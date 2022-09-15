@@ -1,0 +1,738 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95A4B11A-1FB1-41B0-B9A9-12C953A44CD5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>UlcWin</RootNamespace>
+    <AssemblyName>UlcWin</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PCI-card_view.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\bin_client\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=5.0.10.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.5.0.10\lib\netstandard2.0\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="QueryBuilder.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\QueryBuilder.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Common.6.0.2\lib\netstandard2.0\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.6.0.2\lib\netstandard2.0\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.OrmLite.6.0.2\lib\netstandard2.0\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.PostgreSQL, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.OrmLite.PostgreSQL.6.0.2\lib\netstandard2.0\ServiceStack.OrmLite.PostgreSQL.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.6.0.2\lib\netstandard2.0\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartZtpServer">
+      <HintPath>..\..\..\bin_client\SmartZtpServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Net.NetworkInformation, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.NetworkInformation.4.3.0\lib\net46\System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.6.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.4.6.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.7.0\lib\netstandard2.0\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZtpLib">
+      <HintPath>..\..\..\bin_client\ZtpLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ZtpManager, Version=1.1.13.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ZtpManager.dll</HintPath>
+    </Reference>
+    <Reference Include="ZtpModel, Version=1.1.14.2, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ZtpModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AplSetings\ASettings.cs" />
+    <Compile Include="Controls\ChBoxCombo\CheckBoxComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ChBoxCombo\CheckBoxComboBox.Designer.cs">
+      <DependentUpon>CheckBoxComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ChBoxCombo\GripBounds.cs" />
+    <Compile Include="Controls\ChBoxCombo\NativeMethods.cs" />
+    <Compile Include="Controls\ChBoxCombo\Popup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ChBoxCombo\Popup.Designer.cs">
+      <DependentUpon>Popup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ChBoxCombo\PopupComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ChBoxCombo\PopupComboBox.Designer.cs">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB\DBAuthUtils.cs" />
+    <Compile Include="DB\DbLogMsg.cs" />
+    <Compile Include="DB\MeterData.cs" />
+    <Compile Include="DB\Meters.cs" />
+    <Compile Include="DB\OrmDbConfig.cs" />
+    <Compile Include="DB\OrmDbCurrent.cs" />
+    <Compile Include="DB\OrmDbInfo.cs" />
+    <Compile Include="DB\OrmDbLogs.cs" />
+    <Compile Include="DB\OrmDbNodes.cs" />
+    <Compile Include="DB\OrmDbUsers.cs" />
+    <Compile Include="DB\OrmMainLogs.cs" />
+    <Compile Include="DB\OrmResBody.cs" />
+    <Compile Include="DB\OrmResObjects.cs" />
+    <Compile Include="DB\UlcStatistic.cs" />
+    <Compile Include="Drivers\EnMera102.cs" />
+    <Compile Include="Drivers\Granelectro.cs" />
+    <Compile Include="Edit\ATCommForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\ATCommForm.Designer.cs">
+      <DependentUpon>ATCommForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edit\ConnectionDBForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\ConnectionDBForm.Designer.cs">
+      <DependentUpon>ConnectionDBForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Db.cs" />
+    <Compile Include="Edit\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\Editor.Designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edit\MeterEditFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\MeterEditFrom.Designer.cs">
+      <DependentUpon>MeterEditFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Export\ExportExcel.cs" />
+    <Compile Include="Statistics\StatRes.cs" />
+    <Compile Include="ui\AllStatMonthView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\AllStatMonthView.Designer.cs">
+      <DependentUpon>AllStatMonthView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\AutoCompleteCombobox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\AutoCompleteCombobox.Designer.cs">
+      <DependentUpon>AutoCompleteCombobox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\DashContrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\DashContrl.Designer.cs">
+      <DependentUpon>DashContrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\DtMonth.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\DtMonth.Designer.cs">
+      <DependentUpon>DtMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\EventForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\EventForm.Designer.cs">
+      <DependentUpon>EventForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fota\fota.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fota\fota.Designer.cs">
+      <DependentUpon>fota.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logs\EnumLogs.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\ParceLog.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="itemIp.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ui\FesStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\FesStatistics.Designer.cs">
+      <DependentUpon>FesStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\InWaitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\InWaitControl.Designer.cs">
+      <DependentUpon>InWaitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\LogsViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\LogsViewForm.Designer.cs">
+      <DependentUpon>LogsViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\MeterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\MeterForm.Designer.cs">
+      <DependentUpon>MeterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\MultiSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\MultiSettingsForm.Designer.cs">
+      <DependentUpon>MultiSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\RoundShape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\ScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\ScheduleForm.Designer.cs">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\SettingEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\SettingEditForm.Designer.cs">
+      <DependentUpon>SettingEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\AllStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\AllStatisticsForm.Designer.cs">
+      <DependentUpon>AllStatisticsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\TextBoxPlaceHolder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\UsersAccsessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\UsersAccsessForm.Designer.cs">
+      <DependentUpon>UsersAccsessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsersEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\UsersEditForm.Designer.cs">
+      <DependentUpon>UsersEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\PartitionConfigEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\PartitionConfigEditorControl.Designer.cs">
+      <DependentUpon>PartitionConfigEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\PingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\PingForm.Designer.cs">
+      <DependentUpon>PingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\SimpleWaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\SimpleWaitForm.Designer.cs">
+      <DependentUpon>SimpleWaitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\TreeItemNodeEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\TreeItemNodeEdit.Designer.cs">
+      <DependentUpon>TreeItemNodeEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\TriStateTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\TriStateTree.Designer.cs">
+      <DependentUpon>TriStateTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UlcCfg.cs" />
+    <Compile Include="ui\UsrFesStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrFesStatistics.Designer.cs">
+      <DependentUpon>UsrFesStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsrPercentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrPercentControl.Designer.cs">
+      <DependentUpon>UsrPercentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsrStatComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrStatComponent.Designer.cs">
+      <DependentUpon>UsrStatComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsrStatDetailControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrStatDetailControl.Designer.cs">
+      <DependentUpon>UsrStatDetailControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsrStatResControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrStatResControl.Designer.cs">
+      <DependentUpon>UsrStatResControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\UsrUlcChartCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\UsrUlcChartCtrl.Designer.cs">
+      <DependentUpon>UsrUlcChartCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\WaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\WaitForm.Designer.cs">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\ChBoxCombo\PopupComboBox.resx">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\ATCommForm.resx">
+      <DependentUpon>ATCommForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\ConnectionDBForm.resx">
+      <DependentUpon>ConnectionDBForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\MeterEditFrom.resx">
+      <DependentUpon>MeterEditFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\AllStatMonthView.resx">
+      <DependentUpon>AllStatMonthView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\DashContrl.resx">
+      <DependentUpon>DashContrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\EventForm.resx">
+      <DependentUpon>EventForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fota\fota.resx">
+      <DependentUpon>fota.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ui\FesStatistics.resx">
+      <DependentUpon>FesStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\InWaitControl.resx">
+      <DependentUpon>InWaitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\LogsViewForm.resx">
+      <DependentUpon>LogsViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\MeterForm.resx">
+      <DependentUpon>MeterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\MultiSettingsForm.resx">
+      <DependentUpon>MultiSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\ScheduleForm.resx">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\SettingEditForm.resx">
+      <DependentUpon>SettingEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\AllStatisticsForm.resx">
+      <DependentUpon>AllStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsersAccsessForm.resx">
+      <DependentUpon>UsersAccsessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsersEditForm.resx">
+      <DependentUpon>UsersEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\PartitionConfigEditorControl.resx">
+      <DependentUpon>PartitionConfigEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\PingForm.resx">
+      <DependentUpon>PingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\SimpleWaitForm.resx">
+      <DependentUpon>SimpleWaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\TreeItemNodeEdit.resx">
+      <DependentUpon>TreeItemNodeEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\TriStateTree.resx">
+      <DependentUpon>TriStateTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrFesStatistics.resx">
+      <DependentUpon>UsrFesStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrPercentControl.resx">
+      <DependentUpon>UsrPercentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrStatComponent.resx">
+      <DependentUpon>UsrStatComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrStatDetailControl.resx">
+      <DependentUpon>UsrStatDetailControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrStatResControl.resx">
+      <DependentUpon>UsrStatResControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UsrUlcChartCtrl.resx">
+      <DependentUpon>UsrUlcChartCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\WaitForm.resx">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\checks.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_warning.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shield_yellow.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_add.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left_blue.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right_blue.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear_replace.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_gear.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_refresh.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="1488.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="btnCheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="btnUncheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="btnInvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_check.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_client.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_ok.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_warning.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_sql_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear_information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_connection.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_warning1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\row_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\row_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\window.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\window_split_ver.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flash.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\data_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\data_into.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\data_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel_exports.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\monitor_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PCI-card_view.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PCI-card_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PCI-card_view1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PCI-card_view.ico" />
+    <None Include="Resources\chart_line.png" />
+    <None Include="Resources\chart.ico" />
+    <None Include="Resources\chart2.png" />
+    <None Include="Resources\chart1.png" />
+    <None Include="Resources\text_marked.png" />
+    <None Include="Resources\edit2.png" />
+    <None Include="Resources\edit1.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
