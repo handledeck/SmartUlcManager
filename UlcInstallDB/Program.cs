@@ -15,6 +15,8 @@ namespace UlcDbInstall
     READ_WRITE,
     FULL
   }
+
+  //aaaaaaa
   class Options
   {
     [Option('a', "address", Required = true, HelpText = "ip или dns адрес сервера Postgres")]
