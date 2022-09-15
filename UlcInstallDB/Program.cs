@@ -77,7 +77,7 @@ namespace UlcDbInstall
       }
       else
       {
-        Console.WriteLine("aaaaaa");
+        Console.WriteLine("argumets error");
         result = 1;
       }
       return result;
