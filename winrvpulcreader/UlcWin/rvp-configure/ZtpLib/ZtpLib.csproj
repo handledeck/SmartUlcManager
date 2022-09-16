@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FFB5FB9-E06B-450E-9D68-DFB8F77AD81E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ztp</RootNamespace>
+    <AssemblyName>ZtpLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin_client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin_client\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\..\winrvpulcreader\UlcWin\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\NLog.4.7.5\lib\net40-client\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\include\BaseAssemblyInfo.cs">
+      <Link>Properties\BaseAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Attributes\DevAttribute.cs" />
+    <Compile Include="Bit.cs" />
+    <Compile Include="Configuration\CheckingChangesObject.cs" />
+    <Compile Include="Configuration\ZtpLight.cs" />
+    <Compile Include="Configuration\ZtpScheduler.cs" />
+    <Compile Include="Configuration\ZtpSeason.cs" />
+    <Compile Include="Configuration\ZtpDateItem.cs" />
+    <Compile Include="Configuration\ZtpDate.cs" />
+    <Compile Include="Configuration\ZtpTimeRange.cs" />
+    <Compile Include="Configuration\ZtpTimeItem.cs" />
+    <Compile Include="Configuration\ZtpTime.cs" />
+    <Compile Include="Configuration\ZtpVersion.cs" />
+    <Compile Include="Enums\Device.cs" />
+    <Compile Include="Enums\DevType.cs" />
+    <Compile Include="Enums\LogLevel.cs" />
+    <Compile Include="Enums\Month.cs" />
+    <Compile Include="Attributes\MonthAttribute.cs" />
+    <Compile Include="Enums\TimeRangeKind.cs" />
+    <Compile Include="Enums\TimeKind.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IO\CmdParse.cs" />
+    <Compile Include="IO\FineTune.cs" />
+    <Compile Include="IO\FineTune.Data.cs" />
+    <Compile Include="IO\Folder.cs" />
+    <Compile Include="IO\FormatConsole.cs" />
+    <Compile Include="IO\Logger\FileLog.cs" />
+    <Compile Include="IO\Logger\ILog.cs" />
+    <Compile Include="IO\Logger\LogFormatter.cs" />
+    <Compile Include="IO\Logger\NullLog.cs" />
+    <Compile Include="IO\Logger\СompoundLog.cs" />
+    <Compile Include="ItemCollection.cs" />
+    <Compile Include="Protocol\ZtpFotaTelit.cs" />
+    <Compile Include="Protocol\ZtpPatchTelit.cs" />
+    <Compile Include="Ui\ApnEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ApnEditorControl.Designer.cs">
+      <DependentUpon>ApnEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FileUploadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\FileUploadForm.Designer.cs">
+      <DependentUpon>FileUploadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FotaFormTelit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\FotaFormTelit.Designer.cs">
+      <DependentUpon>FotaFormTelit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FotaInfoControlTelit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\FotaInfoControlTelit.Designer.cs">
+      <DependentUpon>FotaInfoControlTelit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\gsmTechn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\gsmTechn.Designer.cs">
+      <DependentUpon>gsmTechn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\Iec104EditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\Iec104EditorControl.Designer.cs">
+      <DependentUpon>Iec104EditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\LogsStateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\LogsStateControl.Designer.cs">
+      <DependentUpon>LogsStateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ModBusAddItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\ModBusAddItemForm.Designer.cs">
+      <DependentUpon>ModBusAddItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ModbusItemListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ModbusItemListControl.Designer.cs">
+      <DependentUpon>ModbusItemListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ModbusLabelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\ModbusLabelForm.Designer.cs">
+      <DependentUpon>ModbusLabelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ModBusSettingsEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ModBusSettingsEditorControl.Designer.cs">
+      <DependentUpon>ModBusSettingsEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PasswordControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\PasswordControl.Designer.cs">
+      <DependentUpon>PasswordControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Port\ComPort\ComPort.cs" />
+    <Compile Include="Port\ComPort\ComPortSettings.cs" />
+    <Compile Include="Port\ComPort\ComPortUtils.cs" />
+    <Compile Include="Port\ComPort\Enums.cs" />
+    <Compile Include="Protocol\DeviceActionArg.cs" />
+    <Compile Include="Protocol\DeviceActionMode.cs" />
+    <Compile Include="Protocol\DeviceActionResult.cs" />
+    <Compile Include="Protocol\DeviceUnknownError.cs" />
+    <Compile Include="Protocol\Event\ZtpEventAin.cs" />
+    <Compile Include="Protocol\Event\ZtpEventDin.cs" />
+    <Compile Include="Protocol\Event\ZtpEventDout.cs" />
+    <Compile Include="Protocol\IOperationHistorian.cs" />
+    <Compile Include="Protocol\OpHistoryCode.cs" />
+    <Compile Include="Protocol\SwitchOnOffAnswer.cs" />
+    <Compile Include="Protocol\WritePwdAnswer.cs" />
+    <Compile Include="Protocol\Event\ZtpEvent.cs" />
+    <Compile Include="Protocol\ZtpFota.cs" />
+    <Compile Include="Protocol\ZtpProtocolDriver.cs" />
+    <Compile Include="Port\IPort.cs" />
+    <Compile Include="Port\IPortSetting.cs" />
+    <Compile Include="Port\PortKind.cs" />
+    <Compile Include="Port\PortManager.cs" />
+    <Compile Include="Port\SpanSnapshot.cs" />
+    <Compile Include="Port\TcpPort\TcpPort.cs" />
+    <Compile Include="Port\TcpPort\TcpPortSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ComboboxItem.cs" />
+    <Compile Include="Ui\ComPortSettingsEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ComPortSettingsEditorControl.Designer.cs">
+      <DependentUpon>ComPortSettingsEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\CurrentAinViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\CurrentAinViewControl.Designer.cs">
+      <DependentUpon>CurrentAinViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\CurrentStateViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\CurrentStateViewControl.Designer.cs">
+      <DependentUpon>CurrentStateViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ExpanderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ExpanderControl.Designer.cs">
+      <DependentUpon>ExpanderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FlayoutBitArrayViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\FlayoutBitArrayViewControl.Designer.cs">
+      <DependentUpon>FlayoutBitArrayViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FotaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\FotaForm.Designer.cs">
+      <DependentUpon>FotaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\FotaInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\FotaInfoControl.Designer.cs">
+      <DependentUpon>FotaInfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\LightPlanEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\LightPlanEditorControl.Designer.cs">
+      <DependentUpon>LightPlanEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\LocationEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\LocationEditorControl.Designer.cs">
+      <DependentUpon>LocationEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\NewPasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\NewPasswordForm.Designer.cs">
+      <DependentUpon>NewPasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PasswordWithConfirmControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\PasswordWithConfirmControl.Designer.cs">
+      <DependentUpon>PasswordWithConfirmControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PingEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\PingEditorControl.Designer.cs">
+      <DependentUpon>PingEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PlanResetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\PlanResetControl.Designer.cs">
+      <DependentUpon>PlanResetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\PresentsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\PresentsPanel.Designer.cs">
+      <DependentUpon>PresentsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ProgressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ProgressControl.Designer.cs">
+      <DependentUpon>ProgressControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\ScheduleForm.Designer.cs">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ScheduleListEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ScheduleListEditorControl.Designer.cs">
+      <DependentUpon>ScheduleListEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\SeasonEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\SeasonEditorControl.Designer.cs">
+      <DependentUpon>SeasonEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\SeasonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\SeasonForm.Designer.cs">
+      <DependentUpon>SeasonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\SelectDevTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\SelectDevTypeControl.Designer.cs">
+      <DependentUpon>SelectDevTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\SelectPortKindControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\SelectPortKindControl.Designer.cs">
+      <DependentUpon>SelectPortKindControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\SelectPortKindWithSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\SelectPortKindWithSettingsControl.Designer.cs">
+      <DependentUpon>SelectPortKindWithSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ShowTicksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\ShowTicksForm.Designer.cs">
+      <DependentUpon>ShowTicksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\TcpPortSettingsEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\TcpPortSettingsEditorControl.Designer.cs">
+      <DependentUpon>TcpPortSettingsEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\UiLogConsoleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\UiLogConsoleControl.Designer.cs">
+      <DependentUpon>UiLogConsoleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\UseSchedulerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\UseSchedulerControl.Designer.cs">
+      <DependentUpon>UseSchedulerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\WaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\WaitForm.Designer.cs">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ArrayUtils.cs" />
+    <Compile Include="Utils\DateTimeUtils.cs" />
+    <Compile Include="Protocol\ZtpProtocol.cs" />
+    <Compile Include="Utils\IntValidator.cs" />
+    <Compile Include="Utils\IpAddressValidator.cs" />
+    <Compile Include="Utils\PortValidator.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\Table.cs" />
+    <Compile Include="Utils\TimeZoneInfoUtils.cs" />
+    <Compile Include="Ui\AinEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\AinEditorControl.Designer.cs">
+      <DependentUpon>AinEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\Box.cs" />
+    <Compile Include="Ui\ConfigEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ConfigEditorControl.Designer.cs">
+      <DependentUpon>ConfigEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\DinEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\DinEditorControl.Designer.cs">
+      <DependentUpon>DinEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\DoutEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\DoutEditorControl.Designer.cs">
+      <DependentUpon>DoutEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\InputDateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\InputDateControl.Designer.cs">
+      <DependentUpon>InputDateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\InputDoubleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\InputDoubleControl.Designer.cs">
+      <DependentUpon>InputDoubleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\InputTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\InputTextControl.Designer.cs">
+      <DependentUpon>InputTextControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\InputTimeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\InputTimeControl.Designer.cs">
+      <DependentUpon>InputTimeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\InputTimeZoneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\InputTimeZoneControl.Designer.cs">
+      <DependentUpon>InputTimeZoneControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ViewTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\ViewTextControl.Designer.cs">
+      <DependentUpon>ViewTextControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\ZtpConfig.cs" />
+    <Compile Include="ZtpFileInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Resources\sizon_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ui\ApnEditorControl.resx">
+      <DependentUpon>ApnEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FileUploadForm.resx">
+      <DependentUpon>FileUploadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FotaFormTelit.resx">
+      <DependentUpon>FotaFormTelit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FotaInfoControlTelit.resx">
+      <DependentUpon>FotaInfoControlTelit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\gsmTechn.resx">
+      <DependentUpon>gsmTechn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\Iec104EditorControl.resx">
+      <DependentUpon>Iec104EditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\LogsStateControl.resx">
+      <DependentUpon>LogsStateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ModBusAddItemForm.resx">
+      <DependentUpon>ModBusAddItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ModbusItemListControl.resx">
+      <DependentUpon>ModbusItemListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ModbusLabelForm.resx">
+      <DependentUpon>ModbusLabelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ModBusSettingsEditorControl.resx">
+      <DependentUpon>ModBusSettingsEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PasswordControl.resx">
+      <DependentUpon>PasswordControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\AinEditorControl.resx">
+      <DependentUpon>AinEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ComPortSettingsEditorControl.resx">
+      <DependentUpon>ComPortSettingsEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ConfigEditorControl.resx">
+      <DependentUpon>ConfigEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\CurrentAinViewControl.resx">
+      <DependentUpon>CurrentAinViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\CurrentStateViewControl.resx">
+      <DependentUpon>CurrentStateViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\DinEditorControl.resx">
+      <DependentUpon>DinEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\DoutEditorControl.resx">
+      <DependentUpon>DoutEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ExpanderControl.resx">
+      <DependentUpon>ExpanderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FlayoutBitArrayViewControl.resx">
+      <DependentUpon>FlayoutBitArrayViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FotaForm.resx">
+      <DependentUpon>FotaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\FotaInfoControl.resx">
+      <DependentUpon>FotaInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\InputDateControl.resx">
+      <DependentUpon>InputDateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\InputDoubleControl.resx">
+      <DependentUpon>InputDoubleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\InputTextControl.resx">
+      <DependentUpon>InputTextControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\InputTimeControl.resx">
+      <DependentUpon>InputTimeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\InputTimeZoneControl.resx">
+      <DependentUpon>InputTimeZoneControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\LightPlanEditorControl.resx">
+      <DependentUpon>LightPlanEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\LocationEditorControl.resx">
+      <DependentUpon>LocationEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\NewPasswordForm.resx">
+      <DependentUpon>NewPasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PasswordWithConfirmControl.resx">
+      <DependentUpon>PasswordWithConfirmControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PingEditorControl.resx">
+      <DependentUpon>PingEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PlanResetControl.resx">
+      <DependentUpon>PlanResetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\PresentsPanel.resx">
+      <DependentUpon>PresentsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ProgressControl.resx">
+      <DependentUpon>ProgressControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ScheduleForm.resx">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ScheduleListEditorControl.resx">
+      <DependentUpon>ScheduleListEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\SeasonEditorControl.resx">
+      <DependentUpon>SeasonEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\SeasonForm.resx">
+      <DependentUpon>SeasonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\SelectDevTypeControl.resx">
+      <DependentUpon>SelectDevTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\SelectPortKindControl.resx">
+      <DependentUpon>SelectPortKindControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\SelectPortKindWithSettingsControl.resx">
+      <DependentUpon>SelectPortKindWithSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ShowTicksForm.resx">
+      <DependentUpon>ShowTicksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\TcpPortSettingsEditorControl.resx">
+      <DependentUpon>TcpPortSettingsEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\UiLogConsoleControl.resx">
+      <DependentUpon>UiLogConsoleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\UseSchedulerControl.resx">
+      <DependentUpon>UseSchedulerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\ViewTextControl.resx">
+      <DependentUpon>ViewTextControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ui\WaitForm.resx">
+      <DependentUpon>WaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sizon_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sizon_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\absolute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\relative.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cpu_preferences.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="fota\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_StartDate="2000/1/1" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

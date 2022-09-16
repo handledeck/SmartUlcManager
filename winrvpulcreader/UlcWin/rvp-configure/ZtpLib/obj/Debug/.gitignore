@@ -1,0 +1,12 @@
+/CoreCompileInputs.cache
+/DesignTimeResolveAssemblyReferences.cache
+/DesignTimeResolveAssemblyReferencesInput.cache
+*.resources
+/ZtpLib.csproj.GenerateResource.Cache
+/ZtpLib.csprojResolveAssemblyReference.cache
+/ZtpLib.dll
+/ZtpLib.pdb
+*.csproj.CoreCompileInputs.cache
+*.txt
+*.csprojAssemblyReference.cache
+*.csproj.CopyComplete

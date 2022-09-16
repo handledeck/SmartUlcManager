@@ -1,0 +1,12 @@
+*.resources
+/ZtpLib.csproj.FileListAbsolute.txt
+/ZtpLib.csproj.GenerateResource.Cache
+/ZtpLib.csprojResolveAssemblyReference.cache
+/ZtpLib.dll
+/ZtpLib.pdb
+/TempPE/
+*.csproj.CoreCompileInputs.cache
+/DesignTimeResolveAssemblyReferences.cache
+/DesignTimeResolveAssemblyReferencesInput.cache
+/ZtpLib.csprojAssemblyReference.cache
+*.csproj.CopyComplete

@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B53D42A9-B081-4D5C-A5AE-B4B04000F191}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZtpManager</RootNamespace>
+    <AssemblyName>ZtpManager</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin_client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin_client\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>widescreen.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bss.SysClasses">
+      <HintPath>..\lib\Bss.SysClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="Bss.SysInterfaces">
+      <HintPath>..\lib\Bss.SysInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Bss.Windows.Forms.Mstv">
+      <HintPath>..\lib\Bss.Windows.Forms.Mstv.dll</HintPath>
+    </Reference>
+    <Reference Include="CryptoNet">
+      <HintPath>..\lib\CryptoNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\Dapper.Contrib.1.50.0\lib\net40\Dapper.Contrib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Logger">
+      <HintPath>..\lib\Logger.dll</HintPath>
+    </Reference>
+    <Reference Include="MdiTabControl">
+      <HintPath>..\lib\MdiTabControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\NLog.4.7.5\lib\net40-client\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="QueryBuilder.NET">
+      <HintPath>..\lib\QueryBuilder.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="RemoteClient">
+      <HintPath>..\lib\RemoteClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Remoting">
+      <HintPath>..\lib\Remoting.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartDrv.Common">
+      <HintPath>..\lib\SmartDrv.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartZtpServer">
+      <HintPath>..\lib\SmartZtpServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.Ribbon35, Version=3.5.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\pkg\packages\System.Windows.Forms.Ribbon35.3.5.8.0\lib\net35\System.Windows.Forms.Ribbon35.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ZtpLib">
+      <HintPath>..\..\bin_client\ZtpLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ZtpModel">
+      <HintPath>..\..\bin_client\ZtpModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\include\BaseAssemblyInfo.cs">
+      <Link>Properties\BaseAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\include\DatabaseSetting.cs">
+      <Link>DatabaseSetting.cs</Link>
+    </Compile>
+    <Compile Include="..\include\TuneSetting.cs">
+      <Link>TuneSetting.cs</Link>
+    </Compile>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="AppConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppConfigForm.Designer.cs">
+      <DependentUpon>AppConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CatLightPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CatLightPlanForm.Designer.cs">
+      <DependentUpon>CatLightPlanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChildFormControl.cs" />
+    <Compile Include="Clipboard\ClipboardData.cs" />
+    <Compile Include="Controls\DateTimeToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DeviceTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FilteredListViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FilteredListViewControl.Designer.cs">
+      <DependentUpon>FilteredListViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PartitionConfigEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PartitionConfigEditorControl.Designer.cs">
+      <DependentUpon>PartitionConfigEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SelectDeviceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectDeviceControl.Designer.cs">
+      <DependentUpon>SelectDeviceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SelectLightPlanControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectLightPlanControl.Designer.cs">
+      <DependentUpon>SelectLightPlanControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\Dal.cs" />
+    <Compile Include="DataAccessLayer\LastOperation.cs" />
+    <Compile Include="DataAccessLayer\SqlAnnouncer.cs" />
+    <Compile Include="DeviceAccessLayer\DevAl.cs" />
+    <Compile Include="DeviceAccessLayer\Fal.cs" />
+    <Compile Include="DataAccessLayer\OperationHistorian.cs" />
+    <Compile Include="DeviceAccessLayer\PortDictionary.cs" />
+    <Compile Include="EditDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditDeviceForm.Designer.cs">
+      <DependentUpon>EditDeviceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditFolderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditFolderForm.Designer.cs">
+      <DependentUpon>EditFolderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditLightPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditLightPlanForm.Designer.cs">
+      <DependentUpon>EditLightPlanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EstDevicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EstDevicesForm.Designer.cs">
+      <DependentUpon>EstDevicesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Est\EstAccess.cs" />
+    <Compile Include="Extensions\CollectionEx.cs" />
+    <Compile Include="HistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryForm.Designer.cs">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IChildForm.cs" />
+    <Compile Include="LastOpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LastOpForm.Designer.cs">
+      <DependentUpon>LastOpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiChangePasswordForm.Designer.cs">
+      <DependentUpon>MultiChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiConfigForm.Designer.cs">
+      <DependentUpon>MultiConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPatchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiPatchForm.Designer.cs">
+      <DependentUpon>MultiPatchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiRebootForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiRebootForm.Designer.cs">
+      <DependentUpon>MultiRebootForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiSwitchOnOffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiSwitchOnOffForm.Designer.cs">
+      <DependentUpon>MultiSwitchOnOffForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectListForm.Designer.cs">
+      <DependentUpon>ObjectListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.Multi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiFotaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiFotaForm.Designer.cs">
+      <DependentUpon>MultiFotaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiResultForm.Designer.cs">
+      <DependentUpon>MultiResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes\BaseNode.cs" />
+    <Compile Include="Nodes\DeviceNode.cs" />
+    <Compile Include="Nodes\FolderNode.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes\StubNode.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Nodes\RootNode.cs" />
+    <Compile Include="Scope\ScopeArea.cs" />
+    <Compile Include="Scope\ScopeItem.cs" />
+    <Compile Include="Scope\SelectedList.cs" />
+    <Compile Include="SelectLightPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectLightPlanForm.Designer.cs">
+      <DependentUpon>SelectLightPlanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartForm.Designer.cs">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringListLog.cs" />
+    <Compile Include="ZtpConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZtpConfigForm.Designer.cs">
+      <DependentUpon>ZtpConfigForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppConfigForm.resx">
+      <DependentUpon>AppConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CatLightPlanForm.resx">
+      <DependentUpon>CatLightPlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FilteredListViewControl.resx">
+      <DependentUpon>FilteredListViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PartitionConfigEditorControl.resx">
+      <DependentUpon>PartitionConfigEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SelectDeviceControl.resx">
+      <DependentUpon>SelectDeviceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SelectLightPlanControl.resx">
+      <DependentUpon>SelectLightPlanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditDeviceForm.resx">
+      <DependentUpon>EditDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditFolderForm.resx">
+      <DependentUpon>EditFolderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditLightPlanForm.resx">
+      <DependentUpon>EditLightPlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EstDevicesForm.resx">
+      <DependentUpon>EstDevicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryForm.resx">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LastOpForm.resx">
+      <DependentUpon>LastOpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiChangePasswordForm.resx">
+      <DependentUpon>MultiChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiConfigForm.resx">
+      <DependentUpon>MultiConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiPatchForm.resx">
+      <DependentUpon>MultiPatchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiRebootForm.resx">
+      <DependentUpon>MultiRebootForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiSwitchOnOffForm.resx">
+      <DependentUpon>MultiSwitchOnOffForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectListForm.resx">
+      <DependentUpon>ObjectListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiFotaForm.resx">
+      <DependentUpon>MultiFotaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiResultForm.resx">
+      <DependentUpon>MultiResultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SelectLightPlanForm.resx">
+      <DependentUpon>SelectLightPlanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartForm.resx">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZtpConfigForm.resx">
+      <DependentUpon>ZtpConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightbulb.png" />
+    <None Include="Resources\lightbulb_off.png" />
+    <None Include="readme.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="widescreen.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_StartDate="2000/1/1" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
