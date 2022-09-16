@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Out\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,7 +42,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Out\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -150,10 +150,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ZtpConfig">
-      <HintPath>..\bin_client\ZtpConfig.exe</HintPath>
+      <HintPath>lib\ZtpConfig.exe</HintPath>
     </Reference>
     <Reference Include="ZtpLib">
-      <HintPath>..\bin_client\ZtpLib.dll</HintPath>
+      <HintPath>lib\ZtpLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
