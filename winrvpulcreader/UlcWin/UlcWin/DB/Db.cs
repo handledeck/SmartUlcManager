@@ -406,17 +406,26 @@ namespace InterUlc.Db
 
     Exception CheckForSuperUser(IDbCommand cmd) {
       Exception exc = null;
-      string sql = "SELECT *FROM pg_catalog.pg_user";
+      NpgsqlDataReader rd;
+      string sql = string.Format("SELECT *FROM pg_catalog.pg_user where usename='{0}'",this.__DbUserName);
       try
       {
         cmd.CommandText=sql;
-        NpgsqlDataReader rd=(NpgsqlDataReader)cmd.ExecuteReader();
-        
+        rd=(NpgsqlDataReader)cmd.ExecuteReader();
+        if (rd.HasRows) {
+          if (rd.Read()) {
+            bool sprUsr = (bool)rd["usesuper"];
+            if (!sprUsr)
+              exc = new Exception();
+          }
+        }
+        rd.Close();
       }
       catch (Exception e)
       {
         exc = e;
       }
+    
       return exc;
     }
 
@@ -447,6 +456,7 @@ namespace InterUlc.Db
         }
         else
         {
+          cmd.CommandText = sql;
           var dr = cmd.ExecuteReader();
 
           if (dr.HasRows)
@@ -663,7 +673,7 @@ namespace InterUlc.Db
           cmd.CommandText = string.Format("GRANT ulc_read TO \"{0}\";", ulcUser.User);
           cmd.ExecuteNonQuery();
         }
-        else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
+        else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite ||  ulcUser.AccsessLavel== EnumAccsesLevel.Full)
         {
           cmd.CommandText = string.Format("GRANT ulc_read_write TO \"{0}\";", ulcUser.User);
           cmd.ExecuteNonQuery();
