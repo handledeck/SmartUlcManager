@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      Ztp.Port.ComPort.ComPortSettings comPortSettings2 = new Ztp.Port.ComPort.ComPortSettings();
+      Ztp.Port.ComPort.ComPortSettings comPortSettings1 = new Ztp.Port.ComPort.ComPortSettings();
       this.flp = new System.Windows.Forms.FlowLayoutPanel();
       this.exDin = new Ztp.Ui.ExpanderControl();
       this.dinEditor = new Ztp.Ui.DinEditorControl();
@@ -62,6 +62,8 @@
       this.cbDebug = new System.Windows.Forms.CheckBox();
       this.exRs485 = new Ztp.Ui.ExpanderControl();
       this.comPortSettingsEditor = new Ztp.Ui.ComPortSettingsEditorControl();
+      this.exPing = new Ztp.Ui.ExpanderControl();
+      this.pingEditorControl1 = new Ztp.Ui.PingEditorControl();
       this.exPlanReboot = new Ztp.Ui.ExpanderControl();
       this.planResetControl1 = new Ztp.Ui.PlanResetControl();
       this.exIec104Control = new Ztp.Ui.ExpanderControl();
@@ -96,6 +98,8 @@
       this.exDebug.SuspendLayout();
       this.exRs485.Content.SuspendLayout();
       this.exRs485.SuspendLayout();
+      this.exPing.Content.SuspendLayout();
+      this.exPing.SuspendLayout();
       this.exPlanReboot.Content.SuspendLayout();
       this.exPlanReboot.SuspendLayout();
       this.exIec104Control.Content.SuspendLayout();
@@ -120,6 +124,7 @@
       this.flp.Controls.Add(this.exDebounce);
       this.flp.Controls.Add(this.exDebug);
       this.flp.Controls.Add(this.exRs485);
+      this.flp.Controls.Add(this.exPing);
       this.flp.Controls.Add(this.exPlanReboot);
       this.flp.Controls.Add(this.exIec104Control);
       this.flp.Controls.Add(this.exLogsControl);
@@ -804,17 +809,51 @@
       this.comPortSettingsEditor.ShowHandshake = false;
       this.comPortSettingsEditor.ShowPortName = false;
       this.comPortSettingsEditor.ShowTimeout = false;
-      this.comPortSettingsEditor.Size = new System.Drawing.Size(505, 108);
+      this.comPortSettingsEditor.Size = new System.Drawing.Size(495, 108);
       this.comPortSettingsEditor.TabIndex = 0;
-      comPortSettings2.BaudRate = 9600;
-      comPortSettings2.DataBits = ((byte)(8));
-      comPortSettings2.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings2.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings2.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings2.PortName = "COM1";
-      comPortSettings2.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings2.Timeout = 5000;
-      this.comPortSettingsEditor.Value = comPortSettings2;
+      comPortSettings1.BaudRate = 9600;
+      comPortSettings1.DataBits = ((byte)(8));
+      comPortSettings1.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings1.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings1.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings1.PortName = "COM1";
+      comPortSettings1.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings1.Timeout = 5000;
+      this.comPortSettingsEditor.Value = comPortSettings1;
+      // 
+      // exPing
+      // 
+      this.exPing.BackColor = System.Drawing.Color.White;
+      this.exPing.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      // 
+      // exPing.Content
+      // 
+      this.exPing.Content.Controls.Add(this.pingEditorControl1);
+      this.exPing.Content.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.exPing.Content.Location = new System.Drawing.Point(0, 26);
+      this.exPing.Content.Name = "Content";
+      this.exPing.Content.Size = new System.Drawing.Size(501, 132);
+      this.exPing.Content.TabIndex = 1;
+      this.exPing.Header = "Пингование";
+      this.exPing.HeaderBackColor = System.Drawing.SystemColors.ActiveCaption;
+      this.exPing.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+      this.exPing.IsExpanded = true;
+      this.exPing.Location = new System.Drawing.Point(3, 1216);
+      this.exPing.Name = "exPing";
+      this.exPing.Size = new System.Drawing.Size(503, 160);
+      this.exPing.TabIndex = 16;
+      // 
+      // pingEditorControl1
+      // 
+      this.pingEditorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pingEditorControl1.Ip = "";
+      this.pingEditorControl1.IsValidOk = false;
+      this.pingEditorControl1.Location = new System.Drawing.Point(0, 0);
+      this.pingEditorControl1.Name = "pingEditorControl1";
+      this.pingEditorControl1.Padding = new System.Windows.Forms.Padding(5);
+      this.pingEditorControl1.Period = ((byte)(1));
+      this.pingEditorControl1.Size = new System.Drawing.Size(501, 132);
+      this.pingEditorControl1.TabIndex = 0;
       // 
       // exPlanReboot
       // 
@@ -833,7 +872,7 @@
       this.exPlanReboot.HeaderBackColor = System.Drawing.SystemColors.ActiveCaption;
       this.exPlanReboot.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.exPlanReboot.IsExpanded = true;
-      this.exPlanReboot.Location = new System.Drawing.Point(3, 1216);
+      this.exPlanReboot.Location = new System.Drawing.Point(3, 1382);
       this.exPlanReboot.Name = "exPlanReboot";
       this.exPlanReboot.Size = new System.Drawing.Size(503, 109);
       this.exPlanReboot.TabIndex = 13;
@@ -844,6 +883,7 @@
       this.planResetControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.planResetControl1.Location = new System.Drawing.Point(0, 0);
       this.planResetControl1.Name = "planResetControl1";
+      this.planResetControl1.Padding = new System.Windows.Forms.Padding(5);
       this.planResetControl1.Size = new System.Drawing.Size(501, 81);
       this.planResetControl1.TabIndex = 0;
       this.planResetControl1.Value = "";
@@ -866,7 +906,7 @@
       this.exIec104Control.HeaderBackColor = System.Drawing.SystemColors.ActiveCaption;
       this.exIec104Control.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.exIec104Control.IsExpanded = true;
-      this.exIec104Control.Location = new System.Drawing.Point(3, 1331);
+      this.exIec104Control.Location = new System.Drawing.Point(3, 1497);
       this.exIec104Control.Name = "exIec104Control";
       this.exIec104Control.Size = new System.Drawing.Size(503, 115);
       this.exIec104Control.TabIndex = 14;
@@ -897,7 +937,7 @@
       this.exLogsControl.HeaderBackColor = System.Drawing.SystemColors.ActiveCaption;
       this.exLogsControl.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.exLogsControl.IsExpanded = true;
-      this.exLogsControl.Location = new System.Drawing.Point(3, 1452);
+      this.exLogsControl.Location = new System.Drawing.Point(3, 1618);
       this.exLogsControl.Name = "exLogsControl";
       this.exLogsControl.Size = new System.Drawing.Size(503, 104);
       this.exLogsControl.TabIndex = 15;
@@ -949,6 +989,8 @@
       this.exDebug.ResumeLayout(false);
       this.exRs485.Content.ResumeLayout(false);
       this.exRs485.ResumeLayout(false);
+      this.exPing.Content.ResumeLayout(false);
+      this.exPing.ResumeLayout(false);
       this.exPlanReboot.Content.ResumeLayout(false);
       this.exPlanReboot.ResumeLayout(false);
       this.exIec104Control.Content.ResumeLayout(false);
@@ -1000,5 +1042,7 @@
         public Ztp.Ui.LogsStateControl lscLogs;
         private Ztp.Ui.ExpanderControl exScheduler;
         private System.Windows.Forms.WebBrowser wb;
+        private Ztp.Ui.ExpanderControl exPing;
+        private Ztp.Ui.PingEditorControl pingEditorControl1;
     }
 }

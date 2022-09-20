@@ -406,16 +406,16 @@ namespace InterUlc.Db
 
     Exception CheckForSuperUser(IDbCommand cmd) {
       Exception exc = null;
-      NpgsqlDataReader rd;
-      string sql = string.Format("SELECT *FROM pg_catalog.pg_user where usename='{0}'",this.__DbUserName);
+      string sql = string.Format("SELECT *FROM pg_catalog.pg_user where usename='{0}'", this.__DbUserName);
       try
       {
         cmd.CommandText=sql;
-        rd=(NpgsqlDataReader)cmd.ExecuteReader();
-        if (rd.HasRows) {
+        NpgsqlDataReader rd=(NpgsqlDataReader)cmd.ExecuteReader();
+        if (rd.HasRows)
+        {
           if (rd.Read()) {
-            bool sprUsr = (bool)rd["usesuper"];
-            if (!sprUsr)
+            bool supUsr = (bool)rd["usesuper"];
+            if (supUsr == false)
               exc = new Exception();
           }
         }
@@ -425,7 +425,6 @@ namespace InterUlc.Db
       {
         exc = e;
       }
-    
       return exc;
     }
 
@@ -440,7 +439,6 @@ namespace InterUlc.Db
         consql = new NpgsqlConnection(this.__connection);
         consql.Open();
         __host = Dns.GetHostEntry(Dns.GetHostName());
-       
         var cmd = new NpgsqlCommand(sql, consql);
         __ulcUser = new UlcUser();
         if (CheckForSuperUser(cmd) == null)
@@ -487,10 +485,9 @@ namespace InterUlc.Db
           {
             return false;
           }
-
         }
       }
-      catch (Exception exp)
+      catch (Exception exp) 
       {
         return false;
       }
@@ -499,9 +496,6 @@ namespace InterUlc.Db
           consql.Close();
       }
     }
-
-
-
     public List<UlcUser> GetAllUsers() {
       //Dictionary<int, string> utype = null;
       var sql = "select * from main_user";
@@ -673,7 +667,7 @@ namespace InterUlc.Db
           cmd.CommandText = string.Format("GRANT ulc_read TO \"{0}\";", ulcUser.User);
           cmd.ExecuteNonQuery();
         }
-        else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite ||  ulcUser.AccsessLavel== EnumAccsesLevel.Full)
+        else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
         {
           cmd.CommandText = string.Format("GRANT ulc_read_write TO \"{0}\";", ulcUser.User);
           cmd.ExecuteNonQuery();

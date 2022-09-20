@@ -13,14 +13,27 @@ namespace Ztp.Ui
     public delegate void TestPinghandler();
     public event TestPinghandler TestPing;
 
-    private string _ip = "";
+    private string _ip = "127.0.0.1";
     private byte _period = 1;
-
+    public bool __isValidOk = false;
+    public bool IsValidOk
+    {
+      get { return __isValidOk; }
+      set { __isValidOk = false; }
+    }
     public PingEditorControl()
     {
       InitializeComponent();
+      this.IsValidOk = false;
+     
       _ip = itcIP.Value;
+      Application.Idle += Application_Idle;
       idcPeriod.Enabled = itcIP.Enabled = bPingTest.Enabled = cbActivePing.Checked;
+    }
+
+    private void Application_Idle(object sender, EventArgs e)
+    {
+      itcIP_Validated(this, EventArgs.Empty);
     }
 
     public string Ip
@@ -28,9 +41,9 @@ namespace Ztp.Ui
       get
       {
         //if (string.CompareOrdinal(_ip, itcIP.Value) != 0)
-          itcIP_Validated(this, EventArgs.Empty);
-        if (this.errorProvider.GetError(itcIP) != string.Empty)
-          throw new FormatException("Некорректный IP для пинга");
+          //itcIP_Validated(this, EventArgs.Empty);
+        //if (this.errorProvider.GetError(itcIP) != string.Empty)
+          //throw new FormatException("Некорректный IP для пинга");
         return _ip;
       }
       set
@@ -61,14 +74,16 @@ namespace Ztp.Ui
     private void itcIP_Validated(object sender, EventArgs e)
     {
       bool ipV = IsTextAValidIPAddress(itcIP.Value);
-      if(string.IsNullOrEmpty(itcIP.Value) || ipV)
+      if(!string.IsNullOrEmpty(itcIP.Value) && ipV)
       {
+        __isValidOk = true;
         _ip = itcIP.Value;
         this.errorProvider.SetError(itcIP, "");
       }
       else
       {
-        itcIP.Focus();
+        //itcIP.Focus();
+        __isValidOk = false;
         this.errorProvider.SetError(itcIP, "Введите корректный IP адрес или оставте пустую строку если параметр не нужен");
       }
     }

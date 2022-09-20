@@ -137,7 +137,7 @@ namespace UlcWin.ui
       exPlanReboot.Tag = ZtpConfig.ConfigFlag.PlanReboot;
       exIec104Control.Tag = ZtpConfig.ConfigFlag.UseIec;
       exLogsControl.Tag = ZtpConfig.ConfigFlag.Logs;
-      
+      exPing.Tag = ZtpConfig.ConfigFlag.Ping;
     }
 
     ZtpConfig CollectZtpConfig()
@@ -154,6 +154,7 @@ namespace UlcWin.ui
         __ztpConfig.EstAddress = itEstAddress.Value;
         __ztpConfig.EstPort = Convert.ToUInt16(itEstPort.Value);
         __ztpConfig.EstTsend = Convert.ToUInt32(itEstTsend.Value);
+      
       }
       else
       {
@@ -171,6 +172,11 @@ namespace UlcWin.ui
       __ztpConfig.ComPortSetting = comPortSettingsEditor.Value;
       __ztpConfig.rebootTime = planResetControl1.Value;
       __ztpConfig.logLevel = lscLogs.LogLevel;
+      if (pingEditorControl1.IsValidOk)
+      {
+        __ztpConfig.IpPing = pingEditorControl1.Ip;
+        __ztpConfig.PingPeriod = pingEditorControl1.Period;
+      }
       return __ztpConfig;
     }
 
@@ -189,7 +195,6 @@ namespace UlcWin.ui
     {
       get
       {
-        
         __ztpConfig = CollectZtpConfig();
         return __ztpConfig;
       }

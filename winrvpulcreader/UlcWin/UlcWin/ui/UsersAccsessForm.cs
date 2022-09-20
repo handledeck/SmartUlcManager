@@ -196,7 +196,12 @@ namespace UlcWin.ui
           lstNode.IdItems.Add(uItem);
         }
       }
-      __ulcUser.AccsessLavel = (EnumAccsesLevel)cbLevel.SelectedIndex;
+      int indAc = cbLevel.SelectedIndex;
+      if (indAc == 0)
+        __ulcUser.AccsessLavel = EnumAccsesLevel.ReadWrite;
+      else if(indAc==1)
+        __ulcUser.AccsessLavel = EnumAccsesLevel.Read;
+      //__ulcUser.AccsessLavel = (EnumAccsesLevel)cbLevel.SelectedIndex;
       __ulcUser.PackUlcItems();
       //__ulcUser.UlcItems = ulcUserItems;
       this.DialogResult = DialogResult.OK;
