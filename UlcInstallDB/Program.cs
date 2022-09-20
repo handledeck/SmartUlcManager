@@ -40,9 +40,11 @@ namespace UlcDbInstall
     const string __role_read_write = "CREATE ROLE ulc_read_write WITH NOSUPERUSER NOCREATEDB NOCREATEROLE " +
                 "NOINHERIT NOLOGIN NOREPLICATION NOBYPASSRLS CONNECTION LIMIT -1;";
 
-    const string __read_only = "GRANT SELECT ON ALL TABLES IN SCHEMA public TO ulc_read;" +
-      " GRANT UPDATE, INSERT ON TABLE public.main_logs TO ulc_read;" +
-      " GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO ulc_read";
+    //const string __read_only = "GRANT SELECT ON ALL TABLES IN SCHEMA public TO ulc_read;" +
+    //" GRANT UPDATE, INSERT ON TABLE public.main_logs TO ulc_read;";
+
+    const string __read_only = "GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO ulc_read;" +
+    " GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO ulc_read";
     const string __read_write = "GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO ulc_read_write;" +
       " GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO ulc_read_write";
     static Options __opts = null;
@@ -97,7 +99,7 @@ namespace UlcDbInstall
           return 0;
         }
       }
-      catch
+      catch(Exception exp)
       {
         Console.WriteLine("Connection ERROR");
         return 1;
