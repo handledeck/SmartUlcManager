@@ -158,10 +158,10 @@
       // 
       this.label20.AutoSize = true;
       this.label20.BackColor = System.Drawing.Color.White;
-      this.label20.Font = new System.Drawing.Font("Verdana", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label20.Font = new System.Drawing.Font("Verdana", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label20.Location = new System.Drawing.Point(31, 19);
       this.label20.Name = "label20";
-      this.label20.Size = new System.Drawing.Size(799, 45);
+      this.label20.Size = new System.Drawing.Size(608, 34);
       this.label20.TabIndex = 64;
       this.label20.Text = "Общая статистика работы контроллеров";
       // 
@@ -177,25 +177,25 @@
       this.roundedControl1.Controls.Add(this.lblAll);
       this.roundedControl1.Controls.Add(this.label4);
       this.roundedControl1.Controls.Add(this.lblAllNot);
-      this.roundedControl1.Location = new System.Drawing.Point(22, 71);
+      this.roundedControl1.Location = new System.Drawing.Point(12, 56);
       this.roundedControl1.Name = "roundedControl1";
       this.roundedControl1.Padding = new System.Windows.Forms.Padding(2);
       this.roundedControl1.RoundCorner = 10;
       this.roundedControl1.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundedControl1.ShapeBorderPadding = 5;
       this.roundedControl1.ShapeBorderWitdh = 1;
-      this.roundedControl1.Size = new System.Drawing.Size(395, 161);
+      this.roundedControl1.Size = new System.Drawing.Size(366, 124);
       this.roundedControl1.TabIndex = 19;
       // 
       // lblAllGsm
       // 
       this.lblAllGsm.AutoSize = true;
       this.lblAllGsm.BackColor = System.Drawing.Color.White;
-      this.lblAllGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllGsm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllGsm.Location = new System.Drawing.Point(325, 115);
+      this.lblAllGsm.Location = new System.Drawing.Point(165, 94);
       this.lblAllGsm.Name = "lblAllGsm";
-      this.lblAllGsm.Size = new System.Drawing.Size(70, 24);
+      this.lblAllGsm.Size = new System.Drawing.Size(56, 17);
       this.lblAllGsm.TabIndex = 36;
       this.lblAllGsm.Text = "161345";
       // 
@@ -203,11 +203,11 @@
       // 
       this.label32.AutoSize = true;
       this.label32.BackColor = System.Drawing.Color.White;
-      this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label32.ForeColor = System.Drawing.Color.Gray;
-      this.label32.Location = new System.Drawing.Point(180, 117);
+      this.label32.Location = new System.Drawing.Point(20, 94);
       this.label32.Name = "label32";
-      this.label32.Size = new System.Drawing.Size(178, 20);
+      this.label32.Size = new System.Drawing.Size(142, 17);
       this.label32.TabIndex = 35;
       this.label32.Text = "Слабый сигнал GSM";
       // 
@@ -215,11 +215,11 @@
       // 
       this.lblAllNotRs.AutoSize = true;
       this.lblAllNotRs.BackColor = System.Drawing.Color.White;
-      this.lblAllNotRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllNotRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllNotRs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllNotRs.Location = new System.Drawing.Point(325, 90);
+      this.lblAllNotRs.Location = new System.Drawing.Point(165, 73);
       this.lblAllNotRs.Name = "lblAllNotRs";
-      this.lblAllNotRs.Size = new System.Drawing.Size(70, 24);
+      this.lblAllNotRs.Size = new System.Drawing.Size(56, 17);
       this.lblAllNotRs.TabIndex = 34;
       this.lblAllNotRs.Text = "161345";
       // 
@@ -227,11 +227,11 @@
       // 
       this.label6.AutoSize = true;
       this.label6.BackColor = System.Drawing.Color.White;
-      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this.label6.Location = new System.Drawing.Point(19, 19);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(327, 24);
+      this.label6.Size = new System.Drawing.Size(252, 18);
       this.label6.TabIndex = 24;
       this.label6.Text = "Активных контроллеров в системе";
       // 
@@ -239,23 +239,24 @@
       // 
       this.label28.AutoSize = true;
       this.label28.BackColor = System.Drawing.Color.White;
-      this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label28.ForeColor = System.Drawing.Color.Gray;
-      this.label28.Location = new System.Drawing.Point(198, 92);
+      this.label28.Location = new System.Drawing.Point(19, 73);
       this.label28.Name = "label28";
-      this.label28.Size = new System.Drawing.Size(156, 20);
+      this.label28.Size = new System.Drawing.Size(126, 17);
       this.label28.TabIndex = 33;
       this.label28.Text = "Нет связи RS-485";
       // 
       // lblAll
       // 
+      this.lblAll.AutoEllipsis = true;
       this.lblAll.AutoSize = true;
       this.lblAll.BackColor = System.Drawing.Color.White;
-      this.lblAll.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAll.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAll.Location = new System.Drawing.Point(9, 56);
+      this.lblAll.Location = new System.Drawing.Point(227, 52);
       this.lblAll.Name = "lblAll";
-      this.lblAll.Size = new System.Drawing.Size(218, 97);
+      this.lblAll.Size = new System.Drawing.Size(129, 58);
       this.lblAll.TabIndex = 22;
       this.lblAll.Text = "3076";
       // 
@@ -263,11 +264,11 @@
       // 
       this.label4.AutoSize = true;
       this.label4.BackColor = System.Drawing.Color.White;
-      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label4.ForeColor = System.Drawing.Color.Gray;
-      this.label4.Location = new System.Drawing.Point(245, 62);
+      this.label4.Location = new System.Drawing.Point(20, 52);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(95, 20);
+      this.label4.Size = new System.Drawing.Size(74, 17);
       this.label4.TabIndex = 23;
       this.label4.Text = "Нет связи";
       // 
@@ -275,11 +276,11 @@
       // 
       this.lblAllNot.AutoSize = true;
       this.lblAllNot.BackColor = System.Drawing.Color.White;
-      this.lblAllNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllNot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllNot.Location = new System.Drawing.Point(325, 62);
+      this.lblAllNot.Location = new System.Drawing.Point(165, 52);
       this.lblAllNot.Name = "lblAllNot";
-      this.lblAllNot.Size = new System.Drawing.Size(70, 24);
+      this.lblAllNot.Size = new System.Drawing.Size(56, 17);
       this.lblAllNot.TabIndex = 25;
       this.lblAllNot.Text = "161345";
       // 
@@ -295,25 +296,25 @@
       this.roundedControl2.Controls.Add(this.label3);
       this.roundedControl2.Controls.Add(this.lblAllUlc);
       this.roundedControl2.Controls.Add(this.lblAllUlcNot);
-      this.roundedControl2.Location = new System.Drawing.Point(423, 71);
+      this.roundedControl2.Location = new System.Drawing.Point(384, 56);
       this.roundedControl2.Name = "roundedControl2";
       this.roundedControl2.Padding = new System.Windows.Forms.Padding(2);
       this.roundedControl2.RoundCorner = 10;
       this.roundedControl2.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundedControl2.ShapeBorderPadding = 5;
       this.roundedControl2.ShapeBorderWitdh = 1;
-      this.roundedControl2.Size = new System.Drawing.Size(395, 161);
+      this.roundedControl2.Size = new System.Drawing.Size(360, 124);
       this.roundedControl2.TabIndex = 26;
       // 
       // label29
       // 
       this.label29.AutoSize = true;
       this.label29.BackColor = System.Drawing.Color.White;
-      this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label29.ForeColor = System.Drawing.Color.Gray;
-      this.label29.Location = new System.Drawing.Point(242, 64);
+      this.label29.Location = new System.Drawing.Point(16, 52);
       this.label29.Name = "label29";
-      this.label29.Size = new System.Drawing.Size(95, 20);
+      this.label29.Size = new System.Drawing.Size(74, 17);
       this.label29.TabIndex = 38;
       this.label29.Text = "Нет связи";
       // 
@@ -321,11 +322,11 @@
       // 
       this.label7.AutoSize = true;
       this.label7.BackColor = System.Drawing.Color.White;
-      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label7.ForeColor = System.Drawing.Color.Gray;
-      this.label7.Location = new System.Drawing.Point(177, 120);
+      this.label7.Location = new System.Drawing.Point(16, 94);
       this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(178, 20);
+      this.label7.Size = new System.Drawing.Size(142, 17);
       this.label7.TabIndex = 37;
       this.label7.Text = "Слабый сигнал GSM";
       // 
@@ -333,11 +334,11 @@
       // 
       this.label1.AutoSize = true;
       this.label1.BackColor = System.Drawing.Color.White;
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label1.ForeColor = System.Drawing.Color.Gray;
-      this.label1.Location = new System.Drawing.Point(195, 92);
+      this.label1.Location = new System.Drawing.Point(16, 73);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(156, 20);
+      this.label1.Size = new System.Drawing.Size(126, 17);
       this.label1.TabIndex = 36;
       this.label1.Text = "Нет связи RS-485";
       // 
@@ -345,11 +346,11 @@
       // 
       this.lblUlcGsm.AutoSize = true;
       this.lblUlcGsm.BackColor = System.Drawing.Color.White;
-      this.lblUlcGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblUlcGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUlcGsm.ForeColor = System.Drawing.Color.Teal;
-      this.lblUlcGsm.Location = new System.Drawing.Point(322, 118);
+      this.lblUlcGsm.Location = new System.Drawing.Point(164, 93);
       this.lblUlcGsm.Name = "lblUlcGsm";
-      this.lblUlcGsm.Size = new System.Drawing.Size(70, 24);
+      this.lblUlcGsm.Size = new System.Drawing.Size(56, 17);
       this.lblUlcGsm.TabIndex = 34;
       this.lblUlcGsm.Text = "161345";
       // 
@@ -357,11 +358,11 @@
       // 
       this.lblUlcRs.AutoSize = true;
       this.lblUlcRs.BackColor = System.Drawing.Color.White;
-      this.lblUlcRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblUlcRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUlcRs.ForeColor = System.Drawing.Color.Teal;
-      this.lblUlcRs.Location = new System.Drawing.Point(322, 90);
+      this.lblUlcRs.Location = new System.Drawing.Point(164, 73);
       this.lblUlcRs.Name = "lblUlcRs";
-      this.lblUlcRs.Size = new System.Drawing.Size(70, 24);
+      this.lblUlcRs.Size = new System.Drawing.Size(56, 17);
       this.lblUlcRs.TabIndex = 32;
       this.lblUlcRs.Text = "161345";
       // 
@@ -369,11 +370,11 @@
       // 
       this.label3.AutoSize = true;
       this.label3.BackColor = System.Drawing.Color.White;
-      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.label3.Location = new System.Drawing.Point(27, 14);
+      this.label3.Location = new System.Drawing.Point(20, 19);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(288, 24);
+      this.label3.Size = new System.Drawing.Size(227, 18);
       this.label3.TabIndex = 29;
       this.label3.Text = "Активные контроллеры ULC 02";
       // 
@@ -381,11 +382,11 @@
       // 
       this.lblAllUlc.AutoSize = true;
       this.lblAllUlc.BackColor = System.Drawing.Color.White;
-      this.lblAllUlc.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllUlc.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllUlc.ForeColor = System.Drawing.Color.Teal;
-      this.lblAllUlc.Location = new System.Drawing.Point(17, 54);
+      this.lblAllUlc.Location = new System.Drawing.Point(226, 53);
       this.lblAllUlc.Name = "lblAllUlc";
-      this.lblAllUlc.Size = new System.Drawing.Size(218, 97);
+      this.lblAllUlc.Size = new System.Drawing.Size(129, 58);
       this.lblAllUlc.TabIndex = 27;
       this.lblAllUlc.Text = "3076";
       // 
@@ -393,11 +394,11 @@
       // 
       this.lblAllUlcNot.AutoSize = true;
       this.lblAllUlcNot.BackColor = System.Drawing.Color.White;
-      this.lblAllUlcNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllUlcNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllUlcNot.ForeColor = System.Drawing.Color.Teal;
-      this.lblAllUlcNot.Location = new System.Drawing.Point(322, 64);
+      this.lblAllUlcNot.Location = new System.Drawing.Point(164, 52);
       this.lblAllUlcNot.Name = "lblAllUlcNot";
-      this.lblAllUlcNot.Size = new System.Drawing.Size(70, 24);
+      this.lblAllUlcNot.Size = new System.Drawing.Size(56, 17);
       this.lblAllUlcNot.TabIndex = 30;
       this.lblAllUlcNot.Text = "161345";
       // 
