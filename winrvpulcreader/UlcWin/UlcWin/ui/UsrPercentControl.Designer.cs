@@ -46,7 +46,7 @@
       this.roundedControl1.Padding = new System.Windows.Forms.Padding(2);
       this.roundedControl1.RoundCorner = 5;
       this.roundedControl1.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
-      this.roundedControl1.ShapeBorderPadding = 1;
+      this.roundedControl1.ShapeBorderPadding = 3;
       this.roundedControl1.ShapeBorderWitdh = 1;
       this.roundedControl1.Size = new System.Drawing.Size(213, 115);
       this.roundedControl1.TabIndex = 22;
@@ -59,7 +59,7 @@
       this.lblHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this.lblHeader.Location = new System.Drawing.Point(23, 12);
       this.lblHeader.Name = "lblHeader";
-      this.lblHeader.Size = new System.Drawing.Size(164, 24);
+      this.lblHeader.Size = new System.Drawing.Size(127, 24);
       this.lblHeader.TabIndex = 24;
       this.lblHeader.Text = "Отклонение в % ";
       // 
@@ -70,7 +70,7 @@
       this.lblPercent.BackColor = System.Drawing.Color.White;
       this.lblPercent.Font = new System.Drawing.Font("Verdana", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblPercent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblPercent.Location = new System.Drawing.Point(33, 46);
+      this.lblPercent.Location = new System.Drawing.Point(19, 45);
       this.lblPercent.Name = "lblPercent";
       this.lblPercent.Size = new System.Drawing.Size(154, 46);
       this.lblPercent.TabIndex = 22;
@@ -81,6 +81,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.Transparent;
       this.Controls.Add(this.roundedControl1);
       this.Name = "UsrPercentControl";
       this.Size = new System.Drawing.Size(213, 115);

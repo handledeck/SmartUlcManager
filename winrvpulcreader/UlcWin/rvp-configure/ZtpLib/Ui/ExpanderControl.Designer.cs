@@ -49,6 +49,7 @@
       this.cbHeader.Checked = true;
       this.cbHeader.CheckState = System.Windows.Forms.CheckState.Checked;
       this.cbHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbHeader.ForeColor = System.Drawing.SystemColors.ControlLightLight;
       this.cbHeader.Location = new System.Drawing.Point(0, 0);
       this.cbHeader.Name = "cbHeader";
       this.cbHeader.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);

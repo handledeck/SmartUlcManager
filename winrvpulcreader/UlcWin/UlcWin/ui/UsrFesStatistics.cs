@@ -28,16 +28,32 @@ namespace UlcWin.ui
     public UsrFesStatistics()
     {
       InitializeComponent();
-      
+     
+      this.SizeChanged += UsrFesStatistics_SizeChanged;
+
     }
 
-    
+    private void UsrFesStatistics_SizeChanged(object sender, EventArgs e)
+    {
+      if (this.Width > 1000)
+      {
+        this.panel1.Left = (this.ClientSize.Width - this.panel1.Width) / 2;
+        tblResControl.Left=this.panel1.Left+10;
+        //this.panel1.Top = (this.ClientSize.Height - this.panel1.Height) / 2;
+      }
+      else {
+        this.panel1.Left = 10;
+        tblResControl.Left = this.panel1.Left+10;
+      }
+      this.tblResControl.Height = (this.ClientSize.Height-this.panel1.Height)-10;
+    }
 
-    void ReInit() {
-       __all = 0;
-       __all_net = 0;
-       __all_rs = 0;
-       __all_signal = 0;
+    void ReInit()
+    {
+      __all = 0;
+      __all_net = 0;
+      __all_rs = 0;
+      __all_signal = 0;
       __all_ulc = 0;
       __all_ulc_net = 0;
       __all_ulc_rs = 0;
@@ -69,21 +85,21 @@ namespace UlcWin.ui
           __all += item.All;
           __all_ulc += item.AllUlc;
           __all_rvp += item.AllRvp;
-          __all_net += item.AllUlcNet+item.AllRvpNet;
+          __all_net += item.AllUlcNet + item.AllRvpNet;
           __all_rs += item.AllUlcRs;
-          __all_signal += (item.AllRvpBadSignal+item.AllUlcBadSignal);
+          __all_signal += (item.AllRvpBadSignal + item.AllUlcBadSignal);
           __all_ulc_net += item.AllUlcNet;
           __all_ulc_rs += item.AllUlcRs;
           __all_ulc_signal += item.AllUlcBadSignal;
           __all_rvp_net += item.AllRvpNet;
           __all_rvp_signal += item.AllRvpBadSignal;
           usrStatAll.lblAll.Text = __all.ToString(); ;
-          usrStatAll.lblAllNot.Text = (__all-(__all_net)).ToString();
+          usrStatAll.lblAllNot.Text = (__all - (__all_net)).ToString();
           usrStatAll.lblAllNotRs.Text = __all_rs.ToString();
           usrStatAll.lblAllGsm.Text = __all_signal.ToString();
-          
-          usrStatAllUlc.lblHeader.Text="Активных контроллеров ULC 02"; 
-          usrStatAllUlc.lblAll.Text = __all_ulc.ToString(); 
+
+          usrStatAllUlc.lblHeader.Text = "Активных контроллеров ULC 02";
+          usrStatAllUlc.lblAll.Text = __all_ulc.ToString();
           usrStatAllUlc.lblAllNot.Text = (__all_ulc - (__all_ulc_net)).ToString();
           usrStatAllUlc.lblAllNotRs.Text = __all_ulc_rs.ToString();
           usrStatAllUlc.lblAllGsm.Text = __all_ulc_signal.ToString();
@@ -107,11 +123,11 @@ namespace UlcWin.ui
               usrAllPercent.lblPercent.ForeColor = Color.FromArgb(124, 180, 136);
             }
           }
-         
+
           usrAllPercent.lblPercent.Text = count.ToString();
 
           this.tblResControl.RowCount += 1;
-          UsrStatResControl ctl = new UsrStatResControl() { Dock = DockStyle.Fill,HeaderText=item.ResName };
+          UsrStatResControl ctl = new UsrStatResControl() { Dock = DockStyle.Fill, HeaderText = item.ResName };
           ctl.AddItemStat(item);
           ////ctl.MinimumSize = new Size(100, 100);
           ////Label lbl = new Label() { Text = "1111" + i.ToString(), Font = this.label10.Font, Dock = DockStyle.Fill };
@@ -128,26 +144,26 @@ namespace UlcWin.ui
           this.tblResControl.Controls.Add(ctl);
         }
       }
-      //this.lblAll.Text =  __all.ToString(); ;
-      //this.lblAllNot.Text = (__all-(__all_net)).ToString();
+      //this.lblAll.Text = __all.ToString(); ;
+      //this.lblAllNot.Text = (__all - (__all_net)).ToString();
       //this.lblAllNotRs.Text = __all_rs.ToString();
       //this.lblAllGsm.Text = __all_signal.ToString();
-      
+
       //this.lblAllUlc.Text = __all_ulc.ToString();
       //this.lblAllUlcNot.Text = (__all_ulc - __all_ulc_net).ToString();
       //this.lblUlcRs.Text = __all_ulc_rs.ToString();
       //this.lblUlcGsm.Text = __all_ulc_signal.ToString();
 
       //this.lblAllRvp.Text = __all_rvp.ToString();
-      //this.lblAllTvpNot.Text = (__all_rvp-__all_rvp_net).ToString();
+      //this.lblAllTvpNot.Text = (__all_rvp - __all_rvp_net).ToString();
       //this.lblRvpRs.Text = "0";
       //this.lblRvpGsm.Text = __all_rvp_signal.ToString();
       //this.tblResControl.RowStyles.Clear();
       //this.tblResControl.RowCount = 0;
       //this.tblResControl.BackColor = Color.White;
-   
-      
-     
+
+
+
     }
 
 
@@ -163,9 +179,5 @@ namespace UlcWin.ui
       }
     }
 
-        private void roundBorderPanel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

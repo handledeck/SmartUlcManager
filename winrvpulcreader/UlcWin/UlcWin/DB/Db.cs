@@ -518,7 +518,7 @@ namespace InterUlc.Db
           ulcUser.Pwd = (string)dr[2];
           ulcUser.NodesString = (string)dr[3];
           ulcUser.Comment = (string)dr[4];
-          int lvl = (int)dr[5];
+          int lvl = (short)dr[5];
           ulcUser.AccsessLavel = (EnumAccsesLevel)lvl;
           ulcUserList.Add(ulcUser);
         }

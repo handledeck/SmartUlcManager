@@ -40,7 +40,7 @@ namespace GraphStatic
       dataGridView1.Columns[4].HeaderCell.Style.ForeColor = Color.White;
       dataGridView1.Columns[5].HeaderCell.Style.BackColor = Color.Teal;
       dataGridView1.Columns[5].HeaderCell.Style.ForeColor = Color.White;
-      dataGridView1.Columns[6].HeaderCell.Style.BackColor = Color.DodgerBlue;
+      dataGridView1.Columns[6].HeaderCell.Style.BackColor = Color.DodgerBlue;//Color.Olive;
       dataGridView1.Columns[6].HeaderCell.Style.ForeColor = Color.White;
       dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8);
       this.dataGridView1.DefaultCellStyle.Font = new Font("Verdana", 8);
@@ -216,5 +216,10 @@ namespace GraphStatic
       if (this.monthViewClose != null)
         this.monthViewClose();
     }
-  }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+    }
 }

@@ -146,6 +146,13 @@ namespace UlcWin.ui
         return cp;
       }
     }
+
+    private void InitializeComponent()
+    {
+      this.SuspendLayout();
+      this.ResumeLayout(false);
+
+    }
   }
 
   static class GraphicsExtension

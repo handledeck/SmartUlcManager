@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      Ztp.Port.ComPort.ComPortSettings comPortSettings1 = new Ztp.Port.ComPort.ComPortSettings();
+      Ztp.Port.ComPort.ComPortSettings comPortSettings3 = new Ztp.Port.ComPort.ComPortSettings();
       this.flp = new System.Windows.Forms.FlowLayoutPanel();
       this.exDin = new Ztp.Ui.ExpanderControl();
       this.dinEditor = new Ztp.Ui.DinEditorControl();
@@ -70,6 +70,7 @@
       this.iec104EditorControl = new Ztp.Ui.Iec104EditorControl();
       this.exLogsControl = new Ztp.Ui.ExpanderControl();
       this.lscLogs = new Ztp.Ui.LogsStateControl();
+      this.Content = new System.Windows.Forms.Panel();
       this.flp.SuspendLayout();
       this.exDin.Content.SuspendLayout();
       this.exDin.SuspendLayout();
@@ -105,7 +106,6 @@
       this.exIec104Control.Content.SuspendLayout();
       this.exIec104Control.SuspendLayout();
       this.exLogsControl.Content.SuspendLayout();
-      this.exLogsControl.SuspendLayout();
       this.SuspendLayout();
       // 
       // flp
@@ -811,15 +811,15 @@
       this.comPortSettingsEditor.ShowTimeout = false;
       this.comPortSettingsEditor.Size = new System.Drawing.Size(495, 108);
       this.comPortSettingsEditor.TabIndex = 0;
-      comPortSettings1.BaudRate = 9600;
-      comPortSettings1.DataBits = ((byte)(8));
-      comPortSettings1.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings1.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings1.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings1.PortName = "COM1";
-      comPortSettings1.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings1.Timeout = 5000;
-      this.comPortSettingsEditor.Value = comPortSettings1;
+      comPortSettings3.BaudRate = 9600;
+      comPortSettings3.DataBits = ((byte)(8));
+      comPortSettings3.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings3.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings3.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings3.PortName = "COM1";
+      comPortSettings3.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings3.Timeout = 5000;
+      this.comPortSettingsEditor.Value = comPortSettings3;
       // 
       // exPing
       // 
@@ -951,6 +951,14 @@
       this.lscLogs.Size = new System.Drawing.Size(501, 76);
       this.lscLogs.TabIndex = 0;
       // 
+      // Content
+      // 
+      this.Content.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Content.Location = new System.Drawing.Point(0, 26);
+      this.Content.Name = "Content";
+      this.Content.Size = new System.Drawing.Size(503, 134);
+      this.Content.TabIndex = 1;
+      // 
       // PartitionConfigEditorControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -996,7 +1004,6 @@
       this.exIec104Control.Content.ResumeLayout(false);
       this.exIec104Control.ResumeLayout(false);
       this.exLogsControl.Content.ResumeLayout(false);
-      this.exLogsControl.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -1044,5 +1051,6 @@
         private System.Windows.Forms.WebBrowser wb;
         private Ztp.Ui.ExpanderControl exPing;
         private Ztp.Ui.PingEditorControl pingEditorControl1;
+        private System.Windows.Forms.Panel Content;
     }
 }

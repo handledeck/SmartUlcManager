@@ -134,19 +134,19 @@
       this.roundBorderPanel5.Controls.Add(this.roundedControl2);
       this.roundBorderPanel5.Controls.Add(this.roundedControl4);
       this.roundBorderPanel5.Controls.Add(this.roundedControl3);
-      this.roundBorderPanel5.Location = new System.Drawing.Point(14, 12);
+      this.roundBorderPanel5.Location = new System.Drawing.Point(12, 12);
       this.roundBorderPanel5.Name = "roundBorderPanel5";
       this.roundBorderPanel5.RoundCorner = 5;
       this.roundBorderPanel5.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundBorderPanel5.ShapeBorderPadding = 1;
       this.roundBorderPanel5.ShapeBorderWitdh = 1;
-      this.roundBorderPanel5.Size = new System.Drawing.Size(1492, 248);
+      this.roundBorderPanel5.Size = new System.Drawing.Size(1202, 179);
       this.roundBorderPanel5.TabIndex = 61;
       // 
       // btnMonthView
       // 
       this.btnMonthView.Image = global::UlcWin.Properties.Resources.chart_line;
-      this.btnMonthView.Location = new System.Drawing.Point(1440, 19);
+      this.btnMonthView.Location = new System.Drawing.Point(1138, 11);
       this.btnMonthView.Name = "btnMonthView";
       this.btnMonthView.Size = new System.Drawing.Size(35, 35);
       this.btnMonthView.TabIndex = 1200;
@@ -158,10 +158,10 @@
       // 
       this.label20.AutoSize = true;
       this.label20.BackColor = System.Drawing.Color.White;
-      this.label20.Font = new System.Drawing.Font("Verdana", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label20.Location = new System.Drawing.Point(31, 19);
+      this.label20.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label20.Location = new System.Drawing.Point(31, 17);
       this.label20.Name = "label20";
-      this.label20.Size = new System.Drawing.Size(608, 34);
+      this.label20.Size = new System.Drawing.Size(518, 29);
       this.label20.TabIndex = 64;
       this.label20.Text = "Общая статистика работы контроллеров";
       // 
@@ -177,25 +177,25 @@
       this.roundedControl1.Controls.Add(this.lblAll);
       this.roundedControl1.Controls.Add(this.label4);
       this.roundedControl1.Controls.Add(this.lblAllNot);
-      this.roundedControl1.Location = new System.Drawing.Point(12, 56);
+      this.roundedControl1.Location = new System.Drawing.Point(15, 56);
       this.roundedControl1.Name = "roundedControl1";
-      this.roundedControl1.Padding = new System.Windows.Forms.Padding(2);
+      this.roundedControl1.Padding = new System.Windows.Forms.Padding(1);
       this.roundedControl1.RoundCorner = 10;
       this.roundedControl1.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
-      this.roundedControl1.ShapeBorderPadding = 5;
+      this.roundedControl1.ShapeBorderPadding = 2;
       this.roundedControl1.ShapeBorderWitdh = 1;
-      this.roundedControl1.Size = new System.Drawing.Size(366, 124);
+      this.roundedControl1.Size = new System.Drawing.Size(313, 110);
       this.roundedControl1.TabIndex = 19;
       // 
       // lblAllGsm
       // 
       this.lblAllGsm.AutoSize = true;
       this.lblAllGsm.BackColor = System.Drawing.Color.White;
-      this.lblAllGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllGsm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllGsm.Location = new System.Drawing.Point(165, 94);
+      this.lblAllGsm.Location = new System.Drawing.Point(252, 81);
       this.lblAllGsm.Name = "lblAllGsm";
-      this.lblAllGsm.Size = new System.Drawing.Size(56, 17);
+      this.lblAllGsm.Size = new System.Drawing.Size(49, 15);
       this.lblAllGsm.TabIndex = 36;
       this.lblAllGsm.Text = "161345";
       // 
@@ -203,11 +203,11 @@
       // 
       this.label32.AutoSize = true;
       this.label32.BackColor = System.Drawing.Color.White;
-      this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label32.ForeColor = System.Drawing.Color.Gray;
-      this.label32.Location = new System.Drawing.Point(20, 94);
+      this.label32.Location = new System.Drawing.Point(119, 81);
       this.label32.Name = "label32";
-      this.label32.Size = new System.Drawing.Size(142, 17);
+      this.label32.Size = new System.Drawing.Size(125, 15);
       this.label32.TabIndex = 35;
       this.label32.Text = "Слабый сигнал GSM";
       // 
@@ -215,11 +215,11 @@
       // 
       this.lblAllNotRs.AutoSize = true;
       this.lblAllNotRs.BackColor = System.Drawing.Color.White;
-      this.lblAllNotRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllNotRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllNotRs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllNotRs.Location = new System.Drawing.Point(165, 73);
+      this.lblAllNotRs.Location = new System.Drawing.Point(252, 59);
       this.lblAllNotRs.Name = "lblAllNotRs";
-      this.lblAllNotRs.Size = new System.Drawing.Size(56, 17);
+      this.lblAllNotRs.Size = new System.Drawing.Size(49, 15);
       this.lblAllNotRs.TabIndex = 34;
       this.lblAllNotRs.Text = "161345";
       // 
@@ -227,11 +227,11 @@
       // 
       this.label6.AutoSize = true;
       this.label6.BackColor = System.Drawing.Color.White;
-      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.label6.Location = new System.Drawing.Point(19, 19);
+      this.label6.Location = new System.Drawing.Point(18, 13);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(252, 18);
+      this.label6.Size = new System.Drawing.Size(235, 16);
       this.label6.TabIndex = 24;
       this.label6.Text = "Активных контроллеров в системе";
       // 
@@ -239,24 +239,23 @@
       // 
       this.label28.AutoSize = true;
       this.label28.BackColor = System.Drawing.Color.White;
-      this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label28.ForeColor = System.Drawing.Color.Gray;
-      this.label28.Location = new System.Drawing.Point(19, 73);
+      this.label28.Location = new System.Drawing.Point(119, 60);
       this.label28.Name = "label28";
-      this.label28.Size = new System.Drawing.Size(126, 17);
+      this.label28.Size = new System.Drawing.Size(111, 15);
       this.label28.TabIndex = 33;
       this.label28.Text = "Нет связи RS-485";
       // 
       // lblAll
       // 
-      this.lblAll.AutoEllipsis = true;
       this.lblAll.AutoSize = true;
       this.lblAll.BackColor = System.Drawing.Color.White;
-      this.lblAll.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAll.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAll.Location = new System.Drawing.Point(227, 52);
+      this.lblAll.Location = new System.Drawing.Point(13, 43);
       this.lblAll.Name = "lblAll";
-      this.lblAll.Size = new System.Drawing.Size(129, 58);
+      this.lblAll.Size = new System.Drawing.Size(100, 45);
       this.lblAll.TabIndex = 22;
       this.lblAll.Text = "3076";
       // 
@@ -264,11 +263,11 @@
       // 
       this.label4.AutoSize = true;
       this.label4.BackColor = System.Drawing.Color.White;
-      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label4.ForeColor = System.Drawing.Color.Gray;
-      this.label4.Location = new System.Drawing.Point(20, 52);
+      this.label4.Location = new System.Drawing.Point(119, 38);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(74, 17);
+      this.label4.Size = new System.Drawing.Size(66, 15);
       this.label4.TabIndex = 23;
       this.label4.Text = "Нет связи";
       // 
@@ -276,11 +275,11 @@
       // 
       this.lblAllNot.AutoSize = true;
       this.lblAllNot.BackColor = System.Drawing.Color.White;
-      this.lblAllNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllNot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-      this.lblAllNot.Location = new System.Drawing.Point(165, 52);
+      this.lblAllNot.Location = new System.Drawing.Point(252, 38);
       this.lblAllNot.Name = "lblAllNot";
-      this.lblAllNot.Size = new System.Drawing.Size(56, 17);
+      this.lblAllNot.Size = new System.Drawing.Size(49, 15);
       this.lblAllNot.TabIndex = 25;
       this.lblAllNot.Text = "161345";
       // 
@@ -296,25 +295,25 @@
       this.roundedControl2.Controls.Add(this.label3);
       this.roundedControl2.Controls.Add(this.lblAllUlc);
       this.roundedControl2.Controls.Add(this.lblAllUlcNot);
-      this.roundedControl2.Location = new System.Drawing.Point(384, 56);
+      this.roundedControl2.Location = new System.Drawing.Point(334, 56);
       this.roundedControl2.Name = "roundedControl2";
-      this.roundedControl2.Padding = new System.Windows.Forms.Padding(2);
+      this.roundedControl2.Padding = new System.Windows.Forms.Padding(1);
       this.roundedControl2.RoundCorner = 10;
       this.roundedControl2.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
-      this.roundedControl2.ShapeBorderPadding = 5;
+      this.roundedControl2.ShapeBorderPadding = 3;
       this.roundedControl2.ShapeBorderWitdh = 1;
-      this.roundedControl2.Size = new System.Drawing.Size(360, 124);
+      this.roundedControl2.Size = new System.Drawing.Size(313, 110);
       this.roundedControl2.TabIndex = 26;
       // 
       // label29
       // 
       this.label29.AutoSize = true;
       this.label29.BackColor = System.Drawing.Color.White;
-      this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label29.ForeColor = System.Drawing.Color.Gray;
-      this.label29.Location = new System.Drawing.Point(16, 52);
+      this.label29.Location = new System.Drawing.Point(127, 36);
       this.label29.Name = "label29";
-      this.label29.Size = new System.Drawing.Size(74, 17);
+      this.label29.Size = new System.Drawing.Size(66, 15);
       this.label29.TabIndex = 38;
       this.label29.Text = "Нет связи";
       // 
@@ -322,11 +321,11 @@
       // 
       this.label7.AutoSize = true;
       this.label7.BackColor = System.Drawing.Color.White;
-      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label7.ForeColor = System.Drawing.Color.Gray;
-      this.label7.Location = new System.Drawing.Point(16, 94);
+      this.label7.Location = new System.Drawing.Point(127, 79);
       this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(142, 17);
+      this.label7.Size = new System.Drawing.Size(125, 15);
       this.label7.TabIndex = 37;
       this.label7.Text = "Слабый сигнал GSM";
       // 
@@ -334,11 +333,11 @@
       // 
       this.label1.AutoSize = true;
       this.label1.BackColor = System.Drawing.Color.White;
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label1.ForeColor = System.Drawing.Color.Gray;
-      this.label1.Location = new System.Drawing.Point(16, 73);
+      this.label1.Location = new System.Drawing.Point(127, 58);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(126, 17);
+      this.label1.Size = new System.Drawing.Size(111, 15);
       this.label1.TabIndex = 36;
       this.label1.Text = "Нет связи RS-485";
       // 
@@ -346,11 +345,11 @@
       // 
       this.lblUlcGsm.AutoSize = true;
       this.lblUlcGsm.BackColor = System.Drawing.Color.White;
-      this.lblUlcGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblUlcGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUlcGsm.ForeColor = System.Drawing.Color.Teal;
-      this.lblUlcGsm.Location = new System.Drawing.Point(164, 93);
+      this.lblUlcGsm.Location = new System.Drawing.Point(258, 79);
       this.lblUlcGsm.Name = "lblUlcGsm";
-      this.lblUlcGsm.Size = new System.Drawing.Size(56, 17);
+      this.lblUlcGsm.Size = new System.Drawing.Size(49, 15);
       this.lblUlcGsm.TabIndex = 34;
       this.lblUlcGsm.Text = "161345";
       // 
@@ -358,11 +357,11 @@
       // 
       this.lblUlcRs.AutoSize = true;
       this.lblUlcRs.BackColor = System.Drawing.Color.White;
-      this.lblUlcRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblUlcRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUlcRs.ForeColor = System.Drawing.Color.Teal;
-      this.lblUlcRs.Location = new System.Drawing.Point(164, 73);
+      this.lblUlcRs.Location = new System.Drawing.Point(258, 58);
       this.lblUlcRs.Name = "lblUlcRs";
-      this.lblUlcRs.Size = new System.Drawing.Size(56, 17);
+      this.lblUlcRs.Size = new System.Drawing.Size(49, 15);
       this.lblUlcRs.TabIndex = 32;
       this.lblUlcRs.Text = "161345";
       // 
@@ -370,11 +369,11 @@
       // 
       this.label3.AutoSize = true;
       this.label3.BackColor = System.Drawing.Color.White;
-      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.label3.Location = new System.Drawing.Point(20, 19);
+      this.label3.Location = new System.Drawing.Point(26, 13);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(227, 18);
+      this.label3.Size = new System.Drawing.Size(208, 16);
       this.label3.TabIndex = 29;
       this.label3.Text = "Активные контроллеры ULC 02";
       // 
@@ -382,11 +381,11 @@
       // 
       this.lblAllUlc.AutoSize = true;
       this.lblAllUlc.BackColor = System.Drawing.Color.White;
-      this.lblAllUlc.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllUlc.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllUlc.ForeColor = System.Drawing.Color.Teal;
-      this.lblAllUlc.Location = new System.Drawing.Point(226, 53);
+      this.lblAllUlc.Location = new System.Drawing.Point(21, 41);
       this.lblAllUlc.Name = "lblAllUlc";
-      this.lblAllUlc.Size = new System.Drawing.Size(129, 58);
+      this.lblAllUlc.Size = new System.Drawing.Size(100, 45);
       this.lblAllUlc.TabIndex = 27;
       this.lblAllUlc.Text = "3076";
       // 
@@ -394,11 +393,11 @@
       // 
       this.lblAllUlcNot.AutoSize = true;
       this.lblAllUlcNot.BackColor = System.Drawing.Color.White;
-      this.lblAllUlcNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllUlcNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllUlcNot.ForeColor = System.Drawing.Color.Teal;
-      this.lblAllUlcNot.Location = new System.Drawing.Point(164, 52);
+      this.lblAllUlcNot.Location = new System.Drawing.Point(258, 36);
       this.lblAllUlcNot.Name = "lblAllUlcNot";
-      this.lblAllUlcNot.Size = new System.Drawing.Size(56, 17);
+      this.lblAllUlcNot.Size = new System.Drawing.Size(49, 15);
       this.lblAllUlcNot.TabIndex = 30;
       this.lblAllUlcNot.Text = "161345";
       // 
@@ -410,48 +409,49 @@
       this.roundedControl4.Controls.Add(this.lblAllPercent);
       this.roundedControl4.Controls.Add(this.label15);
       this.roundedControl4.Controls.Add(this.label13);
-      this.roundedControl4.Location = new System.Drawing.Point(1225, 71);
+      this.roundedControl4.Location = new System.Drawing.Point(972, 56);
       this.roundedControl4.Name = "roundedControl4";
-      this.roundedControl4.Padding = new System.Windows.Forms.Padding(2);
+      this.roundedControl4.Padding = new System.Windows.Forms.Padding(1);
       this.roundedControl4.RoundCorner = 10;
       this.roundedControl4.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
-      this.roundedControl4.ShapeBorderPadding = 5;
+      this.roundedControl4.ShapeBorderPadding = 2;
       this.roundedControl4.ShapeBorderWitdh = 1;
-      this.roundedControl4.Size = new System.Drawing.Size(250, 161);
+      this.roundedControl4.Size = new System.Drawing.Size(220, 112);
       this.roundedControl4.TabIndex = 36;
       // 
       // label14
       // 
       this.label14.AutoSize = true;
       this.label14.BackColor = System.Drawing.Color.White;
-      this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.label14.Location = new System.Drawing.Point(14, 12);
+      this.label14.Location = new System.Drawing.Point(13, 11);
       this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(140, 24);
+      this.label14.Size = new System.Drawing.Size(103, 16);
       this.label14.TabIndex = 39;
       this.label14.Text = "% Отклонение";
       // 
       // lblAllPercent
       // 
       this.lblAllPercent.BackColor = System.Drawing.Color.White;
-      this.lblAllPercent.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllPercent.Font = new System.Drawing.Font("Tahoma", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllPercent.ForeColor = System.Drawing.Color.Salmon;
-      this.lblAllPercent.Location = new System.Drawing.Point(58, 37);
+      this.lblAllPercent.Location = new System.Drawing.Point(26, 34);
       this.lblAllPercent.Name = "lblAllPercent";
-      this.lblAllPercent.Size = new System.Drawing.Size(141, 77);
+      this.lblAllPercent.Size = new System.Drawing.Size(170, 48);
       this.lblAllPercent.TabIndex = 37;
       this.lblAllPercent.Text = "100%";
+      this.lblAllPercent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // label15
       // 
       this.label15.AutoSize = true;
       this.label15.BackColor = System.Drawing.Color.White;
-      this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label15.ForeColor = System.Drawing.Color.Gray;
-      this.label15.Location = new System.Drawing.Point(30, 132);
+      this.label15.Location = new System.Drawing.Point(29, 81);
       this.label15.Name = "label15";
-      this.label15.Size = new System.Drawing.Size(215, 20);
+      this.label15.Size = new System.Drawing.Size(150, 15);
       this.label15.TabIndex = 38;
       this.label15.Text = "Допустимое отклонение";
       // 
@@ -459,11 +459,11 @@
       // 
       this.label13.AutoSize = true;
       this.label13.BackColor = System.Drawing.Color.White;
-      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-      this.label13.Location = new System.Drawing.Point(205, 130);
+      this.label13.Location = new System.Drawing.Point(185, 81);
       this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(35, 24);
+      this.label13.Size = new System.Drawing.Size(25, 15);
       this.label13.TabIndex = 40;
       this.label13.Text = "5%";
       // 
@@ -479,25 +479,25 @@
       this.roundedControl3.Controls.Add(this.label10);
       this.roundedControl3.Controls.Add(this.lblAllRvp);
       this.roundedControl3.Controls.Add(this.lblAllTvpNot);
-      this.roundedControl3.Location = new System.Drawing.Point(824, 71);
+      this.roundedControl3.Location = new System.Drawing.Point(653, 56);
       this.roundedControl3.Name = "roundedControl3";
-      this.roundedControl3.Padding = new System.Windows.Forms.Padding(2);
+      this.roundedControl3.Padding = new System.Windows.Forms.Padding(1);
       this.roundedControl3.RoundCorner = 10;
       this.roundedControl3.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
-      this.roundedControl3.ShapeBorderPadding = 5;
+      this.roundedControl3.ShapeBorderPadding = 2;
       this.roundedControl3.ShapeBorderWitdh = 1;
-      this.roundedControl3.Size = new System.Drawing.Size(395, 161);
+      this.roundedControl3.Size = new System.Drawing.Size(313, 110);
       this.roundedControl3.TabIndex = 31;
       // 
       // label35
       // 
       this.label35.AutoSize = true;
       this.label35.BackColor = System.Drawing.Color.White;
-      this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label35.ForeColor = System.Drawing.Color.Gray;
-      this.label35.Location = new System.Drawing.Point(170, 120);
+      this.label35.Location = new System.Drawing.Point(120, 81);
       this.label35.Name = "label35";
-      this.label35.Size = new System.Drawing.Size(178, 20);
+      this.label35.Size = new System.Drawing.Size(125, 15);
       this.label35.TabIndex = 40;
       this.label35.Text = "Слабый сигнал GSM";
       // 
@@ -505,11 +505,11 @@
       // 
       this.lblRvpGsm.AutoSize = true;
       this.lblRvpGsm.BackColor = System.Drawing.Color.White;
-      this.lblRvpGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblRvpGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblRvpGsm.ForeColor = System.Drawing.Color.CornflowerBlue;
-      this.lblRvpGsm.Location = new System.Drawing.Point(315, 120);
+      this.lblRvpGsm.Location = new System.Drawing.Point(251, 81);
       this.lblRvpGsm.Name = "lblRvpGsm";
-      this.lblRvpGsm.Size = new System.Drawing.Size(70, 24);
+      this.lblRvpGsm.Size = new System.Drawing.Size(49, 15);
       this.lblRvpGsm.TabIndex = 39;
       this.lblRvpGsm.Text = "161345";
       // 
@@ -517,11 +517,11 @@
       // 
       this.lblRvpRs.AutoSize = true;
       this.lblRvpRs.BackColor = System.Drawing.Color.White;
-      this.lblRvpRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblRvpRs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblRvpRs.ForeColor = System.Drawing.Color.CornflowerBlue;
-      this.lblRvpRs.Location = new System.Drawing.Point(315, 92);
+      this.lblRvpRs.Location = new System.Drawing.Point(251, 58);
       this.lblRvpRs.Name = "lblRvpRs";
-      this.lblRvpRs.Size = new System.Drawing.Size(70, 24);
+      this.lblRvpRs.Size = new System.Drawing.Size(49, 15);
       this.lblRvpRs.TabIndex = 38;
       this.lblRvpRs.Text = "161345";
       // 
@@ -529,11 +529,11 @@
       // 
       this.label33.AutoSize = true;
       this.label33.BackColor = System.Drawing.Color.White;
-      this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label33.ForeColor = System.Drawing.Color.Gray;
-      this.label33.Location = new System.Drawing.Point(188, 94);
+      this.label33.Location = new System.Drawing.Point(120, 60);
       this.label33.Name = "label33";
-      this.label33.Size = new System.Drawing.Size(156, 20);
+      this.label33.Size = new System.Drawing.Size(111, 15);
       this.label33.TabIndex = 37;
       this.label33.Text = "Нет связи RS-485";
       // 
@@ -541,11 +541,11 @@
       // 
       this.label11.AutoSize = true;
       this.label11.BackColor = System.Drawing.Color.White;
-      this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label11.ForeColor = System.Drawing.Color.Gray;
-      this.label11.Location = new System.Drawing.Point(239, 64);
+      this.label11.Location = new System.Drawing.Point(120, 38);
       this.label11.Name = "label11";
-      this.label11.Size = new System.Drawing.Size(91, 20);
+      this.label11.Size = new System.Drawing.Size(63, 15);
       this.label11.TabIndex = 36;
       this.label11.Text = "Не в сети";
       // 
@@ -553,11 +553,11 @@
       // 
       this.label10.AutoSize = true;
       this.label10.BackColor = System.Drawing.Color.White;
-      this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.label10.Location = new System.Drawing.Point(28, 12);
+      this.label10.Location = new System.Drawing.Point(27, 11);
       this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(376, 24);
+      this.label10.Size = new System.Drawing.Size(272, 16);
       this.label10.TabIndex = 34;
       this.label10.Text = "Активные контроллеры УУСИ-16, РВП-18";
       // 
@@ -565,11 +565,11 @@
       // 
       this.lblAllRvp.AutoSize = true;
       this.lblAllRvp.BackColor = System.Drawing.Color.White;
-      this.lblAllRvp.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllRvp.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllRvp.ForeColor = System.Drawing.Color.CornflowerBlue;
-      this.lblAllRvp.Location = new System.Drawing.Point(9, 52);
+      this.lblAllRvp.Location = new System.Drawing.Point(13, 43);
       this.lblAllRvp.Name = "lblAllRvp";
-      this.lblAllRvp.Size = new System.Drawing.Size(218, 97);
+      this.lblAllRvp.Size = new System.Drawing.Size(100, 45);
       this.lblAllRvp.TabIndex = 32;
       this.lblAllRvp.Text = "3076";
       // 
@@ -577,11 +577,11 @@
       // 
       this.lblAllTvpNot.AutoSize = true;
       this.lblAllTvpNot.BackColor = System.Drawing.Color.White;
-      this.lblAllTvpNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblAllTvpNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblAllTvpNot.ForeColor = System.Drawing.Color.CornflowerBlue;
-      this.lblAllTvpNot.Location = new System.Drawing.Point(315, 64);
+      this.lblAllTvpNot.Location = new System.Drawing.Point(251, 38);
       this.lblAllTvpNot.Name = "lblAllTvpNot";
-      this.lblAllTvpNot.Size = new System.Drawing.Size(70, 24);
+      this.lblAllTvpNot.Size = new System.Drawing.Size(49, 15);
       this.lblAllTvpNot.TabIndex = 35;
       this.lblAllTvpNot.Text = "161345";
       // 
@@ -593,23 +593,23 @@
       this.roundBorderPanel1.Controls.Add(this.roundBorderPanel3);
       this.roundBorderPanel1.Controls.Add(this.roundBorderPanel2);
       this.roundBorderPanel1.Controls.Add(this.roundedControl5);
-      this.roundBorderPanel1.Location = new System.Drawing.Point(14, 266);
+      this.roundBorderPanel1.Location = new System.Drawing.Point(5, 197);
       this.roundBorderPanel1.Name = "roundBorderPanel1";
       this.roundBorderPanel1.RoundCorner = 5;
       this.roundBorderPanel1.ShapeBorderColor = System.Drawing.Color.Gray;
       this.roundBorderPanel1.ShapeBorderPadding = 5;
       this.roundBorderPanel1.ShapeBorderWitdh = 1;
-      this.roundBorderPanel1.Size = new System.Drawing.Size(1492, 437);
+      this.roundBorderPanel1.Size = new System.Drawing.Size(1209, 410);
       this.roundBorderPanel1.TabIndex = 60;
       // 
       // label44
       // 
       this.label44.AutoSize = true;
       this.label44.BackColor = System.Drawing.Color.White;
-      this.label44.Font = new System.Drawing.Font("Verdana", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label44.Location = new System.Drawing.Point(31, 35);
+      this.label44.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label44.Location = new System.Drawing.Point(31, 20);
       this.label44.Name = "label44";
-      this.label44.Size = new System.Drawing.Size(757, 45);
+      this.label44.Size = new System.Drawing.Size(489, 29);
       this.label44.TabIndex = 63;
       this.label44.Text = "Статистика по версиям контроллеров ";
       // 
@@ -627,14 +627,14 @@
       this.roundBorderPanel4.Controls.Add(this.lblRvp);
       this.roundBorderPanel4.Controls.Add(this.lblCRvpNotNet);
       this.roundBorderPanel4.Controls.Add(this.label38);
-      this.roundBorderPanel4.Location = new System.Drawing.Point(1116, 93);
+      this.roundBorderPanel4.Location = new System.Drawing.Point(934, 60);
       this.roundBorderPanel4.Name = "roundBorderPanel4";
       this.roundBorderPanel4.Padding = new System.Windows.Forms.Padding(2);
       this.roundBorderPanel4.RoundCorner = 5;
       this.roundBorderPanel4.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundBorderPanel4.ShapeBorderPadding = 5;
       this.roundBorderPanel4.ShapeBorderWitdh = 1;
-      this.roundBorderPanel4.Size = new System.Drawing.Size(343, 313);
+      this.roundBorderPanel4.Size = new System.Drawing.Size(265, 313);
       this.roundBorderPanel4.TabIndex = 62;
       // 
       // label12
@@ -642,9 +642,9 @@
       this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label12.BackColor = System.Drawing.Color.White;
       this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label12.Location = new System.Drawing.Point(35, 212);
+      this.label12.Location = new System.Drawing.Point(20, 212);
       this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(136, 30);
+      this.label12.Size = new System.Drawing.Size(119, 30);
       this.label12.TabIndex = 49;
       this.label12.Text = "Всего в системе";
       this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -655,9 +655,9 @@
       this.lblUusi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(180)))), ((int)(((byte)(136)))));
       this.lblUusi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUusi.ForeColor = System.Drawing.Color.White;
-      this.lblUusi.Location = new System.Drawing.Point(180, 211);
+      this.lblUusi.Location = new System.Drawing.Point(145, 211);
       this.lblUusi.Name = "lblUusi";
-      this.lblUusi.Size = new System.Drawing.Size(131, 30);
+      this.lblUusi.Size = new System.Drawing.Size(101, 30);
       this.lblUusi.TabIndex = 50;
       this.lblUusi.Text = "В сети";
       this.lblUusi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -668,9 +668,9 @@
       this.lblUusiNotNet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(196)))), ((int)(((byte)(192)))));
       this.lblUusiNotNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblUusiNotNet.ForeColor = System.Drawing.Color.White;
-      this.lblUusiNotNet.Location = new System.Drawing.Point(180, 250);
+      this.lblUusiNotNet.Location = new System.Drawing.Point(145, 250);
       this.lblUusiNotNet.Name = "lblUusiNotNet";
-      this.lblUusiNotNet.Size = new System.Drawing.Size(131, 30);
+      this.lblUusiNotNet.Size = new System.Drawing.Size(101, 30);
       this.lblUusiNotNet.TabIndex = 52;
       this.lblUusiNotNet.Text = "В сети";
       this.lblUusiNotNet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -680,9 +680,9 @@
       this.label43.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label43.BackColor = System.Drawing.Color.White;
       this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label43.Location = new System.Drawing.Point(35, 251);
+      this.label43.Location = new System.Drawing.Point(20, 251);
       this.label43.Name = "label43";
-      this.label43.Size = new System.Drawing.Size(136, 30);
+      this.label43.Size = new System.Drawing.Size(80, 30);
       this.label43.TabIndex = 51;
       this.label43.Text = "Не в сети";
       this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -691,11 +691,11 @@
       // 
       this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label9.BackColor = System.Drawing.Color.White;
-      this.label9.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label9.ForeColor = System.Drawing.Color.Black;
       this.label9.Location = new System.Drawing.Point(18, 170);
       this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(255, 30);
+      this.label9.Size = new System.Drawing.Size(170, 30);
       this.label9.TabIndex = 48;
       this.label9.Text = "УУСИ-16";
       this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -704,11 +704,11 @@
       // 
       this.label25.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label25.BackColor = System.Drawing.Color.White;
-      this.label25.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label25.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label25.ForeColor = System.Drawing.Color.Black;
       this.label25.Location = new System.Drawing.Point(18, 24);
       this.label25.Name = "label25";
-      this.label25.Size = new System.Drawing.Size(255, 30);
+      this.label25.Size = new System.Drawing.Size(186, 30);
       this.label25.TabIndex = 43;
       this.label25.Text = "РВП-18";
       this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -720,7 +720,7 @@
       this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label26.Location = new System.Drawing.Point(19, 71);
       this.label26.Name = "label26";
-      this.label26.Size = new System.Drawing.Size(136, 30);
+      this.label26.Size = new System.Drawing.Size(120, 30);
       this.label26.TabIndex = 44;
       this.label26.Text = "Всего в системе";
       this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -731,9 +731,9 @@
       this.lblRvp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(180)))), ((int)(((byte)(136)))));
       this.lblRvp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblRvp.ForeColor = System.Drawing.Color.White;
-      this.lblRvp.Location = new System.Drawing.Point(180, 70);
+      this.lblRvp.Location = new System.Drawing.Point(145, 69);
       this.lblRvp.Name = "lblRvp";
-      this.lblRvp.Size = new System.Drawing.Size(131, 30);
+      this.lblRvp.Size = new System.Drawing.Size(101, 30);
       this.lblRvp.TabIndex = 45;
       this.lblRvp.Text = "В сети";
       this.lblRvp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -744,9 +744,9 @@
       this.lblCRvpNotNet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(196)))), ((int)(((byte)(192)))));
       this.lblCRvpNotNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblCRvpNotNet.ForeColor = System.Drawing.Color.White;
-      this.lblCRvpNotNet.Location = new System.Drawing.Point(180, 109);
+      this.lblCRvpNotNet.Location = new System.Drawing.Point(145, 108);
       this.lblCRvpNotNet.Name = "lblCRvpNotNet";
-      this.lblCRvpNotNet.Size = new System.Drawing.Size(131, 30);
+      this.lblCRvpNotNet.Size = new System.Drawing.Size(101, 30);
       this.lblCRvpNotNet.TabIndex = 47;
       this.lblCRvpNotNet.Text = "В сети";
       this.lblCRvpNotNet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -778,14 +778,14 @@
       this.roundBorderPanel3.Controls.Add(this.label39);
       this.roundBorderPanel3.Controls.Add(this.label42);
       this.roundBorderPanel3.Controls.Add(this.lblFiveGsm);
-      this.roundBorderPanel3.Location = new System.Drawing.Point(761, 93);
+      this.roundBorderPanel3.Location = new System.Drawing.Point(633, 60);
       this.roundBorderPanel3.Name = "roundBorderPanel3";
       this.roundBorderPanel3.Padding = new System.Windows.Forms.Padding(2);
       this.roundBorderPanel3.RoundCorner = 5;
       this.roundBorderPanel3.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundBorderPanel3.ShapeBorderPadding = 5;
       this.roundBorderPanel3.ShapeBorderWitdh = 1;
-      this.roundBorderPanel3.Size = new System.Drawing.Size(334, 313);
+      this.roundBorderPanel3.Size = new System.Drawing.Size(295, 313);
       this.roundBorderPanel3.TabIndex = 61;
       // 
       // label8
@@ -808,7 +808,7 @@
       this.lblFiveVers.ForeColor = System.Drawing.Color.White;
       this.lblFiveVers.Location = new System.Drawing.Point(180, 227);
       this.lblFiveVers.Name = "lblFiveVers";
-      this.lblFiveVers.Size = new System.Drawing.Size(131, 30);
+      this.lblFiveVers.Size = new System.Drawing.Size(101, 30);
       this.lblFiveVers.TabIndex = 52;
       this.lblFiveVers.Text = "В сети";
       this.lblFiveVers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -821,7 +821,7 @@
       this.lblFiveRSNotTrue.ForeColor = System.Drawing.Color.White;
       this.lblFiveRSNotTrue.Location = new System.Drawing.Point(180, 148);
       this.lblFiveRSNotTrue.Name = "lblFiveRSNotTrue";
-      this.lblFiveRSNotTrue.Size = new System.Drawing.Size(131, 30);
+      this.lblFiveRSNotTrue.Size = new System.Drawing.Size(101, 30);
       this.lblFiveRSNotTrue.TabIndex = 51;
       this.lblFiveRSNotTrue.Text = "В сети";
       this.lblFiveRSNotTrue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -842,7 +842,7 @@
       // 
       this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label22.BackColor = System.Drawing.Color.White;
-      this.label22.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label22.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label22.ForeColor = System.Drawing.Color.Black;
       this.label22.Location = new System.Drawing.Point(18, 24);
       this.label22.Name = "label22";
@@ -871,7 +871,7 @@
       this.lblFive.ForeColor = System.Drawing.Color.White;
       this.lblFive.Location = new System.Drawing.Point(180, 70);
       this.lblFive.Name = "lblFive";
-      this.lblFive.Size = new System.Drawing.Size(131, 30);
+      this.lblFive.Size = new System.Drawing.Size(101, 30);
       this.lblFive.TabIndex = 45;
       this.lblFive.Text = "В сети";
       this.lblFive.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -884,7 +884,7 @@
       this.lblFiveNotTrue.ForeColor = System.Drawing.Color.White;
       this.lblFiveNotTrue.Location = new System.Drawing.Point(180, 109);
       this.lblFiveNotTrue.Name = "lblFiveNotTrue";
-      this.lblFiveNotTrue.Size = new System.Drawing.Size(131, 30);
+      this.lblFiveNotTrue.Size = new System.Drawing.Size(101, 30);
       this.lblFiveNotTrue.TabIndex = 47;
       this.lblFiveNotTrue.Text = "В сети";
       this.lblFiveNotTrue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -921,7 +921,7 @@
       this.lblFiveGsm.ForeColor = System.Drawing.Color.White;
       this.lblFiveGsm.Location = new System.Drawing.Point(180, 187);
       this.lblFiveGsm.Name = "lblFiveGsm";
-      this.lblFiveGsm.Size = new System.Drawing.Size(131, 30);
+      this.lblFiveGsm.Size = new System.Drawing.Size(101, 30);
       this.lblFiveGsm.TabIndex = 49;
       this.lblFiveGsm.Text = "В сети";
       this.lblFiveGsm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -941,14 +941,14 @@
       this.roundBorderPanel2.Controls.Add(this.label40);
       this.roundBorderPanel2.Controls.Add(this.label41);
       this.roundBorderPanel2.Controls.Add(this.lblThreeOrFourGsm);
-      this.roundBorderPanel2.Location = new System.Drawing.Point(405, 93);
+      this.roundBorderPanel2.Location = new System.Drawing.Point(329, 60);
       this.roundBorderPanel2.Name = "roundBorderPanel2";
       this.roundBorderPanel2.Padding = new System.Windows.Forms.Padding(2);
       this.roundBorderPanel2.RoundCorner = 5;
       this.roundBorderPanel2.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundBorderPanel2.ShapeBorderPadding = 5;
       this.roundBorderPanel2.ShapeBorderWitdh = 1;
-      this.roundBorderPanel2.Size = new System.Drawing.Size(334, 313);
+      this.roundBorderPanel2.Size = new System.Drawing.Size(298, 313);
       this.roundBorderPanel2.TabIndex = 60;
       // 
       // label16
@@ -971,7 +971,7 @@
       this.lblThreeOrFourVers.ForeColor = System.Drawing.Color.White;
       this.lblThreeOrFourVers.Location = new System.Drawing.Point(180, 227);
       this.lblThreeOrFourVers.Name = "lblThreeOrFourVers";
-      this.lblThreeOrFourVers.Size = new System.Drawing.Size(131, 30);
+      this.lblThreeOrFourVers.Size = new System.Drawing.Size(101, 30);
       this.lblThreeOrFourVers.TabIndex = 52;
       this.lblThreeOrFourVers.Text = "В сети";
       this.lblThreeOrFourVers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -984,7 +984,7 @@
       this.lblThreeOrFourRSNotTrue.ForeColor = System.Drawing.Color.White;
       this.lblThreeOrFourRSNotTrue.Location = new System.Drawing.Point(180, 148);
       this.lblThreeOrFourRSNotTrue.Name = "lblThreeOrFourRSNotTrue";
-      this.lblThreeOrFourRSNotTrue.Size = new System.Drawing.Size(131, 30);
+      this.lblThreeOrFourRSNotTrue.Size = new System.Drawing.Size(101, 30);
       this.lblThreeOrFourRSNotTrue.TabIndex = 51;
       this.lblThreeOrFourRSNotTrue.Text = "В сети";
       this.lblThreeOrFourRSNotTrue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1005,7 +1005,7 @@
       // 
       this.label36.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label36.BackColor = System.Drawing.Color.White;
-      this.label36.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label36.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label36.ForeColor = System.Drawing.Color.Black;
       this.label36.Location = new System.Drawing.Point(18, 24);
       this.label36.Name = "label36";
@@ -1034,7 +1034,7 @@
       this.lblThreeOrFour.ForeColor = System.Drawing.Color.White;
       this.lblThreeOrFour.Location = new System.Drawing.Point(180, 70);
       this.lblThreeOrFour.Name = "lblThreeOrFour";
-      this.lblThreeOrFour.Size = new System.Drawing.Size(131, 30);
+      this.lblThreeOrFour.Size = new System.Drawing.Size(101, 30);
       this.lblThreeOrFour.TabIndex = 45;
       this.lblThreeOrFour.Text = "В сети";
       this.lblThreeOrFour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1047,7 +1047,7 @@
       this.lblThreeOrFourNotTrue.ForeColor = System.Drawing.Color.White;
       this.lblThreeOrFourNotTrue.Location = new System.Drawing.Point(180, 109);
       this.lblThreeOrFourNotTrue.Name = "lblThreeOrFourNotTrue";
-      this.lblThreeOrFourNotTrue.Size = new System.Drawing.Size(131, 30);
+      this.lblThreeOrFourNotTrue.Size = new System.Drawing.Size(101, 30);
       this.lblThreeOrFourNotTrue.TabIndex = 47;
       this.lblThreeOrFourNotTrue.Text = "В сети";
       this.lblThreeOrFourNotTrue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1084,7 +1084,7 @@
       this.lblThreeOrFourGsm.ForeColor = System.Drawing.Color.White;
       this.lblThreeOrFourGsm.Location = new System.Drawing.Point(180, 187);
       this.lblThreeOrFourGsm.Name = "lblThreeOrFourGsm";
-      this.lblThreeOrFourGsm.Size = new System.Drawing.Size(131, 30);
+      this.lblThreeOrFourGsm.Size = new System.Drawing.Size(101, 30);
       this.lblThreeOrFourGsm.TabIndex = 49;
       this.lblThreeOrFourGsm.Text = "В сети";
       this.lblThreeOrFourGsm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1104,14 +1104,14 @@
       this.roundedControl5.Controls.Add(this.label2);
       this.roundedControl5.Controls.Add(this.label5);
       this.roundedControl5.Controls.Add(this.lblFirstOrSecondLowGsm);
-      this.roundedControl5.Location = new System.Drawing.Point(44, 93);
+      this.roundedControl5.Location = new System.Drawing.Point(22, 60);
       this.roundedControl5.Name = "roundedControl5";
       this.roundedControl5.Padding = new System.Windows.Forms.Padding(2);
       this.roundedControl5.RoundCorner = 5;
       this.roundedControl5.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundedControl5.ShapeBorderPadding = 5;
       this.roundedControl5.ShapeBorderWitdh = 1;
-      this.roundedControl5.Size = new System.Drawing.Size(334, 313);
+      this.roundedControl5.Size = new System.Drawing.Size(301, 313);
       this.roundedControl5.TabIndex = 41;
       // 
       // label24
@@ -1130,11 +1130,11 @@
       // 
       this.lblFirstOrSecondVers.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.lblFirstOrSecondVers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(80)))), ((int)(((byte)(92)))));
-      this.lblFirstOrSecondVers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblFirstOrSecondVers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblFirstOrSecondVers.ForeColor = System.Drawing.Color.White;
       this.lblFirstOrSecondVers.Location = new System.Drawing.Point(180, 227);
       this.lblFirstOrSecondVers.Name = "lblFirstOrSecondVers";
-      this.lblFirstOrSecondVers.Size = new System.Drawing.Size(131, 30);
+      this.lblFirstOrSecondVers.Size = new System.Drawing.Size(101, 30);
       this.lblFirstOrSecondVers.TabIndex = 52;
       this.lblFirstOrSecondVers.Text = "В сети";
       this.lblFirstOrSecondVers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1143,11 +1143,11 @@
       // 
       this.lblFirstOrSecondRSNotTrue.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.lblFirstOrSecondRSNotTrue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(144)))), ((int)(((byte)(132)))));
-      this.lblFirstOrSecondRSNotTrue.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblFirstOrSecondRSNotTrue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblFirstOrSecondRSNotTrue.ForeColor = System.Drawing.Color.White;
       this.lblFirstOrSecondRSNotTrue.Location = new System.Drawing.Point(180, 148);
       this.lblFirstOrSecondRSNotTrue.Name = "lblFirstOrSecondRSNotTrue";
-      this.lblFirstOrSecondRSNotTrue.Size = new System.Drawing.Size(131, 30);
+      this.lblFirstOrSecondRSNotTrue.Size = new System.Drawing.Size(101, 30);
       this.lblFirstOrSecondRSNotTrue.TabIndex = 51;
       this.lblFirstOrSecondRSNotTrue.Text = "В сети";
       this.lblFirstOrSecondRSNotTrue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1168,7 +1168,7 @@
       // 
       this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.label18.BackColor = System.Drawing.Color.White;
-      this.label18.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.label18.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.label18.ForeColor = System.Drawing.Color.Black;
       this.label18.Location = new System.Drawing.Point(18, 23);
       this.label18.Name = "label18";
@@ -1193,11 +1193,11 @@
       // 
       this.lblFirstOrSecond.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.lblFirstOrSecond.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(180)))), ((int)(((byte)(136)))));
-      this.lblFirstOrSecond.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblFirstOrSecond.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblFirstOrSecond.ForeColor = System.Drawing.Color.White;
       this.lblFirstOrSecond.Location = new System.Drawing.Point(180, 70);
       this.lblFirstOrSecond.Name = "lblFirstOrSecond";
-      this.lblFirstOrSecond.Size = new System.Drawing.Size(131, 30);
+      this.lblFirstOrSecond.Size = new System.Drawing.Size(101, 30);
       this.lblFirstOrSecond.TabIndex = 45;
       this.lblFirstOrSecond.Text = "В сети";
       this.lblFirstOrSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1206,11 +1206,11 @@
       // 
       this.lblFirstOrSecondNetNot.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.lblFirstOrSecondNetNot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(196)))), ((int)(((byte)(192)))));
-      this.lblFirstOrSecondNetNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblFirstOrSecondNetNot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblFirstOrSecondNetNot.ForeColor = System.Drawing.Color.White;
       this.lblFirstOrSecondNetNot.Location = new System.Drawing.Point(180, 109);
       this.lblFirstOrSecondNetNot.Name = "lblFirstOrSecondNetNot";
-      this.lblFirstOrSecondNetNot.Size = new System.Drawing.Size(131, 30);
+      this.lblFirstOrSecondNetNot.Size = new System.Drawing.Size(101, 30);
       this.lblFirstOrSecondNetNot.TabIndex = 47;
       this.lblFirstOrSecondNetNot.Text = "В сети";
       this.lblFirstOrSecondNetNot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1243,11 +1243,11 @@
       // 
       this.lblFirstOrSecondLowGsm.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.lblFirstOrSecondLowGsm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(180)))), ((int)(((byte)(182)))));
-      this.lblFirstOrSecondLowGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.lblFirstOrSecondLowGsm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblFirstOrSecondLowGsm.ForeColor = System.Drawing.Color.White;
       this.lblFirstOrSecondLowGsm.Location = new System.Drawing.Point(180, 187);
       this.lblFirstOrSecondLowGsm.Name = "lblFirstOrSecondLowGsm";
-      this.lblFirstOrSecondLowGsm.Size = new System.Drawing.Size(131, 30);
+      this.lblFirstOrSecondLowGsm.Size = new System.Drawing.Size(101, 30);
       this.lblFirstOrSecondLowGsm.TabIndex = 49;
       this.lblFirstOrSecondLowGsm.Text = "В сети";
       this.lblFirstOrSecondLowGsm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1256,19 +1256,19 @@
       // 
       this.usrUlcChartCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.usrUlcChartCtrl1.Location = new System.Drawing.Point(0, 0);
-      this.usrUlcChartCtrl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.usrUlcChartCtrl1.Name = "usrUlcChartCtrl1";
-      this.usrUlcChartCtrl1.Size = new System.Drawing.Size(1518, 714);
+      this.usrUlcChartCtrl1.Size = new System.Drawing.Size(1222, 637);
       this.usrUlcChartCtrl1.TabIndex = 62;
       this.usrUlcChartCtrl1.Visible = false;
       // 
       // AllStatisticsForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1518, 714);
-      this.Controls.Add(this.roundBorderPanel5);
+      this.AutoScroll = true;
+      this.ClientSize = new System.Drawing.Size(1222, 637);
       this.Controls.Add(this.roundBorderPanel1);
+      this.Controls.Add(this.roundBorderPanel5);
       this.Controls.Add(this.usrUlcChartCtrl1);
       this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1277,7 +1277,7 @@
       this.Name = "AllStatisticsForm";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Статистика по конроллерам";
+      this.Text = "Статистика по контроллерам";
       this.roundBorderPanel5.ResumeLayout(false);
       this.roundBorderPanel5.PerformLayout();
       this.roundedControl1.ResumeLayout(false);

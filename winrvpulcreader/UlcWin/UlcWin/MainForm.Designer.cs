@@ -459,7 +459,6 @@
       // 
       // treeMenu
       // 
-      this.treeMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
       this.treeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMnuAddRootItem,
             this.tsMnuTreeAddItem,
@@ -467,13 +466,13 @@
             this.toolStripSeparator6,
             this.tsMnuTreeEdit});
       this.treeMenu.Name = "contextMenuStrip1";
-      this.treeMenu.Size = new System.Drawing.Size(236, 114);
+      this.treeMenu.Size = new System.Drawing.Size(232, 98);
       // 
       // tsMnuAddRootItem
       // 
       this.tsMnuAddRootItem.Image = global::UlcWin.Properties.Resources.table_sql_add;
       this.tsMnuAddRootItem.Name = "tsMnuAddRootItem";
-      this.tsMnuAddRootItem.Size = new System.Drawing.Size(235, 26);
+      this.tsMnuAddRootItem.Size = new System.Drawing.Size(231, 22);
       this.tsMnuAddRootItem.Text = "Добавить корневой элемент";
       this.tsMnuAddRootItem.Click += new System.EventHandler(this.tsAddRootItem_Click);
       // 
@@ -481,7 +480,7 @@
       // 
       this.tsMnuTreeAddItem.Image = global::UlcWin.Properties.Resources.add2;
       this.tsMnuTreeAddItem.Name = "tsMnuTreeAddItem";
-      this.tsMnuTreeAddItem.Size = new System.Drawing.Size(235, 26);
+      this.tsMnuTreeAddItem.Size = new System.Drawing.Size(231, 22);
       this.tsMnuTreeAddItem.Text = "Добавить элемент";
       this.tsMnuTreeAddItem.Click += new System.EventHandler(this.tsTreeAddItem_Click);
       // 
@@ -489,20 +488,20 @@
       // 
       this.tsMnuTreeDeleteItem.Image = global::UlcWin.Properties.Resources.delete21;
       this.tsMnuTreeDeleteItem.Name = "tsMnuTreeDeleteItem";
-      this.tsMnuTreeDeleteItem.Size = new System.Drawing.Size(235, 26);
+      this.tsMnuTreeDeleteItem.Size = new System.Drawing.Size(231, 22);
       this.tsMnuTreeDeleteItem.Text = "Удалить элемент";
       this.tsMnuTreeDeleteItem.Click += new System.EventHandler(this.tsTreeDeleteItem_Click);
       // 
       // toolStripSeparator6
       // 
       this.toolStripSeparator6.Name = "toolStripSeparator6";
-      this.toolStripSeparator6.Size = new System.Drawing.Size(232, 6);
+      this.toolStripSeparator6.Size = new System.Drawing.Size(228, 6);
       // 
       // tsMnuTreeEdit
       // 
       this.tsMnuTreeEdit.Image = global::UlcWin.Properties.Resources.edit1;
       this.tsMnuTreeEdit.Name = "tsMnuTreeEdit";
-      this.tsMnuTreeEdit.Size = new System.Drawing.Size(235, 26);
+      this.tsMnuTreeEdit.Size = new System.Drawing.Size(231, 22);
       this.tsMnuTreeEdit.Text = "Изменить";
       this.tsMnuTreeEdit.Click += new System.EventHandler(this.tsTreeEdit_Click);
       // 
@@ -561,7 +560,7 @@
       this.tsTreeBtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsTreeBtnEdit.Name = "tsTreeBtnEdit";
       this.tsTreeBtnEdit.Size = new System.Drawing.Size(23, 22);
-      this.tsTreeBtnEdit.Text = "Перименовать элемент";
+      this.tsTreeBtnEdit.Text = "Переименовать элемент";
       this.tsTreeBtnEdit.Click += new System.EventHandler(this.tsTreeBtnEdit_Click);
       // 
       // tsTreeBtnDelete
@@ -934,6 +933,9 @@
       // 
       // usrFesStatistics1
       // 
+      this.usrFesStatistics1.AutoScroll = true;
+      this.usrFesStatistics1.AutoSize = true;
+      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
       this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.usrFesStatistics1.Location = new System.Drawing.Point(1, 1);
       this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
@@ -1284,6 +1286,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
       this.splitContainer2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
+      this.panel1.PerformLayout();
       this.LvMenu.ResumeLayout(false);
       this.tsResView.ResumeLayout(false);
       this.tsResView.PerformLayout();

@@ -221,6 +221,18 @@
     </Compile>
     <Compile Include="Export\ExportExcel.cs" />
     <Compile Include="Statistics\StatRes.cs" />
+    <Compile Include="test\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="test\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="test\UserControl1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="test\UserControl1.Designer.cs">
+      <DependentUpon>UserControl1.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\AllStatMonthView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -429,6 +441,12 @@
     <EmbeddedResource Include="Edit\MeterEditFrom.resx">
       <DependentUpon>MeterEditFrom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="test\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="test\UserControl1.resx">
+      <DependentUpon>UserControl1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\AllStatMonthView.resx">
       <DependentUpon>AllStatMonthView.cs</DependentUpon>
     </EmbeddedResource>
@@ -468,6 +486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ui\MultiSettingsForm.resx">
       <DependentUpon>MultiSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\RoundShape.resx">
+      <DependentUpon>RoundShape.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\ScheduleForm.resx">
       <DependentUpon>ScheduleForm.cs</DependentUpon>

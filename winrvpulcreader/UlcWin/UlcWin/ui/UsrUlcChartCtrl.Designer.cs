@@ -95,8 +95,8 @@ namespace GraphStatic
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
-      this.splitContainer1.Size = new System.Drawing.Size(933, 583);
-      this.splitContainer1.SplitterDistance = 284;
+      this.splitContainer1.Size = new System.Drawing.Size(933, 595);
+      this.splitContainer1.SplitterDistance = 289;
       this.splitContainer1.TabIndex = 1;
       // 
       // tableLayoutPanel1
@@ -110,7 +110,7 @@ namespace GraphStatic
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(933, 284);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(933, 289);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // tableLayoutPanel3
@@ -119,7 +119,7 @@ namespace GraphStatic
       this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
       this.tableLayoutPanel3.ColumnCount = 2;
       this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.50867F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 197F));
       this.tableLayoutPanel3.Controls.Add(this.chart1, 0, 0);
       this.tableLayoutPanel3.Controls.Add(this.panel1, 1, 0);
       this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -127,7 +127,7 @@ namespace GraphStatic
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(923, 274);
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(923, 279);
       this.tableLayoutPanel3.TabIndex = 0;
       // 
       // chart1
@@ -171,7 +171,7 @@ namespace GraphStatic
       this.chart1.Series.Add(series1);
       this.chart1.Series.Add(series2);
       this.chart1.Series.Add(series3);
-      this.chart1.Size = new System.Drawing.Size(621, 264);
+      this.chart1.Size = new System.Drawing.Size(714, 269);
       this.chart1.TabIndex = 0;
       this.chart1.Text = "chart1";
       title1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -187,15 +187,15 @@ namespace GraphStatic
       this.panel1.Controls.Add(this.label1);
       this.panel1.Controls.Add(this.monthPicker1);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(634, 5);
+      this.panel1.Location = new System.Drawing.Point(727, 5);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(284, 264);
+      this.panel1.Size = new System.Drawing.Size(191, 269);
       this.panel1.TabIndex = 1;
       // 
       // btnMonthViewClose
       // 
       this.btnMonthViewClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnMonthViewClose.Location = new System.Drawing.Point(189, 224);
+      this.btnMonthViewClose.Location = new System.Drawing.Point(104, 227);
       this.btnMonthViewClose.Name = "btnMonthViewClose";
       this.btnMonthViewClose.Size = new System.Drawing.Size(79, 27);
       this.btnMonthViewClose.TabIndex = 4;
@@ -208,10 +208,10 @@ namespace GraphStatic
       this.btnMonthExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnMonthExport.Image = global::UlcWin.Properties.Resources.excel_exports;
       this.btnMonthExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnMonthExport.Location = new System.Drawing.Point(95, 223);
+      this.btnMonthExport.Location = new System.Drawing.Point(19, 227);
       this.btnMonthExport.Name = "btnMonthExport";
       this.btnMonthExport.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-      this.btnMonthExport.Size = new System.Drawing.Size(79, 28);
+      this.btnMonthExport.Size = new System.Drawing.Size(79, 27);
       this.btnMonthExport.TabIndex = 3;
       this.btnMonthExport.Text = "Экспорт";
       this.btnMonthExport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -223,7 +223,7 @@ namespace GraphStatic
       this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.label2.AutoSize = true;
       this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label2.Location = new System.Drawing.Point(150, 82);
+      this.label2.Location = new System.Drawing.Point(57, 82);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(0, 42);
       this.label2.TabIndex = 2;
@@ -232,7 +232,7 @@ namespace GraphStatic
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.label1.Location = new System.Drawing.Point(3, 58);
+      this.label1.Location = new System.Drawing.Point(18, 55);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(146, 14);
       this.label1.TabIndex = 1;
@@ -242,15 +242,15 @@ namespace GraphStatic
       // 
       this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
       this.tableLayoutPanel2.ColumnCount = 1;
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel2.Controls.Add(this.dataGridView1, 0, 0);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-      this.tableLayoutPanel2.RowCount = 2;
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(933, 295);
+      this.tableLayoutPanel2.RowCount = 1;
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(933, 302);
       this.tableLayoutPanel2.TabIndex = 0;
       // 
       // dataGridView1
@@ -303,8 +303,9 @@ namespace GraphStatic
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.dataGridView1.Size = new System.Drawing.Size(919, 259);
+      this.dataGridView1.Size = new System.Drawing.Size(919, 288);
       this.dataGridView1.TabIndex = 0;
+      this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
       this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridView1_DataBindingComplete);
       // 
       // monthPicker1
@@ -317,7 +318,7 @@ namespace GraphStatic
       this.monthPicker1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.monthPicker1.Location = new System.Drawing.Point(13, 15);
       this.monthPicker1.Name = "monthPicker1";
-      this.monthPicker1.Size = new System.Drawing.Size(255, 21);
+      this.monthPicker1.Size = new System.Drawing.Size(162, 21);
       this.monthPicker1.TabIndex = 0;
       // 
       // currenttimeDataGridViewTextBoxColumn
@@ -415,7 +416,7 @@ namespace GraphStatic
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainer1);
       this.Name = "UsrUlcChartCtrl";
-      this.Size = new System.Drawing.Size(933, 583);
+      this.Size = new System.Drawing.Size(933, 595);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

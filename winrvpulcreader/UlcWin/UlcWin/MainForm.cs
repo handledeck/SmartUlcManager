@@ -1,4 +1,5 @@
-﻿using InterUlc.Db;
+﻿#define STAT
+using InterUlc.Db;
 using InterUlc.Logs;
 using Npgsql;
 using PresentationControls;
@@ -433,7 +434,9 @@ namespace UlcWin
       {
         this.tsBtnEventLog.Visible = true;
         this.tsBtnUsersEdit.Visible = true;
+#if STAT
         this.tsBtnStatistics.Visible = true;
+#endif
         toolStripSeparator2.Visible = true;
         toolStripSeparator7.Visible = true;
         treeMenu.Enabled = true;
@@ -806,7 +809,9 @@ namespace UlcWin
           if (lst.Count > 0)
           {
             this.usrFesStatistics1.Value = lst;
+#if STAT
             this.usrFesStatistics1.Visible = true;
+#endif
           }
           else {
             this.usrFesStatistics1.Visible = false;
@@ -2518,14 +2523,18 @@ namespace UlcWin
         this.tsBtnConnect.Image = UlcWin.Properties.Resources.server_ok;
         this.tsBtnConnect.Text = "Подключено";
         tsBtnUsersEdit.Enabled = true;
+#if STAT
         tsBtnStatistics.Enabled = true;
+#endif
         toolStripSeparator2.Visible = true;
         toolStripSeparator7.Visible = true;
         //this.LstViewItm.Visible = true;
         this.tsTreePanel.Visible = true;
         //this.tsResView.Visible = false;
         this.tsBtnAbout.Visible = true;
+#if STAT
         this.tsBtnStatistics.Visible = true;
+#endif
         this.tsBtnUsersEdit.Visible = true;
         this.tsBtnEventLog.Visible = true;
         this.tsTreePanel.Enabled = true;

@@ -78,7 +78,7 @@ namespace UlcWin.ui
               {
                 this.lblAllPercent.ForeColor = Color.FromArgb(124, 180, 136);
               }
-              this.lblAllPercent.Text = count.ToString() + "%";
+              this.lblAllPercent.Text = Math.Round(count,2).ToString() + "%";
             }
             else
               this.lblAllPercent.Text = "0";

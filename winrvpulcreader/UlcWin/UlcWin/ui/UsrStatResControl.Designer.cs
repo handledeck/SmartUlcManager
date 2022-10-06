@@ -34,7 +34,7 @@
       // 
       // lblHeader
       // 
-      this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(144)))), ((int)(((byte)(132)))));
+      this.lblHeader.BackColor = System.Drawing.Color.LightSteelBlue;
       this.lblHeader.Dock = System.Windows.Forms.DockStyle.Top;
       this.lblHeader.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblHeader.ForeColor = System.Drawing.Color.White;
@@ -57,10 +57,11 @@
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.34694F));
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 26);
+      this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(30);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(912, 103);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(912, 102);
       this.tableLayoutPanel1.TabIndex = 2;
       // 
       // UsrStatResControl
@@ -70,7 +71,7 @@
       this.Controls.Add(this.tableLayoutPanel1);
       this.Controls.Add(this.lblHeader);
       this.Name = "UsrStatResControl";
-      this.Size = new System.Drawing.Size(912, 134);
+      this.Size = new System.Drawing.Size(912, 129);
       this.ResumeLayout(false);
 
     }
