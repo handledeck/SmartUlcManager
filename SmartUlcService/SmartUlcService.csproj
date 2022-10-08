@@ -205,6 +205,8 @@
     <Error Condition="!Exists('packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Text.Json.6.0.0\build\System.Text.Json.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>del /S/Q *.xml *.pdb *.config</PostBuildEvent>
+    <PostBuildEvent>del /S/Q *.xml *.pdb *.config
+SET CurrentDir="%25~dp0"
+copy ..\..\UlcSrvSettings.ini</PostBuildEvent>
   </PropertyGroup>
 </Project>
