@@ -62,6 +62,7 @@ namespace SmartUlcService.ini
           this.UserPwdDb = iData["DBUser"].GetKeyData("password").Value;
           this.UserPwdDb = iData["DBUser"].GetKeyData("password").Value;
           this.Scheduler = iData["Schedule"].GetKeyData("schedule").Value;
+          s.Close();
         }
       }
       catch (Exception exc)

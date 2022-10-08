@@ -32,15 +32,16 @@ namespace SmartUlcService
 
     protected override void OnStart(string[] args)
     {
-      InterviewService interviewService = new InterviewService(Program.__configIni);
+      //InterviewService interviewService = new InterviewService(Program.__configIni);
       UlcSrvLog.Logger.Info("first time runner");
-     // __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler);
-      //__ulcScheduleJob.Start();
+      __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler);
+      __ulcScheduleJob.Start();
     }
 
     protected override void OnStop()
     {
-
+      __ulcScheduleJob.Stop();
+      UlcSrvLog.Logger.Info("service stoped");
     }
   }
 }

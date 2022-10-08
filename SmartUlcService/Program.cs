@@ -25,7 +25,7 @@ namespace SmartUlcService
     public static ConfigIni __configIni;
     public static int __intWait = 0;
     public static int __cout_request = 0;
-
+    public static bool __service_run = false;
     static void Main()
     {
       __configIni = new ConfigIni();

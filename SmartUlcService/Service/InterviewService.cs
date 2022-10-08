@@ -109,7 +109,7 @@ namespace SmartUlcService.Service
       {
         LstUncomp = null;
         int all = lstDevice.Count;
-        int rem = 0;
+        //int rem = 0;
         __lstTaskUpdate = new List<Task>();
         __lstTaskRunner = new List<Task>();
         var iner = Task.Factory.StartNew(() =>
@@ -117,8 +117,8 @@ namespace SmartUlcService.Service
           foreach (var item in lstDevice)
           {
             item.EvtItemRunComplite = RemoveTask;
-            Interlocked.Increment(ref Program.__cout_request);
-            UlcSrvLog.Logger.Info(Program.__cout_request.ToString());
+            
+            
             Task tsk = new Task(() =>
             {
               TcpClient client = null;
@@ -173,6 +173,8 @@ namespace SmartUlcService.Service
 
                 //cowr.WriteLine(string.Format("all-{0} now-{1}", all, rem++));
                 item.EvtItemRunComplite(item.OwnerTask);
+                Interlocked.Increment(ref Program.__cout_request);
+                UlcSrvLog.Logger.Info(string.Format("опрошено:{0}",Program.__cout_request.ToString()));
               }
             });
 
@@ -185,7 +187,8 @@ namespace SmartUlcService.Service
 
           for (int i = 0; i < __lstTaskRunner.Count; i++)
           {
-
+            if (!Program.__service_run)
+              return;
             if (__lstTaskUpdate.Count < 1000)
             {
               lock (__lstTaskUpdate)

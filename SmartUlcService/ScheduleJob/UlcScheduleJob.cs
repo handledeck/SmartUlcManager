@@ -33,9 +33,20 @@ namespace SmartUlcService.ScheduleJob
           .Build();
       __scheduler.ScheduleJob(jobDetail, trigger);
       
+
+
     }
+
+    public void Stop()
+    {
+      Program.__service_run = false;
+      UlcSrvLog.Logger.Info("Start service");
+      __scheduler.Shutdown(false);
+    }
+
     public void Start()
     {
+      Program.__service_run = true;
       UlcSrvLog.Logger.Info("Start service");
       __scheduler.Start();
     }
