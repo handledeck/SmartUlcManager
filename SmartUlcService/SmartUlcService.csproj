@@ -204,4 +204,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Text.Json.6.0.0\build\System.Text.Json.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>del /S/Q *.xml *.pdb *.config</PostBuildEvent>
+  </PropertyGroup>
 </Project>
