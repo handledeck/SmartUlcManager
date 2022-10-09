@@ -51,6 +51,9 @@
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
@@ -206,7 +209,9 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>del /S/Q *.xml *.pdb *.config
-SET CurrentDir="%25~dp0"
-copy ..\..\UlcSrvSettings.ini</PostBuildEvent>
+rem SET CurrentDir="%25~dp0"
+xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\bin
+rem copy ..\..\bin\UlcSrvSettings.ini
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
