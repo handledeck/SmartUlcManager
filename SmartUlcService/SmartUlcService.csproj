@@ -208,10 +208,11 @@
     <Error Condition="!Exists('packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Text.Json.6.0.0\build\System.Text.Json.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>del /S/Q *.xml *.pdb *.config
+    <PostBuildEvent>del /S/Q *.xml *.pdb
 rem SET CurrentDir="%25~dp0"
-xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\bin
-rem copy ..\..\bin\UlcSrvSettings.ini
+copy ..\..\bin\UlcSrvSettings.ini
+xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\srv
+
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
