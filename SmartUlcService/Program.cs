@@ -29,6 +29,9 @@ namespace SmartUlcService
     static void Main()
     {
       __configIni = new ConfigIni();
+      //SmartUlcSrv smartUlcSrv = new SmartUlcSrv();
+      //UlcScheduleJob __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler);
+     // __ulcScheduleJob.Start();
       ServiceBase[] ServicesToRun;
       ServicesToRun = new ServiceBase[]
       {

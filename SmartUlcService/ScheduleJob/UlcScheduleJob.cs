@@ -16,64 +16,77 @@ namespace SmartUlcService.ScheduleJob
   {
     ISchedulerFactory __schedulerFactory = null;
     IScheduler __scheduler = null;
-   
+    public IJobDetail __jDtCron = null;
+    public ITrigger __tgrCron = null;
     public UlcScheduleJob(string schedule)
     {
-     __schedulerFactory = new StdSchedulerFactory();
+      __schedulerFactory = new StdSchedulerFactory();
       __scheduler = __schedulerFactory.GetScheduler();
-      IJobDetail jobDetail = JobBuilder.Create<UlcScedilerJob>()
-      .WithIdentity("UlcJob")
+      Dictionary<string, object> dic = new Dictionary<string, object>();
+      dic.Add("scheduler", this);
+      JobDataMap jobDataMap = new JobDataMap((IDictionary<string, object>)dic);
+      IJobDetail jDtIm = JobBuilder.Create<UlcScedilerJob>()
+            .WithIdentity("jDtIm")
+            .SetJobData(jobDataMap)
+            .Build();
+      ITrigger tgrIm = TriggerBuilder.Create()
+                .WithIdentity("tgrIm")
+               .Build();
+      __scheduler.ScheduleJob(jDtIm, tgrIm);
+      
+
+      __jDtCron = JobBuilder.Create<UlcScedilerJob>()
+      .WithIdentity("jDtCron")
       .Build();
 
-      ITrigger trigger = TriggerBuilder.Create()
-          .ForJob(jobDetail)
+      __tgrCron = TriggerBuilder.Create()
+          .ForJob(__jDtCron)
           .WithCronSchedule(schedule)//"* * * * * ?"
           .WithIdentity("UlcTrigger")
           .StartNow()
           .Build();
-      __scheduler.ScheduleJob(jobDetail, trigger);
-      
-
-
     }
 
     public void Stop()
     {
       Program.__service_run = false;
-      UlcSrvLog.Logger.Info("Start service");
+      //UlcSrvLog.Logger.Info("Service shutdown");
       __scheduler.Shutdown(false);
-    }
+  }
 
     public void Start()
     {
       Program.__service_run = true;
-      UlcSrvLog.Logger.Info("Start service");
-      __scheduler.Start();
+      //UlcSrvLog.Logger.Info("Service start");
+      __scheduler.StartDelayed(TimeSpan.FromSeconds(10));
+      //__scheduler.Start();
     }
 
     internal class UlcScedilerJob : IJob
     {
-     
       public void Execute(IJobExecutionContext context)
       {
-        
-        if (Program.__intWait > 0) {
-          UlcSrvLog.Logger.Info("wait");
+        if (Program.__intWait > 0)
+        {
+          UlcSrvLog.Logger.Info("Ожидание окончания опроса");
           return;
         }
+        if (context.MergedJobDataMap.Values.Count > 0)
+        {
+          UlcScheduleJob c = (UlcScheduleJob)context.MergedJobDataMap["scheduler"];
+          context.Scheduler.Clear();
+          context.Scheduler.ScheduleJob(c.__jDtCron, c.__tgrCron);
+          UlcSrvLog.Logger.Info("Первичный опрос устройств");
+        }
+        else {
+          UlcSrvLog.Logger.Info("Опрос устройств по расписанию");
+        }
+        
         Program.__cout_request = 0;
-        UlcSrvLog.Logger.Info("run");
         Interlocked.Increment(ref Program.__intWait);
-        //for (int i = 0; i < 10; i++)
-        //{
-        //Console.WriteLine("wait...");
-        //Thread.Sleep(1);
-        //}
         InterviewService interviewService = new InterviewService(Program.__configIni);
-        UlcSrvLog.Logger.Info("stop");
         Interlocked.Decrement(ref Program.__intWait);
       }
-
     }
   }
 

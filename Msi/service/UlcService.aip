@@ -10,6 +10,7 @@
     <ROW Property="AI_ThemeStyle" Value="aero" MultiBuildValue="DefaultBuild:style31" MsiKey="AI_ThemeStyle"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="Эта база данных установщика содержит логику и данные, необходимые для установки [|[ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
     <ROW Property="Manufacturer" Value="ViebskUchCeter"/>
     <ROW Property="ProductCode" Value="1049:{38888B4C-30E1-4B03-8CCF-A123973FE979} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
@@ -29,37 +30,36 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
-    <ROW Directory="srv_Dir" Directory_Parent="APPDIR" DefaultDir="srv"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{D04D721A-2045-401C-8AA0-53BBEC43394A}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Common.Logging.Core.dll" ComponentId="{B7D72A2E-4D96-4D87-AC79-36AB81F42427}" Directory_="srv_Dir" Attributes="0" KeyPath="Common.Logging.Core.dll"/>
-    <ROW Component="Common.Logging.dll" ComponentId="{E3F478DB-BF35-4187-963D-17851EE827FF}" Directory_="srv_Dir" Attributes="0" KeyPath="Common.Logging.dll"/>
-    <ROW Component="INIFileParser.dll" ComponentId="{E34E3A13-84AF-44D0-90DD-FAEDEC575552}" Directory_="srv_Dir" Attributes="0" KeyPath="INIFileParser.dll"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{47C5ADE3-7951-46DE-B22D-1A9A4C6977E3}" Directory_="srv_Dir" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{CCDF58D6-19E6-4EC8-A16E-B86BDEFDCFBD}" Directory_="srv_Dir" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
-    <ROW Component="NLog.dll" ComponentId="{BC736546-BC23-4686-9626-39B631E36FCD}" Directory_="srv_Dir" Attributes="0" KeyPath="NLog.dll"/>
-    <ROW Component="Npgsql.dll" ComponentId="{A6F21059-54B4-4105-9181-3FF110D9DFCF}" Directory_="srv_Dir" Attributes="0" KeyPath="Npgsql.dll"/>
+    <ROW Component="Common.Logging.Core.dll" ComponentId="{3DEFA3DD-6A36-442A-957A-B2DD9578711B}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.Core.dll"/>
+    <ROW Component="Common.Logging.dll" ComponentId="{B9C261F9-3975-4AC0-B847-25FC372CED03}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.dll"/>
+    <ROW Component="INIFileParser.dll" ComponentId="{D7AEC81E-12EE-4C96-BDB2-D7029499E34C}" Directory_="APPDIR" Attributes="0" KeyPath="INIFileParser.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{1D2CF4DB-3B6D-45BA-83C6-CD1628DE329E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{B65CDAFA-01EF-48A9-BC24-BA8255B6A932}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{1EC72B8C-21A3-41C7-A900-2435E3991E51}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="Npgsql.dll" ComponentId="{FCA7EE42-D810-426C-AA6A-CD2C1D248A65}" Directory_="APPDIR" Attributes="0" KeyPath="Npgsql.dll"/>
     <ROW Component="ProductInformation" ComponentId="{960A17A4-3584-46D7-B23A-4744449B01C6}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="Quartz.dll" ComponentId="{E3A7724D-8BCB-4E2B-ABDF-FCF31CF1629C}" Directory_="srv_Dir" Attributes="0" KeyPath="Quartz.dll"/>
-    <ROW Component="ServiceStack.Common.dll" ComponentId="{0D00E7C8-2CB6-4FE0-9CE8-C40D8F975D0B}" Directory_="srv_Dir" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
-    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{72497BFF-4891-4C46-B749-1A41CFF3D55E}" Directory_="srv_Dir" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
-    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{B7CAD82B-CDFC-4CE8-B3C5-D74F9E2EE26E}" Directory_="srv_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
-    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{E86425EF-E777-4D6A-8F2A-566FDD780F04}" Directory_="srv_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
-    <ROW Component="ServiceStack.Text.dll" ComponentId="{3170ED6B-840F-4A86-B396-DD87DB049ED9}" Directory_="srv_Dir" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
-    <ROW Component="SmartUlcService.exe" ComponentId="{EF2E9323-DC41-4E05-AB16-2F7563DC28C1}" Directory_="srv_Dir" Attributes="0" KeyPath="SmartUlcService.exe"/>
-    <ROW Component="SmartUlcService.exe.config" ComponentId="{A4A93162-B81D-4996-B0BA-41CE2B60CEC3}" Directory_="srv_Dir" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
-    <ROW Component="System.Buffers.dll" ComponentId="{E93B93C9-7A87-4A99-AAE8-A274021BCBB5}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Buffers.dll"/>
-    <ROW Component="System.Collections.Immutable.dll" ComponentId="{31FE2C65-A7BB-42C9-8F02-F91E86A2D0A3}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Collections.Immutable.dll"/>
-    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{15D5F980-FDCB-4F64-BFB4-12005EAB418A}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
-    <ROW Component="System.Memory.dll" ComponentId="{5E195777-F6F3-4DF0-BB6F-A3669058F659}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Memory.dll"/>
-    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{B3C5A458-029E-45FE-8454-5E713CAD6450}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{0A44A288-7EF7-4C42-8F56-24F7C3337E21}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{9176BA36-F0A6-4E3D-B198-009CE76D42C0}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
-    <ROW Component="System.Text.Json.dll" ComponentId="{DC25593F-2B3B-4BCB-BAB6-15334BD8C21A}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Text.Json.dll"/>
-    <ROW Component="System.Threading.Channels.dll" ComponentId="{5C3BE933-EEB1-4895-B565-54B48A029413}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
-    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{73F2F7D2-B164-43F4-9AC8-DAFC3BF20B07}" Directory_="srv_Dir" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Component="System.ValueTuple.dll" ComponentId="{A92F9236-432A-4B86-BDC5-14285B332D95}" Directory_="srv_Dir" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="Quartz.dll" ComponentId="{1F3B4909-568C-4AE6-8C05-2F87CE113244}" Directory_="APPDIR" Attributes="0" KeyPath="Quartz.dll"/>
+    <ROW Component="ServiceStack.Common.dll" ComponentId="{97DFEEA1-A89A-43D7-869F-12F308C2B98E}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
+    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{BAD93539-74B7-4014-B59B-C9170D2A8853}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
+    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{C822BFF8-31B4-403E-9967-BC720EEC999D}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
+    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{BAF76F08-11E8-4089-922A-0C6A38E669C8}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
+    <ROW Component="ServiceStack.Text.dll" ComponentId="{07573F1E-F5C6-4E5B-9D5E-3131865480F9}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
+    <ROW Component="SmartUlcService.exe" ComponentId="{57F8280D-3EAD-4B11-A991-CC6A7697B524}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe"/>
+    <ROW Component="SmartUlcService.exe.config" ComponentId="{A905F7AE-0B08-480A-8917-FA12B1A4EECD}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{27A85B70-D4CA-4A1F-A324-F2516E559AA4}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.Collections.Immutable.dll" ComponentId="{5A735E12-507F-4F6D-BDE2-B8E7DB77F745}" Directory_="APPDIR" Attributes="0" KeyPath="System.Collections.Immutable.dll"/>
+    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{3C3D5A23-1303-4AD1-8F02-9207A2136C51}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{53AD467C-9B7A-46C0-A2A3-1DADB344D204}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{E1F9E793-91DC-419A-92AD-DB7670C7C69A}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{BFDE3602-30F0-4FA3-BFD1-EF9DE2D2C4EB}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{1358AD74-4FFE-4606-BF63-86BA623EFFF7}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{3E889C5A-6FFC-41F7-858A-787DC0FA0E4C}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Channels.dll" ComponentId="{02D576CD-0E09-417B-A4E5-CF5F683DC656}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{FD0D7536-2C30-4F50-8A40-5A8551FFE7B4}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{1DFF4EF2-47BD-41E1-B1A1-9DC99A83FC7B}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="Ulc" Title="Ulc" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -327,7 +327,7 @@
     <ROW ServiceControl="SmartUlcService.exe" Name="SmartUlcService.exe" Event="161" Wait="1" Component_="SmartUlcService.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiServInstComponent">
-    <ROW ServiceInstall="SmartUlcService.exe" Name="SmartUlcService.exe" DisplayName="SmartUlcService" ServiceType="272" StartType="2" ErrorControl="32769" Component_="SmartUlcService.exe" Description="Programm diagnostic controllers ULC 02"/>
+    <ROW ServiceInstall="SmartUlcService.exe" Name="SmartUlcService.exe" DisplayName="SmartUlcService" ServiceType="272" StartType="2" ErrorControl="32769" Component_="SmartUlcService.exe" Description="Service for ULC 02 (diagnostic)"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>

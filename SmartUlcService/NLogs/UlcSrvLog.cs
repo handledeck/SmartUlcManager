@@ -14,13 +14,15 @@ namespace SmartUlcService.NLogs
     public static void InitUlcSrvLog()
     {
       var config = new NLog.Config.LoggingConfiguration();
+      
       var logfile = new NLog.Targets.FileTarget("logfile")
       {
         FileName = "${basedir}/logs/now.log",
         ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
         ArchiveFileName = "${basedir}/logs/${date:format=yyyy-MM-dd HH-mm-ss}.log",
         MaxArchiveFiles = 3,
-        MaxArchiveDays=5
+        MaxArchiveDays=5,
+        Layout = "${longdate}|${level:uppercase=true}|${message}",
       };
       var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
       config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);

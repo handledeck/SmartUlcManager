@@ -25,13 +25,14 @@ namespace SmartUlcService.Service
          List<DbReqestNotTrue> ll = db.ReadNotTrueItems(DateTime.Now);
         //List<DbReqestNotTrue> ll = ReadEvent();
         UlcSrvLog.Logger.Info("Начало опроса {0}", DateTime.Now);
-        UlcSrvLog.Logger.Info("Недоставерн {0}", ll.Count);
+        UlcSrvLog.Logger.Info("Недоставерных данных по устройствам: {0}", ll.Count);
         //UlcSrvLog.Logger.Info("Недоставерн {0}", ll.Count);
         GetNotTrueItems(ll, db);
-       // List<RsNotTrueData> rsNotTrueDatas = db.GetNotTruerS485();
+        UlcSrvLog.Logger.Info(string.Format("Опрошено:{0}", Program.__cout_request.ToString()));
+        // List<RsNotTrueData> rsNotTrueDatas = db.GetNotTruerS485();
         //GetNotTrueItemsRs(rsNotTrueDatas, db, uset, cowr);
         //GetNotTrueItems(ll, db, uset, cowr);
-        UlcSrvLog.Logger.Info("Окончание опроса {0} ver 1.0.0", DateTime.Now);
+        UlcSrvLog.Logger.Info("Окончание опроса:{0}", DateTime.Now);
       }
       catch (Exception exp)
       {
@@ -47,9 +48,6 @@ namespace SmartUlcService.Service
       dbReqestNotTrue.IPAddres = "172.22.128.125"; //15482
       dbReqestNotTrue.ID = 13677;
       dbReqestNotTrue.TypeDevice = 1;
-
-
-
       List<DbReqestNotTrue> lstDevice = new List<DbReqestNotTrue>();
       lstDevice.Add(dbReqestNotTrue);
       return lstDevice;
@@ -109,7 +107,6 @@ namespace SmartUlcService.Service
       {
         LstUncomp = null;
         int all = lstDevice.Count;
-        //int rem = 0;
         __lstTaskUpdate = new List<Task>();
         __lstTaskRunner = new List<Task>();
         var iner = Task.Factory.StartNew(() =>
@@ -117,8 +114,6 @@ namespace SmartUlcService.Service
           foreach (var item in lstDevice)
           {
             item.EvtItemRunComplite = RemoveTask;
-            
-            
             Task tsk = new Task(() =>
             {
               TcpClient client = null;
@@ -137,32 +132,21 @@ namespace SmartUlcService.Service
                   item.Message = msg;
 
                 }
-                //}
                 if (item.TypeDevice == 1)
                 {
-                  //client = GetTcpConnection(item.IPAddres, item.TypeDevice);
-                  //if (client == null)
-                  //throw new Exception(string.Format("Error connect to:{0}", item.IPAddres));
-                  // if (client != null)
-                  //{
                   NetworkStream stream = client.GetStream();
                   stream.ReadTimeout = 10000;
                   Exception exp;
-
-
                   List<Log> log = ParceLog.GetLogIP(stream, out exp);
                   if (log != null)
                   {
                     item.Logs = log;
                   }
-                  //}
                 }
-                //cowr.WriteLine(string.Format("all-{0} now-{1}", all, rem++));
-
+                Interlocked.Increment(ref Program.__cout_request);
               }
               catch (Exception exp)
               {
-                //cowr.WriteLine(string.Format("error all-{0} now-{1}", all, rem++));
               }
               finally
               {
@@ -170,26 +154,17 @@ namespace SmartUlcService.Service
                 {
                   client.Close();
                 }
-
-                //cowr.WriteLine(string.Format("all-{0} now-{1}", all, rem++));
                 item.EvtItemRunComplite(item.OwnerTask);
-                Interlocked.Increment(ref Program.__cout_request);
-                UlcSrvLog.Logger.Info(string.Format("опрошено:{0}",Program.__cout_request.ToString()));
               }
             });
-
             item.OwnerTask = tsk;
-
             __lstTaskRunner.Add(tsk);
           }
-
-
-
           for (int i = 0; i < __lstTaskRunner.Count; i++)
           {
             if (!Program.__service_run)
               return;
-            if (__lstTaskUpdate.Count < 1000)
+            if (__lstTaskUpdate.Count < 100)
             {
               lock (__lstTaskUpdate)
               {
@@ -197,10 +172,8 @@ namespace SmartUlcService.Service
                 __lstTaskRunner[i].Start();
 
               }
-              //Thread.Sleep(10);
-
             }
-            while (__lstTaskUpdate.Count == 1000)
+            while (__lstTaskUpdate.Count == 100)
             {
               Thread.Sleep(1);
             }
@@ -211,6 +184,7 @@ namespace SmartUlcService.Service
           }
         });
         iner.Wait();
+        UlcSrvLog.Logger.Info("Обновление базы данных");
         db.InsertCfgMsg(lstDevice);
         db.WriteEventMessage(lstDevice);
         db.SeptStatictics();
@@ -221,96 +195,5 @@ namespace SmartUlcService.Service
         UlcSrvLog.Logger.Error(exp);
       }
     }
-    //static void GetNotTrueItemsRs(List<RsNotTrueData> lstDevice, DbReader db, UlcSettings uset, StreamWriter cowr)
-    //{
-    //  List<DbReqestNotTrue> lstDbReqestNotTrue = new List<DbReqestNotTrue>();
-    //  try
-    //  {
-    //    LstUncomp = null;
-    //    int all = lstDevice.Count;
-    //    __lstTaskUpdate = new List<Task>();
-    //    __lstTaskRunner = new List<Task>();
-    //    var iner = Task.Factory.StartNew(() =>
-    //    {
-    //      foreach (var item in lstDevice)
-    //      {
-    //        item.EvtItemRunComplite = RemoveTask;
-    //        Task tsk = new Task(() =>
-    //        {
-    //          DataMsg dataMsg = null;
-    //          try
-    //          {
-    //            Meters[] mtr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(item.meters, typeof(Meters[]));
-    //            dataMsg = ReadMeter(item.ip_address, mtr);
-
-    //            if (dataMsg != null)
-    //            {
-    //              lock (lstDbReqestNotTrue)
-    //              {
-    //                lstDbReqestNotTrue.Add(new DbReqestNotTrue()
-    //                {
-    //                  ID = item.id,
-    //                  IPAddres = item.ip_address,
-    //                  Message = dataMsg.Message,
-    //                  TypeDevice = 1
-    //                });
-    //              }
-    //            }
-    //          }
-    //          catch (Exception exp)
-    //          {
-    //            int x = 0;
-    //          }
-    //          finally
-    //          {
-    //            item.EvtItemRunComplite(item.OwnerTask);
-    //            if (dataMsg != null)
-    //              cowr.WriteLine("{0}++", item.ip_address);
-    //            else
-    //              cowr.WriteLine("{0}------", item.ip_address);
-    //          }
-
-
-
-    //        });
-
-    //        item.OwnerTask = tsk;
-
-    //        __lstTaskRunner.Add(tsk);
-    //      }
-    //      for (int i = 0; i < __lstTaskRunner.Count; i++)
-    //      {
-    //        if (__lstTaskUpdate.Count < 1000)
-    //        {
-    //          lock (__lstTaskUpdate)
-    //          {
-    //            __lstTaskUpdate.Add(__lstTaskRunner[i]);
-    //            __lstTaskRunner[i].Start();
-    //          }
-    //        }
-    //        while (__lstTaskUpdate.Count == 1000)
-    //        {
-    //          Thread.Sleep(1);
-    //        }
-    //      }
-    //      while (__lstTaskUpdate.Count != 0)
-    //      {
-    //        Thread.Sleep(100);
-    //        //Console.WriteLine(__lstTaskUpdate.Count);
-    //      }
-    //    });
-    //    iner.Wait();
-    //    db.InsertCfgMsg(lstDbReqestNotTrue);
-    //  }
-
-    //  catch (Exception exp)
-    //  {
-    //    cowr.WriteLine(exp);
-    //  }
-    //  finally
-    //  {
-    //    int x = 0;
-    //  }
-    //}
   }
 }

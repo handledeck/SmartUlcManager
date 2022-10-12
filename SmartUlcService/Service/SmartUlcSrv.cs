@@ -22,7 +22,7 @@ namespace SmartUlcService
     {
       InitializeComponent();
       UlcSrvLog.InitUlcSrvLog();
-      UlcSrvLog.Logger.Info("start");
+      UlcSrvLog.Logger.Info("Инициализация службы");
     }
 
     //public void Execute(IJobExecutionContext context)
@@ -32,8 +32,9 @@ namespace SmartUlcService
 
     protected override void OnStart(string[] args)
     {
+
       //InterviewService interviewService = new InterviewService(Program.__configIni);
-      UlcSrvLog.Logger.Info("first time runner");
+      UlcSrvLog.Logger.Info("Старт службы");
       __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler);
       __ulcScheduleJob.Start();
     }
@@ -41,7 +42,7 @@ namespace SmartUlcService
     protected override void OnStop()
     {
       __ulcScheduleJob.Stop();
-      UlcSrvLog.Logger.Info("service stoped");
+      UlcSrvLog.Logger.Info("Служба остановлена");
     }
   }
 }
