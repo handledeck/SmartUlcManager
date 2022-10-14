@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Windows.Forms;
 using UlcWin;
 
 namespace UlcDbInstall
@@ -65,28 +66,47 @@ namespace UlcDbInstall
 
     static int Main(string[] args)
     {
-
       ParserResult<Options> res = CommandLine.Parser.Default.ParseArguments<Options>(args)
           .WithParsed(RunOptions)
           .WithNotParsed(HandleParseError);
+      Exception exception = null;
       if (res.Tag == ParserResultType.Parsed)
       {
         if (__opts.PsgTest != null)
         {
-          return TryConnectDb();
+          result = TryConnectDb(out exception);
+          if (result == 1)
+            MessageBox.Show(exception.Message, "Ошибка соединения с БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          else
+          {
+            MessageBox.Show("Проверка прошла успешно", "Соединение с БД", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          }
+          return result;
         }
-        return CreateDb();
+        else {
+          result=CreateDb(out exception);
+          if (result == 1)
+          {
+            MessageBox.Show(exception.Message, "Ошибка создания БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
+          else {
+            MessageBox.Show("Создание БД прошло успешно", "Создание БД", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          }
+          return result;
+        }
       }
       else
       {
-        Console.WriteLine("argumets error");
+        MessageBox.Show("Неверно заданы параметры для создания БД", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //Console.WriteLine("argumets error");
         result = 1;
       }
       return result;
     }
 
-    static int TryConnectDb()
+    static int TryConnectDb(out Exception exception)
     {
+      exception = null;
       string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
        __opts.DbPsgAddress, __opts.PgsPort, __opts.PsgUser, __opts.PsgPwd);
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
@@ -101,13 +121,15 @@ namespace UlcDbInstall
       }
       catch(Exception exp)
       {
+        exception = exp;
         Console.WriteLine("Connection ERROR");
         return 1;
       }
     }
 
-    static int CreateDb()
+    static int CreateDb(out Exception exception)
     {
+      exception = null;
       string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
      __opts.DbPsgAddress, __opts.PgsPort, __opts.PsgUser, __opts.PsgPwd);
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
@@ -154,20 +176,21 @@ namespace UlcDbInstall
             db.Insert<MainUser>(mainUser);
           if (!CheckForRole("ulc_read", EnumRole.READ, db))
           {
-            return 1;
+            return 0;
           }
           if (!CheckForRole("ulc_read_write", EnumRole.READ_WRITE, db))
           {
-            return 1;
+            return 0;
           }
           Console.WriteLine("Create DB is OK");
-          return 0;
+          return 1;
         }
       }
       catch (Exception ec)
       {
         byte[] bb = System.Text.ASCIIEncoding.UTF8.GetBytes(ec.Message);
         string msg = System.Text.ASCIIEncoding.Default.GetString(bb);
+        exception = ec;
         Console.WriteLine("Connection ERROR:{0}", msg);
         return 1;
       }
