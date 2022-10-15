@@ -141,6 +141,7 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>del /S/Q *.xml *.pdb
+xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\db
 xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\srv
 </PostBuildEvent>
   </PropertyGroup>

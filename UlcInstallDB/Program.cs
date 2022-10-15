@@ -188,10 +188,10 @@ namespace UlcDbInstall
       }
       catch (Exception ec)
       {
-        byte[] bb = System.Text.ASCIIEncoding.UTF8.GetBytes(ec.Message);
-        string msg = System.Text.ASCIIEncoding.Default.GetString(bb);
+        //byte[] bb = System.Text.ASCIIEncoding.UTF8.GetBytes(ec.Message);
+        //string msg = System.Text.ASCIIEncoding.UTF8.GetString(bb);
         exception = ec;
-        Console.WriteLine("Connection ERROR:{0}", msg);
+        Console.WriteLine("Connection ERROR:{0}", ec.Message);
         return 1;
       }
     }
