@@ -199,7 +199,7 @@
     <PostBuildEvent>del /S/Q *.xml *.pdb
 rem SET CurrentDir="%25~dp0"
 copy ..\..\bin\UlcSrvSettings.ini
-xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\srv
+xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\soft
 
 </PostBuildEvent>
   </PropertyGroup>

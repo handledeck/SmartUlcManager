@@ -93,7 +93,7 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>del /S/Q *.xml *.pdb
-xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\srv</PostBuildEvent>
+xcopy /S /I /Q /Y /F .\* ..\..\..\Msi\service\soft</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>del /S/Q *.*</PreBuildEvent>
