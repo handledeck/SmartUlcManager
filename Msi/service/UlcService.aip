@@ -7,22 +7,27 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
     <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.9 build de6d6401" ValueLocId="-"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_INTERNET_CONNECTION"/>
     <ROW Property="AI_ThemeStyle" Value="aero" MultiBuildValue="DefaultBuild:classic" MsiKey="AI_ThemeStyle"/>
     <ROW Property="ALLUSERS" Value="1"/>
-    <ROW Property="ARPCOMMENTS" Value="Эта база данных установщика содержит логику и данные, необходимые для установки [|[ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="Эта программа содержит данные, необходимые для установки [|ProductName]" ValueLocId="*"/>
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
-    <ROW Property="ARPNOREPAIR" Value="1"/>
+    <ROW Property="ARPPRODUCTICON" Value="PCIcard_preferences.exe" Type="8"/>
+    <ROW Property="AiFeatIcoServiceUlc" Value="PCIcard_preferences.exe" Type="8"/>
     <ROW Property="DB_ADDRESS" Value="localhost" Type="4"/>
     <ROW Property="DB_PORT" Value="5432" Type="4"/>
     <ROW Property="DB_RESULT" Value="0"/>
+    <ROW Property="DB_TEST" Value="0"/>
     <ROW Property="DB_USER" Value="postgres" Type="4"/>
-    <ROW Property="LBL_RESULT" Value="0"/>
-    <ROW Property="Manufacturer" Value="ViebskUchCeter"/>
+    <ROW Property="Manufacturer" Value="VitebskTrainingCenter"/>
     <ROW Property="ProductCode" Value="1049:{38888B4C-30E1-4B03-8CCF-A123973FE979} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="SmartUlcService"/>
     <ROW Property="ProductVersion" Value="1.0.0"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="TEXT_1_PROP_1" Value="Порт сервера" Type="4"/>
+    <ROW Property="TEXT_1_PROP_2" Value="Пользователь" Type="4"/>
+    <ROW Property="TEXT_1_PROP_3" Value="Пароль" Type="4"/>
     <ROW Property="UpgradeCode" Value="{703AADB3-890A-4BE8-875A-E6952B8AD4D2}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -40,73 +45,77 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{D04D721A-2045-401C-8AA0-53BBEC43394A}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="CommandLine.dll" ComponentId="{B7A054D2-37F2-483B-96EF-21488DFBD357}" Directory_="APPDIR" Attributes="0" KeyPath="CommandLine.dll"/>
-    <ROW Component="Common.Logging.Core.dll" ComponentId="{6EAF408F-5AFC-4C5F-B76C-4776112F9A0D}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.Core.dll"/>
-    <ROW Component="Common.Logging.dll" ComponentId="{39468461-3972-42FE-80CC-592967D311D1}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.dll"/>
-    <ROW Component="INIFileParser.dll" ComponentId="{154CB602-F887-4755-9786-96E336C46B34}" Directory_="APPDIR" Attributes="0" KeyPath="INIFileParser.dll"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{D32F9FFB-FF9B-4A91-A21A-E8F427A96F55}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{227BB894-E776-452B-A060-3050D8D63403}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
-    <ROW Component="NLog.dll" ComponentId="{B64F8A85-F3D3-4C3B-AD45-54FFBC20F93C}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
-    <ROW Component="Npgsql.dll" ComponentId="{84874477-FA58-420D-91EB-EF7634AB5E6F}" Directory_="APPDIR" Attributes="0" KeyPath="Npgsql.dll"/>
+    <ROW Component="CommandLine.dll" ComponentId="{67A2B0BF-B03D-4CA2-AFD0-F1526B90A6FE}" Directory_="APPDIR" Attributes="0" KeyPath="CommandLine.dll"/>
+    <ROW Component="Common.Logging.Core.dll" ComponentId="{7347E923-357D-4DCA-BE6C-B4A11F3AB6FC}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.Core.dll"/>
+    <ROW Component="Common.Logging.dll" ComponentId="{679EF12E-C6A8-4F4E-A5A3-CDDFC3BBA990}" Directory_="APPDIR" Attributes="0" KeyPath="Common.Logging.dll"/>
+    <ROW Component="INIFileParser.dll" ComponentId="{15CFF9E7-DAE1-409E-9E71-B01B1A001D80}" Directory_="APPDIR" Attributes="0" KeyPath="INIFileParser.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{E6287779-840F-4643-A809-B27AA49FDC1A}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{A81E70AB-E3F3-463E-91C4-9018836385F4}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{41F2D997-97B0-475C-8B0A-A09FED5BA1FD}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="Npgsql.dll" ComponentId="{9E56AF61-F37A-4A47-B998-E48CC9C264CE}" Directory_="APPDIR" Attributes="0" KeyPath="Npgsql.dll"/>
     <ROW Component="ProductInformation" ComponentId="{960A17A4-3584-46D7-B23A-4744449B01C6}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="Quartz.dll" ComponentId="{5C3F5F1B-7D4B-4082-BB8B-F8BC552FA5C3}" Directory_="APPDIR" Attributes="0" KeyPath="Quartz.dll"/>
-    <ROW Component="ServiceStack.Common.dll" ComponentId="{C85BE9C3-EE57-4DF7-B9C5-96BE3D4D1959}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
-    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{EE59A7E7-1202-4856-851D-747508D2D4AF}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
-    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{CE7E72EA-E8E7-4D7D-A0DA-9A333F459C56}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
-    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{F15DABB5-6244-4F9A-877B-26E997FA39DA}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
-    <ROW Component="ServiceStack.Text.dll" ComponentId="{7ECEBB50-6C34-4678-A250-6BF757A41BA7}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
-    <ROW Component="SmartUlcService.exe" ComponentId="{90707BE8-D353-43E0-B28B-B491C1A3F942}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe"/>
-    <ROW Component="SmartUlcService.exe.config" ComponentId="{B2DEA3BF-8D51-47E5-9473-466254798A6E}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
-    <ROW Component="System.Buffers.dll" ComponentId="{63EB0AAA-6A0A-479D-AB6C-BC8F8FFD4C99}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
-    <ROW Component="System.Collections.Immutable.dll" ComponentId="{F702B06C-6465-4C2D-A600-0316E46CDCFD}" Directory_="APPDIR" Attributes="0" KeyPath="System.Collections.Immutable.dll"/>
-    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{CEFDAE9A-6BFD-432B-AC95-CE4CD9A9EE0D}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
-    <ROW Component="System.Memory.dll" ComponentId="{E7805CD3-8D92-43EE-91FD-37FBE3D1386B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
-    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{7311696F-8852-4CDE-9AB3-B5884C73F07A}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{D3E95EE3-0B4B-40B8-BBA8-F61458A8840B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{274ACB8D-C4D8-4599-9415-906ACF142E44}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
-    <ROW Component="System.Text.Json.dll" ComponentId="{167F8DBA-A20D-4B82-A30F-14759C6C87A9}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
-    <ROW Component="System.Threading.Channels.dll" ComponentId="{8662C54E-9707-471B-93A2-D7FDAD129B33}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
-    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{F7215F94-C14C-41F2-BF15-0A7CBE431C42}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Component="System.ValueTuple.dll" ComponentId="{5263C852-6EF7-4C78-90DA-F141525D1D50}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
-    <ROW Component="UlcInstallDB.exe" ComponentId="{7A804C7C-AA30-41F8-B90F-4065F56955F0}" Directory_="APPDIR" Attributes="0" KeyPath="UlcInstallDB.exe"/>
+    <ROW Component="Quartz.dll" ComponentId="{9C7ED100-C925-4DD4-80EB-D2069486962A}" Directory_="APPDIR" Attributes="0" KeyPath="Quartz.dll"/>
+    <ROW Component="ServiceStack.Common.dll" ComponentId="{7F5F933B-84B9-4790-A43A-A5661F806736}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
+    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{02ABE1E6-0EC4-460D-A09E-3865820D10AA}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
+    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{1D3D29BF-CCB1-4E5F-BEC9-E339C6A7E007}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
+    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{CD4C60E8-AADF-47C0-8756-DDB077B6D645}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
+    <ROW Component="ServiceStack.Text.dll" ComponentId="{887C08C2-AB53-475E-98F1-A35A99DAA75A}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
+    <ROW Component="SmartUlcService.exe" ComponentId="{8F13FFFC-F463-470F-A791-D8315F5BAF29}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe"/>
+    <ROW Component="SmartUlcService.exe.config" ComponentId="{CBEDDDC7-5D78-4569-AC4D-D8524AF58D5B}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{88912503-F3F4-41DB-9EBB-4663E0259AF8}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.Collections.Immutable.dll" ComponentId="{D198EB1A-66FE-4D63-A741-ABA67112679E}" Directory_="APPDIR" Attributes="0" KeyPath="System.Collections.Immutable.dll"/>
+    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{8E2C55D4-4EEA-4294-A3A5-80EBD62D11C3}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{34436728-CA64-4A44-9BC9-634583E008C7}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{80E32850-9FCF-46C2-870A-1F57EAA87F61}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{5422781F-8C10-49CF-934F-3BCA73779DF2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{66C53B1B-F2FB-4456-ADDD-DE23ECF1357A}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{911497C4-A8ED-487B-AEB7-E9D8C65CEA10}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Channels.dll" ComponentId="{FEF1AC3B-243D-4279-B9E4-E2C928520F7A}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{6ECABCF2-3C2B-44CB-A601-E3F43ADE3818}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{08D8DDD8-971D-41FE-8B71-E94B1A32B3FE}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="UlcInstallDB.exe" ComponentId="{8FB54D9C-7111-4E67-A3E8-7F5F9B4203A5}" Directory_="APPDIR" Attributes="0" KeyPath="UlcInstallDB.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="ServiceUlc" Title="Служба диагностики ULC" Description="Служба диагностики контроллеров" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="ServiceUlc" Title="Служба диагностики ULC" Description="Служба диагностики контроллеров" Display="2" Level="1" Directory_="APPDIR" Attributes="16"/>
     <ATTRIBUTE name="CurrentFeature" value="ServiceUlc"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="CommandLine.dll" Component_="CommandLine.dll" FileName="COMMAN~1.DLL|CommandLine.dll" Attributes="0" SourcePath="srv\CommandLine.dll" SelfReg="false"/>
-    <ROW File="Common.Logging.Core.dll" Component_="Common.Logging.Core.dll" FileName="COMMON~1.DLL|Common.Logging.Core.dll" Attributes="0" SourcePath="srv\Common.Logging.Core.dll" SelfReg="false"/>
-    <ROW File="Common.Logging.dll" Component_="Common.Logging.dll" FileName="COMMON~2.DLL|Common.Logging.dll" Attributes="0" SourcePath="srv\Common.Logging.dll" SelfReg="false"/>
-    <ROW File="INIFileParser.dll" Component_="INIFileParser.dll" FileName="INIFIL~1.DLL|INIFileParser.dll" Attributes="0" SourcePath="srv\INIFileParser.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="srv\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.HashCode.dll" Component_="Microsoft.Bcl.HashCode.dll" FileName="MICROS~2.DLL|Microsoft.Bcl.HashCode.dll" Attributes="0" SourcePath="srv\Microsoft.Bcl.HashCode.dll" SelfReg="false"/>
-    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="srv\NLog.dll" SelfReg="false"/>
-    <ROW File="Npgsql.dll" Component_="Npgsql.dll" FileName="Npgsql.dll" Attributes="0" SourcePath="srv\Npgsql.dll" SelfReg="false"/>
-    <ROW File="Quartz.dll" Component_="Quartz.dll" FileName="Quartz.dll" Attributes="0" SourcePath="srv\Quartz.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Common.dll" Component_="ServiceStack.Common.dll" FileName="SERVIC~1.DLL|ServiceStack.Common.dll" Attributes="0" SourcePath="srv\ServiceStack.Common.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Interfaces.dll" Component_="ServiceStack.Interfaces.dll" FileName="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Attributes="0" SourcePath="srv\ServiceStack.Interfaces.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.OrmLite.dll" Component_="ServiceStack.OrmLite.dll" FileName="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Attributes="0" SourcePath="srv\ServiceStack.OrmLite.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.OrmLite.PostgreSQL.dll" Component_="ServiceStack.OrmLite.PostgreSQL.dll" FileName="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Attributes="0" SourcePath="srv\ServiceStack.OrmLite.PostgreSQL.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Text.dll" Component_="ServiceStack.Text.dll" FileName="SERVIC~5.DLL|ServiceStack.Text.dll" Attributes="0" SourcePath="srv\ServiceStack.Text.dll" SelfReg="false"/>
-    <ROW File="SmartUlcService.exe" Component_="SmartUlcService.exe" FileName="SMARTU~1.EXE|SmartUlcService.exe" Attributes="0" SourcePath="srv\SmartUlcService.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="SmartUlcService.exe.config" Component_="SmartUlcService.exe.config" FileName="SMARTU~1.CON|SmartUlcService.exe.config" Attributes="0" SourcePath="srv\SmartUlcService.exe.config" SelfReg="false"/>
-    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="srv\System.Buffers.dll" SelfReg="false"/>
-    <ROW File="System.Collections.Immutable.dll" Component_="System.Collections.Immutable.dll" FileName="SYSTEM~2.DLL|System.Collections.Immutable.dll" Attributes="0" SourcePath="srv\System.Collections.Immutable.dll" SelfReg="false"/>
-    <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTEM~3.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="srv\System.Diagnostics.DiagnosticSource.dll" SelfReg="false"/>
-    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~4.DLL|System.Memory.dll" Attributes="0" SourcePath="srv\System.Memory.dll" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~5.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="srv\System.Numerics.Vectors.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="srv\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
-    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="srv\System.Text.Encodings.Web.dll" SelfReg="false"/>
-    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~8.DLL|System.Text.Json.dll" Attributes="0" SourcePath="srv\System.Text.Json.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Channels.dll" Component_="System.Threading.Channels.dll" FileName="SYSTEM~9.DLL|System.Threading.Channels.dll" Attributes="0" SourcePath="srv\System.Threading.Channels.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="srv\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
-    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTE~11.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="srv\System.ValueTuple.dll" SelfReg="false"/>
-    <ROW File="UlcInstallDB.exe" Component_="UlcInstallDB.exe" FileName="ULCINS~1.EXE|UlcInstallDB.exe" Attributes="0" SourcePath="srv\UlcInstallDB.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="UlcInstallDB.exe.config" Component_="SmartUlcService.exe.config" FileName="ULCINS~1.CON|UlcInstallDB.exe.config" Attributes="0" SourcePath="srv\UlcInstallDB.exe.config" SelfReg="false"/>
+    <ROW File="CommandLine.dll" Component_="CommandLine.dll" FileName="COMMAN~1.DLL|CommandLine.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\CommandLine.dll" SelfReg="false"/>
+    <ROW File="Common.Logging.Core.dll" Component_="Common.Logging.Core.dll" FileName="COMMON~1.DLL|Common.Logging.Core.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Common.Logging.Core.dll" SelfReg="false"/>
+    <ROW File="Common.Logging.dll" Component_="Common.Logging.dll" FileName="COMMON~2.DLL|Common.Logging.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Common.Logging.dll" SelfReg="false"/>
+    <ROW File="INIFileParser.dll" Component_="INIFileParser.dll" FileName="INIFIL~1.DLL|INIFileParser.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\INIFileParser.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.HashCode.dll" Component_="Microsoft.Bcl.HashCode.dll" FileName="MICROS~2.DLL|Microsoft.Bcl.HashCode.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Microsoft.Bcl.HashCode.dll" SelfReg="false"/>
+    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\NLog.dll" SelfReg="false"/>
+    <ROW File="Npgsql.dll" Component_="Npgsql.dll" FileName="Npgsql.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Npgsql.dll" SelfReg="false"/>
+    <ROW File="Quartz.dll" Component_="Quartz.dll" FileName="Quartz.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\Quartz.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Common.dll" Component_="ServiceStack.Common.dll" FileName="SERVIC~1.DLL|ServiceStack.Common.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\ServiceStack.Common.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Interfaces.dll" Component_="ServiceStack.Interfaces.dll" FileName="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\ServiceStack.Interfaces.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.OrmLite.dll" Component_="ServiceStack.OrmLite.dll" FileName="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\ServiceStack.OrmLite.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.OrmLite.PostgreSQL.dll" Component_="ServiceStack.OrmLite.PostgreSQL.dll" FileName="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\ServiceStack.OrmLite.PostgreSQL.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Text.dll" Component_="ServiceStack.Text.dll" FileName="SERVIC~5.DLL|ServiceStack.Text.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\ServiceStack.Text.dll" SelfReg="false"/>
+    <ROW File="SmartUlcService.exe" Component_="SmartUlcService.exe" FileName="SMARTU~1.EXE|SmartUlcService.exe" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\SmartUlcService.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="SmartUlcService.exe.config" Component_="SmartUlcService.exe.config" FileName="SMARTU~1.CON|SmartUlcService.exe.config" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\SmartUlcService.exe.config" SelfReg="false"/>
+    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Buffers.dll" SelfReg="false"/>
+    <ROW File="System.Collections.Immutable.dll" Component_="System.Collections.Immutable.dll" FileName="SYSTEM~2.DLL|System.Collections.Immutable.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Collections.Immutable.dll" SelfReg="false"/>
+    <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTEM~3.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Diagnostics.DiagnosticSource.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~4.DLL|System.Memory.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~5.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~8.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Channels.dll" Component_="System.Threading.Channels.dll" FileName="SYSTEM~9.DLL|System.Threading.Channels.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Threading.Channels.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTE~11.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\System.ValueTuple.dll" SelfReg="false"/>
+    <ROW File="UlcInstallDB.exe" Component_="UlcInstallDB.exe" FileName="ULCINS~1.EXE|UlcInstallDB.exe" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\UlcInstallDB.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="UlcInstallDB.exe.config" Component_="SmartUlcService.exe.config" FileName="ULCINS~1.CON|UlcInstallDB.exe.config" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\UlcInstallDB.exe.config" SelfReg="false"/>
+    <ROW File="UlcSrvSettings.ini" Component_="SmartUlcService.exe.config" FileName="ULCSRV~1.INI|UlcSrvSettings.ini" Attributes="0" SourcePath="..\..\..\..\SmartUlcManager\Msi\service\srv\UlcSrvSettings.ini" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
+    <ROW Action="AI_DetectSoftware" Sequence="151"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" Languages="ru" InstallationType="4" UseLargeSchema="true"/>
@@ -131,10 +140,10 @@
     <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
-    <ROW Name="CustomAction1.CA.dll" SourcePath="..\..\..\CustomAction1\bin\Debug\CustomAction1.CA.dll"/>
+    <ROW Name="CtmAction.CA.dll" SourcePath="srv\CtmAction.CA.dll"/>
+    <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="tempFiles.dll" SourcePath="&lt;AI_CUSTACTS&gt;tempFiles.dll"/>
-    <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe" DigSign="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
     <ROW Dialog_="AdminBrowseDlg" Control="OK" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_OK]" Order="300" TextLocId="-" MsiKey="AdminBrowseDlg#OK"/>
@@ -193,7 +202,7 @@
     <ROW Dialog_="FolderDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="700" TextLocId="-" MsiKey="FolderDlg#Back" Options="1"/>
     <ROW Dialog_="FolderDlg" Control="BannerBitmap" Type="Bitmap" X="5" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Help="|" Order="800" HelpLocId="Control.Help.FolderDlg#BannerBitmap" MsiKey="FolderDlg#BannerBitmap"/>
     <ROW Dialog_="FolderDlg" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Выбор папки установки" TextStyle="[DlgTitleFont]" Order="900" TextLocId="Control.Text.FolderDlg#Title" MsiKey="FolderDlg#Title"/>
-    <ROW Dialog_="FolderDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="40" Attributes="3" Text="Для установки в эту папку, нажмите кнопку &quot;[Text_Next]&quot;. Чтобы установить в другую папку, введите ее ниже, или нажмите кнопку &quot;Обзор&quot;, чтобы указать ее." Order="1000" TextLocId="Control.Text.FolderDlg#Text" MsiKey="FolderDlg#Text"/>
+    <ROW Dialog_="FolderDlg" Control="Text" Type="Text" X="26" Y="56" Width="320" Height="40" Attributes="3" Text="Для установки в эту папку, нажмите кнопку &quot;[Text_Next]&quot;. Чтобы установить в другую папку, введите ее ниже, или нажмите кнопку &quot;Обзор&quot;, чтобы указать ее." Order="1000" TextLocId="Control.Text.FolderDlg#Text" MsiKey="FolderDlg#Text"/>
     <ROW Dialog_="FolderDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Выбор папки для установки [ProductName]." Order="1100" TextLocId="Control.Text.FolderDlg#Description" MsiKey="FolderDlg#Description"/>
     <ROW Dialog_="FolderDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="1200" MsiKey="FolderDlg#BannerLine"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeButton" Type="PushButton" X="50" Y="65" Width="38" Height="38" Attributes="7864323" Text="[CustomSetupIcon]" Help="Изменить установку|" Order="200" HelpLocId="Control.Help.MaintenanceTypeDlg#ChangeButton" MsiKey="MaintenanceTypeDlg#ChangeButton"/>
@@ -226,24 +235,6 @@
     <ROW Dialog_="OutOfRbDiskDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="800" MsiKey="OutOfRbDiskDlg#BannerLine"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="VolumeList" Type="VolumeCostList" X="20" Y="140" Width="330" Height="80" Attributes="4587527" Text="{120}{70}{70}{70}{70}" Order="900" TextLocId="Control.Text.OutOfRbDiskDlg#VolumeList" MsiKey="OutOfRbDiskDlg#VolumeList"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Недостаточно места на диске" TextStyle="[DlgTitleFont]" Order="1000" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
-    <ROW Dialog_="PgresDlg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
-    <ROW Dialog_="PgresDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
-    <ROW Dialog_="PgresDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PgresDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
-    <ROW Dialog_="PgresDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
-    <ROW Dialog_="PgresDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
-    <ROW Dialog_="PgresDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Установка базы данных в PostgresSql " Order="700"/>
-    <ROW Dialog_="PgresDlg" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Cистема управления базами данных" TextStyle="[DlgTitleFont]" Order="800"/>
-    <ROW Dialog_="PgresDlg" Control="Edit_1" Type="Edit" X="131" Y="79" Width="145" Height="18" Attributes="3" Property="DB_ADDRESS" Text="{260}" Order="900" ExtData="localhost"/>
-    <ROW Dialog_="PgresDlg" Control="Text_1" Type="Text" X="25" Y="83" Width="67" Height="10" Attributes="65539" Property="TEXT_1_PROP" Text="IP адрес сервера Postgres" Order="1000"/>
-    <ROW Dialog_="PgresDlg" Control="Edit_2" Type="Edit" X="131" Y="104" Width="72" Height="18" Attributes="19" Property="DB_PORT" Text="localhost" Order="1100" ExtData="localhost"/>
-    <ROW Dialog_="PgresDlg" Control="Text_2" Type="Text" X="25" Y="109" Width="54" Height="10" Attributes="65539" Property="TEXT_1_PROP_1" Text="Порт сервера Postgres" Order="1200"/>
-    <ROW Dialog_="PgresDlg" Control="Edit_3" Type="Edit" X="131" Y="142" Width="145" Height="18" Attributes="3" Property="DB_USER" Text="{260}" Order="1300" ExtData="localhost"/>
-    <ROW Dialog_="PgresDlg" Control="Text_3" Type="Text" X="25" Y="142" Width="75" Height="10" Attributes="65539" Property="TEXT_1_PROP_2" Text="Имя пользователя" Order="1400"/>
-    <ROW Dialog_="PgresDlg" Control="Edit_4" Type="Edit" X="131" Y="169" Width="145" Height="18" Attributes="2097155" Property="DB_PWD" Text="{260}" Order="1500"/>
-    <ROW Dialog_="PgresDlg" Control="Text_4" Type="Text" X="25" Y="169" Width="67" Height="10" Attributes="65539" Property="TEXT_1_PROP_3" Text="Пароль" Order="1600"/>
-    <ROW Dialog_="PgresDlg" Control="PushButton_1" Type="PushButton" X="15" Y="208" Width="89" Height="16" Attributes="3" Text="Тест соединения" Order="1700"/>
-    <ROW Dialog_="PgresDlg" Control="Text_5" Type="Text" X="131" Y="208" Width="223" Height="10" Attributes="65539" Property="LBL_RESULT" Text="[LBL_RESULT]" Order="1800"/>
     <ROW Dialog_="ProgressDlg" Control="BannerBitmap" Type="Bitmap" X="5" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="200" MsiKey="ProgressDlg#BannerBitmap"/>
     <ROW Dialog_="ProgressDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="ProgressDlg#Back" Options="1"/>
     <ROW Dialog_="ProgressDlg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Next]" Order="500" TextLocId="-" MsiKey="ProgressDlg#Next" Options="1"/>
@@ -255,10 +246,19 @@
     <ROW Dialog_="ProgressDlg" Control="ProgressBar" Type="ProgressBar" X="35" Y="115" Width="300" Height="10" Attributes="65537" Text="Выполнено" Order="1100" TextLocId="Control.Text.ProgressDlg#ProgressBar" MsiKey="ProgressDlg#ProgressBar"/>
     <ROW Dialog_="VerifyReadyDlg" Control="BannerBitmap" Type="Bitmap" X="5" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="300" MsiKey="VerifyReadyDlg#BannerBitmap"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="500" TextLocId="-" MsiKey="VerifyReadyDlg#Back" Options="1"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="40" Attributes="196611" Text="Нажмите кнопку &quot;Установить&quot;, чтобы начать установку. Если вы хотите просмотреть или изменить какие-либо параметры установки, нажмите кнопку &quot;Назад&quot;, чтобы завершить работу мастера нажмите кнопку &quot;Отмена&quot;." Order="600" TextLocId="Control.Text.VerifyReadyDlg#Text" MsiKey="VerifyReadyDlg#Text"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text" Type="Text" X="26" Y="56" Width="320" Height="40" Attributes="196611" Text="Нажмите кнопку &quot;Установить&quot;, чтобы начать установку. Если вы хотите просмотреть или изменить какие-либо параметры установки, нажмите кнопку &quot;Назад&quot;, чтобы завершить работу мастера нажмите кнопку &quot;Отмена&quot;." Order="600" TextLocId="Control.Text.VerifyReadyDlg#Text" MsiKey="VerifyReadyDlg#Text"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Description" Type="Text" X="25" Y="23" Width="304" Height="20" Attributes="196611" Text="Мастер готов выполнить установку [ProductName]." Order="700" TextLocId="Control.Text.VerifyReadyDlg#Description" MsiKey="VerifyReadyDlg#Description"/>
     <ROW Dialog_="VerifyReadyDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="800" MsiKey="VerifyReadyDlg#BannerLine"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Title" Type="Text" X="15" Y="6" Width="304" Height="15" Attributes="196611" Text="Все готово для начала установки" TextStyle="[DlgTitleFont]" Order="900" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#Title"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="PushButton_1" Type="PushButton" X="272" Y="209" Width="80" Height="17" Attributes="3" Text="Тест соединения" Order="1000"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Edit_1" Type="Edit" X="171" Y="104" Width="160" Height="18" Attributes="3" Property="DB_ADDRESS" Text="{260}" Order="1100"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Edit_2" Type="Edit" X="173" Y="131" Width="89" Height="18" Attributes="3" Property="DB_PORT" Text="{260}" Order="1200"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Edit_3" Type="Edit" X="173" Y="158" Width="140" Height="18" Attributes="3" Property="DB_USER" Text="{260}" Order="1300"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Edit_4" Type="Edit" X="173" Y="185" Width="138" Height="18" Attributes="2097155" Property="DB_PWD" Text="{260}" Order="1400"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text_1" Type="Text" X="21" Y="109" Width="107" Height="11" Attributes="65539" Text="Адрес сервера" Order="1500"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text_2" Type="Text" X="22" Y="134" Width="107" Height="11" Attributes="65539" Property="TEXT_1_PROP_1" Text="Порт сервера" Order="1600"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text_3" Type="Text" X="23" Y="161" Width="107" Height="11" Attributes="65539" Property="TEXT_1_PROP_2" Text="Пользователь" Order="1700"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text_4" Type="Text" X="23" Y="187" Width="107" Height="11" Attributes="65539" Property="TEXT_1_PROP_3" Text="Пароль" Order="1800"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="BannerBitmap" Type="Bitmap" X="5" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400" MsiKey="VerifyRemoveDlg#BannerBitmap"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Удалить [ProductName]" TextStyle="DlgFontBold8" Order="600" TextLocId="Control.Text.VerifyRemoveDlg#Title" MsiKey="VerifyRemoveDlg#Title"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="60" Attributes="3" Text="Нажмите кнопку &quot;Удалить&quot;, чтобы удалить [ProductName] с вашего компьютера.  Если вы хотите просмотреть или изменить параметры установки, нажмите кнопку &quot;Назад&quot;. Нажмите кнопку &quot;Отмена&quot; для выхода из мастера." Order="700" TextLocId="Control.Text.VerifyRemoveDlg#Text" MsiKey="VerifyRemoveDlg#Text"/>
@@ -274,14 +274,14 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="PgresDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PgresDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL AND ( DB_RESULT=1 )" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
     <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="195"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
@@ -293,44 +293,44 @@
     <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="196"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
     <ROW Dialog_="NewDialog" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="PgresDlg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="PushButton_1" Event="DoAction" Argument="CustomAction1.CA.dll" Condition="AI_INSTALL" Ordering="2"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RemoveTempFiles" Condition="1" Ordering="102"/>
     <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_RemoveTempFiles" Condition="1" Ordering="101"/>
-    <ROW Dialog_="PgresDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="10"/>
-    <ROW Dialog_="PgresDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="PgresDlg" Control_="PushButton_1" Event="DoAction" Argument="CustomAction1.CA.dll" Condition="AI_INSTALL" Ordering="0"/>
-    <ROW Dialog_="PgresDlg" Control_="PushButton_1" Event="DoAction" Argument="UpdateMsiEditControls" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="PushButton_1" Event="[DB_TEST]" Argument="1" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="[DB_TEST]" Argument="0" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="DoAction" Argument="CustomAction1.CA.dll" Condition="AI_INSTALL" Ordering="198"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_RemoveAllTempFiles" Target="[AI_TEMP_FILE_ROLLBACK_INFO]"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
     <ROW Action="AI_ExtractTempFiles" Type="1" Source="tempFiles.dll" Target="ExtractTempFiles"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_RemoveAllTempFiles" Type="1281" Source="tempFiles.dll" Target="RemoveAllTempFiles" AdditionalSeq="AI_DATA_SETTER"/>
     <ROW Action="AI_RemoveTempFiles" Type="1" Source="tempFiles.dll" Target="RemoveTempFiles" WithoutSeq="true"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="CustomAction1.CA.dll" Type="1" Source="CustomAction1.CA.dll" Target="CustomAction1" WithoutSeq="true"/>
+    <ROW Action="CustomAction1.CA.dll" Type="65" Source="CtmAction.CA.dll" Target="ActionInstallDB" WithoutSeq="true"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
-    <ROW Action="TestDbConnection" Type="66" Source="viewer.exe" Target="/RunAsAdmin /HideWindow &quot;[&amp;ulcinstalldb.exe]&quot; -a [DB_ADDRESS] -p [DB_PORT] -u [DB_USER] -w [DB_PWD] -t 1" WithoutSeq="true" Options="1"/>
     <ROW Action="UpdateMsiEditControls" Type="1" Source="aicustact.dll" Target="UpdateMsiEditControls" WithoutSeq="true" Options="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
     <ROW Dialog="NewDialog" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
-    <ROW Dialog="PgresDlg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="ServiceUlc" Component_="APPDIR"/>
@@ -364,17 +364,21 @@
     <ROW Feature_="ServiceUlc" Component_="System.ValueTuple.dll"/>
     <ROW Feature_="ServiceUlc" Component_="UlcInstallDB.exe"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="PCIcard_preferences.exe" SourcePath="Z:\Graph\_Images\IconExperience_Collection\Collection 2 - Objects and People\ico-files\PCI-card_preferences.ico" Index="0"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1503"/>
-    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_ExtractTempFiles" Sequence="1001"/>
     <ROW Action="AI_RemoveTempFiles" Sequence="6601"/>
     <ROW Action="AI_RemoveAllTempFiles" Sequence="1502"/>
     <ROW Action="AI_DATA_SETTER" Sequence="1501"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
@@ -382,11 +386,15 @@
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_ExtractTempFiles" Sequence="1001"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="Нельзя установить [ProductName] на [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="Нельзя установить [ProductName] на [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 500)" Description="Нельзя установить [ProductName] на [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="AI_DETECTED_INTERNET_CONNECTION" Description="Для установки [ProductName] требуется активное подключение к Интернету. Пожалуйста, проверьте настройки прокси-сервера и конфигурации сети." DescriptionLocId="AI.LaunchCondition.Internet" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="VersionNT" Description="[ProductName] не может быть установлен на [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
@@ -396,6 +404,12 @@
     <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiServCtrlComponent">
+    <ROW ServiceControl="SmartUlcService.exe" Name="SmartUlcService.exe" Event="161" Wait="1" Component_="SmartUlcService.exe"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiServInstComponent">
+    <ROW ServiceInstall="SmartUlcService.exe" Name="SmartUlcService.exe" DisplayName="SmartUlcService" ServiceType="16" StartType="2" ErrorControl="1" Component_="SmartUlcService.exe" Description="Система диагностики контроллеров ULC"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
   </COMPONENT>
@@ -404,27 +418,30 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.TempFileComponent">
-    <ROW FileId="commandline.dll" Name="COMMAN~1.DLL|CommandLine.dll" Directory_="TempFolder" Property="AI_COMMANDLINE.DLL" Options="0" Data="db\CommandLine.dll"/>
-    <ROW FileId="microsoft.bcl.asyncinterfaces.dll" Name="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Directory_="TempFolder" Property="AI_MICROSOFT.BCL.ASYNCINTERFACES.DLL" Options="0" Data="db\Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW FileId="microsoft.bcl.hashcode.dll" Name="MICROS~2.DLL|Microsoft.Bcl.HashCode.dll" Directory_="TempFolder" Property="AI_MICROSOFT.BCL.HASHCODE.DLL" Options="0" Data="db\Microsoft.Bcl.HashCode.dll"/>
-    <ROW FileId="npgsql.dll" Name="Npgsql.dll" Directory_="TempFolder" Property="AI_NPGSQL.DLL" Options="0" Data="db\Npgsql.dll"/>
-    <ROW FileId="servicestack.common.dll" Name="SERVIC~1.DLL|ServiceStack.Common.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.COMMON.DLL" Options="0" Data="db\ServiceStack.Common.dll"/>
-    <ROW FileId="servicestack.interfaces.dll" Name="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.INTERFACES.DLL" Options="0" Data="db\ServiceStack.Interfaces.dll"/>
-    <ROW FileId="servicestack.ormlite.dll" Name="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.ORMLITE.DLL" Options="0" Data="db\ServiceStack.OrmLite.dll"/>
-    <ROW FileId="servicestack.ormlite.postgresql.dll" Name="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.ORMLITE.POSTGRESQL.DLL" Options="0" Data="db\ServiceStack.OrmLite.PostgreSQL.dll"/>
-    <ROW FileId="servicestack.text.dll" Name="SERVIC~5.DLL|ServiceStack.Text.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.TEXT.DLL" Options="0" Data="db\ServiceStack.Text.dll"/>
-    <ROW FileId="system.buffers.dll" Name="SYSTEM~1.DLL|System.Buffers.dll" Directory_="TempFolder" Property="AI_SYSTEM.BUFFERS.DLL" Options="0" Data="db\System.Buffers.dll"/>
-    <ROW FileId="system.collections.immutable.dll" Name="SYSTEM~2.DLL|System.Collections.Immutable.dll" Directory_="TempFolder" Property="AI_SYSTEM.COLLECTIONS.IMMUTABLE.DLL" Options="0" Data="db\System.Collections.Immutable.dll"/>
-    <ROW FileId="system.diagnostics.diagnosticsource" Name="SYSTEM~3.DLL|System.Diagnostics.DiagnosticSource.dll" Directory_="TempFolder" Property="AI_SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE" Options="0" Data="db\System.Diagnostics.DiagnosticSource.dll"/>
-    <ROW FileId="system.memory.dll" Name="SYSTEM~4.DLL|System.Memory.dll" Directory_="TempFolder" Property="AI_SYSTEM.MEMORY.DLL" Options="0" Data="db\System.Memory.dll"/>
-    <ROW FileId="system.numerics.vectors.dll" Name="SYSTEM~5.DLL|System.Numerics.Vectors.dll" Directory_="TempFolder" Property="AI_SYSTEM.NUMERICS.VECTORS.DLL" Options="0" Data="db\System.Numerics.Vectors.dll"/>
-    <ROW FileId="system.runtime.compilerservices.uns" Name="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Directory_="TempFolder" Property="AI_SYSTEM.RUNTIME.COMPILERSERVICES.UNS" Options="0" Data="db\System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW FileId="system.text.encodings.web.dll" Name="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Directory_="TempFolder" Property="AI_SYSTEM.TEXT.ENCODINGS.WEB.DLL" Options="0" Data="db\System.Text.Encodings.Web.dll"/>
-    <ROW FileId="system.text.json.dll" Name="SYSTEM~8.DLL|System.Text.Json.dll" Directory_="TempFolder" Property="AI_SYSTEM.TEXT.JSON.DLL" Options="0" Data="db\System.Text.Json.dll"/>
-    <ROW FileId="system.threading.channels.dll" Name="SYSTEM~9.DLL|System.Threading.Channels.dll" Directory_="TempFolder" Property="AI_SYSTEM.THREADING.CHANNELS.DLL" Options="0" Data="db\System.Threading.Channels.dll"/>
-    <ROW FileId="system.threading.tasks.extensions.d" Name="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Directory_="TempFolder" Property="AI_SYSTEM.THREADING.TASKS.EXTENSIONS.D" Options="0" Data="db\System.Threading.Tasks.Extensions.dll"/>
-    <ROW FileId="system.valuetuple.dll" Name="SYSTE~11.DLL|System.ValueTuple.dll" Directory_="TempFolder" Property="AI_SYSTEM.VALUETUPLE.DLL" Options="0" Data="db\System.ValueTuple.dll"/>
-    <ROW FileId="ulcinstalldb.exe" Name="ULCINS~1.EXE|UlcInstallDB.exe" Directory_="TempFolder" Property="AI_ULCINSTALLDB.EXE" Options="0" Data="db\UlcInstallDB.exe"/>
-    <ROW FileId="ulcinstalldb.exe.config" Name="ULCINS~1.CON|UlcInstallDB.exe.config" Directory_="TempFolder" Property="AI_ULCINSTALLDB.EXE.CONFIG" Options="0" Data="db\UlcInstallDB.exe.config"/>
+    <ROW FileId="commandline.dll" Name="COMMAN~1.DLL|CommandLine.dll" Directory_="TempFolder" Property="AI_COMMANDLINE.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\CommandLine.dll"/>
+    <ROW FileId="microsoft.bcl.asyncinterfaces.dll" Name="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Directory_="TempFolder" Property="AI_MICROSOFT.BCL.ASYNCINTERFACES.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW FileId="microsoft.bcl.hashcode.dll" Name="MICROS~2.DLL|Microsoft.Bcl.HashCode.dll" Directory_="TempFolder" Property="AI_MICROSOFT.BCL.HASHCODE.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\Microsoft.Bcl.HashCode.dll"/>
+    <ROW FileId="microsoft.deployment.windowsinstall" Name="MICROS~3.DLL|Microsoft.Deployment.WindowsInstaller.dll" Directory_="TempFolder" Property="AI_MICROSOFT.DEPLOYMENT.WINDOWSINSTALL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\Microsoft.Deployment.WindowsInstaller.dll"/>
+    <ROW FileId="npgsql.dll" Name="Npgsql.dll" Directory_="TempFolder" Property="AI_NPGSQL.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\Npgsql.dll"/>
+    <ROW FileId="servicestack.common.dll" Name="SERVIC~1.DLL|ServiceStack.Common.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.COMMON.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\ServiceStack.Common.dll"/>
+    <ROW FileId="servicestack.interfaces.dll" Name="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.INTERFACES.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\ServiceStack.Interfaces.dll"/>
+    <ROW FileId="servicestack.ormlite.dll" Name="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.ORMLITE.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\ServiceStack.OrmLite.dll"/>
+    <ROW FileId="servicestack.ormlite.postgresql.dll" Name="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.ORMLITE.POSTGRESQL.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\ServiceStack.OrmLite.PostgreSQL.dll"/>
+    <ROW FileId="servicestack.text.dll" Name="SERVIC~5.DLL|ServiceStack.Text.dll" Directory_="TempFolder" Property="AI_SERVICESTACK.TEXT.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\ServiceStack.Text.dll"/>
+    <ROW FileId="system.buffers.dll" Name="SYSTEM~1.DLL|System.Buffers.dll" Directory_="TempFolder" Property="AI_SYSTEM.BUFFERS.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Buffers.dll"/>
+    <ROW FileId="system.collections.immutable.dll" Name="SYSTEM~2.DLL|System.Collections.Immutable.dll" Directory_="TempFolder" Property="AI_SYSTEM.COLLECTIONS.IMMUTABLE.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Collections.Immutable.dll"/>
+    <ROW FileId="system.diagnostics.diagnosticsource" Name="SYSTEM~3.DLL|System.Diagnostics.DiagnosticSource.dll" Directory_="TempFolder" Property="AI_SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW FileId="system.memory.dll" Name="SYSTEM~4.DLL|System.Memory.dll" Directory_="TempFolder" Property="AI_SYSTEM.MEMORY.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Memory.dll"/>
+    <ROW FileId="system.numerics.vectors.dll" Name="SYSTEM~5.DLL|System.Numerics.Vectors.dll" Directory_="TempFolder" Property="AI_SYSTEM.NUMERICS.VECTORS.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Numerics.Vectors.dll"/>
+    <ROW FileId="system.runtime.compilerservices.uns" Name="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Directory_="TempFolder" Property="AI_SYSTEM.RUNTIME.COMPILERSERVICES.UNS" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW FileId="system.text.encodings.web.dll" Name="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Directory_="TempFolder" Property="AI_SYSTEM.TEXT.ENCODINGS.WEB.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Text.Encodings.Web.dll"/>
+    <ROW FileId="system.text.json.dll" Name="SYSTEM~8.DLL|System.Text.Json.dll" Directory_="TempFolder" Property="AI_SYSTEM.TEXT.JSON.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Text.Json.dll"/>
+    <ROW FileId="system.threading.channels.dll" Name="SYSTEM~9.DLL|System.Threading.Channels.dll" Directory_="TempFolder" Property="AI_SYSTEM.THREADING.CHANNELS.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Threading.Channels.dll"/>
+    <ROW FileId="system.threading.tasks.extensions.d" Name="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Directory_="TempFolder" Property="AI_SYSTEM.THREADING.TASKS.EXTENSIONS.D" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.Threading.Tasks.Extensions.dll"/>
+    <ROW FileId="system.valuetuple.dll" Name="SYSTE~11.DLL|System.ValueTuple.dll" Directory_="TempFolder" Property="AI_SYSTEM.VALUETUPLE.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\System.ValueTuple.dll"/>
+    <ROW FileId="ulcinstalldb.dll" Name="ULCINS~1.DLL|UlcInstallDB.dll" Directory_="TempFolder" Property="AI_ULCINSTALLDB.DLL" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\UlcInstallDB.dll"/>
+    <ROW FileId="ulcinstalldb.dll.config" Name="ULCINS~1.CON|UlcInstallDB.dll.config" Directory_="TempFolder" Property="AI_ULCINSTALLDB.DLL.CONFIG" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\UlcInstallDB.dll.config"/>
+    <ROW FileId="ulcinstalldb.exe" Name="ULCINS~1.EXE|UlcInstallDB.exe" Directory_="TempFolder" Property="AI_ULCINSTALLDB.EXE" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\UlcInstallDB.exe"/>
+    <ROW FileId="ulcinstalldb.exe.config" Name="ULCINS~2.CON|UlcInstallDB.exe.config" Directory_="TempFolder" Property="AI_ULCINSTALLDB.EXE.CONFIG" Options="0" Data="..\..\..\..\SmartUlcManager\Msi\service\db\UlcInstallDB.exe.config"/>
   </COMPONENT>
 </DOCUMENT>

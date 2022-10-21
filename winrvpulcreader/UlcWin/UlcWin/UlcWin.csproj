@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\out\Debug\</OutputPath>
+    <OutputPath>..\out\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -741,4 +741,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /S/Q *.xml *.pdb
+xcopy /S /I /Q /Y /F ..\UlcWin\utils\* .\
+xcopy /S /I /Q /Y /F *.* ..\..\..\Msi\client\soft</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rmdir /s/q .\out
+rmdir /s/q ..\..\..\Msi\client\soft</PreBuildEvent>
+  </PropertyGroup>
 </Project>

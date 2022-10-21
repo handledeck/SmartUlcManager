@@ -171,7 +171,9 @@ namespace UlcDbInstall
           };
           string spu = DBAuthUtils.Encrypt(mainUser.level.ToString(), mainUser.usr);
           mainUser.pwd = spu;
-          List<MainUser> lst = db.Select<MainUser>(x => x.usr.Equals(__opts.PsgUser));// this.txtDbSprUser.Text); ; ;//);
+          
+          List<MainUser> lst = db.Select<MainUser>(x => x.usr == __opts.PsgUser);
+          //List<MainUser> lst = db.Select<MainUser>(x => x.usr.Equals(__opts.PsgUser));// this.txtDbSprUser.Text); ; ;//);
           if (lst.Count == 0)
             db.Insert<MainUser>(mainUser);
           if (!CheckForRole("ulc_read", EnumRole.READ, db))

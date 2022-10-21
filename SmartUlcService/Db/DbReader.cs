@@ -769,7 +769,7 @@ namespace InterUlc.Db
         string sql_ins = "INSERT INTO main_ctrlevent(\"event_time\", event_type, event_level, ctrl_id,event_msg) " +
           "VALUES(@event_time, @event_type, @event_level, @ctrl_id,@event_msg)";
         cmd_ins = new NpgsqlCommand(sql_ins, this.__dbConnection);
-        cmd_ins.Parameters.Add(new NpgsqlParameter("@event_time", NpgsqlTypes.NpgsqlDbType.TimestampTz));
+        cmd_ins.Parameters.Add(new NpgsqlParameter("@event_time", NpgsqlTypes.NpgsqlDbType.TimestampTZ));
         //cmd_ins.Parameters[0].Value = lstColumns.__event_time.ToArray();
         cmd_ins.Parameters.Add(new NpgsqlParameter("@event_type", NpgsqlDbType.Integer));
         //cmd_ins.Parameters[1].Value = lstColumns.__event_type.ToArray();
