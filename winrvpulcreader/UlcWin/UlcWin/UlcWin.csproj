@@ -61,6 +61,10 @@
     <Reference Include="Npgsql, Version=5.0.10.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.5.0.10\lib\netstandard2.0\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="ObjectListView, Version=2.5.1.28942, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ObjectListView.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Common, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Common.6.0.2\lib\netstandard2.0\ServiceStack.Common.dll</HintPath>
     </Reference>
@@ -178,6 +182,24 @@
     <Compile Include="Controls\ChBoxCombo\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MeterProgress\MeterProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MeterProgress\MeterProgress.Designer.cs">
+      <DependentUpon>MeterProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UlcMeterComponet\MeterInfo.cs" />
+    <Compile Include="Controls\UlcMeterComponet\Meters.cs" />
+    <Compile Include="Controls\UlcMeterComponet\MeterUtils.cs" />
+    <Compile Include="Controls\UlcMeterComponet\MeterValue.cs" />
+    <Compile Include="Controls\UlcMeterComponet\TreeListViewModel.cs" />
+    <Compile Include="Controls\UlcMeterComponet\UlcTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UlcMeterComponet\UlcTreeView.Designer.cs">
+      <DependentUpon>UlcTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UlcMeterComponet\ValueDateTime.cs" />
     <Compile Include="DB\DBAuthUtils.cs" />
     <Compile Include="DB\DbLogMsg.cs" />
     <Compile Include="DB\MeterData.cs" />
@@ -428,6 +450,12 @@
     </Compile>
     <EmbeddedResource Include="Controls\ChBoxCombo\PopupComboBox.resx">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MeterProgress\MeterProgress.resx">
+      <DependentUpon>MeterProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UlcMeterComponet\UlcTreeView.resx">
+      <DependentUpon>UlcTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Edit\ATCommForm.resx">
       <DependentUpon>ATCommForm.cs</DependentUpon>

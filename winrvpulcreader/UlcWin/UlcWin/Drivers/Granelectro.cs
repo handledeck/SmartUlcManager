@@ -15,6 +15,7 @@ namespace UlcWin.Drivers
     public const byte HEADER = 4;
     const byte LEN_OFFSET = 16;
     public const byte LEN_CRC = 2;
+    public const byte ACCUMULATED_ENERGY_DAY = 42;
     public Granelectro()
     {
       //int lenght = HEADER + LEN_OFFSET + LEN_CRC;
@@ -25,7 +26,7 @@ namespace UlcWin.Drivers
     {
       exception = null;
     int lenght = HEADER + LEN_OFFSET + LEN_CRC;
-    byte[] bWrite = PreparePacket(address, FUNCTION, VOLTAGE, 0, 0, 0);
+    byte[] bWrite = PreparePacket(address, FUNCTION, ACCUMULATED_ENERGY_DAY, 0, 0, 0);
     List<float> lstF=null;
       
       NetworkStream stream = client.GetStream();

@@ -60,6 +60,8 @@ namespace UlcWin
       this.tsStsIMEI.Visible = false;
       this.tsLblFind.Visible = false;
       this.LstViewItm.Visible = false;
+      this.tsResView.Visible = false;
+      this.ulcMeterTreeView.Visible = false;
       __dtp = new DateTimePicker();
       __dtp.ValueChanged += __dtp_ValueChanged;
       this.checkBoxComboBox1.DropDownHeight = 390;
@@ -78,6 +80,7 @@ namespace UlcWin
       this.tsResView.Items.Insert(1, dtCtlCbBox);
       ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.__tsAutoCompleteCmb);
       dtCtrlCbFind.Alignment = ToolStripItemAlignment.Left;
+      dtCtrlCbFind.Margin = new Padding(100, 0, 0, 0);
       this.tsResView.Items.Insert(9, dtCtrlCbFind);
       //this.__tsAutoCompleteCmb.Visible = false;
       this.tsEvent.Items.Insert(1, dtCtl);
@@ -708,6 +711,8 @@ namespace UlcWin
       {
         this.usrFesStatistics1.Visible = false;
         this.LstViewItm.Visible = true;
+        tsResView.Visible = true;
+        ulcMeterTreeView.Visible = true;
         this.tsComboBoxDev.Enabled = true;
         //this.tsResView.Visible = false;
         e.Node.SelectedImageIndex = 18;
@@ -722,7 +727,7 @@ namespace UlcWin
         this.LstViewItm.Items.Clear();
         __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,
           __sel_node.Text);
-
+        this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
 
         this.tsMnuTreeAddItem.Enabled = false;
         this.tsTreeBtnAdd.Enabled = false;
@@ -766,6 +771,8 @@ namespace UlcWin
       else
       {
         this.LstViewItm.Visible = false;
+        tsResView.Visible = false;
+        ulcMeterTreeView.Visible = false;
         this.tsLblFind.Visible = false;
         //this.__tsAutoCompleteCmb.Visible = false;
         this.treeMenu.Items[0].Enabled = true;
@@ -3366,6 +3373,11 @@ namespace UlcWin
     private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
     {
       this.treeView1.SelectedNode = e.Node;
+      int x = 0;
+    }
+
+    private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+    {
       int x = 0;
     }
   }

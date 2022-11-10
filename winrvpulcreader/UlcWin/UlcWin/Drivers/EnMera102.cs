@@ -33,8 +33,6 @@ namespace UlcWin.Drivers
       bool readed = true;
       NetworkStream requestInfo = client.GetStream();
       requestInfo.ReadTimeout = 10000;
-
-
       try
       {
         requestInfo.Write(buf, 0, buf.Length);

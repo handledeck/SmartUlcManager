@@ -72,8 +72,9 @@
       this.tsTreeBtnAddRoot = new System.Windows.Forms.ToolStripButton();
       this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.tabItemsControl = new System.Windows.Forms.TabControl();
+      this.tabPage1 = new System.Windows.Forms.TabPage();
       this.LstViewItm = new System.Windows.Forms.ListView();
       this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -110,8 +111,9 @@
       this.ctxMenuAtCommand = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxNotTrueMeter = new System.Windows.Forms.ToolStripMenuItem();
-      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
+      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
       this.tsResView = new System.Windows.Forms.ToolStrip();
+      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
       this.tsComboBoxDev = new System.Windows.Forms.ToolStripComboBox();
       this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
       this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
@@ -125,7 +127,9 @@
       this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
       this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
       this.tsUpdate = new System.Windows.Forms.ToolStripButton();
-      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
+      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
+      this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
       this.LstViewEvent = new System.Windows.Forms.ListView();
       this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -155,8 +159,11 @@
       this.splitContainer2.Panel2.SuspendLayout();
       this.splitContainer2.SuspendLayout();
       this.panel1.SuspendLayout();
+      this.tabItemsControl.SuspendLayout();
+      this.tabPage1.SuspendLayout();
       this.LvMenu.SuspendLayout();
       this.tsResView.SuspendLayout();
+      this.tabPage2.SuspendLayout();
       this.tsEvent.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
       this.SuspendLayout();
@@ -620,9 +627,7 @@
       // 
       // splitContainer2.Panel1
       // 
-      this.splitContainer2.Panel1.Controls.Add(this.checkBoxComboBox1);
       this.splitContainer2.Panel1.Controls.Add(this.panel1);
-      this.splitContainer2.Panel1.Controls.Add(this.tsResView);
       // 
       // splitContainer2.Panel2
       // 
@@ -633,30 +638,41 @@
       this.splitContainer2.SplitterDistance = 291;
       this.splitContainer2.TabIndex = 0;
       // 
-      // checkBoxComboBox1
-      // 
-      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
-      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
-      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.checkBoxComboBox1.FormattingEnabled = true;
-      this.checkBoxComboBox1.Location = new System.Drawing.Point(126, 0);
-      this.checkBoxComboBox1.MaxDropDownItems = 15;
-      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
-      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
-      this.checkBoxComboBox1.TabIndex = 3;
-      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
-      // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.LstViewItm);
-      this.panel1.Controls.Add(this.usrFesStatistics1);
+      this.panel1.Controls.Add(this.tabItemsControl);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(0, 25);
+      this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
       this.panel1.Padding = new System.Windows.Forms.Padding(1);
-      this.panel1.Size = new System.Drawing.Size(1152, 266);
+      this.panel1.Size = new System.Drawing.Size(1152, 291);
       this.panel1.TabIndex = 2;
+      // 
+      // tabItemsControl
+      // 
+      this.tabItemsControl.Controls.Add(this.tabPage1);
+      this.tabItemsControl.Controls.Add(this.tabPage2);
+      this.tabItemsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabItemsControl.Location = new System.Drawing.Point(1, 1);
+      this.tabItemsControl.Name = "tabItemsControl";
+      this.tabItemsControl.SelectedIndex = 0;
+      this.tabItemsControl.Size = new System.Drawing.Size(1150, 289);
+      this.tabItemsControl.TabIndex = 2;
+      this.tabItemsControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+      // 
+      // tabPage1
+      // 
+      this.tabPage1.Controls.Add(this.LstViewItm);
+      this.tabPage1.Controls.Add(this.checkBoxComboBox1);
+      this.tabPage1.Controls.Add(this.tsResView);
+      this.tabPage1.Controls.Add(this.usrFesStatistics1);
+      this.tabPage1.Location = new System.Drawing.Point(4, 22);
+      this.tabPage1.Name = "tabPage1";
+      this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage1.Size = new System.Drawing.Size(1142, 263);
+      this.tabPage1.TabIndex = 0;
+      this.tabPage1.Text = "tabPage1";
+      this.tabPage1.UseVisualStyleBackColor = true;
       // 
       // LstViewItm
       // 
@@ -686,10 +702,10 @@
       this.LstViewItm.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.LstViewItm.FullRowSelect = true;
       this.LstViewItm.HideSelection = false;
-      this.LstViewItm.Location = new System.Drawing.Point(1, 1);
+      this.LstViewItm.Location = new System.Drawing.Point(3, 28);
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
-      this.LstViewItm.Size = new System.Drawing.Size(1150, 264);
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 232);
       this.LstViewItm.SmallImageList = this.imageList1;
       this.LstViewItm.TabIndex = 0;
       this.LstViewItm.UseCompatibleStateImageBehavior = false;
@@ -931,39 +947,44 @@
       this.ctxNotTrueMeter.Text = "Счетчики недоставерные";
       this.ctxNotTrueMeter.Click += new System.EventHandler(this.ctxNotTrueMeter_Click);
       // 
-      // usrFesStatistics1
+      // checkBoxComboBox1
       // 
-      this.usrFesStatistics1.AutoScroll = true;
-      this.usrFesStatistics1.AutoSize = true;
-      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
-      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrFesStatistics1.Location = new System.Drawing.Point(1, 1);
-      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
-      this.usrFesStatistics1.Name = "usrFesStatistics1";
-      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1150, 264);
-      this.usrFesStatistics1.TabIndex = 1;
-      this.usrFesStatistics1.Value = null;
-      this.usrFesStatistics1.Visible = false;
+      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
+      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
+      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.checkBoxComboBox1.FormattingEnabled = true;
+      this.checkBoxComboBox1.Location = new System.Drawing.Point(179, 3);
+      this.checkBoxComboBox1.MaxDropDownItems = 15;
+      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
+      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
+      this.checkBoxComboBox1.TabIndex = 3;
+      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
       // 
       // tsResView
       // 
       this.tsResView.BackColor = System.Drawing.SystemColors.ControlLight;
       this.tsResView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.tsResView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsLblFind,
             this.tsComboBoxDev,
             this.toolStripSeparator9,
             this.tsBtnExport,
             this.tsDwnUpdate,
             this.tsSelectedItems,
             this.tsBtnEventShowHide,
-            this.tsUpdate,
-            this.tsLblFind});
-      this.tsResView.Location = new System.Drawing.Point(0, 0);
+            this.tsUpdate});
+      this.tsResView.Location = new System.Drawing.Point(3, 3);
       this.tsResView.Name = "tsResView";
-      this.tsResView.Size = new System.Drawing.Size(1152, 25);
+      this.tsResView.Size = new System.Drawing.Size(1136, 25);
       this.tsResView.TabIndex = 1;
       this.tsResView.Text = "toolStrip2";
+      // 
+      // tsLblFind
+      // 
+      this.tsLblFind.Name = "tsLblFind";
+      this.tsLblFind.Size = new System.Drawing.Size(42, 22);
+      this.tsLblFind.Text = "Поиск";
       // 
       // tsComboBoxDev
       // 
@@ -1100,11 +1121,40 @@
       this.tsUpdate.Visible = false;
       this.tsUpdate.Click += new System.EventHandler(this.tsUpdate_Click);
       // 
-      // tsLblFind
+      // usrFesStatistics1
       // 
-      this.tsLblFind.Name = "tsLblFind";
-      this.tsLblFind.Size = new System.Drawing.Size(42, 22);
-      this.tsLblFind.Text = "Поиск";
+      this.usrFesStatistics1.AutoScroll = true;
+      this.usrFesStatistics1.AutoSize = true;
+      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
+      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrFesStatistics1.Location = new System.Drawing.Point(3, 3);
+      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
+      this.usrFesStatistics1.Name = "usrFesStatistics1";
+      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 257);
+      this.usrFesStatistics1.TabIndex = 1;
+      this.usrFesStatistics1.Value = null;
+      this.usrFesStatistics1.Visible = false;
+      // 
+      // tabPage2
+      // 
+      this.tabPage2.Controls.Add(this.ulcMeterTreeView);
+      this.tabPage2.Location = new System.Drawing.Point(4, 22);
+      this.tabPage2.Name = "tabPage2";
+      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage2.Size = new System.Drawing.Size(1142, 263);
+      this.tabPage2.TabIndex = 1;
+      this.tabPage2.Text = "tabPage2";
+      this.tabPage2.UseVisualStyleBackColor = true;
+      // 
+      // ulcMeterTreeView
+      // 
+      this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
+      this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
+      this.ulcMeterTreeView.Name = "ulcMeterTreeView";
+      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 257);
+      this.ulcMeterTreeView.TabIndex = 0;
       // 
       // LstViewEvent
       // 
@@ -1280,16 +1330,18 @@
       this.tsTreePanel.ResumeLayout(false);
       this.tsTreePanel.PerformLayout();
       this.splitContainer2.Panel1.ResumeLayout(false);
-      this.splitContainer2.Panel1.PerformLayout();
       this.splitContainer2.Panel2.ResumeLayout(false);
       this.splitContainer2.Panel2.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
       this.splitContainer2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
+      this.tabItemsControl.ResumeLayout(false);
+      this.tabPage1.ResumeLayout(false);
+      this.tabPage1.PerformLayout();
       this.LvMenu.ResumeLayout(false);
       this.tsResView.ResumeLayout(false);
       this.tsResView.PerformLayout();
+      this.tabPage2.ResumeLayout(false);
       this.tsEvent.ResumeLayout(false);
       this.tsEvent.PerformLayout();
       this.tsStatusLbl.ResumeLayout(false);
@@ -1412,6 +1464,10 @@
     private ui.UsrFesStatistics usrFesStatistics1;
         private System.Windows.Forms.ToolStripButton tsBtnEventLog;
     private System.Windows.Forms.ToolStripMenuItem ctxNotTrueMeter;
+        private System.Windows.Forms.TabControl tabItemsControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+    private GettingStartedTree.UlcTreeView ulcMeterTreeView;
   }
 }
 
