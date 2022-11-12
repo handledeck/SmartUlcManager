@@ -70,32 +70,40 @@ namespace GettingStartedTree
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          string sql = string.Format("select mn.id as idmain,mc.unit_type_id, mn.\"name\", mi.id, mi.ctrl_id, mi.parent_id,mi.ip ,mi.meter_type, mi.meter_factory, mv.value, mv.is_true,mv.date_time FROM meter_info mi " +
-                       "left join main_nodes mn on mn.id = mi.ctrl_id " +
-                       "left join main_ctrlinfo mc on mc.id =mn.id "+
-                       "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' where mi.parent_id ={1}",
-                       DateTime.Now.ToString("yyyy-MM-dd"),__parent_id);
+          //string sql = string.Format("select mn.id as idmain,mc.unit_type_id, mn.\"name\", mi.id, mi.ctrl_id, mi.parent_id,mi.ip ,mi.meter_type, mi.meter_factory, mv.value, mv.is_true,mv.date_time FROM meter_info mi " +
+          //             "left join main_nodes mn on mn.id = mi.ctrl_id " +
+          //             "left join main_ctrlinfo mc on mc.id =mn.id "+
+          //             "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' where mi.parent_id ={1}",
+          //             DateTime.Now.ToString("yyyy-MM-dd"),__parent_id);
+          string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home " +
+                                    "from meter_info mi "+
+                                    "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' "+
+                                    "left join main_nodes mn on mn.id = mi.ctrl_id "+
+                                    "left join main_ctrlinfo mc on mc.id = mi.ctrl_id "+
+                                    "where mi.parent_id = {1} and mn.active = 1", DateTime.Now.ToString("yyyy-MM-dd"), __parent_id);
           IDbCommand cmd = db.CreateCommand();
           cmd.CommandText = sql;
           var reader = cmd.ExecuteReader();
-          Random random = new Random();
+          //Random random = new Random();
           while (reader.Read())
           {
-            int idmain = (int)reader[0];
-            int unit_type_id = (int)reader[1];
-            string name = (string)reader[2];
-            int id = (int)reader[3];
-            int ctrl_id = (int)reader[4];
-            int parent_id = (int)reader[5];
-            string ip = (string)reader[6];
+            int id = (int)reader[0];
+            //int unit_type_id = (int)reader[1];
+            string name = (string)reader[1];
+            //int id = (int)reader[3];
+            //int ctrl_id = (int)reader[4];
+            //int parent_id = (int)reader[5];
+            string ip = (string)reader[2];
             //DateTime dt = (DateTime)reader[3];
-            if (reader[7].GetType() == typeof(DBNull) || reader[8].GetType() == typeof(DBNull))
+            if (reader[3].GetType() == typeof(DBNull) || reader[4].GetType() == typeof(DBNull))
               continue;
-            string meter_type = (string)reader[7];
-            string meter_factory = (string)reader[8];
-            double value = reader[9].GetType() == typeof(DBNull) ? 0 : (double)reader[9];
-            bool is_true = reader[10].GetType() == typeof(DBNull) ? false : (bool)reader[10];
-            DateTime dt = reader[11].GetType() == typeof(DBNull) ? DateTime.MinValue : (DateTime)reader[11];
+            string meter_type = (string)reader[3];
+            string meter_factory = (string)reader[4];
+            DateTime dt = reader[5].GetType() == typeof(DBNull) ? DateTime.MinValue : (DateTime)reader[5];
+            double value = reader[6].GetType() == typeof(DBNull) ? 0 : (double)reader[6];
+            bool is_true = reader[7].GetType() == typeof(DBNull) ? false : (bool)reader[7];
+            int unit_type_id = (int)reader[8];
+            int id_home= (int)reader[9];
             TreeListNodeModel mt = new TreeListNodeModel
             {
               name = name,
@@ -104,18 +112,17 @@ namespace GettingStartedTree
             };
             TreeListNodeModel treeListNodeModel = new TreeListNodeModel()
             {
-              id = id,
+              ctrl_id = id,
               name = meter_type,
-              date_time = DateTime.Now,
+              date_time = dt,
               ip = ip,
               is_true = is_true,
               value = value,
               meter_factory = meter_factory,
               meter_type = meter_type,
               unit_type_id = unit_type_id
-
             };
-            if (!dic.ContainsKey(idmain))
+            if (!dic.ContainsKey(id_home))
             {
               mt.Nodes = new List<TreeListNodeModel>();
               mt.Nodes.Add(treeListNodeModel);
@@ -123,15 +130,14 @@ namespace GettingStartedTree
               {
                 mt.is_true = false;
               }
-              dic.Add(idmain, mt);
-
+              dic.Add(id_home, mt);
             }
             else
             {
-              dic[idmain].Nodes.Add(treeListNodeModel);
+              dic[id_home].Nodes.Add(treeListNodeModel);
               if (!treeListNodeModel.is_true)
               {
-                dic[idmain].is_true = false;
+                dic[id_home].is_true = false;
               }
             }
           }
@@ -261,71 +267,75 @@ namespace GettingStartedTree
 
     private void TreeListView1_SelectionChanged(object sender, EventArgs e)
     {
-      TreeListView treeListView = (TreeListView)sender;
-      TreeListNodeModel treeListNodeModel = (TreeListNodeModel)treeListView.SelectedObject;
-      if (treeListNodeModel.Nodes == null)
+      try
       {
-        DateTime dtend = DateTime.Now.AddDays(1);
-        DateTime dtstart = new DateTime(dtend.Year, dtend.Month, 1);
-        Dictionary<string, ValueDateTime> lstVdt = new Dictionary<string, ValueDateTime>();
-        int res = dtend.Day - dtstart.Day;
-        DateTime lstDt = dtstart;
-        for (int i = 1; i < dtend.Day; i++)
+        TreeListView treeListView = (TreeListView)sender;
+        TreeListNodeModel treeListNodeModel = (TreeListNodeModel)treeListView.SelectedObject;
+        if (treeListNodeModel.Nodes == null)
         {
-          lstVdt.Add(lstDt.ToString("yyyy-MM-dd"), new ValueDateTime()
+          DateTime dtend = DateTime.Now.AddDays(1);
+          DateTime dtstart = new DateTime(dtend.Year, dtend.Month, 1);
+          Dictionary<string, ValueDateTime> lstVdt = new Dictionary<string, ValueDateTime>();
+          int res = dtend.Day - dtstart.Day;
+          DateTime lstDt = dtstart;
+          for (int i = 1; i < dtend.Day; i++)
           {
-            dt = lstDt.ToString("yyyy-MM-dd"),
-            is_true = false
-          }); ;
-          lstDt = lstDt.AddDays(1);
-        }
-        int id = treeListNodeModel.id;
-        string sql = string.Format("select date_time,value,is_true from meter_value mv " +
-                      "where mv.ctrl_id ={0} " +
-                      "and mv.date_time between '{1}' and '{2}'", id,
-                      dtstart.ToString("yyyy-MM-dd"), dtend.ToString("yyyy-MM-dd"));
-        try
-        {
-          var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
-          using (var db = dbFactory.Open())
-          {
-            IDbCommand cmd = db.CreateCommand();
-            cmd.CommandText = sql;
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
+            lstVdt.Add(lstDt.ToString("yyyy-MM-dd"), new ValueDateTime()
             {
-              DateTime dt = (DateTime)reader[0];
-              string dt_str = dt.ToString("yyyy-MM-dd");
-              double value = (double)reader[1];
-              bool is_true = (bool)reader[2];
-              if (lstVdt.ContainsKey(dt_str))
-              {
-                lstVdt[dt_str] = new ValueDateTime()
-                {
-                  dt = dt_str,
-                  id = id,
-                  value = value,
-                  is_true = true
-                };
-              }
-            }
-            reader.Close();
+              dt = lstDt.ToString("yyyy-MM-dd"),
+              is_true = false
+            }); ;
+            lstDt = lstDt.AddDays(1);
           }
-          //this.objectListView1.Clear();
-          __valueDateTimes = lstVdt.Values.ToList<ValueDateTime>();
-          this.objectListView1.SetObjects(__valueDateTimes);
+          int id = treeListNodeModel.ctrl_id;
+          string sql = string.Format("select date_time,value,is_true from meter_value mv " +
+                        "where mv.ctrl_id ={0} " +
+                        "and mv.date_time between '{1}' and '{2}'", id,
+                        dtstart.ToString("yyyy-MM-dd"), dtend.ToString("yyyy-MM-dd"));
+          try
+          {
+            var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+            using (var db = dbFactory.Open())
+            {
+              IDbCommand cmd = db.CreateCommand();
+              cmd.CommandText = sql;
+              var reader = cmd.ExecuteReader();
+              while (reader.Read())
+              {
+                DateTime dt = (DateTime)reader[0];
+                string dt_str = dt.ToString("yyyy-MM-dd");
+                double value = (double)reader[1];
+                bool is_true = (bool)reader[2];
+                if (lstVdt.ContainsKey(dt_str))
+                {
+                  lstVdt[dt_str] = new ValueDateTime()
+                  {
+                    dt = dt_str,
+                    id = id,
+                    value = value,
+                    is_true = true
+                  };
+                }
+              }
+              reader.Close();
+            }
+            //this.objectListView1.Clear();
+            __valueDateTimes = lstVdt.Values.ToList<ValueDateTime>();
+            this.objectListView1.SetObjects(__valueDateTimes);
+          }
+          catch (Exception exp)
+          {
+
+            throw;
+          }
         }
-        catch (Exception exp)
+        else
         {
+          this.objectListView1.SetObjects(null);
 
-          throw;
         }
       }
-      else
-      {
-        this.objectListView1.SetObjects(null);
-
-      }
+      catch { }
     }
 
     private void objectListView1_FormatRow(object sender, FormatRowEventArgs e)
@@ -377,49 +387,89 @@ namespace GettingStartedTree
     private void tsUpdateMeterValue_Click(object sender, EventArgs e)
     {
       List<TreeListNodeModel> tLst = new List<TreeListNodeModel>();
+      int count = 0;
       foreach (var item in this.treeListView1.Roots)
       {
         TreeListNodeModel model = (TreeListNodeModel)item;
+        bool add = false;
         foreach (var it in model.Nodes)
         {
-          if (!it.is_true) {
-            tLst.Add(it);
+          if (!it.is_true)
+          {
+            if (!add)
+            {
+              tLst.Add(model);
+              add = true;
+            }
+            count++;
           }
         }
       }
-      //ReadValueFromMeter(tLst);
-      ReadMetersValue(tLst);
+
+      ReadMetersValue(tLst, count);
+      List<MeterValue> lstMv = new List<MeterValue>();
+      foreach (var item in tLst)
+      {
+        foreach (var it in item.Nodes)
+        {
+          if (it.updated)
+          {
+            lstMv.Add(new MeterValue()
+            {
+              ctrl_id = it.ctrl_id,
+              ip = it.ip,
+              is_true = it.is_true,
+              date_time = it.date_time.Value,
+              meter_factory = it.meter_factory,
+              meter_type = it.meter_type,
+              //parent_id = it.parent_id,
+              value = it.value.Value
+            });
+            it.updated = false;
+          }
+        }
+      }
+
       foreach (var item in this.treeListView1.Roots)
       {
         TreeListNodeModel model = (TreeListNodeModel)item;
-       
-          model.Validated();
-       
+
+        model.Validated();
+
+      }
+      if (lstMv.Count > 0)
+      {
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          db.Insert<MeterValue>(lstMv.ToArray());
+        }
       }
     }
 
-    public void ReadMetersValue(List<TreeListNodeModel> tLst) {
+    public void ReadMetersValue(List<TreeListNodeModel> tLst,int count) {
       CancellationTokenSource tokenSource=new CancellationTokenSource();
       CancellationToken token= tokenSource.Token;
       long prog_value = 0;
       List<Task> tasks = new List<Task>();
       using (MeterProgress mp=new MeterProgress())
       {
-        mp.SetTasksToken(tokenSource, tLst.Count);
+        mp.SetTasksToken(tokenSource, count);
         for (int i = 0; i < tLst.Count; i++)
         {
           Task tsk = new Task(new Action<object>((obj) => {
             TreeListNodeModel model = (TreeListNodeModel)obj;
             string ip_loc = string.Empty;
             TcpClient client = null;
-            foreach (var item in tLst)
+            foreach (var item in model.Nodes)
             {
+              if (item.is_true)
+                continue;
               if (token.IsCancellationRequested)
               {
-                //System.Diagnostics.Debug.WriteLine("Операция прервана");
                 return;
               }
-              mp.SetLabelText(string.Format("Опрос счетчика {0} ip:{1}", item.name, item.ip));
+              mp.SetLabelText(string.Format("{1}:{0}", item.ip, item.name));
               try
               {
                 if (client != null && ip_loc.Equals(item.ip))
@@ -453,6 +503,8 @@ namespace GettingStartedTree
                       float ds = (float)BitConverter.ToInt32(buffer, 9);
                       item.value = (ds / 100);
                       item.is_true = true;
+                      item.updated = true;
+                      item.date_time = DateTime.Now;
                     }
                     else throw exp;
                   }
@@ -486,6 +538,8 @@ namespace GettingStartedTree
                   {
                     item.is_true = true;
                     item.value = Math.Round((float)xx[0], 3);
+                    item.updated = true;
+                    item.date_time = DateTime.Now;
                   }
                 }
                 else
@@ -500,7 +554,10 @@ namespace GettingStartedTree
               Interlocked.Increment(ref prog_value);
              mp.SetProgressValue(Interlocked.Read(ref prog_value));
             }
-          
+            if (client != null)
+            {
+              client.Close();
+            }
           }), tLst[i], token);
           tasks.Add(tsk);
         }
@@ -519,17 +576,12 @@ namespace GettingStartedTree
             Task.WaitAll(tasks.ToArray());
             mp.DialogResult = DialogResult.OK;
           }
-          catch (Exception ex)
-          {
-            int x = 0;
-          }
+          catch { }
         }, token);
         };
         mp.ShowDialog();
         mp.DialogResult = DialogResult.OK;
       }
-      
-
     }
 
     void ReadValueFromMeter(List<TreeListNodeModel> tLst)

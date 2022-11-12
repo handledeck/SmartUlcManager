@@ -74,7 +74,7 @@
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.panel1 = new System.Windows.Forms.Panel();
       this.tabItemsControl = new System.Windows.Forms.TabControl();
-      this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.tabControllers = new System.Windows.Forms.TabPage();
       this.LstViewItm = new System.Windows.Forms.ListView();
       this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -128,8 +128,9 @@
       this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
       this.tsUpdate = new System.Windows.Forms.ToolStripButton();
       this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
-      this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.tabMeter = new System.Windows.Forms.TabPage();
       this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
+      this.imgTabs = new System.Windows.Forms.ImageList(this.components);
       this.LstViewEvent = new System.Windows.Forms.ListView();
       this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -160,10 +161,10 @@
       this.splitContainer2.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tabItemsControl.SuspendLayout();
-      this.tabPage1.SuspendLayout();
+      this.tabControllers.SuspendLayout();
       this.LvMenu.SuspendLayout();
       this.tsResView.SuspendLayout();
-      this.tabPage2.SuspendLayout();
+      this.tabMeter.SuspendLayout();
       this.tsEvent.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
       this.SuspendLayout();
@@ -650,9 +651,10 @@
       // 
       // tabItemsControl
       // 
-      this.tabItemsControl.Controls.Add(this.tabPage1);
-      this.tabItemsControl.Controls.Add(this.tabPage2);
+      this.tabItemsControl.Controls.Add(this.tabControllers);
+      this.tabItemsControl.Controls.Add(this.tabMeter);
       this.tabItemsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabItemsControl.ImageList = this.imgTabs;
       this.tabItemsControl.Location = new System.Drawing.Point(1, 1);
       this.tabItemsControl.Name = "tabItemsControl";
       this.tabItemsControl.SelectedIndex = 0;
@@ -660,19 +662,20 @@
       this.tabItemsControl.TabIndex = 2;
       this.tabItemsControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
       // 
-      // tabPage1
+      // tabControllers
       // 
-      this.tabPage1.Controls.Add(this.LstViewItm);
-      this.tabPage1.Controls.Add(this.checkBoxComboBox1);
-      this.tabPage1.Controls.Add(this.tsResView);
-      this.tabPage1.Controls.Add(this.usrFesStatistics1);
-      this.tabPage1.Location = new System.Drawing.Point(4, 22);
-      this.tabPage1.Name = "tabPage1";
-      this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(1142, 263);
-      this.tabPage1.TabIndex = 0;
-      this.tabPage1.Text = "tabPage1";
-      this.tabPage1.UseVisualStyleBackColor = true;
+      this.tabControllers.Controls.Add(this.LstViewItm);
+      this.tabControllers.Controls.Add(this.checkBoxComboBox1);
+      this.tabControllers.Controls.Add(this.tsResView);
+      this.tabControllers.Controls.Add(this.usrFesStatistics1);
+      this.tabControllers.ImageKey = "blackberry_white.ico";
+      this.tabControllers.Location = new System.Drawing.Point(4, 23);
+      this.tabControllers.Name = "tabControllers";
+      this.tabControllers.Padding = new System.Windows.Forms.Padding(3);
+      this.tabControllers.Size = new System.Drawing.Size(1142, 262);
+      this.tabControllers.TabIndex = 0;
+      this.tabControllers.Text = "Контроллеры";
+      this.tabControllers.UseVisualStyleBackColor = true;
       // 
       // LstViewItm
       // 
@@ -705,7 +708,7 @@
       this.LstViewItm.Location = new System.Drawing.Point(3, 28);
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
-      this.LstViewItm.Size = new System.Drawing.Size(1136, 232);
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 231);
       this.LstViewItm.SmallImageList = this.imageList1;
       this.LstViewItm.TabIndex = 0;
       this.LstViewItm.UseCompatibleStateImageBehavior = false;
@@ -1131,21 +1134,22 @@
       this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
       this.usrFesStatistics1.Name = "usrFesStatistics1";
       this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 257);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 256);
       this.usrFesStatistics1.TabIndex = 1;
       this.usrFesStatistics1.Value = null;
       this.usrFesStatistics1.Visible = false;
       // 
-      // tabPage2
+      // tabMeter
       // 
-      this.tabPage2.Controls.Add(this.ulcMeterTreeView);
-      this.tabPage2.Location = new System.Drawing.Point(4, 22);
-      this.tabPage2.Name = "tabPage2";
-      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(1142, 263);
-      this.tabPage2.TabIndex = 1;
-      this.tabPage2.Text = "tabPage2";
-      this.tabPage2.UseVisualStyleBackColor = true;
+      this.tabMeter.Controls.Add(this.ulcMeterTreeView);
+      this.tabMeter.ImageIndex = 1;
+      this.tabMeter.Location = new System.Drawing.Point(4, 23);
+      this.tabMeter.Name = "tabMeter";
+      this.tabMeter.Padding = new System.Windows.Forms.Padding(3);
+      this.tabMeter.Size = new System.Drawing.Size(1142, 262);
+      this.tabMeter.TabIndex = 1;
+      this.tabMeter.Text = "Счетчики";
+      this.tabMeter.UseVisualStyleBackColor = true;
       // 
       // ulcMeterTreeView
       // 
@@ -1153,8 +1157,21 @@
       this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
       this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
       this.ulcMeterTreeView.Name = "ulcMeterTreeView";
-      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 257);
+      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 256);
       this.ulcMeterTreeView.TabIndex = 0;
+      // 
+      // imgTabs
+      // 
+      this.imgTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgTabs.ImageStream")));
+      this.imgTabs.TransparentColor = System.Drawing.Color.Transparent;
+      this.imgTabs.Images.SetKeyName(0, "blackberry_white.ico");
+      this.imgTabs.Images.SetKeyName(1, "color_pick.ico");
+      this.imgTabs.Images.SetKeyName(2, "color_picker_default.ico");
+      this.imgTabs.Images.SetKeyName(3, "led.ico");
+      this.imgTabs.Images.SetKeyName(4, "monitor_sidebar.ico");
+      this.imgTabs.Images.SetKeyName(5, "next_markup.ico");
+      this.imgTabs.Images.SetKeyName(6, "odbs_database.ico");
+      this.imgTabs.Images.SetKeyName(7, "page_white_go.ico");
       // 
       // LstViewEvent
       // 
@@ -1336,12 +1353,12 @@
       this.splitContainer2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
       this.tabItemsControl.ResumeLayout(false);
-      this.tabPage1.ResumeLayout(false);
-      this.tabPage1.PerformLayout();
+      this.tabControllers.ResumeLayout(false);
+      this.tabControllers.PerformLayout();
       this.LvMenu.ResumeLayout(false);
       this.tsResView.ResumeLayout(false);
       this.tsResView.PerformLayout();
-      this.tabPage2.ResumeLayout(false);
+      this.tabMeter.ResumeLayout(false);
       this.tsEvent.ResumeLayout(false);
       this.tsEvent.PerformLayout();
       this.tsStatusLbl.ResumeLayout(false);
@@ -1465,9 +1482,10 @@
         private System.Windows.Forms.ToolStripButton tsBtnEventLog;
     private System.Windows.Forms.ToolStripMenuItem ctxNotTrueMeter;
         private System.Windows.Forms.TabControl tabItemsControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabControllers;
+        private System.Windows.Forms.TabPage tabMeter;
     private GettingStartedTree.UlcTreeView ulcMeterTreeView;
+    private System.Windows.Forms.ImageList imgTabs;
   }
 }
 

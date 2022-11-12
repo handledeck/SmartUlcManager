@@ -17,7 +17,9 @@ namespace UlcWin.Controls.UlcMeterComponet
     public double? value { get; set; }
     public bool is_true { get; set; }
     public int? unit_type_id { get; set; }
-
+    public bool updated { get; set; }
+    public int parent_id { get; set; }
+    public int ctrl_id { get; set; }
     public List<TreeListNodeModel> Nodes { get; set; }
 
     public void Validated() {

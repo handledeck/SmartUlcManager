@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace UlcWin.Controls.UlcMeterComponet
 {
-
-
   public class MeterValue
   {
     [ServiceStack.DataAnnotations.AutoIncrement]
     public int id { get; set; }
     public int ctrl_id { get; set; }
-    public int parent_id { get; set; }
     public DateTime date_time { get; set; }
     public string ip { get; set; }
     public string meter_type { get; set; }

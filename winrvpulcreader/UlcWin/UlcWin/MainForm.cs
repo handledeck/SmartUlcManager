@@ -774,6 +774,7 @@ namespace UlcWin
         tsResView.Visible = false;
         ulcMeterTreeView.Visible = false;
         this.tsLblFind.Visible = false;
+       
         //this.__tsAutoCompleteCmb.Visible = false;
         this.treeMenu.Items[0].Enabled = true;
         this.tsTreeBtnAddRoot.Enabled = true;
