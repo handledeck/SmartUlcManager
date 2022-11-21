@@ -43,15 +43,14 @@ namespace GettingStartedTree
       textOverlay1.Rotation = 0;
       this.treeListView1.SetObjects(__treeNodes);
       this.objectListView1.SetObjects(__valueDateTimes);
-      this.objectListView1.EmptyListMsg = "This database has no rows";
+      this.objectListView1.EmptyListMsg = "Нет данных для просмотра";
       this.objectListView1.EmptyListMsgFont = new Font("Tahoma", 10);
-      this.treeListView1.EmptyListMsg = "This database has no rows";
+      this.treeListView1.EmptyListMsg = "Нет данных для просмотра";
       this.treeListView1.EmptyListMsgFont = new Font("Tahoma", 10);
-     
       this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
     }
-    
-    public void SetValue(string connection,int parent_id)
+
+    public void SetValue(string connection, int parent_id)
     {
       this.__connection = connection;
       this.__parent_id = parent_id;
@@ -76,10 +75,10 @@ namespace GettingStartedTree
           //             "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' where mi.parent_id ={1}",
           //             DateTime.Now.ToString("yyyy-MM-dd"),__parent_id);
           string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home " +
-                                    "from meter_info mi "+
-                                    "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' "+
-                                    "left join main_nodes mn on mn.id = mi.ctrl_id "+
-                                    "left join main_ctrlinfo mc on mc.id = mi.ctrl_id "+
+                                    "from meter_info mi " +
+                                    "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' " +
+                                    "left join main_nodes mn on mn.id = mi.ctrl_id " +
+                                    "left join main_ctrlinfo mc on mc.id = mi.ctrl_id " +
                                     "where mi.parent_id = {1} and mn.active = 1", DateTime.Now.ToString("yyyy-MM-dd"), __parent_id);
           IDbCommand cmd = db.CreateCommand();
           cmd.CommandText = sql;
@@ -103,12 +102,12 @@ namespace GettingStartedTree
             double value = reader[6].GetType() == typeof(DBNull) ? 0 : (double)reader[6];
             bool is_true = reader[7].GetType() == typeof(DBNull) ? false : (bool)reader[7];
             int unit_type_id = (int)reader[8];
-            int id_home= (int)reader[9];
+            int id_home = (int)reader[9];
             TreeListNodeModel mt = new TreeListNodeModel
             {
               name = name,
               is_true = true,
-             
+
             };
             TreeListNodeModel treeListNodeModel = new TreeListNodeModel()
             {
@@ -117,7 +116,7 @@ namespace GettingStartedTree
               date_time = dt,
               ip = ip,
               is_true = is_true,
-              value = value,
+              value = Math.Round(value,2),
               meter_factory = meter_factory,
               meter_type = meter_type,
               unit_type_id = unit_type_id
@@ -137,7 +136,10 @@ namespace GettingStartedTree
               dic[id_home].Nodes.Add(treeListNodeModel);
               if (!treeListNodeModel.is_true)
               {
-                dic[id_home].is_true = false;
+                if (dic[id_home].is_true) {
+                  dic[id_home].is_part_true = true;
+                }
+                
               }
             }
           }
@@ -150,6 +152,17 @@ namespace GettingStartedTree
           if (__treeNodes == null)
           {
             __treeNodes = new List<TreeListNodeModel>();
+          }
+          if (item.Value.Nodes.Count == 1) {
+              item.Value.name = item.Value.name+"(" + item.Value.Nodes[0].name + ")";
+              item.Value.ip = item.Value.Nodes[0].ip;
+              item.Value.meter_type = item.Value.Nodes[0].meter_type;
+              item.Value.meter_factory = item.Value.Nodes[0].meter_factory;
+              item.Value.value = item.Value.Nodes[0].value;
+              item.Value.date_time = item.Value.Nodes[0].date_time;
+            item.Value.unit_type_id = item.Value.Nodes[0].unit_type_id;
+            item.Value.ctrl_id = item.Value.Nodes[0].ctrl_id;
+            item.Value.is_true = item.Value.Nodes[0].is_true;
           }
           __treeNodes.Add(item.Value);
         }
@@ -166,17 +179,29 @@ namespace GettingStartedTree
     {
 
       TreeListNodeModel vv = (TreeListNodeModel)e.Model;
+      if (!vv.is_true)
+      e.Item.ForeColor = Color.Gray;
       if (vv.Nodes == null)
       {
         //e.ListView.FullRowSelect = true;
         //TreeListView1_SelectionChanged(this.treeListView1, null);
-        if (!vv.is_true)
-          e.Item.ForeColor = Color.Gray;
-        e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
-
+        //if (!vv.is_true)
+          //e.Item.ForeColor = Color.Gray;
+        //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
+       
       }
       else
       {
+        //if (vv.Nodes.Count == 1)
+        //{
+        //  vv.name = vv.name+"(" + vv.Nodes[0].name + ")";
+        //  vv.ip = vv.Nodes[0].ip;
+        //  vv.meter_type = vv.Nodes[0].meter_type;
+        //  vv.meter_factory = vv.Nodes[0].meter_factory;
+        //  vv.value = vv.Nodes[0].value;
+        //  vv.date_time = vv.Nodes[0].date_time;
+        //  vv.unit_type_id = vv.Nodes[0].unit_type_id;
+        //}
         //e.ListView.FullRowSelect = false;
 
         //if (!vv.is_true)
@@ -197,7 +222,10 @@ namespace GettingStartedTree
         TreeListNodeModel vv = (TreeListNodeModel)x;
         if (vv.Nodes == null)
           return false;
-        return true;//(x is ArtistExample) || (x is AlbumExample);
+        else if (vv.Nodes.Count > 1)
+            return true;
+
+        return false;//(x is ArtistExample) || (x is AlbumExample);
       };
 
       // What objects should belong underneath the given model object?
@@ -205,6 +233,14 @@ namespace GettingStartedTree
       {
         TreeListNodeModel vv = (TreeListNodeModel)x;
         //List<MeterValue> l = (List<MeterValue>)x;
+        //if (vv.Nodes.Count == 1) {
+        //  vv.ip = vv.Nodes[0].ip;
+        //  vv.meter_type = vv.Nodes[0].meter_type;
+        //  vv.meter_factory = vv.Nodes[0].meter_factory;
+        //  vv.name = vv.Nodes[0].name
+        //  vv.meter_type = vv.Nodes[0].meter_ty
+        //}
+        //else
         return vv.Nodes;
         //throw new ArgumentException("Should be Artist or Album");
       };
@@ -216,6 +252,8 @@ namespace GettingStartedTree
         {
           if (!vv.is_true)
             return "error";
+          else if (vv.is_part_true)
+            return "part";
           else
             return "ok";
         }
@@ -271,7 +309,7 @@ namespace GettingStartedTree
       {
         TreeListView treeListView = (TreeListView)sender;
         TreeListNodeModel treeListNodeModel = (TreeListNodeModel)treeListView.SelectedObject;
-        if (treeListNodeModel.Nodes == null)
+        if (treeListNodeModel != null)
         {
           DateTime dtend = DateTime.Now.AddDays(1);
           DateTime dtstart = new DateTime(dtend.Year, dtend.Month, 1);
@@ -312,7 +350,7 @@ namespace GettingStartedTree
                   {
                     dt = dt_str,
                     id = id,
-                    value = value,
+                    value = Math.Round(value, 2),
                     is_true = true
                   };
                 }
@@ -346,7 +384,8 @@ namespace GettingStartedTree
       {
         e.Item.ForeColor = Color.Gray;
       }
-      else {
+      else
+      {
         e.Item.ForeColor = Color.Black;
       }
 
@@ -356,14 +395,14 @@ namespace GettingStartedTree
     private void treeListView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
     {
       TreeListView treeListView = (TreeListView)sender;
-      
+
       TreeListNodeModel vv = (TreeListNodeModel)treeListView.SelectedObject;
       int x = 0;
       //TreeListNodeModel vv = (TreeListNodeModel)e.Model;
       if (vv.Nodes == null)
       {
-        treeListView.FullRowSelect = true;
-       
+        //treeListView.FullRowSelect = true;
+
         //ll.SubItems[5].BackColor = Color.Red;
         //TreeListView1_SelectionChanged(this.treeListView1, null);
         //if (!vv.is_true)
@@ -373,7 +412,7 @@ namespace GettingStartedTree
       }
       else
       {
-        treeListView.FullRowSelect = false;
+        //treeListView.FullRowSelect = false;
 
         //if (!vv.is_true)
         //  e.Item.ForeColor = Color.Gray;
@@ -405,7 +444,6 @@ namespace GettingStartedTree
           }
         }
       }
-
       ReadMetersValue(tLst, count);
       List<MeterValue> lstMv = new List<MeterValue>();
       foreach (var item in tLst)
@@ -430,13 +468,11 @@ namespace GettingStartedTree
         }
       }
 
-      foreach (var item in this.treeListView1.Roots)
-      {
-        TreeListNodeModel model = (TreeListNodeModel)item;
-
-        model.Validated();
-
-      }
+      //foreach (var item in this.treeListView1.Roots)
+      //{
+      //  TreeListNodeModel model = (TreeListNodeModel)item;
+      //  model.Validated();
+      //}
       if (lstMv.Count > 0)
       {
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
@@ -445,19 +481,22 @@ namespace GettingStartedTree
           db.Insert<MeterValue>(lstMv.ToArray());
         }
       }
+      FillTreeList();
     }
 
-    public void ReadMetersValue(List<TreeListNodeModel> tLst,int count) {
-      CancellationTokenSource tokenSource=new CancellationTokenSource();
-      CancellationToken token= tokenSource.Token;
+    public void ReadMetersValue(List<TreeListNodeModel> tLst, int count)
+    {
+      CancellationTokenSource tokenSource = new CancellationTokenSource();
+      CancellationToken token = tokenSource.Token;
       long prog_value = 0;
       List<Task> tasks = new List<Task>();
-      using (MeterProgress mp=new MeterProgress())
+      using (MeterProgress mp = new MeterProgress())
       {
         mp.SetTasksToken(tokenSource, count);
         for (int i = 0; i < tLst.Count; i++)
         {
-          Task tsk = new Task(new Action<object>((obj) => {
+          Task tsk = new Task(new Action<object>((obj) =>
+          {
             TreeListNodeModel model = (TreeListNodeModel)obj;
             string ip_loc = string.Empty;
             TcpClient client = null;
@@ -469,7 +508,7 @@ namespace GettingStartedTree
               {
                 return;
               }
-              mp.SetLabelText(string.Format("{1}:{0}", item.ip, item.name));
+              mp.SetLabelText(string.Format("{1}:{0}", item.ip, model.name));
               try
               {
                 if (client != null && ip_loc.Equals(item.ip))
@@ -501,7 +540,7 @@ namespace GettingStartedTree
                     if (exp == null)
                     {
                       float ds = (float)BitConverter.ToInt32(buffer, 9);
-                      item.value = (ds / 100);
+                      item.value = Math.Round((ds / 100),2);
                       item.is_true = true;
                       item.updated = true;
                       item.date_time = DateTime.Now;
@@ -552,7 +591,7 @@ namespace GettingStartedTree
                 int xxx = 0;
               }
               Interlocked.Increment(ref prog_value);
-             mp.SetProgressValue(Interlocked.Read(ref prog_value));
+              mp.SetProgressValue(Interlocked.Read(ref prog_value));
             }
             if (client != null)
             {
@@ -697,6 +736,24 @@ namespace GettingStartedTree
       if (!state)
         return null;
       else return client;
+    }
+
+
+    bool __colapssed = false;
+    private void button2_Click(object sender, EventArgs e)
+    {
+      if (!__colapssed)
+      {
+        this.treeListView1.ExpandAll();
+        __colapssed = true;
+        this.button2.ImageIndex = 6;
+      }
+      else {
+        this.treeListView1.CollapseAll();
+        __colapssed = false;
+        this.button2.ImageIndex = 7;
+      }
+      
     }
   }
 }

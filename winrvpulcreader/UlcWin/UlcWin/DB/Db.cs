@@ -905,6 +905,7 @@ namespace InterUlc.Db
     public void _ViewRes(ListView list, int res, DateTime dt, EnumViewDevType enmDevType)
     {
       //GetResObjects(res, (int)enmDevType);
+
       __num = 0;
       __notTrue = 0;
       __isTrue = 0;

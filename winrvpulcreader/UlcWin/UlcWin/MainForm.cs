@@ -58,7 +58,7 @@ namespace UlcWin
       this.tsStsNetBad.Visible = false;
       this.tsStsRssBad.Visible = false;
       this.tsStsIMEI.Visible = false;
-      this.tsLblFind.Visible = false;
+      //this.tsLblFind.Visible = false;
       this.LstViewItm.Visible = false;
       this.tsResView.Visible = false;
       this.ulcMeterTreeView.Visible = false;
@@ -80,7 +80,7 @@ namespace UlcWin
       this.tsResView.Items.Insert(1, dtCtlCbBox);
       ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.__tsAutoCompleteCmb);
       dtCtrlCbFind.Alignment = ToolStripItemAlignment.Left;
-      dtCtrlCbFind.Margin = new Padding(100, 0, 0, 0);
+      dtCtrlCbFind.Margin = new Padding(10, 0, 0, 0);
       this.tsResView.Items.Insert(9, dtCtrlCbFind);
       //this.__tsAutoCompleteCmb.Visible = false;
       this.tsEvent.Items.Insert(1, dtCtl);
@@ -773,7 +773,7 @@ namespace UlcWin
         this.LstViewItm.Visible = false;
         tsResView.Visible = false;
         ulcMeterTreeView.Visible = false;
-        this.tsLblFind.Visible = false;
+        //this.tsLblFind.Visible = false;
        
         //this.__tsAutoCompleteCmb.Visible = false;
         this.treeMenu.Items[0].Enabled = true;

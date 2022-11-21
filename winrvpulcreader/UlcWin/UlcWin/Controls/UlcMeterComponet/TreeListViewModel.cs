@@ -21,7 +21,7 @@ namespace UlcWin.Controls.UlcMeterComponet
     public int parent_id { get; set; }
     public int ctrl_id { get; set; }
     public List<TreeListNodeModel> Nodes { get; set; }
-
+    public bool is_part_true { get; set; }
     public void Validated() {
       if (this.Nodes != null) {
         foreach (var item in Nodes)

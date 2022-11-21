@@ -28,22 +28,25 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.progressBar1 = new System.Windows.Forms.ProgressBar();
       this.button1 = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
+      this.progressMeterBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      ((System.ComponentModel.ISupportInitialize)(this.progressMeterBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // progressBar1
       // 
       this.progressBar1.Location = new System.Drawing.Point(12, 35);
       this.progressBar1.Name = "progressBar1";
-      this.progressBar1.Size = new System.Drawing.Size(418, 32);
+      this.progressBar1.Size = new System.Drawing.Size(460, 22);
       this.progressBar1.TabIndex = 0;
       // 
       // button1
       // 
       this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.button1.Location = new System.Drawing.Point(165, 73);
+      this.button1.Location = new System.Drawing.Point(209, 72);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(75, 23);
       this.button1.TabIndex = 1;
@@ -54,18 +57,22 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(21, 19);
+      this.label1.Location = new System.Drawing.Point(23, 19);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(35, 13);
       this.label1.TabIndex = 3;
       this.label1.Text = "label1";
+      // 
+      // progressMeterBindingSource
+      // 
+      this.progressMeterBindingSource.DataSource = typeof(UlcWin.Controls.MeterProgress.ProgressMeter);
       // 
       // MeterProgress
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.button1;
-      this.ClientSize = new System.Drawing.Size(447, 106);
+      this.ClientSize = new System.Drawing.Size(484, 107);
       this.ControlBox = false;
       this.Controls.Add(this.label1);
       this.Controls.Add(this.button1);
@@ -76,7 +83,7 @@
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Опрос";
-      this.TopMost = true;
+      ((System.ComponentModel.ISupportInitialize)(this.progressMeterBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -87,5 +94,6 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-  }
+        private System.Windows.Forms.BindingSource progressMeterBindingSource;
+    }
 }

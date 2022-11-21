@@ -43,24 +43,27 @@ namespace GettingStartedTree
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvVal = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-      this.tsUpdateMeterValue = new System.Windows.Forms.ToolStripButton();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.button2 = new System.Windows.Forms.Button();
+      this.button1 = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
-      this.toolStrip1.SuspendLayout();
       this.panel1.SuspendLayout();
+      this.tableLayoutPanel1.SuspendLayout();
+      this.panel2.SuspendLayout();
       this.SuspendLayout();
       // 
       // splitContainer1
       // 
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer1.Margin = new System.Windows.Forms.Padding(20);
+      this.splitContainer1.Location = new System.Drawing.Point(4, 39);
+      this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
       this.splitContainer1.Name = "splitContainer1";
       // 
       // splitContainer1.Panel1
@@ -70,8 +73,8 @@ namespace GettingStartedTree
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.objectListView1);
-      this.splitContainer1.Size = new System.Drawing.Size(1083, 434);
-      this.splitContainer1.SplitterDistance = 757;
+      this.splitContainer1.Size = new System.Drawing.Size(1075, 416);
+      this.splitContainer1.SplitterDistance = 838;
       this.splitContainer1.SplitterWidth = 3;
       this.splitContainer1.TabIndex = 0;
       // 
@@ -102,7 +105,7 @@ namespace GettingStartedTree
       this.treeListView1.OwnerDraw = true;
       this.treeListView1.ShowGroups = false;
       this.treeListView1.ShowSortIndicators = false;
-      this.treeListView1.Size = new System.Drawing.Size(757, 434);
+      this.treeListView1.Size = new System.Drawing.Size(838, 416);
       this.treeListView1.SmallImageList = this.imageList1;
       this.treeListView1.TabIndex = 4;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
@@ -163,6 +166,10 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(2, "nav_down");
       this.imageList1.Images.SetKeyName(3, "error");
       this.imageList1.Images.SetKeyName(4, "delete2.ico");
+      this.imageList1.Images.SetKeyName(5, "database_refresh.png");
+      this.imageList1.Images.SetKeyName(6, "text.png");
+      this.imageList1.Images.SetKeyName(7, "text_tree.png");
+      this.imageList1.Images.SetKeyName(8, "part");
       // 
       // objectListView1
       // 
@@ -179,7 +186,7 @@ namespace GettingStartedTree
       this.objectListView1.Margin = new System.Windows.Forms.Padding(2);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.ShowGroups = false;
-      this.objectListView1.Size = new System.Drawing.Size(323, 434);
+      this.objectListView1.Size = new System.Drawing.Size(234, 416);
       this.objectListView1.TabIndex = 4;
       this.objectListView1.UseCompatibleStateImageBehavior = false;
       this.objectListView1.View = System.Windows.Forms.View.Details;
@@ -197,41 +204,72 @@ namespace GettingStartedTree
       this.olvVal.Text = "Данные";
       this.olvVal.Width = 123;
       // 
-      // toolStrip1
-      // 
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsUpdateMeterValue});
-      this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-      this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(1083, 25);
-      this.toolStrip1.TabIndex = 1;
-      this.toolStrip1.Text = "toolStrip1";
-      // 
-      // tsUpdateMeterValue
-      // 
-      this.tsUpdateMeterValue.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.tsUpdateMeterValue.Image = ((System.Drawing.Image)(resources.GetObject("tsUpdateMeterValue.Image")));
-      this.tsUpdateMeterValue.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.tsUpdateMeterValue.Name = "tsUpdateMeterValue";
-      this.tsUpdateMeterValue.Size = new System.Drawing.Size(23, 22);
-      this.tsUpdateMeterValue.Text = "toolStripButton1";
-      this.tsUpdateMeterValue.Click += new System.EventHandler(this.tsUpdateMeterValue_Click);
-      // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.splitContainer1);
+      this.panel1.Controls.Add(this.tableLayoutPanel1);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(0, 25);
+      this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1083, 434);
+      this.panel1.Size = new System.Drawing.Size(1083, 459);
       this.panel1.TabIndex = 2;
+      // 
+      // tableLayoutPanel1
+      // 
+      this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+      this.tableLayoutPanel1.ColumnCount = 1;
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
+      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      this.tableLayoutPanel1.RowCount = 2;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1083, 459);
+      this.tableLayoutPanel1.TabIndex = 1;
+      // 
+      // panel2
+      // 
+      this.panel2.Controls.Add(this.button2);
+      this.panel2.Controls.Add(this.button1);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel2.Location = new System.Drawing.Point(5, 5);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(1073, 27);
+      this.panel2.TabIndex = 1;
+      // 
+      // button2
+      // 
+      this.button2.Dock = System.Windows.Forms.DockStyle.Left;
+      this.button2.ImageIndex = 7;
+      this.button2.ImageList = this.imageList1;
+      this.button2.Location = new System.Drawing.Point(32, 0);
+      this.button2.Margin = new System.Windows.Forms.Padding(22);
+      this.button2.Name = "button2";
+      this.button2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+      this.button2.Size = new System.Drawing.Size(32, 27);
+      this.button2.TabIndex = 1;
+      this.button2.UseVisualStyleBackColor = true;
+      this.button2.Click += new System.EventHandler(this.button2_Click);
+      // 
+      // button1
+      // 
+      this.button1.Dock = System.Windows.Forms.DockStyle.Left;
+      this.button1.ImageIndex = 5;
+      this.button1.ImageList = this.imageList1;
+      this.button1.Location = new System.Drawing.Point(0, 0);
+      this.button1.Name = "button1";
+      this.button1.Size = new System.Drawing.Size(32, 27);
+      this.button1.TabIndex = 0;
+      this.button1.UseVisualStyleBackColor = true;
+      this.button1.Click += new System.EventHandler(this.tsUpdateMeterValue_Click);
       // 
       // UlcTreeView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.panel1);
-      this.Controls.Add(this.toolStrip1);
       this.Margin = new System.Windows.Forms.Padding(2);
       this.Name = "UlcTreeView";
       this.Size = new System.Drawing.Size(1083, 459);
@@ -241,11 +279,10 @@ namespace GettingStartedTree
       this.splitContainer1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
-      this.toolStrip1.ResumeLayout(false);
-      this.toolStrip1.PerformLayout();
       this.panel1.ResumeLayout(false);
+      this.tableLayoutPanel1.ResumeLayout(false);
+      this.panel2.ResumeLayout(false);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -263,8 +300,10 @@ namespace GettingStartedTree
     private System.Windows.Forms.ImageList imageList1;
         private BrightIdeasSoftware.OLVColumn olvType;
         private BrightIdeasSoftware.OLVColumn olvIp;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tsUpdateMeterValue;
         private System.Windows.Forms.Panel panel1;
-    }
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+  }
 }

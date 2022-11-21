@@ -188,6 +188,7 @@
     <Compile Include="Controls\MeterProgress\MeterProgress.Designer.cs">
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MeterProgress\ProgressMeter.cs" />
     <Compile Include="Controls\UlcMeterComponet\MeterInfo.cs" />
     <Compile Include="Controls\UlcMeterComponet\Meters.cs" />
     <Compile Include="Controls\UlcMeterComponet\MeterUtils.cs" />
@@ -573,6 +574,7 @@
       <DependentUpon>WaitForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\UlcWin.Controls.MeterProgress.ProgressMeter.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

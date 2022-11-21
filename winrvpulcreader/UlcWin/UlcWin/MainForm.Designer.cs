@@ -1154,6 +1154,7 @@
       // ulcMeterTreeView
       // 
       this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ulcMeterTreeView.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
       this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
       this.ulcMeterTreeView.Name = "ulcMeterTreeView";

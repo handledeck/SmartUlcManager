@@ -53,6 +53,8 @@ namespace UlcWin.Controls.UlcMeterComponet
       catch{}
     }
 
+
+
     public void SetTasksToken(CancellationTokenSource cancellationToken,int progressMax) {
 
       __cancellationToken = cancellationToken;
