@@ -668,7 +668,7 @@
       this.tabControllers.Controls.Add(this.checkBoxComboBox1);
       this.tabControllers.Controls.Add(this.tsResView);
       this.tabControllers.Controls.Add(this.usrFesStatistics1);
-      this.tabControllers.ImageKey = "blackberry_white.ico";
+      this.tabControllers.ImageKey = "PCI-card.ico";
       this.tabControllers.Location = new System.Drawing.Point(4, 23);
       this.tabControllers.Name = "tabControllers";
       this.tabControllers.Padding = new System.Windows.Forms.Padding(3);
@@ -835,7 +835,7 @@
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Size = new System.Drawing.Size(224, 336);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1142,7 +1142,7 @@
       // tabMeter
       // 
       this.tabMeter.Controls.Add(this.ulcMeterTreeView);
-      this.tabMeter.ImageIndex = 1;
+      this.tabMeter.ImageIndex = 0;
       this.tabMeter.Location = new System.Drawing.Point(4, 23);
       this.tabMeter.Name = "tabMeter";
       this.tabMeter.Padding = new System.Windows.Forms.Padding(3);
@@ -1173,6 +1173,7 @@
       this.imgTabs.Images.SetKeyName(5, "next_markup.ico");
       this.imgTabs.Images.SetKeyName(6, "odbs_database.ico");
       this.imgTabs.Images.SetKeyName(7, "page_white_go.ico");
+      this.imgTabs.Images.SetKeyName(8, "PCI-card.ico");
       // 
       // LstViewEvent
       // 

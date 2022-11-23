@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin.Controls.MeterProgress;
 
 namespace UlcWin.Controls.UlcMeterComponet
 {
@@ -18,6 +19,7 @@ namespace UlcWin.Controls.UlcMeterComponet
     public MeterProgress()
     {
       InitializeComponent();
+      
     }
 
     public void SetLabelText(string text)
@@ -65,5 +67,6 @@ namespace UlcWin.Controls.UlcMeterComponet
     {
       __cancellationToken.Cancel();
     }
+
   }
 }

@@ -39,6 +39,8 @@ namespace GettingStartedTree
       this.olvIp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvMeterFactory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.menuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.menuTreeUpdateNotTrue = new System.Windows.Forms.ToolStripMenuItem();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -46,6 +48,8 @@ namespace GettingStartedTree
       this.panel1 = new System.Windows.Forms.Panel();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel2 = new System.Windows.Forms.Panel();
+      this.button3 = new System.Windows.Forms.Button();
+      this.panel3 = new System.Windows.Forms.Panel();
       this.button2 = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -53,6 +57,7 @@ namespace GettingStartedTree
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
+      this.menuTree.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
@@ -93,6 +98,7 @@ namespace GettingStartedTree
             this.olvIp,
             this.olvMeterFactory,
             this.olvValue});
+      this.treeListView1.ContextMenuStrip = this.menuTree;
       this.treeListView1.Cursor = System.Windows.Forms.Cursors.Default;
       this.treeListView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.treeListView1.FullRowSelect = true;
@@ -114,6 +120,7 @@ namespace GettingStartedTree
       this.treeListView1.View = System.Windows.Forms.View.Details;
       this.treeListView1.VirtualMode = true;
       this.treeListView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.treeListView1_ItemSelectionChanged);
+      this.treeListView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeListView1_MouseUp);
       // 
       // olvName
       // 
@@ -157,6 +164,20 @@ namespace GettingStartedTree
       this.olvValue.Width = 177;
       this.olvValue.WordWrap = true;
       // 
+      // menuTree
+      // 
+      this.menuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuTreeUpdateNotTrue});
+      this.menuTree.Name = "menuTree";
+      this.menuTree.Size = new System.Drawing.Size(217, 48);
+      // 
+      // menuTreeUpdateNotTrue
+      // 
+      this.menuTreeUpdateNotTrue.Name = "menuTreeUpdateNotTrue";
+      this.menuTreeUpdateNotTrue.Size = new System.Drawing.Size(216, 22);
+      this.menuTreeUpdateNotTrue.Text = "Обновить недостоверные";
+      this.menuTreeUpdateNotTrue.Click += new System.EventHandler(this.menuTreeUpdateNotTrue_Click);
+      // 
       // imageList1
       // 
       this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -165,11 +186,12 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(1, "err");
       this.imageList1.Images.SetKeyName(2, "nav_down");
       this.imageList1.Images.SetKeyName(3, "error");
-      this.imageList1.Images.SetKeyName(4, "delete2.ico");
+      this.imageList1.Images.SetKeyName(4, "error1");
       this.imageList1.Images.SetKeyName(5, "database_refresh.png");
       this.imageList1.Images.SetKeyName(6, "text.png");
       this.imageList1.Images.SetKeyName(7, "text_tree.png");
       this.imageList1.Images.SetKeyName(8, "part");
+      this.imageList1.Images.SetKeyName(9, "excel_exports.png");
       // 
       // objectListView1
       // 
@@ -231,13 +253,37 @@ namespace GettingStartedTree
       // 
       // panel2
       // 
+      this.panel2.Controls.Add(this.button3);
+      this.panel2.Controls.Add(this.panel3);
       this.panel2.Controls.Add(this.button2);
       this.panel2.Controls.Add(this.button1);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel2.Location = new System.Drawing.Point(5, 5);
+      this.panel2.Location = new System.Drawing.Point(4, 4);
+      this.panel2.Margin = new System.Windows.Forms.Padding(2);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(1073, 27);
+      this.panel2.Size = new System.Drawing.Size(1075, 29);
       this.panel2.TabIndex = 1;
+      // 
+      // button3
+      // 
+      this.button3.Dock = System.Windows.Forms.DockStyle.Left;
+      this.button3.Image = global::UlcWin.Properties.Resources.excel_exports;
+      this.button3.Location = new System.Drawing.Point(73, 0);
+      this.button3.Margin = new System.Windows.Forms.Padding(22);
+      this.button3.Name = "button3";
+      this.button3.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+      this.button3.Size = new System.Drawing.Size(32, 29);
+      this.button3.TabIndex = 3;
+      this.button3.UseVisualStyleBackColor = true;
+      // 
+      // panel3
+      // 
+      this.panel3.BackColor = System.Drawing.SystemColors.Control;
+      this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
+      this.panel3.Location = new System.Drawing.Point(64, 0);
+      this.panel3.Name = "panel3";
+      this.panel3.Size = new System.Drawing.Size(9, 29);
+      this.panel3.TabIndex = 2;
       // 
       // button2
       // 
@@ -248,7 +294,7 @@ namespace GettingStartedTree
       this.button2.Margin = new System.Windows.Forms.Padding(22);
       this.button2.Name = "button2";
       this.button2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-      this.button2.Size = new System.Drawing.Size(32, 27);
+      this.button2.Size = new System.Drawing.Size(32, 29);
       this.button2.TabIndex = 1;
       this.button2.UseVisualStyleBackColor = true;
       this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -260,7 +306,7 @@ namespace GettingStartedTree
       this.button1.ImageList = this.imageList1;
       this.button1.Location = new System.Drawing.Point(0, 0);
       this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(32, 27);
+      this.button1.Size = new System.Drawing.Size(32, 29);
       this.button1.TabIndex = 0;
       this.button1.UseVisualStyleBackColor = true;
       this.button1.Click += new System.EventHandler(this.tsUpdateMeterValue_Click);
@@ -278,6 +324,7 @@ namespace GettingStartedTree
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
+      this.menuTree.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
       this.panel1.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
@@ -304,6 +351,10 @@ namespace GettingStartedTree
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.ContextMenuStrip menuTree;
+    private System.Windows.Forms.ToolStripMenuItem menuTreeUpdateNotTrue;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.Panel panel3;
   }
 }

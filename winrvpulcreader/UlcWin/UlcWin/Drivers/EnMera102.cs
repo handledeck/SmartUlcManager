@@ -163,7 +163,42 @@ namespace UlcWin.Drivers
       //return bres;
     }
 
+    public static float? GetSumDayValue(string meter_factory, TcpClient client, out Exception exp)
+    {
+      exp = null;
+      float? value = 0;
+      try
+      {
+        string num = meter_factory;
+        num = num.Substring(num.Length - 4, 4);
+        ushort addr = 0;
+        if (ushort.TryParse(num, out addr))
+        {
+          byte[] buffer = new byte[128];
+          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
+          exp = EnMera102.Read(buf, 128, client, out buffer);
+          if (exp == null)
+          {
+            float ds = (float)BitConverter.ToInt32(buffer, 9);
+            value = (float)Math.Round((ds / 100), 2);
+            return value;
+          }
+          else throw exp;
+        }
+        else
+          throw new Exception("ошибка получения данных");
+      }
+      catch (Exception e)
+      {
+
+        exp = e;
+        return value;
+      }
+
+    }
   }
+
+  
 
   public class EnmeraCrc
   {

@@ -13,9 +13,6 @@ namespace UlcWin.win
     StateOverSimple=1
   }
 
-
-  
-
   public partial class WaitForm : Form
   {
     public StateWaitForm __full_view = StateWaitForm.StateSimple;

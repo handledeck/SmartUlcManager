@@ -168,6 +168,7 @@ namespace GettingStartedTree
         }
         this.treeListView1.SetObjects(__treeNodes);
         ResetDelegate();
+        
       }
       catch (Exception ex)
       {
@@ -251,7 +252,7 @@ namespace GettingStartedTree
         if (vv.Nodes != null)
         {
           if (!vv.is_true)
-            return "error";
+            return "error1";
           else if (vv.is_part_true)
             return "part";
           else
@@ -261,7 +262,7 @@ namespace GettingStartedTree
         else
         {
           if (!vv.is_true)
-            return "err";
+            return "error";
           else
             return "nav_down";
         }
@@ -528,62 +529,88 @@ namespace GettingStartedTree
                 ip_loc = item.ip;
                 if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
                 {
-                  string num = item.meter_factory;
+                  //string num = item.meter_factory;
 
-                  num = num.Substring(num.Length - 4, 4);
-                  ushort addr = 0;
-                  if (ushort.TryParse(num, out addr))
+                  //num = num.Substring(num.Length - 4, 4);
+                  //ushort addr = 0;
+                  //if (ushort.TryParse(num, out addr))
+                  //{
+                  //  byte[] buffer = new byte[128];
+                  //  byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
+                  //  Exception exp = EnMera102.Read(buf, 128, client, out buffer);
+                  //  if (exp == null)
+                  //  {
+                  //    float ds = (float)BitConverter.ToInt32(buffer, 9);
+                  //    item.value = Math.Round((ds / 100),2);
+                  //    item.is_true = true;
+                  //    item.updated = true;
+                  //    item.date_time = DateTime.Now;
+                  //  }
+                  //  else throw exp;
+                  //}
+                  //else throw new Exception("ошибка получения данных");
+                  Exception ex;
+                  float? value=EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
+                  if (ex == null && value.HasValue)
                   {
-                    byte[] buffer = new byte[128];
-                    byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
-                    Exception exp = EnMera102.Read(buf, 128, client, out buffer);
-                    if (exp == null)
-                    {
-                      float ds = (float)BitConverter.ToInt32(buffer, 9);
-                      item.value = Math.Round((ds / 100),2);
-                      item.is_true = true;
-                      item.updated = true;
-                      item.date_time = DateTime.Now;
-                    }
-                    else throw exp;
-                  }
-                  else throw new Exception("ошибка получения данных");
-                }
-                else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
-                {
-                  string num = item.meter_factory;
-
-                  byte addr = 0;
-                  if (!string.IsNullOrEmpty(num))
-                  {
-                    if (char.IsDigit(num, 0))
-                    {
-                      try
-                      {
-                        num = num.Substring(num.Length - 2, 2);
-                        if (!byte.TryParse(num, out addr))
-                        {
-                          addr = 0;
-                        }
-                      }
-                      catch { addr = 0; }
-                    }
-                  }
-                  if (client == null)
-                    throw new Exception("Ошибка открытия соединения");
-                  Exception ex = null;
-                  var xx = Granelectro.ReadData(item.ip, client, addr, out ex);
-                  if (xx != null)
-                  {
+                    item.value = value.Value;
                     item.is_true = true;
-                    item.value = Math.Round((float)xx[0], 3);
                     item.updated = true;
                     item.date_time = DateTime.Now;
                   }
+                  else {
+                    throw new Exception("ошибка получения данных");
+                  }
+
                 }
-                else
+                else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
                 {
-                  throw new Exception("Счетчик не поддерживается");
+                  Exception exp = null;
+                  float? value= Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
+                  if (exp == null && value.HasValue)
+                  {
+                    item.value = value.Value;
+                    item.is_true = true;
+                    item.updated = true;
+                    item.date_time = DateTime.Now;
+                  }
+                  else
+                  {
+                    throw new Exception("ошибка получения данных");
+                  }
+                  //  string num = item.meter_factory;
+
+                  //  byte addr = 0;
+                  //  if (!string.IsNullOrEmpty(num))
+                  //  {
+                  //    if (char.IsDigit(num, 0))
+                  //    {
+                  //      try
+                  //      {
+                  //        num = num.Substring(num.Length - 2, 2);
+                  //        if (!byte.TryParse(num, out addr))
+                  //        {
+                  //          addr = 0;
+                  //        }
+                  //      }
+                  //      catch { addr = 0; }
+                  //    }
+                  //  }
+                  //  if (client == null)
+                  //    throw new Exception("Ошибка открытия соединения");
+                  //  Exception ex = null;
+                  //  var xx = Granelectro.ReadData(item.ip, client, addr, out ex);
+                  //  if (xx != null)
+                  //  {
+                  //    item.is_true = true;
+                  //    item.value = Math.Round((float)xx[0], 3);
+                  //    item.updated = true;
+                  //    item.date_time = DateTime.Now;
+                  //  }
+                  //}
+                  //else
+                  //{
+                  //  throw new Exception("Счетчик не поддерживается");
                 }
               }
               catch (Exception ex)
@@ -754,6 +781,97 @@ namespace GettingStartedTree
         this.button2.ImageIndex = 7;
       }
       
+    }
+
+    private void treeListView1_MouseUp(object sender, MouseEventArgs e)
+    {
+      if (this.treeListView1.Items.Count > 0)
+      {
+        if (e.Button == MouseButtons.Right)
+        {
+          this.menuTree.Visible = true;
+        }
+        else
+        {
+          this.menuTree.Visible = false;
+        }
+      }
+    }
+
+    private void menuTreeUpdate_Click(object sender, EventArgs e)
+    {
+      List<TreeListNodeModel> treeListNodeModels = new List<TreeListNodeModel>();
+
+      //OLVListItem item = this.treeListView1.SelectedItem;
+      TreeListNodeModel item = (TreeListNodeModel)this.treeListView1.SelectedObject;
+      //treeListNodeModels.Add((TreeListNodeModel)this.treeListView1.SelectedObject);
+      
+      using (SimpleWaitForm wf = new SimpleWaitForm())
+      {
+        wf.RunAction(() =>
+        {
+          wf.SetLabelText(string.Format("Опрашиваю:{0}-{1}", item.name,item.ip));
+          TcpClient client = null;
+          try
+          {
+            client = GetConnection(item.ip, 10250);
+            if (client == null)
+              throw new Exception();
+            if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
+            {
+              Exception ex;
+              float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
+              if (ex == null && value.HasValue)
+              {
+                item.value = value.Value;
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(value.Value.ToString());
+              }
+              else
+              {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+            else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
+            {
+              Exception exp = null;
+              float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
+              if (exp == null && value.HasValue)
+              {
+                item.value = value.Value;
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(value.Value.ToString());
+              }
+              else
+              {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+            //wf.DialogResult = DialogResult.OK;
+          }
+          catch (Exception exp)
+          {
+            wf.SetLabelText(exp.Message);
+            wf.DialogResult = DialogResult.Abort;
+          }
+          finally {
+            if (client != null) {
+              client.Close();
+              client.Dispose();
+            }
+          }
+        });
+        wf.ShowDialog();
+      }
+    }
+
+    private void menuTreeUpdateNotTrue_Click(object sender, EventArgs e)
+    {
+      tsUpdateMeterValue_Click(null, null);
     }
   }
 }

@@ -22,6 +22,52 @@ namespace UlcWin.Drivers
       //byte[] bWrite = PreparePacket(0, FUNCTION, VOLTAGE, 0, 0, 0);
       //ReadData(bWrite, lenght);
     }
+
+    public static float? GetSumDayValue(string meter_factory, TcpClient client, out Exception exp)
+    {
+      float? value=null;
+      exp = null;
+      try
+      {
+        string num = meter_factory;
+       
+        byte addr = 0;
+        if (!string.IsNullOrEmpty(num))
+        {
+          if (char.IsDigit(num, 0))
+          {
+            try
+            {
+              num = num.Substring(num.Length - 2, 2);
+              if (!byte.TryParse(num, out addr))
+              {
+                addr = 0;
+              }
+            }
+            catch { addr = 0; }
+          }
+        }
+        if (client == null)
+          throw new Exception("Ошибка открытия соединения");
+        var xx = Granelectro.ReadData("", client, addr, out exp);
+        if (xx != null)
+        {
+          value = (float)Math.Round((float)xx[0], 3);
+          return value;
+        }
+        else
+        {
+          throw new Exception("Счетчик не поддерживается");
+        }
+      }
+      catch (Exception e)
+      {
+        exp = e;
+        return value;
+      }
+    }
+
+
     public static List<float> ReadData(string ip, TcpClient client,byte address, out Exception exception)// byte[] data, int checkLenght)
     {
       exception = null;

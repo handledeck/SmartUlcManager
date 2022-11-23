@@ -182,6 +182,12 @@
     <Compile Include="Controls\ChBoxCombo\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MeterProgress\LineHorizont.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MeterProgress\LineHorizont.Designer.cs">
+      <DependentUpon>LineHorizont.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MeterProgress\MeterProgress.cs">
       <SubType>Form</SubType>
     </Compile>
