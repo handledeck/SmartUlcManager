@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using GettingStartedTree;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.ui;
 
 namespace UlcWin.Export
@@ -16,9 +18,14 @@ namespace UlcWin.Export
     ListView __listView = null;
     DataGridView __dataGridView1=null;
     string __summ = string.Empty;
+    
     public ExportExcel(ListView listView)
     {
       this.__listView = listView;
+    }
+
+    public ExportExcel() {
+      
     }
 
     public ExportExcel(DataGridView dataGridView,string summ)
@@ -210,6 +217,106 @@ namespace UlcWin.Export
       }
       catch (Exception exp)
       {
+        return false;
+      }
+      finally
+      {
+        if (excelApp != null)
+          excelApp.Quit();
+      }
+    }
+
+
+    public bool PrintMeterToExcel(string res,string fes, ListView listView, List<TreeListNodeModel> treeNodes)
+    {
+      Microsoft.Office.Interop.Excel.Application excelApp = null;
+      Workbook excelWorkbook = null;
+      Worksheet excelWorksheet = null;
+      
+      try
+      {
+        excelApp = new Microsoft.Office.Interop.Excel.Application();
+        if (excelApp != null)
+        {
+          excelWorkbook = excelApp.Workbooks.Add();
+          excelWorksheet = (Worksheet)excelWorkbook.Sheets.Add();
+          excelWorksheet.Cells[1, 1] = res;
+          excelWorksheet.Cells[2, 1] = fes;
+          excelWorksheet.Cells[2, 1].HorizontalAlignment = XlHAlign.xlHAlignRight;
+          excelWorksheet.Cells[1, 1].Font.Size = 18;
+          excelWorksheet.Cells[2, 1].Font.Size = 14;
+          
+          int header = 4;
+          int index = 1;
+          excelWorksheet.Application.ActiveWindow.SplitRow = header;
+          excelWorksheet.Application.ActiveWindow.FreezePanes = true;
+          for (int i = 0; i < listView.Columns.Count; i++)
+          {
+            if (listView.Columns[i].Width != 0)
+            {
+              excelWorksheet.Cells[header, index] = listView.Columns[i].Text;
+              //excelWorksheet.Cells[header, index].EntireRow.Font.Bold = true;
+              //excelWorksheet.Columns[index].NumberFormat = "@";
+              excelWorksheet.Cells[header, index].Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+              excelWorksheet.Cells[header, index].Borders.Weight = Microsoft.Office.Interop.Excel.XlBorderWeight.xlThin;
+              index++;
+            }
+          }
+          header++;
+          //System.Collections.ArrayList xx = (System.Collections.ArrayList)ulcTreeView.treeListView1.Objects;
+          for (int i = 0; i < treeNodes.Count; i++)
+          {
+            TreeListNodeModel itm = (TreeListNodeModel)treeNodes[i];
+            int coln = 1;
+            excelWorksheet.Cells[header, coln] = itm.original_name;
+            excelWorksheet.Cells[header, coln].EntireRow.Font.Bold = true;
+            header++;
+            foreach (var item in itm.Nodes)
+            {
+              XlRgbColor color = item.is_true ? XlRgbColor.rgbBlack : XlRgbColor.rgbDarkGray;
+              excelWorksheet.Cells[header, coln] = item.name;
+              excelWorksheet.Cells[header, coln].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = item.date_time;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = (item.unit_type_id==1 ? "ULC-2" : "РВП-18");
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = item.ip;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = item.meter_factory;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = item.value;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              header++;
+            }
+            
+          }
+          index = 1;
+          for (int i = 0; i < listView.Columns.Count; i++)
+          {
+            if (listView.Columns[i].Width != 0)
+            {
+              excelWorksheet.Columns[index].EntireColumn.AutoFit();
+              index++;
+            }
+          }
+          object name = excelApp.GetSaveAsFilename(Directory.GetCurrentDirectory(), "Excel Files (*.xls), *.xls");
+          if (name.GetType() != typeof(bool))
+          {
+            excelApp.ActiveWorkbook.SaveAs(name, XlFileFormat.xlWorkbookNormal);
+          }
+          excelWorkbook.Close();
+        }
+        return true;
+      }
+      catch (Exception exp)
+      {
+        MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
       }
       finally

@@ -9,6 +9,7 @@ namespace UlcWin.Controls.UlcMeterComponet
   public class TreeListNodeModel
   {
     public int id { get; set; }
+    public string original_name { get; set; }
     public string name { get; set; }
     public DateTime? date_time { get; set; }
     public string ip { get; set; }
@@ -35,6 +36,26 @@ namespace UlcWin.Controls.UlcMeterComponet
       }
       this.is_true = true;
     }
+
+    public static MeterValue ConvertToMeterValue(TreeListNodeModel treeListNodeModel) {
+      MeterValue meterValue;
+      if (treeListNodeModel == null)
+        return null;
+      meterValue = new MeterValue()
+      {
+        ctrl_id = treeListNodeModel.ctrl_id,
+        date_time = treeListNodeModel.date_time.Value,
+        id = treeListNodeModel.id,
+        ip = treeListNodeModel.ip,
+        is_true = treeListNodeModel.is_true,
+        meter_factory = treeListNodeModel.meter_factory,
+        meter_type = treeListNodeModel.meter_type,
+        value = treeListNodeModel.value.Value
+      };
+      return meterValue;
+    }
   }
+
+  
 }
 

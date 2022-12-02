@@ -755,6 +755,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PCI-card_view.ico" />
+    <None Include="Resources\database_refresh.ico" />
+    <None Include="Resources\gear.png" />
+    <None Include="Resources\gear.ico" />
     <None Include="Resources\chart_line.png" />
     <None Include="Resources\chart.ico" />
     <None Include="Resources\chart2.png" />

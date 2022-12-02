@@ -56,12 +56,10 @@ namespace UlcWin.ui
 
     public void SetLabelText(string text) {
       this.BeginInvoke(new Action(() => {
-
         if (text.Length >= 50) {
           text = text.Substring(0, 47) + "...";
         }
         this.label1.Text = text;
-        
       }));
     }
 

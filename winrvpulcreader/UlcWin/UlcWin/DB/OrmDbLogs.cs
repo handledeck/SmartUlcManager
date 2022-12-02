@@ -70,7 +70,7 @@ namespace UlcWin.DB
 
 
   [ServiceStack.DataAnnotations.Alias("main_logs")]
-  class OrmDbLogs
+  public class OrmDbLogs
   {
     [ServiceStack.DataAnnotations.AutoIncrement]
     [ServiceStack.DataAnnotations.PrimaryKey]

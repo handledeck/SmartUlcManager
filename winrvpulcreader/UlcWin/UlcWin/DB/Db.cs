@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Text.Unicode;
 using System.Windows.Forms;
 using UlcWin;
+using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.DB;
 using UlcWin.Edit;
 using UlcWin.Fota;
@@ -714,29 +715,32 @@ namespace InterUlc.Db
       }
     }
 
-    public int UpdateTreeItem(string name, int idRecord,string node_full_path) {
-
+    public int UpdateTreeItem(string name, int idRecord, string node_full_path, SqlTreeNodes sqlTreeNodes)
+    {
       string sql = string.Empty;
-      var consql = new NpgsqlConnection(this.__connection);
-      consql.Open();
-
-      sql = string.Format("UPDATE public.main_nodes SET \"name\"=\'{0}\' WHERE id={1}", name, idRecord);
-      var cmd = new NpgsqlCommand(sql, consql);
-      int rowf = cmd.ExecuteNonQuery();
-      consql.Close();
-      DbLogMsg dbLogMsg = new DbLogMsg()
+      try
       {
-        Id = rowf
-        //Item = name
-      };
-     
-      DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
-      string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-      LogsInsertEvent(EnLogEvt.EDIT_NODE, msg);
-      return rowf;
+        var consql = new NpgsqlConnection(this.__connection);
+        consql.Open();
+        
+        sql = string.Format("UPDATE public.main_nodes SET \"name\"=\'{0}\' WHERE id={1}", name, idRecord);
+        var cmd = new NpgsqlCommand(sql, consql);
+        int rowf = cmd.ExecuteNonQuery();
+        DbLogMsg dbLogMsg = GetDbObjectPath(idRecord, consql, sqlTreeNodes);
+        consql.Close();
+        
+        string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
+        LogsInsertEvent(EnLogEvt.EDIT_NODE, msg);
+        return rowf;
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message,"Ошибка редактирования",MessageBoxButtons.OK,MessageBoxIcon.Error);
+        return -1;
+      }
     }
 
-    public long? AddTreeItem(int? parentID, string name,string node_full_path) {
+    public long? AddTreeItem(int? parentID, string name, string node_full_path, SqlTreeNodes sqlTreeNodes) {
       string sql = string.Empty;
       IDbTransaction iTrz = null;
       long? idR;
@@ -756,6 +760,9 @@ namespace InterUlc.Db
               node_kind_id = parentID == null ? 1 : 2,
             };
             idR = db.Insert<OrmDbNodes>(ormDbNodes, selectIdentity: true);
+            DbLogMsg dbLogMsg = GetDbObjectPath((int)idR.Value, db, sqlTreeNodes);
+            string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
+            LogsInsertEvent(EnLogEvt.ADD_NODE, msg);
             iTrz.Commit();
           }
 
@@ -897,7 +904,6 @@ namespace InterUlc.Db
           }
 
         }
-
       }
     }
 
@@ -1104,7 +1110,13 @@ namespace InterUlc.Db
             long emai;
             bool bp = long.TryParse(uc.IMEI, out emai);
             //GetIMAIChanged(item.Key, emai);
-            it.SubItems.Add(uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
+            try
+            {
+              it.SubItems.Add(uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
+            }
+            catch {
+              it.SubItems.Add("---");
+            }
           }
           else
             it.SubItems.Add("----");
@@ -1360,7 +1372,7 @@ namespace InterUlc.Db
                   ormDataConfig.DeviceType = itip.UType;
                   if (ormDataConfig.DeviceType == 1)
                   {
-                    CheckDeviceIMEI(db, ormDataConfig,full_path, itip.Name);
+                    CheckDeviceIMEI(db, new List<OrmDbConfig>(){ ormDataConfig });//,full_path, itip.Name);
                   }
                   xx = db.Update<OrmDbConfig>(new OrmDbConfig[] { ormDataConfig });
                 }
@@ -1373,7 +1385,7 @@ namespace InterUlc.Db
                   ormDataConfig.DeviceType = itip.UType;
                   if (ormDataConfig.DeviceType == 1)
                   {
-                    CheckDeviceIMEI(db, ormDataConfig, full_path, itip.Name);
+                    CheckDeviceIMEI(db, new List<OrmDbConfig>() { ormDataConfig });//,full_path, itip.Name);
                   }
                   db.Insert<OrmDbConfig>(new OrmDbConfig[] { ormDataConfig });
                 }
@@ -1407,7 +1419,7 @@ namespace InterUlc.Db
       return imei.Substring(imei.Length - 7, imei.Length - 8);
     }
 
-    public void CheckDeviceIMEI(IDbConnection connection, OrmDbConfig ulcCfg, string node_full_path,string item_name)
+    /*public void CheckDeviceIMEI(IDbConnection connection, OrmDbConfig ulcCfg, string node_full_path,string item_name)
     {
       string sql = string.Format("SELECT * FROM main_ctrldata mc " +
             "WHERE id = (" +
@@ -1459,6 +1471,144 @@ namespace InterUlc.Db
         
       }
       //ulcCfg.IMEI
+    }*/
+
+    public enum SqlTreeNodes
+    {
+      FullTree,
+      SubTree,
+      TopTree,
+      None
+    }
+
+    public DbLogMsg GetDbObjectPath(int id, IDbConnection connection, SqlTreeNodes sqlTreeNodes)
+    {
+      string msg = string.Empty;
+      string sql = string.Empty;
+      switch (sqlTreeNodes)
+      {
+        case SqlTreeNodes.FullTree:
+          sql = string.Format("select mn.id, mn.\"name\" as tp ,mn2.\"name\" as res,mn3.\"name\" as fes, mc.ip_address as ip from main_nodes mn " +
+        "right join main_nodes mn2 on mn.parent_id = mn2.id " +
+        "right join main_nodes mn3 on mn2.parent_id = mn3.id " +
+        "right join main_ctrlinfo mc on mn.id =mc.id " +
+        "where mn.id = {0}", id);
+          break;
+        case SqlTreeNodes.SubTree:
+          sql = string.Format("select mn.id, mn.\"name\" as res ,mn2.\"name\" as fes from main_nodes mn " +
+        "right join main_nodes mn2 on mn.parent_id = mn2.id " +
+        "where mn.id = {0}", id);
+          break;
+        case SqlTreeNodes.TopTree:
+          sql = string.Format("select mn.id, mn.\"name\" as fes from main_nodes mn " +
+       "where mn.id = {0}", id);
+          break;
+        default:
+          break;
+      }
+      DbLogMsg lst = connection.Single<DbLogMsg>(sql);
+      if (lst != null)
+      {
+        return lst;
+        //msg = System.Text.Json.JsonSerializer.Serialize(lst[0], typeof(DbLogs), GetSerializeOption());
+        //msg = string.Format("{0}/{1}/{2}",lst[0].Fes,lst[0].Res,lst[0].Tp);
+      }
+      else return null;
+
+    }
+
+    public OrmDbConfig GetLastRecordById(IDbConnection connection, int id)
+    {
+      string sql = String.Format("SELECT * FROM main_ctrldata mc " +
+                  "WHERE ID = (SELECT MAX(ID) FROM main_ctrldata mc1 where mc1.ctrl_id = {0})", id);
+      List<OrmDbConfig> lstMax = connection.Select<OrmDbConfig>(sql);
+      if (lstMax.Count > 0)
+      {
+        return lstMax[0];
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    public static JsonSerializerOptions GetSerializeOption()
+    {
+      JsonSerializerOptions options = new JsonSerializerOptions
+      {
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(UnicodeRanges.BasicLatin,
+         UnicodeRanges.Cyrillic),
+        WriteIndented = true
+      };
+      return options;
+    }
+
+    public void CheckDeviceIMEI(IDbConnection connection, List<OrmDbConfig> ulcCfgLst)
+    {
+      List<OrmDbLogs> lstLog = new List<OrmDbLogs>();
+      try
+      {
+
+
+        foreach (var ulcCfg in ulcCfgLst)
+        {
+          string sql = string.Format("SELECT * FROM main_ctrldata mc " +
+                "WHERE id = (" +
+                "SELECT max(id) FROM main_ctrldata mc2 where mc2.ctrl_id = {0})", ulcCfg.ctrl_id);
+          List<OrmDbConfig> lstMax = connection.Select<OrmDbConfig>(sql);
+          if (lstMax.Count > 0)
+          {
+            DbLogMsg dbLogs = GetDbObjectPath(lstMax[0].ctrl_id, connection, SqlTreeNodes.FullTree);
+
+            string msg = string.Empty;
+
+
+            if (lstMax[0].IMEI != ulcCfg.IMEI)
+            {
+              dbLogs.Feature = new ImeiStatAndRs()
+              {
+                old_imei = GetShortImei(lstMax[0].IMEI.ToString()),
+                new_imei = GetShortImei(ulcCfg.IMEI.ToString()),
+                rs_status = (lstMax[0].CDIN >> 7).ToString()
+              };
+              msg = System.Text.Json.JsonSerializer.Serialize(dbLogs, typeof(DbLogMsg), GetSerializeOption());
+              int en = (int)EnLogEvt.CHANGE_IMEI;
+              OrmDbConfig ormDbConfig = GetLastRecordById(connection, ulcCfg.ctrl_id);
+              OrmDbLogs mainLogs = new OrmDbLogs()
+              {
+                current_time = DateTime.UtcNow,
+                id_user = 0,
+                usr_name = "служба опроса",
+                message = msg, //string.Format("{0}(dt:{1} imei:{2}=>{3} rs:{4})", msg, lstMax[0].current_time.ToString("dd.MM.yyyy HH:mm"),
+                               //GetShortImei(lstMax[0].IMEI.ToString()), GetShortImei(ulcCfg.IMEI.ToString()), (lstMax[0].CDIN >> 7).ToString()),
+                log_event = en,
+                host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName
+              };
+
+              connection.Insert<OrmDbLogs>(mainLogs);
+            }
+            else if ((DateTime.Now - lstMax[0].current_time).TotalDays > 2)
+            {
+              msg = System.Text.Json.JsonSerializer.Serialize(dbLogs, typeof(DbLogMsg), GetSerializeOption());
+              int en = (int)EnLogEvt.CHANGE_NET_STATE;
+              OrmDbLogs mainLogs = new OrmDbLogs()
+              {
+                current_time = DateTime.UtcNow,
+                id_user = 0,
+                usr_name = "служба опроса",
+                message = msg,//string.Format("dt:{0}-{1}", ulcCfg.current_time.ToString("dd.MM.yyyy HH:mm"), msg),
+                log_event = en,
+                host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName
+              };
+              connection.Insert<OrmDbLogs>(mainLogs);
+            }
+          }
+        }
+      }
+      catch (Exception)
+      {
+        throw;
+      }
     }
 
     public bool InsertCurrentRecord(int ctrl_id, DateTime dt, string message, int deviceType, string node_full_path, string item_name)
@@ -1488,7 +1638,7 @@ namespace InterUlc.Db
               ormDataConfig.DeviceType = deviceType;
               if (ormDataConfig.DeviceType == 1)
               {
-                CheckDeviceIMEI(db, ormDataConfig, node_full_path, item_name);
+                CheckDeviceIMEI(db, new List<OrmDbConfig>() { ormDataConfig });//,full_path, itip.Name);//CheckDeviceIMEI(db, ormDataConfig, node_full_path, item_name);
               }
               xx = db.Update<OrmDbConfig>(new OrmDbConfig[] { ormDataConfig });
               return true;
@@ -1502,7 +1652,7 @@ namespace InterUlc.Db
               ormDataConfig.DeviceType = deviceType;
               if (ormDataConfig.DeviceType == 1)
               {
-                CheckDeviceIMEI(db, ormDataConfig, node_full_path, item_name);
+                CheckDeviceIMEI(db, new List<OrmDbConfig>() { ormDataConfig });//,full_path, itip.Name);
               }
               db.Insert<OrmDbConfig>(new OrmDbConfig[] { ormDataConfig });
               return true;
@@ -1748,7 +1898,7 @@ namespace InterUlc.Db
 
     }
 
-    public bool AddNewResRecord(string name, string ipsddress, string phone,
+    public long AddNewResRecord(string name, string ipsddress, string phone,
       int node_kind__id, int parent_id, UTypeController type_controller, int active, int light, string comment, string full_path,
       string meterMsg)
     {
@@ -1775,19 +1925,20 @@ namespace InterUlc.Db
             phone_num = phone,
             unit_type_id = (int)type_controller,
           });
-          DbLogMsg dbLogMsg = new DbLogMsg()
-          {
-            Id = (int)iId,
-            Tp = name
-          };
-          DbLogMsg.ParseNodePath(full_path, ref dbLogMsg);
+          //DbLogMsg dbLogMsg = new DbLogMsg()
+          //{
+          //  Id = (int)iId,
+          //  Tp = name
+          //};
+          DbLogMsg dbLogMsg= GetDbObjectPath((int)iId, db, SqlTreeNodes.FullTree);
+          //DbLogMsg.ParseNodePath(full_path, ref dbLogMsg);
           string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
           LogsInsertEvent(EnLogEvt.ADD_ITEM, msg);
-          return true;
+          return iId;
         }
         catch (Exception exp)
         {
-          return false;
+          return -1;
         }
       }
 
@@ -1829,13 +1980,12 @@ namespace InterUlc.Db
       //}
     }
 
-    public void DeleteTreeItem(int id, string message, EnLogEvt? enLogEvt)
+    public void DeleteTreeItem(int id, string message, EnLogEvt? enLogEvt, SqlTreeNodes sqlTreeNodes)
     {
       string sql = string.Empty;
       var consql = new NpgsqlConnection(this.__connection);
-
       consql.Open();
-
+      DbLogMsg dbLogMsg = GetDbObjectPath(id, consql, sqlTreeNodes);
       sql = string.Format("DELETE FROM public.main_nodes WHERE id={0}", id);
       var cmd = new NpgsqlCommand(sql, consql);
       int rowf = cmd.ExecuteNonQuery();
@@ -1843,14 +1993,14 @@ namespace InterUlc.Db
      
       if (enLogEvt != null)
       {
-        DbLogMsg dbLogMsg = new DbLogMsg()
-        {
-          Id = rowf,
-        };
+        //DbLogMsg dbLogMsg = new DbLogMsg()
+        //{
+        //  Id = rowf,
+        //};
 
-        DbLogMsg.ParseNodePath(message, ref dbLogMsg);
+        //DbLogMsg.ParseNodePath(message, ref dbLogMsg);
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(enLogEvt.Value, message);
+        LogsInsertEvent(enLogEvt.Value, msg);
       }
     }
 
@@ -1865,35 +2015,53 @@ namespace InterUlc.Db
 
     public int DeleteResRecord(int id,string name, EnLogEvt? enLogEvt,string node_full_path)
     {
-     
+      try
+      {
+
       var consql = new NpgsqlConnection(this.__connection);
       consql.Open();
+      DbLogMsg dbLogMsg = GetDbObjectPath(id, consql, SqlTreeNodes.FullTree);
       var sql = string.Format("delete from main_ctrlevent where ctrl_id={0};", id);
       var cmd = new NpgsqlCommand(sql, consql);
       int result = cmd.ExecuteNonQuery();
 
       sql = string.Format("delete from main_ctrlcurrent where ctrl_id={0};", id);
-      cmd = new NpgsqlCommand(sql, consql);
+      cmd.CommandText = sql;
+      //cmd = new NpgsqlCommand(sql, consql);
       result = cmd.ExecuteNonQuery();
       sql = string.Format("delete from main_ctrlinfo where id={0};", id);
-      cmd = new NpgsqlCommand(sql, consql);
+      //cmd = new NpgsqlCommand(sql, consql);
+      cmd.CommandText = sql;
       result = cmd.ExecuteNonQuery();
       sql = string.Format("delete from main_nodes where id={0};", id);
-      cmd = new NpgsqlCommand(sql, consql);
+      cmd.CommandText = sql;
+      //cmd = new NpgsqlCommand(sql, consql);
+      int result_node = cmd.ExecuteNonQuery();
+      sql = string.Format("delete from meter_info where ctrl_id={0};", id);
+      cmd.CommandText = sql;
+      //cmd = new NpgsqlCommand(sql, consql);
       result = cmd.ExecuteNonQuery();
       consql.Close();
       if (enLogEvt!=null)
       {
-        DbLogMsg dbLogMsg = new DbLogMsg()
-        {
-          Id = id,
-          Tp = name
-        };
-        DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
+        //DbLogMsg dbLogMsg = new DbLogMsg()
+        //{
+        //  Id = id,
+        //  Tp = name
+        //};
+        //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
         LogsInsertEvent(enLogEvt.Value, msg);
+         
+        }
+        return result_node;
       }
-      return result;
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message, "Ошибка удаления записи", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return -1;
+      }
+     
     }
 
     internal bool InsertLogMsg(List<Log> logs, int idCtrl)
@@ -2014,12 +2182,13 @@ namespace InterUlc.Db
               phone_num = dbItemEditor.Phone,
               unit_type_id = dbItemEditor.UType,
             });
-          DbLogMsg dbLogMsg = new DbLogMsg()
-          {
-            Id = dbItemEditor.Id,
-            Tp = dbItemEditor.Name
-          };
-          DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
+          //DbLogMsg dbLogMsg = new DbLogMsg()
+          //{
+          //  Id = dbItemEditor.Id,
+          //  Tp = dbItemEditor.Name
+          //};
+          //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
+          DbLogMsg dbLogMsg = GetDbObjectPath(dbItemEditor.Id, db, SqlTreeNodes.FullTree);
           string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
           LogsInsertEvent(EnLogEvt.EDIT_ITEM, msg);
         //}
@@ -2178,5 +2347,63 @@ namespace InterUlc.Db
         }
       }
     }
+
+    public List<MeterInfo> GetUlcMeters(int ctrl_id) {
+      try
+      {
+        List<MeterInfo> lstI;
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+       __connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          lstI = db.Select<MeterInfo>(x => x.ctrl_id == ctrl_id);
+        }
+        return lstI;
+      }
+      catch
+      {
+
+        return null;
+      }
+    }
+
+    public void SetCrudMeterInfo(List<MeterInfo> meterInfos) {
+      try
+      {
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+       __connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
+          {
+            foreach (var item in meterInfos)
+            {
+              switch (item.crud_record)
+              {
+                case CrudRecord.None:
+                  break;
+                case CrudRecord.Add:
+                    db.Insert<MeterInfo>(item);
+                  break;
+                case CrudRecord.Edit:
+                  db.Update<MeterInfo>(item);
+                  break;
+                case CrudRecord.Delete:
+                  db.Delete<MeterInfo>(item);
+                  break;
+                default:
+                  break;
+              }
+            }
+            dbTrans.Commit();
+          }
+        }
+      }
+      catch
+      {
+
+      }
+    }
+
   }
 }

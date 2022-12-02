@@ -1,4 +1,5 @@
-﻿using ServiceStack.OrmLite;
+﻿using ServiceStack.DataAnnotations;
+using ServiceStack.OrmLite;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,8 +18,10 @@ namespace UlcWin.Controls.UlcMeterComponet
     public string ip { get; set; }
     public string meter_type { get; set; }
     public string meter_factory { get; set; }
+    [Ignore]
+    public CrudRecord crud_record { get; set; }
 
-  
+
 
     public static bool CheckTableDb(string connection)
     {

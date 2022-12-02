@@ -15,9 +15,9 @@ namespace UlcWin.Edit
   public partial class MeterEditFrom : Form
   {
 
-    public Meters __meter = null;
+    public Controls.UlcMeterComponet.MeterInfo __meter = null;
     string[] __meters = new string[] { "CC-301(Гранэлектро)", "CC-101(Гранэлектро)", "CE102BY(Энергомера)" };
-    public MeterEditFrom(Meters meter)
+    public MeterEditFrom(Controls.UlcMeterComponet.MeterInfo meter)
     {
       __meter = meter;
       InitializeComponent();

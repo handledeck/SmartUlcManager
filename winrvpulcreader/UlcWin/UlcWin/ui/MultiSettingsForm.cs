@@ -122,19 +122,16 @@ namespace UlcWin.ui
     {
       __count_update = 0;
       __command = ZtpProtocol.SetConfigCommand(__pwd, this.Value);
-
-      //this.label1.Text = __command;
         if (CheckSessionPassword())
         {
           __command = ZtpProtocol.SetConfigCommand(__pwd, this.Value);
+        using (__wForm = new WaitForm("Запись настроек контроллеров", RunSettingsWrite, StateWaitForm.StateOverSimple))
+        {
+          __wForm.ShowDialog();
+          __wForm.Close();
         }
-      using (__wForm = new WaitForm("Запись настроек контроллеров",RunSettingsWrite, StateWaitForm.StateOverSimple))
-      {
-        // __wForm.InitListView(this.__items_checked);
-        __wForm.ShowDialog();
-        __wForm.Close();
-
       }
+      
     }
 
     List<Task>  __lstTaskUpdate = new List<Task>();
@@ -173,8 +170,8 @@ namespace UlcWin.ui
               {
                 DbLogMsg dbLogMsg = new DbLogMsg()
                 {
-                  Id = itemIp.Id,
-                  Tp = itemIp.Name
+                  id = itemIp.Id,
+                  tp = itemIp.Name
                 };
                 DbLogMsg.ParseNodePath(__node_full_path, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());

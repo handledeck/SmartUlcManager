@@ -9,43 +9,38 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.DB;
 using UlcWin.ui;
 
 namespace UlcWin.Edit
 {
 
-
- 
-
   public enum UTypeController:byte{ 
     RVP=0,
     ULC2=1
   }
-
-
   public enum UTypeFunction : byte
   {
     Unknown = 0,
     Street = 1
   }
-
-
-
   public partial class Editor : Form
   {
 
     Dictionary<int, string> __utype;
     bool __addNew = false;
     ItemIp __itemIp = null;
+    DbReader __db;
+    public List<MeterInfo> __meterInfos =null;
     public Editor()
     {
       InitializeComponent();
-     
     }
 
     public Editor(DbReader db,bool addNew, ItemIp itemIp) {
       InitializeComponent();
+      this.__db = db;
       __utype =this.GetTypeConntroller(db);
       __itemIp = itemIp;
       this.__addNew = addNew;
@@ -61,9 +56,6 @@ namespace UlcWin.Edit
       this.Shown += Editor_Shown;
     }
 
-
-    
-
     //string isNeed = "Поле обязательное для запонения";
 
     //List<TextBoxPlaceHolder> __ctrl_insert=null;
@@ -71,20 +63,27 @@ namespace UlcWin.Edit
     {
       if (__itemIp != null)
       {
-        if (!string.IsNullOrEmpty(__itemIp.Meters) && !__itemIp.Meters.Equals("Н/Д"))
+        __meterInfos= __db.GetUlcMeters(__itemIp.Id);
+        foreach (var item in __meterInfos)
         {
-          Meters[] arMetr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(__itemIp.Meters, typeof(Meters[]));
-          if (arMetr != null)
-          {
-            foreach (var item in arMetr)
-            {
-              ListViewItem it = this.lstMeter.Items.Add(item.meter_type);
-                it.SubItems.Add(item.meter_factory);
-              it.Tag = item;
-
-            }
-          }
+          ListViewItem it = this.lstMeter.Items.Add(item.meter_type);
+          it.SubItems.Add(item.meter_factory);
+          it.Tag = item;
         }
+        //if (!string.IsNullOrEmpty(__itemIp.Meters) && !__itemIp.Meters.Equals("Н/Д"))
+        //{
+        //  Meters[] arMetr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(__itemIp.Meters, typeof(Meters[]));
+        //  if (arMetr != null)
+        //  {
+        //    foreach (var item in arMetr)
+        //    {
+        //      ListViewItem it = this.lstMeter.Items.Add(item.meter_type);
+        //        it.SubItems.Add(item.meter_factory);
+        //      it.Tag = item;
+
+        //    }
+        //  }
+        //}
       }
       Application.Idle += Application_Idle;
     }
@@ -201,6 +200,7 @@ namespace UlcWin.Edit
 
     private void BtnDelete_Click(object sender, EventArgs e)
     {
+      ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).crud_record= CrudRecord.Delete;
       if (this.lstMeter.SelectedItems.Count != 0) {
         this.lstMeter.SelectedItems[0].Remove();
       }
@@ -208,11 +208,14 @@ namespace UlcWin.Edit
 
     private void BtnEdit_Click(object sender, EventArgs e)
     {
-      using (MeterEditFrom mMrom = new MeterEditFrom((Meters)this.lstMeter.SelectedItems[0].Tag))
+      using (MeterEditFrom mMrom = new MeterEditFrom((Controls.UlcMeterComponet.MeterInfo)this.lstMeter.SelectedItems[0].Tag))
       {
         if (mMrom.ShowDialog() == DialogResult.OK) {
+          ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).ip = this.txtBoxIpAddress.Text;
+          ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).meter_factory = mMrom.txtBoxPlant.Text;
+           ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).meter_type = mMrom.GetDeviceByIndex();
+          ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).crud_record = CrudRecord.Edit;
           ListViewItem li = this.lstMeter.SelectedItems[0];
-          
           li.Text = mMrom.GetDeviceByIndex();
           li.SubItems[1].Text = mMrom.txtBoxPlant.Text;
         }
@@ -224,7 +227,16 @@ namespace UlcWin.Edit
       using (MeterEditFrom mMrom =new MeterEditFrom(null))
       {
         if (mMrom.ShowDialog() == DialogResult.OK) {
-
+          if (this.__meterInfos == null) {
+            this.__meterInfos = new List<MeterInfo>();
+          }
+          this.__meterInfos.Add(new MeterInfo()
+          {
+            crud_record = CrudRecord.Add,
+            ip = this.txtBoxIpAddress.Text,
+            meter_factory = mMrom.txtBoxPlant.Text,
+            meter_type = mMrom.GetDeviceByIndex()
+          });
           this.lstMeter.Items.Add(mMrom.GetDeviceByIndex()).SubItems.Add(mMrom.txtBoxPlant.Text);
         }
       }

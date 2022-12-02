@@ -37,7 +37,7 @@ namespace UlcWin
   public partial class LoadForm : Form
   {
 
-    DbReader __db;
+    public DbReader __db;
     UlcWin.win.WaitForm __frm = null;
     List<ItemCallBack> __lip = null;
     UNode __sel_node = null;
@@ -697,10 +697,11 @@ namespace UlcWin
       }
 
       return bReadDB;
-
-
     }
 
+    public string GetFullPathNode() {
+      return this.treeView1.SelectedNode.FullPath;
+    }
     private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
       this.LstViewEvent.Items.Clear();
@@ -1838,6 +1839,7 @@ namespace UlcWin
                 IsLight = ed.cbFunction.SelectedIndex,
                 UType = ed.cbType.SelectedIndex == 0 ? 0 : 1
               }, this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
+            __db.SetCrudMeterInfo(ed.__meterInfos);
             this.tsUpdate_Click(null, null);
           }
         }
@@ -2123,9 +2125,15 @@ namespace UlcWin
                 int active = ed.chBoxActive.Checked ? 1 : 0;
                 int light = ed.cbFunction.SelectedIndex;
 
-                __db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
+                long idRec=__db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
                   3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
                   this.treeView1.SelectedNode.FullPath, msgMeter);
+                foreach (var item in ed.__meterInfos)
+                {
+                  item.parent_id = this.__sel_node.Id;
+                  item.ctrl_id = (int)idRec;
+                }
+                __db.SetCrudMeterInfo(ed.__meterInfos);
                 this.tsUpdate_Click(null, null);
               }
               else
@@ -2566,7 +2574,8 @@ namespace UlcWin
         DialogResult result = edForm.ShowDialog();
         if (result == DialogResult.OK)
         {
-          long? idR= __db.AddTreeItem(node.Id, edForm.txtNodeName.Text, node.Text + "\\" + edForm.txtNodeName.Text);
+          long? idR= __db.AddTreeItem(node.Id, edForm.txtNodeName.Text, node.Text + "\\" + edForm.txtNodeName.Text,
+             DbReader.SqlTreeNodes.SubTree);
           if (idR.HasValue)
           {
             UNode uNode = new UNode();
@@ -2621,11 +2630,11 @@ namespace UlcWin
                 __db.DeleteResRecord(item, null, null, null);
               }
             }
-            __db.DeleteTreeItem(lNnode.Id, null, null);
+            __db.DeleteTreeItem(lNnode.Id, null, null, DbReader.SqlTreeNodes.None);
           }
         }
 
-        __db.DeleteTreeItem(node.Id, node.FullPath, EnLogEvt.DELETE_NODE);
+        __db.DeleteTreeItem(node.Id, node.FullPath, EnLogEvt.DELETE_NODE,node.Parent==null ? DbReader.SqlTreeNodes.TopTree: DbReader.SqlTreeNodes.SubTree);
         this.treeView1.Nodes.Remove(this.treeView1.SelectedNode);
         this.LstViewItm.Items.Clear();
       }
@@ -2633,14 +2642,14 @@ namespace UlcWin
 
     private void tsAddRootItem_Click(object sender, EventArgs e)
     {
-      //UNode node = (UNode)this.treeView1.SelectedNode;
+      UNode node = (UNode)this.treeView1.SelectedNode;
       using (TreeItemNodeForm edForm = new TreeItemNodeForm())
       {
         DialogResult result = edForm.ShowDialog();
         if (result == DialogResult.OK)
         {
           edForm.Close();
-          long? idNew = __db.AddTreeItem(null, edForm.txtNodeName.Text, edForm.txtNodeName.Text);
+          long? idNew = __db.AddTreeItem(null, edForm.txtNodeName.Text, edForm.txtNodeName.Text,DbReader.SqlTreeNodes.TopTree);
           if (idNew.HasValue)
           {
             UNode uNode = new UNode();
@@ -2671,7 +2680,7 @@ namespace UlcWin
         DialogResult result = edForm.ShowDialog();
         if (result == DialogResult.OK)
         {
-          __db.UpdateTreeItem(edForm.txtNodeName.Text, node.Id, node.FullPath);
+          __db.UpdateTreeItem(edForm.txtNodeName.Text, node.Id, node.FullPath,node.Parent==null ? DbReader.SqlTreeNodes.TopTree: DbReader.SqlTreeNodes.SubTree);
           UNode uNode = new UNode();
           // uNode.Id = idNew;
           uNode.Name = edForm.txtNodeName.Text;
@@ -2699,14 +2708,15 @@ namespace UlcWin
 
     private void tsTreeBtnAddRoot_Click(object sender, EventArgs e)
     {
-      //UNode node = (UNode)this.treeView1.SelectedNode;
+      UNode node = (UNode)this.treeView1.SelectedNode;
       using (TreeItemNodeForm edForm = new TreeItemNodeForm())
       {
         DialogResult result = edForm.ShowDialog();
         if (result == DialogResult.OK)
         {
           edForm.Close();
-          long? idNew = __db.AddTreeItem(null, edForm.txtNodeName.Text, edForm.txtNodeName.Text);
+          long? idNew = __db.AddTreeItem(null, edForm.txtNodeName.Text, edForm.txtNodeName.Text,
+            DbReader.SqlTreeNodes.TopTree);
           if (idNew.HasValue)
           {
             UNode uNode = new UNode();
@@ -2738,7 +2748,8 @@ namespace UlcWin
         if (result == DialogResult.OK)
         {
           edForm.Close();
-          long? idNew = __db.AddTreeItem(node.Id, edForm.txtNodeName.Text, node.Text + "\\" + edForm.txtNodeName.Text);
+          long? idNew = __db.AddTreeItem(node.Id, edForm.txtNodeName.Text, node.Text + "\\" + edForm.txtNodeName.Text,
+            DbReader.SqlTreeNodes.SubTree);
           if (idNew.HasValue)
           {
             UNode uNode = new UNode();
@@ -2785,10 +2796,10 @@ namespace UlcWin
               __db.DeleteResRecord(item, null, null, null);
             }
           }
-          __db.DeleteTreeItem(lNnode.Id, null, null);
+          __db.DeleteTreeItem(lNnode.Id, null, null, DbReader.SqlTreeNodes.None);
         }
       }
-      __db.DeleteTreeItem(node.Id, node.FullPath, EnLogEvt.DELETE_NODE);
+      __db.DeleteTreeItem(node.Id, node.FullPath, EnLogEvt.DELETE_NODE, node.Parent == null ? DbReader.SqlTreeNodes.TopTree : DbReader.SqlTreeNodes.SubTree);
       this.treeView1.Nodes.Remove(this.treeView1.SelectedNode);
       this.LstViewItm.Items.Clear();
     }
@@ -2802,7 +2813,7 @@ namespace UlcWin
         DialogResult result = edForm.ShowDialog();
         if (result == DialogResult.OK)
         {
-          __db.UpdateTreeItem(edForm.txtNodeName.Text, node.Id, node.FullPath);
+          __db.UpdateTreeItem(edForm.txtNodeName.Text, node.Id, node.FullPath,node.Parent==null? DbReader.SqlTreeNodes.TopTree: DbReader.SqlTreeNodes.SubTree);
           UNode uNode = new UNode();
           // uNode.Id = idNew;
           uNode.Name = edForm.txtNodeName.Text;
@@ -3380,6 +3391,11 @@ namespace UlcWin
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
     {
       int x = 0;
+    }
+
+    private void ulcMeterTreeView_Load(object sender, EventArgs e)
+    {
+
     }
   }
 

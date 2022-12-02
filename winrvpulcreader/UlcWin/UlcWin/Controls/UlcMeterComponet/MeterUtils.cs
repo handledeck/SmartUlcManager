@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace UlcWin.Controls.UlcMeterComponet
 {
+
+  public enum CrudRecord{ 
+    None,
+    Add,
+    Edit,
+    Delete
+  }
+
   public class MeterType
   {
     public string meter_type { get; set; }

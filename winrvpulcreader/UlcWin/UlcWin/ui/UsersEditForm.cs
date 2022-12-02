@@ -44,26 +44,28 @@ namespace UlcWin.ui
       
     }
 
-    void UpdateUsersList() {
-
+    void UpdateUsersList()
+    {
       List<UlcUser> lstUsers = this.__db.GetAllUsers();
-      //this.__nodes = node;
-   
       this.ListUser.Items.Clear();
       foreach (var item in lstUsers)
       {
-        string asc=DBAuthUtils.Decrypt(item.Pwd, item.User);
-        int iAsc;
-        bool bAsc = int.TryParse(asc, out iAsc);
-        if (bAsc && iAsc != -1)
+        try
         {
-          ListViewItem lvi = this.ListUser.Items.Add(item.User);
-          lvi.SubItems.Add(item.Comment);
-          lvi.SubItems.Add(item.Pwd);
-          lvi.SubItems.Add(item.NodesString);
-          lvi.SubItems.Add(item.Id.ToString());
-          lvi.SubItems.Add(((short)item.AccsessLavel).ToString());
+          string asc = DBAuthUtils.Decrypt(item.Pwd, item.User);
+          int iAsc;
+          bool bAsc = int.TryParse(asc, out iAsc);
+          if (bAsc && iAsc != -1)
+          {
+            ListViewItem lvi = this.ListUser.Items.Add(item.User);
+            lvi.SubItems.Add(item.Comment);
+            lvi.SubItems.Add(item.Pwd);
+            lvi.SubItems.Add(item.NodesString);
+            lvi.SubItems.Add(item.Id.ToString());
+            lvi.SubItems.Add(((short)item.AccsessLavel).ToString());
+          }
         }
+        catch { }
       }
     }
 

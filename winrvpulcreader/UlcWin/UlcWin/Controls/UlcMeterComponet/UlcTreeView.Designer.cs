@@ -40,7 +40,10 @@ namespace GettingStartedTree
       this.olvMeterFactory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.menuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.menuTreeUpdateNotTrue = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxMenuChange = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.ctxTreeUpdateNotTrue = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxTreeSimpleUpdate = new System.Windows.Forms.ToolStripMenuItem();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -167,16 +170,42 @@ namespace GettingStartedTree
       // menuTree
       // 
       this.menuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuTreeUpdateNotTrue});
+            this.ctxMenuChange,
+            this.toolStripSeparator1,
+            this.ctxTreeUpdateNotTrue,
+            this.ctxTreeSimpleUpdate});
       this.menuTree.Name = "menuTree";
-      this.menuTree.Size = new System.Drawing.Size(217, 48);
+      this.menuTree.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+      this.menuTree.Size = new System.Drawing.Size(217, 76);
       // 
-      // menuTreeUpdateNotTrue
+      // ctxMenuChange
       // 
-      this.menuTreeUpdateNotTrue.Name = "menuTreeUpdateNotTrue";
-      this.menuTreeUpdateNotTrue.Size = new System.Drawing.Size(216, 22);
-      this.menuTreeUpdateNotTrue.Text = "Обновить недостоверные";
-      this.menuTreeUpdateNotTrue.Click += new System.EventHandler(this.menuTreeUpdateNotTrue_Click);
+      this.ctxMenuChange.Image = global::UlcWin.Properties.Resources.gear;
+      this.ctxMenuChange.Name = "ctxMenuChange";
+      this.ctxMenuChange.Size = new System.Drawing.Size(216, 22);
+      this.ctxMenuChange.Text = "Изменить";
+      this.ctxMenuChange.Click += new System.EventHandler(this.menu_meter_change);
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+      // 
+      // ctxTreeUpdateNotTrue
+      // 
+      this.ctxTreeUpdateNotTrue.Image = global::UlcWin.Properties.Resources.database_refresh;
+      this.ctxTreeUpdateNotTrue.Name = "ctxTreeUpdateNotTrue";
+      this.ctxTreeUpdateNotTrue.Size = new System.Drawing.Size(216, 22);
+      this.ctxTreeUpdateNotTrue.Text = "Обновить недостоверные";
+      this.ctxTreeUpdateNotTrue.Click += new System.EventHandler(this.menuTreeUpdateNotTrue_Click);
+      // 
+      // ctxTreeSimpleUpdate
+      // 
+      this.ctxTreeSimpleUpdate.Image = global::UlcWin.Properties.Resources.refresh1;
+      this.ctxTreeSimpleUpdate.Name = "ctxTreeSimpleUpdate";
+      this.ctxTreeSimpleUpdate.Size = new System.Drawing.Size(216, 22);
+      this.ctxTreeSimpleUpdate.Text = "Обновить выбранный";
+      this.ctxTreeSimpleUpdate.Click += new System.EventHandler(this.ctxTreeSimpleUpdate_Click);
       // 
       // imageList1
       // 
@@ -275,6 +304,7 @@ namespace GettingStartedTree
       this.button3.Size = new System.Drawing.Size(32, 29);
       this.button3.TabIndex = 3;
       this.button3.UseVisualStyleBackColor = true;
+      this.button3.Click += new System.EventHandler(this.button3_Click);
       // 
       // panel3
       // 
@@ -336,7 +366,6 @@ namespace GettingStartedTree
     #endregion
 
     private System.Windows.Forms.SplitContainer splitContainer1;
-    private BrightIdeasSoftware.TreeListView treeListView1;
     private BrightIdeasSoftware.OLVColumn olvName;
     private BrightIdeasSoftware.OLVColumn olvDateTime;
     private BrightIdeasSoftware.OLVColumn olvMeterFactory;
@@ -352,9 +381,13 @@ namespace GettingStartedTree
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
     private System.Windows.Forms.ContextMenuStrip menuTree;
-    private System.Windows.Forms.ToolStripMenuItem menuTreeUpdateNotTrue;
+    private System.Windows.Forms.ToolStripMenuItem ctxTreeUpdateNotTrue;
     private System.Windows.Forms.Button button2;
     private System.Windows.Forms.Button button3;
     private System.Windows.Forms.Panel panel3;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuChange;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripMenuItem ctxTreeSimpleUpdate;
+    public BrightIdeasSoftware.TreeListView treeListView1;
   }
 }

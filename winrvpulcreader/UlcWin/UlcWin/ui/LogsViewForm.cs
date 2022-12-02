@@ -26,16 +26,20 @@ namespace UlcWin.ui
       //this.cbEvetCheckBox.DropDownWidth = 280;
     }
 
-    DbLogMsg EvtObjectWho(string message) {
-
+    DbLogMsg EvtObjectWho(string message, IDbConnection db)
+    {
       try
       {
-        return (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
-
+        DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
+        if (dbLogMsg == null)
+          throw new Exception();
+        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.id);
+        if (ormDbInfo != null)
+          dbLogMsg.ip = ormDbInfo.ip_address;
+        return dbLogMsg;
       }
-      catch (Exception)
+      catch (Exception e)
       {
-
         return null;
       }
     }
@@ -93,62 +97,80 @@ namespace UlcWin.ui
     {
       using (SimpleWaitForm sfrm = new SimpleWaitForm())
       {
+        DateTime dt_start = this.cbDateTimeFrom.Value;
+        DateTime dt_end_val = this.cbDateTimeBy.Value;
+        DateTime dt_end = dt_end_val.AddDays(1);
+        string usr = string.Empty;
+        int id_usr = -1;
+        int id_evet = -1;
+        if (this.cbUsers.SelectedIndex != 0)
+          id_usr = ((OrmDbUsers)this.cbUsers.SelectedItem).id;
+        if (this.cbEvents.SelectedIndex != 0)
+          id_evet = ((CbsEvents)this.cbEvents.SelectedItem).ID;
         sfrm.RunAction(new Action(() =>
         {
           sfrm.SetLabelText("Формирую статистику по всем объектам");
           var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
           using (var db = dbFactory.Open())
           {
+           
             try
             {
               List<OrmDbLogs> lstLogs = null;
-             
-              IAsyncResult re= this.BeginInvoke(new Action(() => {
-                string usr = string.Empty;
-                int id_usr = -1;
-                int id_evet = -1;
-                if(this.cbUsers.SelectedIndex!=0)
-                  id_usr=((OrmDbUsers)this.cbUsers.SelectedItem).id;
-                if(this.cbEvents.SelectedIndex!=0)
-                  id_evet = ((CbsEvents)this.cbEvents.SelectedItem).ID;
-                DateTime dt_start = this.cbDateTime.Value;
-                DateTime dt_end = dt_start.AddDays(1);
+              //IAsyncResult re= this.BeginInvoke(new Action(() => {
               var xx = db.From<OrmDbLogs>().Where(x => x.current_time > dt_start.Date && x.current_time<dt_end.Date).
               And(x => id_usr == -1 ? x.id_user > -1 : x.id_user == id_usr).
-              //And(b.ToString()).
               And(x=>id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).
               Select().OrderByDescending(x => x.current_time);
                 lstLogs = db.SqlList<OrmDbLogs>(xx);
-               
-                //  lstLogs = db.Select<OrmDbLogs>(x => x.current_time > this.cbDateTime.Value.Date
-                //    && id_usr==-1 ? x.id_user> -1 : x.id_user ==id_usr
-                //    && id_evet==-1 ? x.log_event>-1 : x.log_event==id_evet);
-                //  this.lstLogEvents.Items.Clear();
-              }));
-              re.AsyncWaitHandle.WaitOne();
-              IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() =>
+              //}));
+              //re.AsyncWaitHandle.WaitOne();
+              List<ListViewItem> lst = new List<ListViewItem>();
+              foreach (var item in lstLogs)
               {
-                this.lstLogEvents.Items.Clear();
-                foreach (var item in lstLogs)
-                {
+                ListViewItem itr = new ListViewItem(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
 
-                  ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
-                  itr.SubItems.Add(item.host_from + ":" + item.usr_name);
-                  itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
-                  DbLogMsg dbLogMsg = EvtObjectWho(item.message);
-                  if (dbLogMsg != null)
-                    itr.SubItems.Add(dbLogMsg.Fes + "/" + dbLogMsg.Res + "/" + dbLogMsg.Tp);
-                  else {
-                    itr.SubItems.Add(item.message);
-                  }
-                  itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
+                //ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+                itr.SubItems.Add(item.host_from + ":" + item.usr_name);
+                itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
+                DbLogMsg dbLogMsg = EvtObjectWho(item.message, db);
+                if (dbLogMsg != null)
+                  itr.SubItems.Add(item.message); //dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+                else
+                {
+                  itr.SubItems.Add(item.message);
                 }
+                itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
+                lst.Add(itr);
               }
-              ));
-              res.AsyncWaitHandle.WaitOne();
-              
-              sfrm.DialogResult = DialogResult.OK;
-            }
+              IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() => {
+                this.lstLogEvents.Items.Clear();
+                this.lstLogEvents.Items.AddRange(lst.ToArray());
+                sfrm.DialogResult = DialogResult.OK;
+              }));
+           // {
+              ////this.lstLogEvents.Items.Clear();
+              //  //List<ListViewItem> lst = new List<ListViewItem>();
+              //  //foreach (var item in lstLogs)
+              //  //{
+              //  //  ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+              //  //  itr.SubItems.Add(item.host_from + ":" + item.usr_name);
+              //  //  itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
+              //  //  DbLogMsg dbLogMsg = EvtObjectWho(item.message,db);
+              //  //  if (dbLogMsg != null)
+              //  //    itr.SubItems.Add(item.message); //dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+              //  //  else {
+              //  //    itr.SubItems.Add(item.message);
+              //  //  }
+              //  //  itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
+
+              //}
+
+              //sfrm.DialogResult = DialogResult.OK;
+            
+              //));
+        //res.AsyncWaitHandle.WaitOne();
+      }
             catch (Exception exp)
             {
               sfrm.DialogResult = DialogResult.Cancel;
@@ -223,6 +245,11 @@ namespace UlcWin.ui
 
     private void cbDateTime_ValueChanged(object sender, EventArgs e)
     {
+      if (this.cbDateTimeFrom.Value > this.cbDateTimeBy.Value)
+      {
+        MessageBox.Show("Начальная дата не может быть больше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
       if (__loaded)
         ReadAllLogs();
 
@@ -254,9 +281,19 @@ namespace UlcWin.ui
       }
     }
 
+    private void cbDateTimeFrom_ValueChanged(object sender, EventArgs e)
+    {
+      if (this.cbDateTimeFrom.Value > this.cbDateTimeBy.Value)
+      {
+        MessageBox.Show("Начальная дата не может быть больше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+      if (__loaded)
+        ReadAllLogs();
     }
+  }
 
-    public class CbsEvents {
+  public class CbsEvents {
     public int ID { get; set; }
     public string EvtDesc  { get; set; }
 

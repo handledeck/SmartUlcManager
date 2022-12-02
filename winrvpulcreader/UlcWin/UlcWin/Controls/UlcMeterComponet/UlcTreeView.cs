@@ -1,4 +1,5 @@
 ﻿using BrightIdeasSoftware;
+using InterUlc.Db;
 using ServiceStack.OrmLite;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin;
 using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.Drivers;
+using UlcWin.Edit;
+using UlcWin.Export;
 using UlcWin.ui;
 
 namespace GettingStartedTree
 {
   public partial class UlcTreeView : UserControl
   {
+    DbReader __db;
     string __connection = string.Empty;
     int __parent_id = -1;
     List<TreeListNodeModel> __treeNodes = new List<TreeListNodeModel>();
     List<ValueDateTime> __valueDateTimes = new List<ValueDateTime>();
+    UlcWin.LoadForm __loadForm = null;
     public UlcTreeView()
     {
       InitializeComponent();
@@ -54,6 +60,8 @@ namespace GettingStartedTree
     {
       this.__connection = connection;
       this.__parent_id = parent_id;
+      __loadForm = (UlcWin.LoadForm)this.ParentForm;
+      this.__db = __loadForm.__db;
       FillTreeList();
       ResetDelegate();
       this.treeListView1.FormatRow += TreeListView1_FormatRow;
@@ -64,6 +72,7 @@ namespace GettingStartedTree
       Dictionary<int, TreeListNodeModel> dic = new Dictionary<int, TreeListNodeModel>();
       MeterValue.CheckTableDb(__connection);
       List<MeterValue> mv = new List<MeterValue>();
+      this.objectListView1.SetObjects(null);
       try
       {
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
@@ -107,7 +116,6 @@ namespace GettingStartedTree
             {
               name = name,
               is_true = true,
-
             };
             TreeListNodeModel treeListNodeModel = new TreeListNodeModel()
             {
@@ -116,7 +124,7 @@ namespace GettingStartedTree
               date_time = dt,
               ip = ip,
               is_true = is_true,
-              value = Math.Round(value,2),
+              value = Math.Round(value, 2),
               meter_factory = meter_factory,
               meter_type = meter_type,
               unit_type_id = unit_type_id
@@ -136,10 +144,11 @@ namespace GettingStartedTree
               dic[id_home].Nodes.Add(treeListNodeModel);
               if (!treeListNodeModel.is_true)
               {
-                if (dic[id_home].is_true) {
+                if (dic[id_home].is_true)
+                {
                   dic[id_home].is_part_true = true;
                 }
-                
+
               }
             }
           }
@@ -153,13 +162,15 @@ namespace GettingStartedTree
           {
             __treeNodes = new List<TreeListNodeModel>();
           }
-          if (item.Value.Nodes.Count == 1) {
-              item.Value.name = item.Value.name+"(" + item.Value.Nodes[0].name + ")";
-              item.Value.ip = item.Value.Nodes[0].ip;
-              item.Value.meter_type = item.Value.Nodes[0].meter_type;
-              item.Value.meter_factory = item.Value.Nodes[0].meter_factory;
-              item.Value.value = item.Value.Nodes[0].value;
-              item.Value.date_time = item.Value.Nodes[0].date_time;
+          if (item.Value.Nodes.Count == 1)
+          {
+            item.Value.original_name = item.Value.name;
+            item.Value.name = item.Value.name + "(" + item.Value.Nodes[0].name + ")";
+            item.Value.ip = item.Value.Nodes[0].ip;
+            item.Value.meter_type = item.Value.Nodes[0].meter_type;
+            item.Value.meter_factory = item.Value.Nodes[0].meter_factory;
+            item.Value.value = item.Value.Nodes[0].value;
+            item.Value.date_time = item.Value.Nodes[0].date_time;
             item.Value.unit_type_id = item.Value.Nodes[0].unit_type_id;
             item.Value.ctrl_id = item.Value.Nodes[0].ctrl_id;
             item.Value.is_true = item.Value.Nodes[0].is_true;
@@ -168,7 +179,17 @@ namespace GettingStartedTree
         }
         this.treeListView1.SetObjects(__treeNodes);
         ResetDelegate();
-        
+        if (__treeNodes.Count == 0)
+        {
+          this.button1.Enabled = false;
+          this.button2.Enabled = false;
+          this.button3.Enabled = false;
+        }
+        else {
+          this.button1.Enabled = true;
+          this.button2.Enabled = true;
+          this.button3.Enabled = true;
+        }
       }
       catch (Exception ex)
       {
@@ -181,15 +202,15 @@ namespace GettingStartedTree
 
       TreeListNodeModel vv = (TreeListNodeModel)e.Model;
       if (!vv.is_true)
-      e.Item.ForeColor = Color.Gray;
+        e.Item.ForeColor = Color.Gray;
       if (vv.Nodes == null)
       {
         //e.ListView.FullRowSelect = true;
         //TreeListView1_SelectionChanged(this.treeListView1, null);
         //if (!vv.is_true)
-          //e.Item.ForeColor = Color.Gray;
+        //e.Item.ForeColor = Color.Gray;
         //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
-       
+
       }
       else
       {
@@ -224,7 +245,7 @@ namespace GettingStartedTree
         if (vv.Nodes == null)
           return false;
         else if (vv.Nodes.Count > 1)
-            return true;
+          return true;
 
         return false;//(x is ArtistExample) || (x is AlbumExample);
       };
@@ -312,8 +333,28 @@ namespace GettingStartedTree
         TreeListNodeModel treeListNodeModel = (TreeListNodeModel)treeListView.SelectedObject;
         if (treeListNodeModel != null)
         {
+          if (treeListNodeModel.Nodes != null)
+          {
+            if (treeListNodeModel.Nodes.Count > 1)
+            {
+              this.objectListView1.SetObjects(null);
+              this.ctxMenuChange.Enabled = false;
+              this.ctxTreeSimpleUpdate.Enabled = false;
+              return;
+            }
+            else
+            {
+              this.ctxMenuChange.Enabled = true;
+              this.ctxTreeSimpleUpdate.Enabled = true;
+            }
+          }
+          else
+          {
+            this.ctxTreeSimpleUpdate.Enabled = true;
+            this.ctxMenuChange.Enabled = true;
+          }
           DateTime dtend = DateTime.Now.AddDays(1);
-          DateTime dtstart = new DateTime(dtend.Year, dtend.Month, 1);
+          DateTime dtstart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
           Dictionary<string, ValueDateTime> lstVdt = new Dictionary<string, ValueDateTime>();
           int res = dtend.Day - dtstart.Day;
           DateTime lstDt = dtstart;
@@ -396,32 +437,36 @@ namespace GettingStartedTree
     private void treeListView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
     {
       TreeListView treeListView = (TreeListView)sender;
-
       TreeListNodeModel vv = (TreeListNodeModel)treeListView.SelectedObject;
-      int x = 0;
-      //TreeListNodeModel vv = (TreeListNodeModel)e.Model;
-      if (vv.Nodes == null)
-      {
-        //treeListView.FullRowSelect = true;
+      //if (vv.Nodes.Count > 1)
+      //{
+      //  this.ctxMenuChange.Enabled = false;
+      //}
+      //else {
+      //  this.ctxMenuChange.Enabled = true;
+      //}
+      //if (vv.Nodes == null)
+      //{
+      //  //treeListView.FullRowSelect = true;
 
-        //ll.SubItems[5].BackColor = Color.Red;
-        //TreeListView1_SelectionChanged(this.treeListView1, null);
-        //if (!vv.is_true)
-        //  e.Item.ForeColor = Color.Gray;
-        //e.Item.Font = new Font("Courier New", e.Item.Font.Size);
+      //  //ll.SubItems[5].BackColor = Color.Red;
+      //  //TreeListView1_SelectionChanged(this.treeListView1, null);
+      //  //if (!vv.is_true)
+      //  //  e.Item.ForeColor = Color.Gray;
+      //  //e.Item.Font = new Font("Courier New", e.Item.Font.Size);
 
-      }
-      else
-      {
-        //treeListView.FullRowSelect = false;
+      //}
+      //else
+      //{
+      //  //treeListView.FullRowSelect = false;
 
-        //if (!vv.is_true)
-        //  e.Item.ForeColor = Color.Gray;
-        //e.ListView.FullRowSelect = true;
-        //if (!vv.is_true)
-        //  e.Item.ForeColor = Color.Red;
-        //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
-      }
+      //  //if (!vv.is_true)
+      //  //  e.Item.ForeColor = Color.Gray;
+      //  //e.ListView.FullRowSelect = true;
+      //  //if (!vv.is_true)
+      //  //  e.Item.ForeColor = Color.Red;
+      //  //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
+      //}
     }
 
     private void tsUpdateMeterValue_Click(object sender, EventArgs e)
@@ -469,21 +514,38 @@ namespace GettingStartedTree
         }
       }
 
-      //foreach (var item in this.treeListView1.Roots)
-      //{
-      //  TreeListNodeModel model = (TreeListNodeModel)item;
-      //  model.Validated();
-      //}
       if (lstMv.Count > 0)
       {
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          db.Insert<MeterValue>(lstMv.ToArray());
+          DateTime dtc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+          using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
+          {
+            try
+            {
+              foreach (var item in lstMv)
+              {
+                MeterValue mv = db.Single<MeterValue>(x => x.date_time > dtc && x.ctrl_id == item.ctrl_id);
+                if (mv != null)
+                {
+                  item.id = mv.id;
+                }
+                db.Save<MeterValue>(item);
+              }
+              dbTrans.Commit();
+            }
+            catch
+            {
+              dbTrans.Rollback();
+            }
+          }
         }
       }
+      MessageBox.Show(string.Format("Обновлено {0} счетчиков", lstMv.Count), "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
       FillTreeList();
-    }
+    } 
+  
 
     public void ReadMetersValue(List<TreeListNodeModel> tLst, int count)
     {
@@ -800,17 +862,55 @@ namespace GettingStartedTree
 
     private void menuTreeUpdate_Click(object sender, EventArgs e)
     {
+     
+    }
+
+    private void menuTreeUpdateNotTrue_Click(object sender, EventArgs e)
+    {
+      tsUpdateMeterValue_Click(null, null);
+    }
+
+    private void menu_meter_change(object sender, EventArgs e)
+    {
+      TreeListNodeModel item = (TreeListNodeModel)this.treeListView1.SelectedObject;
+      
+      MeterInfo meterInfo = new MeterInfo()
+      {
+        crud_record = CrudRecord.Edit,
+        ctrl_id = item.ctrl_id,
+        id = item.id,
+        ip = item.ip,
+        meter_factory = item.meter_factory,
+        meter_type = item.meter_type,
+        parent_id = item.parent_id
+
+      };
+      using (MeterEditFrom mMrom = new MeterEditFrom(meterInfo))
+      {
+        if (mMrom.ShowDialog() == DialogResult.OK)
+        {
+          meterInfo.meter_factory = mMrom.txtBoxPlant.Text;
+          meterInfo.meter_type = mMrom.GetDeviceByIndex();
+          __db.SetCrudMeterInfo(new List<MeterInfo>(){ meterInfo});
+          item.meter_factory = mMrom.txtBoxPlant.Text;
+          item.meter_type = mMrom.GetDeviceByIndex();
+        }
+      }
+    }
+
+    private void ctxTreeSimpleUpdate_Click(object sender, EventArgs e)
+    {
       List<TreeListNodeModel> treeListNodeModels = new List<TreeListNodeModel>();
 
       //OLVListItem item = this.treeListView1.SelectedItem;
       TreeListNodeModel item = (TreeListNodeModel)this.treeListView1.SelectedObject;
       //treeListNodeModels.Add((TreeListNodeModel)this.treeListView1.SelectedObject);
-      
+      item.updated = false;
       using (SimpleWaitForm wf = new SimpleWaitForm())
       {
         wf.RunAction(() =>
         {
-          wf.SetLabelText(string.Format("Опрашиваю:{0}-{1}", item.name,item.ip));
+          wf.SetLabelText(string.Format("Опрашиваю:{0}-{1}", item.name, item.ip));
           TcpClient client = null;
           try
           {
@@ -851,27 +951,89 @@ namespace GettingStartedTree
                 throw new Exception("ошибка получения данных");
               }
             }
-            //wf.DialogResult = DialogResult.OK;
+            if (item.updated)
+            {
+              var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+              using (var db = dbFactory.Open())
+              {
+                DateTime dtc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
+                {
+                  try
+                  {
+                    MeterValue mv = db.Single<MeterValue>(x => x.date_time > dtc && x.ctrl_id == item.ctrl_id);
+                    if (mv != null)
+                    {
+                      item.id = mv.id;
+                    }
+                    db.Save<MeterValue>(TreeListNodeModel.ConvertToMeterValue(item));
+                    dbTrans.Commit();
+                  }
+                  catch
+                  {
+                    dbTrans.Rollback();
+                    wf.DialogResult = DialogResult.Abort;
+                  }
+                }
+              }
+              wf.DialogResult = DialogResult.OK;
+            }
+            else {
+              wf.DialogResult = DialogResult.Abort;
+            }
+
+            
           }
           catch (Exception exp)
           {
             wf.SetLabelText(exp.Message);
             wf.DialogResult = DialogResult.Abort;
           }
-          finally {
-            if (client != null) {
+          finally
+          {
+            if (client != null)
+            {
               client.Close();
               client.Dispose();
             }
           }
         });
-        wf.ShowDialog();
+        DialogResult result= wf.ShowDialog();
+        if (result == DialogResult.OK)
+        {
+          MessageBox.Show("Элемент обновлен успешно","Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        else {
+          MessageBox.Show("Ошибка обновленя элемента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
       }
+
     }
 
-    private void menuTreeUpdateNotTrue_Click(object sender, EventArgs e)
+    private void button3_Click(object sender, EventArgs e)
     {
-      tsUpdateMeterValue_Click(null, null);
+      object[] cItem = new object[this.treeListView1.Items.Count];
+      this.treeListView1.Items.CopyTo(cItem, 0);
+      ListView listView3 = new ListView();
+      listView3.Columns.AddRange((from ColumnHeader Col in this.treeListView1.Columns
+                                  select (ColumnHeader)Col.Clone()).ToArray());
+      string fpth = __loadForm.GetFullPathNode();
+      string[] fpthArr = fpth.Split('\\');
+      List<TreeListNodeModel> treeNodes = new List<TreeListNodeModel>();
+      treeNodes.AddRange(__treeNodes.ToArray());
+      using (SimpleWaitForm sf = new SimpleWaitForm())
+      {
+        sf.RunAction(() =>
+        {
+          sf.SetLabelText("Формирую отчет по счетчикам");
+
+          ExportExcel exportExcel = new ExportExcel();
+          
+          exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes);
+          sf.DialogResult = DialogResult.OK;
+        });
+        sf.ShowDialog();
+      }
     }
   }
 }
