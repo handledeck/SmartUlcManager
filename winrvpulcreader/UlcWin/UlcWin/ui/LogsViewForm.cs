@@ -109,11 +109,10 @@ namespace UlcWin.ui
           id_evet = ((CbsEvents)this.cbEvents.SelectedItem).ID;
         sfrm.RunAction(new Action(() =>
         {
-          sfrm.SetLabelText("Формирую статистику по всем объектам");
+          sfrm.SetLabelText("Формирую журнал сообщений...");
           var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
           using (var db = dbFactory.Open())
           {
-           
             try
             {
               List<OrmDbLogs> lstLogs = null;

@@ -1,4 +1,6 @@
-﻿namespace UlcWin
+﻿using UlcWin.Controls.ListViewHeaderMenu;
+
+namespace UlcWin
 {
   partial class LoadForm
   {
@@ -30,7 +32,7 @@
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +77,7 @@
       this.panel1 = new System.Windows.Forms.Panel();
       this.tabItemsControl = new System.Windows.Forms.TabControl();
       this.tabControllers = new System.Windows.Forms.TabPage();
-      this.LstViewItm = new System.Windows.Forms.ListView();
+      this.LstViewItm = new UlcWin.Controls.ListViewHeaderMenu.ListViewMenuHeaderControl(this.components);
       this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -93,6 +95,33 @@
       this.active = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.isLight = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.comments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
+      this.tsResView = new System.Windows.Forms.ToolStrip();
+      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
+      this.tsComboBoxDev = new System.Windows.Forms.ToolStripComboBox();
+      this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+      this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
+      this.tsDwnUpdate = new System.Windows.Forms.ToolStripDropDownButton();
+      this.tsMenuItem_Pgrm = new System.Windows.Forms.ToolStripMenuItem();
+      this.tsMenuItem_Patch = new System.Windows.Forms.ToolStripMenuItem();
+      this.geniralSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.tsMenuItemReboot = new System.Windows.Forms.ToolStripMenuItem();
+      this.tsSelectedItems = new System.Windows.Forms.ToolStripDropDownButton();
+      this.tsSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+      this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
+      this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
+      this.tsUpdate = new System.Windows.Forms.ToolStripButton();
+      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
+      this.tabMeter = new System.Windows.Forms.TabPage();
+      this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
+      this.imgTabs = new System.Windows.Forms.ImageList(this.components);
+      this.LstViewEvent = new System.Windows.Forms.ListView();
+      this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.tsEvent = new System.Windows.Forms.ToolStrip();
+      this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+      this.lblNotExist = new System.Windows.Forms.Label();
       this.LvMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuUpdateSelected = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,30 +140,6 @@
       this.ctxMenuAtCommand = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxNotTrueMeter = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsResView = new System.Windows.Forms.ToolStrip();
-      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
-      this.tsComboBoxDev = new System.Windows.Forms.ToolStripComboBox();
-      this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-      this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
-      this.tsDwnUpdate = new System.Windows.Forms.ToolStripDropDownButton();
-      this.tsMenuItem_Pgrm = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsMenuItem_Patch = new System.Windows.Forms.ToolStripMenuItem();
-      this.geniralSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsMenuItemReboot = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsSelectedItems = new System.Windows.Forms.ToolStripDropDownButton();
-      this.tsSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
-      this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
-      this.tsUpdate = new System.Windows.Forms.ToolStripButton();
-      this.tabMeter = new System.Windows.Forms.TabPage();
-      this.imgTabs = new System.Windows.Forms.ImageList(this.components);
-      this.LstViewEvent = new System.Windows.Forms.ListView();
-      this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.tsEvent = new System.Windows.Forms.ToolStrip();
-      this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-      this.lblNotExist = new System.Windows.Forms.Label();
       this.tsStatusLbl = new System.Windows.Forms.StatusStrip();
       this.tsStsLabelAll = new System.Windows.Forms.ToolStripStatusLabel();
       this.tsStsLblNotTrue = new System.Windows.Forms.ToolStripStatusLabel();
@@ -144,9 +149,9 @@
       this.imlTc = new System.Windows.Forms.ImageList(this.components);
       this.imageList2 = new System.Windows.Forms.ImageList(this.components);
       this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
-      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
-      this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
+      this.ctxMenuHeader = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.ctxMenuObject = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxMenuNumber = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -162,11 +167,12 @@
       this.panel1.SuspendLayout();
       this.tabItemsControl.SuspendLayout();
       this.tabControllers.SuspendLayout();
-      this.LvMenu.SuspendLayout();
       this.tsResView.SuspendLayout();
       this.tabMeter.SuspendLayout();
       this.tsEvent.SuspendLayout();
+      this.LvMenu.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
+      this.ctxMenuHeader.SuspendLayout();
       this.SuspendLayout();
       // 
       // toolStrip1
@@ -700,7 +706,6 @@
             this.active,
             this.isLight,
             this.comments});
-      this.LstViewItm.ContextMenuStrip = this.LvMenu;
       this.LstViewItm.Dock = System.Windows.Forms.DockStyle.Fill;
       this.LstViewItm.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.LstViewItm.FullRowSelect = true;
@@ -708,8 +713,10 @@
       this.LstViewItm.Location = new System.Drawing.Point(3, 28);
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
+      this.LstViewItm.OwnerDraw = true;
       this.LstViewItm.Size = new System.Drawing.Size(1136, 231);
       this.LstViewItm.SmallImageList = this.imageList1;
+      this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
       this.LstViewItm.TabIndex = 0;
       this.LstViewItm.UseCompatibleStateImageBehavior = false;
       this.LstViewItm.View = System.Windows.Forms.View.Details;
@@ -717,6 +724,7 @@
       this.LstViewItm.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LstViewItm_ColumnWidthChanged);
       this.LstViewItm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LstViewItm_ItemCheck);
       this.LstViewItm.SelectedIndexChanged += new System.EventHandler(this.LstViewItm_SelectedIndexChanged);
+      this.LstViewItm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseClick);
       this.LstViewItm.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseDoubleClick);
       // 
       // Id
@@ -811,144 +819,19 @@
       this.comments.Text = "Комент.";
       this.comments.Width = 120;
       // 
-      // LvMenu
+      // checkBoxComboBox1
       // 
-      this.LvMenu.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.LvMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-      this.LvMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxMenuUpdateCurrent,
-            this.ctxMenuUpdateSelected,
-            this.ctxMenuUpdateNotTrue,
-            this.ctxMenuUpdateAll,
-            this.tsMenuSeparate,
-            this.ctxMenuReadCurrentLog,
-            this.toolStripSeparator1,
-            this.ctxMenuItemAdd,
-            this.ctxMenuItemChange,
-            this.ctxMenuItemDelete,
-            this.ctxSeparateEdit,
-            this.ctxMenuPingCurrentItem,
-            this.ctxMenuAllPingItem,
-            this.ctxSeparatePing,
-            this.ctxMenuAtCommand,
-            this.ctxMenuMeter,
-            this.ctxNotTrueMeter});
-      this.LvMenu.Name = "contextMenuStrip1";
-      this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
-      this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
-      // 
-      // ctxMenuUpdateCurrent
-      // 
-      this.ctxMenuUpdateCurrent.Name = "ctxMenuUpdateCurrent";
-      this.ctxMenuUpdateCurrent.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuUpdateCurrent.Text = "Обновить текущий ";
-      this.ctxMenuUpdateCurrent.Click += new System.EventHandler(this.CurrentMenuClick);
-      // 
-      // ctxMenuUpdateSelected
-      // 
-      this.ctxMenuUpdateSelected.Name = "ctxMenuUpdateSelected";
-      this.ctxMenuUpdateSelected.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuUpdateSelected.Text = "Обновить выбранные";
-      this.ctxMenuUpdateSelected.Click += new System.EventHandler(this.tsUpdateSelectedMenuItem_Click);
-      // 
-      // ctxMenuUpdateNotTrue
-      // 
-      this.ctxMenuUpdateNotTrue.Name = "ctxMenuUpdateNotTrue";
-      this.ctxMenuUpdateNotTrue.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuUpdateNotTrue.Text = "Обновить недостоверные";
-      this.ctxMenuUpdateNotTrue.Click += new System.EventHandler(this.NotTrueMenuClick);
-      // 
-      // ctxMenuUpdateAll
-      // 
-      this.ctxMenuUpdateAll.Name = "ctxMenuUpdateAll";
-      this.ctxMenuUpdateAll.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuUpdateAll.Text = "Обновить все";
-      this.ctxMenuUpdateAll.Click += new System.EventHandler(this.tsUpdateItemCurrent_Click);
-      // 
-      // tsMenuSeparate
-      // 
-      this.tsMenuSeparate.Name = "tsMenuSeparate";
-      this.tsMenuSeparate.Size = new System.Drawing.Size(220, 6);
-      // 
-      // ctxMenuReadCurrentLog
-      // 
-      this.ctxMenuReadCurrentLog.Name = "ctxMenuReadCurrentLog";
-      this.ctxMenuReadCurrentLog.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuReadCurrentLog.Text = "Чтение журнала с устройства";
-      this.ctxMenuReadCurrentLog.Click += new System.EventHandler(this.tsMenuReadCurrentLog_Click);
-      // 
-      // toolStripSeparator1
-      // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
-      // 
-      // ctxMenuItemAdd
-      // 
-      this.ctxMenuItemAdd.Name = "ctxMenuItemAdd";
-      this.ctxMenuItemAdd.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemAdd.Text = "Добавить";
-      this.ctxMenuItemAdd.Click += new System.EventHandler(this.TsMenuAdd_Click);
-      // 
-      // ctxMenuItemChange
-      // 
-      this.ctxMenuItemChange.Name = "ctxMenuItemChange";
-      this.ctxMenuItemChange.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemChange.Text = "Изменить";
-      this.ctxMenuItemChange.Click += new System.EventHandler(this.tsMenuItChange_Click);
-      // 
-      // ctxMenuItemDelete
-      // 
-      this.ctxMenuItemDelete.Name = "ctxMenuItemDelete";
-      this.ctxMenuItemDelete.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemDelete.Text = "Удалить";
-      this.ctxMenuItemDelete.Click += new System.EventHandler(this.TsMenuItemDelete_Click);
-      // 
-      // ctxSeparateEdit
-      // 
-      this.ctxSeparateEdit.Name = "ctxSeparateEdit";
-      this.ctxSeparateEdit.Size = new System.Drawing.Size(220, 6);
-      // 
-      // ctxMenuPingCurrentItem
-      // 
-      this.ctxMenuPingCurrentItem.Name = "ctxMenuPingCurrentItem";
-      this.ctxMenuPingCurrentItem.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuPingCurrentItem.Text = "Ping текущего устройства";
-      this.ctxMenuPingCurrentItem.Click += new System.EventHandler(this.tsPingCurrentlStriMenuItem_Click);
-      // 
-      // ctxMenuAllPingItem
-      // 
-      this.ctxMenuAllPingItem.Name = "ctxMenuAllPingItem";
-      this.ctxMenuAllPingItem.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuAllPingItem.Text = "Ping всех устройств";
-      this.ctxMenuAllPingItem.Visible = false;
-      this.ctxMenuAllPingItem.Click += new System.EventHandler(this.tsAllPingToolStripMenuItem_Click);
-      // 
-      // ctxSeparatePing
-      // 
-      this.ctxSeparatePing.Name = "ctxSeparatePing";
-      this.ctxSeparatePing.Size = new System.Drawing.Size(220, 6);
-      // 
-      // ctxMenuAtCommand
-      // 
-      this.ctxMenuAtCommand.Name = "ctxMenuAtCommand";
-      this.ctxMenuAtCommand.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuAtCommand.Text = "AT команды";
-      this.ctxMenuAtCommand.Click += new System.EventHandler(this.tsATCommandMenuItem_Click);
-      // 
-      // ctxMenuMeter
-      // 
-      this.ctxMenuMeter.Name = "ctxMenuMeter";
-      this.ctxMenuMeter.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuMeter.Text = "Счетчики ";
-      this.ctxMenuMeter.Click += new System.EventHandler(this.testmeterToolStripMenuItem_Click);
-      // 
-      // ctxNotTrueMeter
-      // 
-      this.ctxNotTrueMeter.Name = "ctxNotTrueMeter";
-      this.ctxNotTrueMeter.Size = new System.Drawing.Size(223, 22);
-      this.ctxNotTrueMeter.Text = "Счетчики недоставерные";
-      this.ctxNotTrueMeter.Click += new System.EventHandler(this.ctxNotTrueMeter_Click);
+      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
+      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
+      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.checkBoxComboBox1.FormattingEnabled = true;
+      this.checkBoxComboBox1.Location = new System.Drawing.Point(179, 3);
+      this.checkBoxComboBox1.MaxDropDownItems = 15;
+      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
+      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
+      this.checkBoxComboBox1.TabIndex = 3;
+      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
       // 
       // tsResView
       // 
@@ -1110,6 +993,21 @@
       this.tsUpdate.Visible = false;
       this.tsUpdate.Click += new System.EventHandler(this.tsUpdate_Click);
       // 
+      // usrFesStatistics1
+      // 
+      this.usrFesStatistics1.AutoScroll = true;
+      this.usrFesStatistics1.AutoSize = true;
+      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
+      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrFesStatistics1.Location = new System.Drawing.Point(3, 3);
+      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
+      this.usrFesStatistics1.Name = "usrFesStatistics1";
+      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 256);
+      this.usrFesStatistics1.TabIndex = 1;
+      this.usrFesStatistics1.Value = null;
+      this.usrFesStatistics1.Visible = false;
+      // 
       // tabMeter
       // 
       this.tabMeter.Controls.Add(this.ulcMeterTreeView);
@@ -1121,6 +1019,17 @@
       this.tabMeter.TabIndex = 1;
       this.tabMeter.Text = "Счетчики";
       this.tabMeter.UseVisualStyleBackColor = true;
+      // 
+      // ulcMeterTreeView
+      // 
+      this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ulcMeterTreeView.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
+      this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
+      this.ulcMeterTreeView.Name = "ulcMeterTreeView";
+      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 256);
+      this.ulcMeterTreeView.TabIndex = 0;
+      this.ulcMeterTreeView.Load += new System.EventHandler(this.ulcMeterTreeView_Load);
       // 
       // imgTabs
       // 
@@ -1207,6 +1116,145 @@
       this.lblNotExist.Text = "Нет информации";
       this.lblNotExist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
+      // LvMenu
+      // 
+      this.LvMenu.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.LvMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+      this.LvMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuUpdateCurrent,
+            this.ctxMenuUpdateSelected,
+            this.ctxMenuUpdateNotTrue,
+            this.ctxMenuUpdateAll,
+            this.tsMenuSeparate,
+            this.ctxMenuReadCurrentLog,
+            this.toolStripSeparator1,
+            this.ctxMenuItemAdd,
+            this.ctxMenuItemChange,
+            this.ctxMenuItemDelete,
+            this.ctxSeparateEdit,
+            this.ctxMenuPingCurrentItem,
+            this.ctxMenuAllPingItem,
+            this.ctxSeparatePing,
+            this.ctxMenuAtCommand,
+            this.ctxMenuMeter,
+            this.ctxNotTrueMeter});
+      this.LvMenu.Name = "contextMenuStrip1";
+      this.LvMenu.ShowImageMargin = false;
+      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
+      // 
+      // ctxMenuUpdateCurrent
+      // 
+      this.ctxMenuUpdateCurrent.Name = "ctxMenuUpdateCurrent";
+      this.ctxMenuUpdateCurrent.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuUpdateCurrent.Text = "Обновить текущий ";
+      this.ctxMenuUpdateCurrent.Click += new System.EventHandler(this.CurrentMenuClick);
+      // 
+      // ctxMenuUpdateSelected
+      // 
+      this.ctxMenuUpdateSelected.Name = "ctxMenuUpdateSelected";
+      this.ctxMenuUpdateSelected.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuUpdateSelected.Text = "Обновить выбранные";
+      this.ctxMenuUpdateSelected.Click += new System.EventHandler(this.tsUpdateSelectedMenuItem_Click);
+      // 
+      // ctxMenuUpdateNotTrue
+      // 
+      this.ctxMenuUpdateNotTrue.Name = "ctxMenuUpdateNotTrue";
+      this.ctxMenuUpdateNotTrue.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuUpdateNotTrue.Text = "Обновить недостоверные";
+      this.ctxMenuUpdateNotTrue.Click += new System.EventHandler(this.NotTrueMenuClick);
+      // 
+      // ctxMenuUpdateAll
+      // 
+      this.ctxMenuUpdateAll.Name = "ctxMenuUpdateAll";
+      this.ctxMenuUpdateAll.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuUpdateAll.Text = "Обновить все";
+      this.ctxMenuUpdateAll.Click += new System.EventHandler(this.tsUpdateItemCurrent_Click);
+      // 
+      // tsMenuSeparate
+      // 
+      this.tsMenuSeparate.Name = "tsMenuSeparate";
+      this.tsMenuSeparate.Size = new System.Drawing.Size(220, 6);
+      // 
+      // ctxMenuReadCurrentLog
+      // 
+      this.ctxMenuReadCurrentLog.Name = "ctxMenuReadCurrentLog";
+      this.ctxMenuReadCurrentLog.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuReadCurrentLog.Text = "Чтение журнала с устройства";
+      this.ctxMenuReadCurrentLog.Click += new System.EventHandler(this.tsMenuReadCurrentLog_Click);
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
+      // 
+      // ctxMenuItemAdd
+      // 
+      this.ctxMenuItemAdd.Name = "ctxMenuItemAdd";
+      this.ctxMenuItemAdd.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuItemAdd.Text = "Добавить";
+      this.ctxMenuItemAdd.Click += new System.EventHandler(this.TsMenuAdd_Click);
+      // 
+      // ctxMenuItemChange
+      // 
+      this.ctxMenuItemChange.Name = "ctxMenuItemChange";
+      this.ctxMenuItemChange.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuItemChange.Text = "Изменить";
+      this.ctxMenuItemChange.Click += new System.EventHandler(this.tsMenuItChange_Click);
+      // 
+      // ctxMenuItemDelete
+      // 
+      this.ctxMenuItemDelete.Name = "ctxMenuItemDelete";
+      this.ctxMenuItemDelete.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuItemDelete.Text = "Удалить";
+      this.ctxMenuItemDelete.Click += new System.EventHandler(this.TsMenuItemDelete_Click);
+      // 
+      // ctxSeparateEdit
+      // 
+      this.ctxSeparateEdit.Name = "ctxSeparateEdit";
+      this.ctxSeparateEdit.Size = new System.Drawing.Size(220, 6);
+      // 
+      // ctxMenuPingCurrentItem
+      // 
+      this.ctxMenuPingCurrentItem.Name = "ctxMenuPingCurrentItem";
+      this.ctxMenuPingCurrentItem.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuPingCurrentItem.Text = "Ping текущего устройства";
+      this.ctxMenuPingCurrentItem.Click += new System.EventHandler(this.tsPingCurrentlStriMenuItem_Click);
+      // 
+      // ctxMenuAllPingItem
+      // 
+      this.ctxMenuAllPingItem.Name = "ctxMenuAllPingItem";
+      this.ctxMenuAllPingItem.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuAllPingItem.Text = "Ping всех устройств";
+      this.ctxMenuAllPingItem.Visible = false;
+      this.ctxMenuAllPingItem.Click += new System.EventHandler(this.tsAllPingToolStripMenuItem_Click);
+      // 
+      // ctxSeparatePing
+      // 
+      this.ctxSeparatePing.Name = "ctxSeparatePing";
+      this.ctxSeparatePing.Size = new System.Drawing.Size(220, 6);
+      // 
+      // ctxMenuAtCommand
+      // 
+      this.ctxMenuAtCommand.Name = "ctxMenuAtCommand";
+      this.ctxMenuAtCommand.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuAtCommand.Text = "AT команды";
+      this.ctxMenuAtCommand.Click += new System.EventHandler(this.tsATCommandMenuItem_Click);
+      // 
+      // ctxMenuMeter
+      // 
+      this.ctxMenuMeter.Name = "ctxMenuMeter";
+      this.ctxMenuMeter.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuMeter.Text = "Счетчики ";
+      this.ctxMenuMeter.Click += new System.EventHandler(this.testmeterToolStripMenuItem_Click);
+      // 
+      // ctxNotTrueMeter
+      // 
+      this.ctxNotTrueMeter.Name = "ctxNotTrueMeter";
+      this.ctxNotTrueMeter.Size = new System.Drawing.Size(223, 22);
+      this.ctxNotTrueMeter.Text = "Счетчики недоставерные";
+      this.ctxNotTrueMeter.Click += new System.EventHandler(this.ctxNotTrueMeter_Click);
+      // 
       // tsStatusLbl
       // 
       this.tsStatusLbl.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1285,45 +1333,30 @@
       this.imageList2.Images.SetKeyName(1, "gear_connection.ico");
       this.imageList2.Images.SetKeyName(2, "gear_stop.ico");
       // 
-      // checkBoxComboBox1
+      // ctxMenuHeader
       // 
-      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
-      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
-      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.checkBoxComboBox1.FormattingEnabled = true;
-      this.checkBoxComboBox1.Location = new System.Drawing.Point(179, 3);
-      this.checkBoxComboBox1.MaxDropDownItems = 15;
-      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
-      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
-      this.checkBoxComboBox1.TabIndex = 3;
-      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
+      this.ctxMenuHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuObject,
+            this.ctxMenuNumber});
+      this.ctxMenuHeader.Name = "ctxMenuHeader";
+      this.ctxMenuHeader.Size = new System.Drawing.Size(221, 48);
+      this.ctxMenuHeader.Opening += new System.ComponentModel.CancelEventHandler(this.ctxMenuHeader_Opening);
       // 
-      // usrFesStatistics1
+      // ctxMenuObject
       // 
-      this.usrFesStatistics1.AutoScroll = true;
-      this.usrFesStatistics1.AutoSize = true;
-      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
-      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrFesStatistics1.Location = new System.Drawing.Point(3, 3);
-      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
-      this.usrFesStatistics1.Name = "usrFesStatistics1";
-      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 256);
-      this.usrFesStatistics1.TabIndex = 1;
-      this.usrFesStatistics1.Value = null;
-      this.usrFesStatistics1.Visible = false;
+      this.ctxMenuObject.Checked = true;
+      this.ctxMenuObject.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.ctxMenuObject.Name = "ctxMenuObject";
+      this.ctxMenuObject.Size = new System.Drawing.Size(220, 22);
+      this.ctxMenuObject.Text = "Сортировка по объекту";
+      this.ctxMenuObject.Click += new System.EventHandler(this.ctxMenuObject_Click);
       // 
-      // ulcMeterTreeView
+      // ctxMenuNumber
       // 
-      this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ulcMeterTreeView.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
-      this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
-      this.ulcMeterTreeView.Name = "ulcMeterTreeView";
-      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 256);
-      this.ulcMeterTreeView.TabIndex = 0;
-      this.ulcMeterTreeView.Load += new System.EventHandler(this.ulcMeterTreeView_Load);
+      this.ctxMenuNumber.Name = "ctxMenuNumber";
+      this.ctxMenuNumber.Size = new System.Drawing.Size(220, 22);
+      this.ctxMenuNumber.Text = "Сортировка по номеру ТП";
+      this.ctxMenuNumber.Click += new System.EventHandler(this.ctxMenuNumber_Click);
       // 
       // LoadForm
       // 
@@ -1358,14 +1391,15 @@
       this.tabItemsControl.ResumeLayout(false);
       this.tabControllers.ResumeLayout(false);
       this.tabControllers.PerformLayout();
-      this.LvMenu.ResumeLayout(false);
       this.tsResView.ResumeLayout(false);
       this.tsResView.PerformLayout();
       this.tabMeter.ResumeLayout(false);
       this.tsEvent.ResumeLayout(false);
       this.tsEvent.PerformLayout();
+      this.LvMenu.ResumeLayout(false);
       this.tsStatusLbl.ResumeLayout(false);
       this.tsStatusLbl.PerformLayout();
+      this.ctxMenuHeader.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -1376,7 +1410,6 @@
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.TreeView treeView1;
-    private System.Windows.Forms.ListView LstViewItm;
     private System.Windows.Forms.ColumnHeader Id;
     private System.Windows.Forms.ColumnHeader Name;
     private System.Windows.Forms.ColumnHeader Ip;
@@ -1489,6 +1522,10 @@
         private System.Windows.Forms.TabPage tabMeter;
     private GettingStartedTree.UlcTreeView ulcMeterTreeView;
     private System.Windows.Forms.ImageList imgTabs;
+    private ListViewMenuHeaderControl LstViewItm;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuObject;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuNumber;
+    public System.Windows.Forms.ContextMenuStrip ctxMenuHeader;
   }
 }
 

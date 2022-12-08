@@ -15,10 +15,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.AplSetings;
+using UlcWin.Controls.ListViewHeaderMenu;
 using UlcWin.DB;
 using UlcWin.Drivers;
 using UlcWin.Edit;
@@ -97,7 +99,19 @@ namespace UlcWin
       __list_objects = null;//new List<ListObj>();
       this.tsResView.Enabled = false;
       //this.treeView1.Nodes.Clear();
+      this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
     }
+
+    private void LstViewItm_ColumnRightClick(object sender, ColumnHeader e, Point point)
+    {
+      if (this.LstViewItm.Items.Count > 0) {
+        if (e.Index == 1)
+        {
+          this.ctxMenuHeader.Show(point);
+        }
+      }
+    }
+
     bool __settings_changed = false;
     private void LstViewItm_ColumnReordered(object sender, ColumnReorderedEventArgs e)
     {
@@ -2264,46 +2278,67 @@ namespace UlcWin
       this.__dtp.Value = dt;
       this.ReadEvent();
     }
-
-
-    int selCoumn = 1;
+    
     private void LstViewItm_ColumnClick(object sender, ColumnClickEventArgs e)
     {
-
+      SortOrder sortOrder = SortOrder.None;
+      if (this.LstViewItm.Columns[e.Column].Tag == null)
+      {
+        this.LstViewItm.Columns[e.Column].Tag = SortOrder.Ascending;
+        sortOrder = SortOrder.Ascending;
+      }
+      else
+      {
+        sortOrder = (SortOrder)this.LstViewItm.Columns[e.Column].Tag;
+        if (sortOrder == SortOrder.Ascending)
+          sortOrder = SortOrder.Descending;
+        else
+          sortOrder = SortOrder.Ascending;
+        this.LstViewItm.Columns[e.Column].Tag = sortOrder;
+      }
+      ListViewExtensions.SetSortIcon(this.LstViewItm, e.Column, sortOrder);
       ItemComparer sorter = this.LstViewItm.ListViewItemSorter as ItemComparer;
       if (sorter == null)
       {
-        if (this.LstViewItm.Columns[selCoumn].ImageIndex == -1)
-          this.LstViewItm.Columns[selCoumn].ImageIndex = 11;
-        sorter = new ItemComparer(selCoumn);
+        //if (this.LstViewItm.Columns[selCoumn].ImageIndex == -1)
+        //  this.LstViewItm.Columns[selCoumn].ImageIndex = 11;
+        sorter = new ItemComparer(e.Column);
         this.LstViewItm.ListViewItemSorter = (ItemComparer)sorter;
         return;
       }
       else
       {
-        if (this.LstViewItm.Columns[e.Column].ImageIndex == 11)
-        {
-          this.LstViewItm.Columns[e.Column].ImageIndex = 12;
-          sorter.Order = SortOrder.Descending;
-        }
-        else
-        {
-          this.LstViewItm.Columns[e.Column].ImageIndex = 11;
-          sorter.Order = SortOrder.Ascending;
-        }
+        //if (this.LstViewItm.Columns[e.Column].ImageIndex == 11)
+        //{
+        //  this.LstViewItm.Columns[e.Column].ImageIndex = 12;
+        //  sorter.Order = SortOrder.Descending;
+        //}
+        //else
+        //{
+        //  this.LstViewItm.Columns[e.Column].ImageIndex = 11;
+        //  sorter.Order = SortOrder.Ascending;
+        //}
+        sorter.Order = sortOrder;
         sorter.Column = e.Column;
+        //}
+        
+        if (e.Column == 2)
+          sorter.UsbSorting = UlcSort.IP;
+        else if (e.Column == 0)
+          sorter.UsbSorting = UlcSort.DATETIME;
+        else if (e.Column == 6)
+        {
+          sorter.UsbSorting = UlcSort.SIGNAL;
+        }
+        else if (e.Column == 13) {
+          sorter.UsbSorting = UlcSort.TRAFFIC;
+        }
+        else if (e.Column == 1)
+          sorter.UsbSorting = UlcSort.NAME;
+        else
+          sorter.UsbSorting = UlcSort.DEFAULT;
+        //selCoumn = e.Column;
       }
-      if (e.Column == 2)
-        sorter.UsbSorting = UlcSort.IP;
-      else if (e.Column == 0)
-        sorter.UsbSorting = UlcSort.DATETIME;
-      else if (e.Column == 6)
-      {
-        sorter.UsbSorting = UlcSort.SIGNAL;
-      }
-      else
-        sorter.UsbSorting = UlcSort.DEFAULT;
-      selCoumn = e.Column;
       this.LstViewItm.Sort();
     }
 
@@ -2533,6 +2568,7 @@ namespace UlcWin
       this.tsBtnStatistics.Visible = false;
       this.tsBtnUsersEdit.Visible = false;
       this.tsBtnEventLog.Visible = false;
+     
       bool con_db = InitDB();
       if (con_db)
       {
@@ -3397,6 +3433,38 @@ namespace UlcWin
     {
 
     }
+
+    private void LstViewItm_MouseClick(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        //Control p = this.GetChildAtPoint(e.Location);
+        LvMenu.Show(Cursor.Position);
+      }
+    }
+
+    private void ctxMenuNumber_Click(object sender, EventArgs e)
+    {
+      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
+      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
+      mItemNum.Checked = true;
+      mItemObj.Checked = false;
+      this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
+    }
+
+    private void ctxMenuObject_Click(object sender, EventArgs e)
+    {
+      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
+      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
+      mItemNum.Checked = false;
+      mItemObj.Checked = true;
+      this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
+    }
+
+    private void ctxMenuHeader_Opening(object sender, CancelEventArgs e)
+    {
+
+    }
   }
 
 
@@ -3404,30 +3472,54 @@ namespace UlcWin
     DEFAULT=0,
     IP=1,
     DATETIME=2,
-    SIGNAL=3
+    SIGNAL=3,
+    TRAFFIC=4,
+    NAME=5
+    
+  }
+
+  public enum SortObject { 
+    OBJECT,
+    NUMBER
   }
 
   public class ItemComparer : IComparer
   {
+    ListView listView;
+    LoadForm loadForm;
     public int Column { get; set; }
     public SortOrder Order { get; set; }
     public UlcSort UsbSorting { get; set; }
     //public bool IPAddres { get; set; }
     //public bool CDateTime { get; set; }
-    public ItemComparer(int colIndex)
+    public ItemComparer(int colIndex)//, LoadForm form)
     {
       Column = colIndex;
       Order = SortOrder.None;
       UsbSorting = UlcSort.DEFAULT;
-      
+      //this.loadForm = form;
       //this.IPAddres = false;
       //CDateTime = false;
     }
+
+    private static Control findControlParent(Control control)
+    {
+      Control parent=null;
+      while ((control = control.Parent) != null)
+      {
+        parent = control;
+      }
+      return parent;
+    }
+
     public int Compare(object a, object b)
     {
+
       int result=-1;
       ListViewItem itemA = a as ListViewItem;
       ListViewItem itemB = b as ListViewItem;
+      this.listView = itemA.ListView;
+      this.loadForm=(LoadForm) findControlParent(itemA.ListView.Parent);
       if (itemA == null && itemB == null)
         result = 0;
       else if (itemA == null)
@@ -3457,12 +3549,79 @@ namespace UlcWin
         case UlcSort.SIGNAL:
           result =CompareSignal(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
           break;
+        case UlcSort.TRAFFIC:
+          result = CompareTraffic(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+          break;
+        case UlcSort.NAME:
+          {
+            ToolStripMenuItem item = (ToolStripMenuItem)loadForm.ctxMenuHeader.Items["ctxMenuObject"];
+            if (item.Checked) {
+              result = String.Compare(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+            }
+            else
+            {
+              result = CompareName(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+            }
+          }
+          
+          break;
         default:
           break;
       }
       if (Order == SortOrder.Descending)
         result *= -1;
       return result;
+    }
+
+    public int CompareName(string first, string second)
+    {
+      Regex reg = new Regex(@"\d+$");
+      Match match = reg.Match(first.TrimEnd());
+      Match match1 = reg.Match(second.TrimEnd());
+      if (match.Success && match1.Success)
+      {
+        int fInt = 0;
+        int sInt = 0;
+        bool fb = int.TryParse(match.Value, out fInt);
+        bool sb = int.TryParse(match1.Value, out sInt);
+        if (!fb && !sb)
+        {
+          return -1;
+        }
+        else
+        {
+          if (fInt == sInt)
+            return 0;
+          if (fInt > sInt)
+            return 1;
+        }
+      }
+      return -1;
+    }
+
+
+    public int CompareTraffic(string first, string second) {
+      Regex reg = new Regex(@".*?\s");
+      Match match= reg.Match(first);
+      Match match1 = reg.Match(second);
+      if (match.Success && match1.Success) {
+        int fInt = 0;
+        int sInt = 0;
+        bool fb = int.TryParse(match.Value, out fInt);
+        bool sb = int.TryParse(match1.Value, out sInt);
+        if (!fb && !sb)
+        {
+          return -1;
+        }
+        else
+        {
+          if (fInt == sInt)
+            return 0;
+          if (fInt > sInt)
+            return 1;
+        }
+      }
+      return -1;
     }
 
     public int CompareSignal(string first, string second)

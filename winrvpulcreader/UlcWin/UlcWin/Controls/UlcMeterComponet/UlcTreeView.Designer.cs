@@ -39,15 +39,15 @@ namespace GettingStartedTree
       this.olvIp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvMeterFactory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+      this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+      this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvVal = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.menuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuChange = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.ctxTreeUpdateNotTrue = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxTreeSimpleUpdate = new System.Windows.Forms.ToolStripMenuItem();
-      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-      this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
-      this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvVal = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.panel1 = new System.Windows.Forms.Panel();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -55,16 +55,20 @@ namespace GettingStartedTree
       this.panel3 = new System.Windows.Forms.Panel();
       this.button2 = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
+      this.ctxMeterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.ctxMenuSortByName = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxMenuSortByNumber = new System.Windows.Forms.ToolStripMenuItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
-      this.menuTree.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+      this.menuTree.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel2.SuspendLayout();
+      this.ctxMeterMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // splitContainer1
@@ -101,10 +105,10 @@ namespace GettingStartedTree
             this.olvIp,
             this.olvMeterFactory,
             this.olvValue});
-      this.treeListView1.ContextMenuStrip = this.menuTree;
       this.treeListView1.Cursor = System.Windows.Forms.Cursors.Default;
       this.treeListView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.treeListView1.FullRowSelect = true;
+      this.treeListView1.HeaderUsesThemes = false;
       this.treeListView1.HideSelection = false;
       this.treeListView1.IncludeColumnHeadersInCopy = true;
       this.treeListView1.IncludeHiddenColumnsInDataTransfer = true;
@@ -112,17 +116,20 @@ namespace GettingStartedTree
       this.treeListView1.MultiSelect = false;
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
+      this.treeListView1.SelectColumnsOnRightClick = false;
+      this.treeListView1.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
+      this.treeListView1.ShowFilterMenuOnRightClick = false;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.ShowSortIndicators = false;
       this.treeListView1.Size = new System.Drawing.Size(838, 416);
       this.treeListView1.SmallImageList = this.imageList1;
       this.treeListView1.TabIndex = 4;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
-      this.treeListView1.UseFilterIndicator = false;
-      this.treeListView1.UseHotItem = true;
       this.treeListView1.View = System.Windows.Forms.View.Details;
       this.treeListView1.VirtualMode = true;
+      this.treeListView1.ColumnRightClick += new BrightIdeasSoftware.ColumnRightClickEventHandler(this.treeListView1_ColumnRightClick);
+      this.treeListView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.treeListView1_ColumnClick);
       this.treeListView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.treeListView1_ItemSelectionChanged);
+      this.treeListView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeListView1_MouseClick);
       this.treeListView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeListView1_MouseUp);
       // 
       // olvName
@@ -166,46 +173,6 @@ namespace GettingStartedTree
       this.olvValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValue.Width = 177;
       this.olvValue.WordWrap = true;
-      // 
-      // menuTree
-      // 
-      this.menuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxMenuChange,
-            this.toolStripSeparator1,
-            this.ctxTreeUpdateNotTrue,
-            this.ctxTreeSimpleUpdate});
-      this.menuTree.Name = "menuTree";
-      this.menuTree.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-      this.menuTree.Size = new System.Drawing.Size(217, 76);
-      // 
-      // ctxMenuChange
-      // 
-      this.ctxMenuChange.Image = global::UlcWin.Properties.Resources.gear;
-      this.ctxMenuChange.Name = "ctxMenuChange";
-      this.ctxMenuChange.Size = new System.Drawing.Size(216, 22);
-      this.ctxMenuChange.Text = "Изменить";
-      this.ctxMenuChange.Click += new System.EventHandler(this.menu_meter_change);
-      // 
-      // toolStripSeparator1
-      // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
-      // 
-      // ctxTreeUpdateNotTrue
-      // 
-      this.ctxTreeUpdateNotTrue.Image = global::UlcWin.Properties.Resources.database_refresh;
-      this.ctxTreeUpdateNotTrue.Name = "ctxTreeUpdateNotTrue";
-      this.ctxTreeUpdateNotTrue.Size = new System.Drawing.Size(216, 22);
-      this.ctxTreeUpdateNotTrue.Text = "Обновить недостоверные";
-      this.ctxTreeUpdateNotTrue.Click += new System.EventHandler(this.menuTreeUpdateNotTrue_Click);
-      // 
-      // ctxTreeSimpleUpdate
-      // 
-      this.ctxTreeSimpleUpdate.Image = global::UlcWin.Properties.Resources.refresh1;
-      this.ctxTreeSimpleUpdate.Name = "ctxTreeSimpleUpdate";
-      this.ctxTreeSimpleUpdate.Size = new System.Drawing.Size(216, 22);
-      this.ctxTreeSimpleUpdate.Text = "Обновить выбранный";
-      this.ctxTreeSimpleUpdate.Click += new System.EventHandler(this.ctxTreeSimpleUpdate_Click);
       // 
       // imageList1
       // 
@@ -254,6 +221,46 @@ namespace GettingStartedTree
       this.olvVal.AspectName = "value";
       this.olvVal.Text = "Данные";
       this.olvVal.Width = 123;
+      // 
+      // menuTree
+      // 
+      this.menuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuChange,
+            this.toolStripSeparator1,
+            this.ctxTreeUpdateNotTrue,
+            this.ctxTreeSimpleUpdate});
+      this.menuTree.Name = "menuTree";
+      this.menuTree.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+      this.menuTree.Size = new System.Drawing.Size(217, 76);
+      // 
+      // ctxMenuChange
+      // 
+      this.ctxMenuChange.Image = global::UlcWin.Properties.Resources.gear;
+      this.ctxMenuChange.Name = "ctxMenuChange";
+      this.ctxMenuChange.Size = new System.Drawing.Size(216, 22);
+      this.ctxMenuChange.Text = "Изменить";
+      this.ctxMenuChange.Click += new System.EventHandler(this.menu_meter_change);
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+      // 
+      // ctxTreeUpdateNotTrue
+      // 
+      this.ctxTreeUpdateNotTrue.Image = global::UlcWin.Properties.Resources.database_refresh;
+      this.ctxTreeUpdateNotTrue.Name = "ctxTreeUpdateNotTrue";
+      this.ctxTreeUpdateNotTrue.Size = new System.Drawing.Size(216, 22);
+      this.ctxTreeUpdateNotTrue.Text = "Обновить недостоверные";
+      this.ctxTreeUpdateNotTrue.Click += new System.EventHandler(this.menuTreeUpdateNotTrue_Click);
+      // 
+      // ctxTreeSimpleUpdate
+      // 
+      this.ctxTreeSimpleUpdate.Image = global::UlcWin.Properties.Resources.refresh1;
+      this.ctxTreeSimpleUpdate.Name = "ctxTreeSimpleUpdate";
+      this.ctxTreeSimpleUpdate.Size = new System.Drawing.Size(216, 22);
+      this.ctxTreeSimpleUpdate.Text = "Обновить выбранный";
+      this.ctxTreeSimpleUpdate.Click += new System.EventHandler(this.ctxTreeSimpleUpdate_Click);
       // 
       // panel1
       // 
@@ -304,7 +311,7 @@ namespace GettingStartedTree
       this.button3.Size = new System.Drawing.Size(32, 29);
       this.button3.TabIndex = 3;
       this.button3.UseVisualStyleBackColor = true;
-      this.button3.Click += new System.EventHandler(this.button3_Click);
+      this.button3.Click += new System.EventHandler(this.btnExportExcel);
       // 
       // panel3
       // 
@@ -341,6 +348,29 @@ namespace GettingStartedTree
       this.button1.UseVisualStyleBackColor = true;
       this.button1.Click += new System.EventHandler(this.tsUpdateMeterValue_Click);
       // 
+      // ctxMeterMenu
+      // 
+      this.ctxMeterMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuSortByName,
+            this.ctxMenuSortByNumber});
+      this.ctxMeterMenu.Name = "ctxMeterMenu";
+      this.ctxMeterMenu.ShowImageMargin = false;
+      this.ctxMeterMenu.Size = new System.Drawing.Size(224, 48);
+      // 
+      // ctxMenuSortByName
+      // 
+      this.ctxMenuSortByName.Name = "ctxMenuSortByName";
+      this.ctxMenuSortByName.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuSortByName.Text = "Сортировать по имени объекта";
+      this.ctxMenuSortByName.Click += new System.EventHandler(this.ctxMenuSortByName_Click);
+      // 
+      // ctxMenuSortByNumber
+      // 
+      this.ctxMenuSortByNumber.Name = "ctxMenuSortByNumber";
+      this.ctxMenuSortByNumber.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuSortByNumber.Text = "Сортировка по номеру ТП";
+      this.ctxMenuSortByNumber.Click += new System.EventHandler(this.ctxMenuSortByNumber_Click);
+      // 
       // UlcTreeView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,11 +384,12 @@ namespace GettingStartedTree
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
-      this.menuTree.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+      this.menuTree.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.panel2.ResumeLayout(false);
+      this.ctxMeterMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -389,5 +420,8 @@ namespace GettingStartedTree
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem ctxTreeSimpleUpdate;
     public BrightIdeasSoftware.TreeListView treeListView1;
+    private System.Windows.Forms.ContextMenuStrip ctxMeterMenu;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByName;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByNumber;
   }
 }

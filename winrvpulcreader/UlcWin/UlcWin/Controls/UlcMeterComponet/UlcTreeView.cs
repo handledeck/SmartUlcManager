@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin;
+using UlcWin.Controls.ListViewHeaderMenu;
 using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.Drivers;
 using UlcWin.Edit;
@@ -54,6 +55,70 @@ namespace GettingStartedTree
       this.treeListView1.EmptyListMsg = "Нет данных для просмотра";
       this.treeListView1.EmptyListMsgFont = new Font("Tahoma", 10);
       this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
+      
+      //this.treeListView1.CustomSorter = delegate (OLVColumn column, SortOrder order)
+      //{
+      //  //SortOrder sortOrder = SortOrder.None;
+      //  //if (this.treeListView1.Columns[column.Index].Tag == null)
+      //  //{
+      //  //  this.treeListView1.Columns[column.Index].Tag = SortOrder.Ascending;
+      //  //  sortOrder = SortOrder.Ascending;
+      //  //}
+      //  //else
+      //  //{
+      //  //  sortOrder = (SortOrder)this.treeListView1.Columns[column.Index].Tag;
+      //  //  if (sortOrder == SortOrder.Ascending)
+      //  //    sortOrder = SortOrder.Descending;
+      //  //  else
+      //  //    sortOrder = SortOrder.Ascending;
+      //  //  this.treeListView1.Columns[column.Index].Tag = sortOrder;
+      //  //}
+      //  //ListViewExtensions.SetSortIcon(this.treeListView1, column.Index, sortOrder);
+      //  //MeterComparer sorter = this.treeListView1.ListViewItemSorter as MeterComparer;
+      //  //if (sorter == null)
+      //  //{
+      //  //  //if (this.LstViewItm.Columns[selCoumn].ImageIndex == -1)
+      //  //  //  this.LstViewItm.Columns[selCoumn].ImageIndex = 11;
+      //  //  sorter = new MeterComparer(column.Index);
+      //  //  this.treeListView1.ListViewItemSorter = (MeterComparer)sorter;
+      //  //  return;
+      //  //}
+      //  //else
+      //  //{
+      //  //  //if (this.LstViewItm.Columns[e.Column].ImageIndex == 11)
+      //  //  //{
+      //  //  //  this.LstViewItm.Columns[e.Column].ImageIndex = 12;
+      //  //  //  sorter.Order = SortOrder.Descending;
+      //  //  //}
+      //  //  //else
+      //  //  //{
+      //  //  //  this.LstViewItm.Columns[e.Column].ImageIndex = 11;
+      //  //  //  sorter.Order = SortOrder.Ascending;
+      //  //  //}
+      //  //  sorter.Order = sortOrder;
+      //  //  sorter.Column =column.Index;
+      //  //  //}
+
+      //  //  //if (e.Column == 2)
+      //  //  //  sorter.UsbSorting = UlcSort.IP;
+      //  //  //else if (e.Column == 0)
+      //  //  //  sorter.UsbSorting = UlcSort.NAME;
+      //  //  //else if (e.Column == 6)
+      //  //  //{
+      //  //  //  sorter.UsbSorting = UlcSort.SIGNAL;
+      //  //  //}
+      //  //  //else if (e.Column == 13)
+      //  //  //{
+      //  //  //  sorter.UsbSorting = UlcSort.TRAFFIC;
+      //  //  // }
+      //  //  if (column.Index == 0)
+      //  //    sorter.UsbSorting = UlcSort.NAME;
+      //  //  else
+      //  //    sorter.UsbSorting = UlcSort.DEFAULT;
+      //  //  //selCoumn = e.Column;
+      //  //}
+      //  //this.treeListView1.Sort();
+      //};
     }
 
     public void SetValue(string connection, int parent_id)
@@ -185,11 +250,77 @@ namespace GettingStartedTree
           this.button2.Enabled = false;
           this.button3.Enabled = false;
         }
-        else {
+        else
+        {
           this.button1.Enabled = true;
           this.button2.Enabled = true;
           this.button3.Enabled = true;
         }
+        //this.treeListView1.CustomSorter = delegate (OLVColumn column, SortOrder order) {
+        //  this.treeListView1.ListViewItemSorter = new MetCom();
+        //};
+        //  this.treeListView1.CustomSorter = delegate (OLVColumn column, SortOrder order) {
+        //  //  SortOrder sortOrder = SortOrder.None;
+        //  //  if (this.treeListView1.Columns[column.Index].Tag == null)
+        //  //  {
+        //  //    this.treeListView1.Columns[column.Index].Tag = SortOrder.Ascending;
+        //  //    sortOrder = SortOrder.Ascending;
+        //  //  }
+        //  //  else
+        //  //  {
+        //  //    sortOrder = (SortOrder)this.treeListView1.Columns[column.Index].Tag;
+        //  //    if (sortOrder == SortOrder.Ascending)
+        //  //      sortOrder = SortOrder.Descending;
+        //  //    else
+        //  //      sortOrder = SortOrder.Ascending;
+        //  //    this.treeListView1.Columns[column.Index].Tag = sortOrder;
+        //  //  }
+        //  //  ListViewExtensions.SetSortIcon(this.treeListView1, column.Index, sortOrder);
+        //  //  MeterComparer sorter = this.treeListView1.ListViewItemSorter as MeterComparer;
+        //  //  if (sorter == null)
+        //  //  {
+        //  //    //if (this.LstViewItm.Columns[selCoumn].ImageIndex == -1)
+        //  //    //  this.LstViewItm.Columns[selCoumn].ImageIndex = 11;
+        //  //    sorter = new MeterComparer(column.Index);
+        //  //    this.treeListView1.ListViewItemSorter = (MeterComparer)sorter;
+        //  //    return;
+        //  //  }
+        //  //  else
+        //  //  {
+        //  //    //if (this.LstViewItm.Columns[e.Column].ImageIndex == 11)
+        //  //    //{
+        //  //    //  this.LstViewItm.Columns[e.Column].ImageIndex = 12;
+        //  //    //  sorter.Order = SortOrder.Descending;
+        //  //    //}
+        //  //    //else
+        //  //    //{
+        //  //    //  this.LstViewItm.Columns[e.Column].ImageIndex = 11;
+        //  //    //  sorter.Order = SortOrder.Ascending;
+        //  //    //}
+        //  //    sorter.Order = sortOrder;
+        //  //    sorter.Column = column.Index;
+        //  //    //}
+
+        //  //    //if (e.Column == 2)
+        //  //    //  sorter.UsbSorting = UlcSort.IP;
+        //  //    //else if (e.Column == 0)
+        //  //    //  sorter.UsbSorting = UlcSort.NAME;
+        //  //    //else if (e.Column == 6)
+        //  //    //{
+        //  //    //  sorter.UsbSorting = UlcSort.SIGNAL;
+        //  //    //}
+        //  //    //else if (e.Column == 13)
+        //  //    //{
+        //  //    //  sorter.UsbSorting = UlcSort.TRAFFIC;
+        //  //    // }
+        //  //    if (column.Index == 0)
+        //  //      sorter.UsbSorting = UlcSort.NAME;
+        //  //    else
+        //  //      sorter.UsbSorting = UlcSort.DEFAULT;
+        //  //    //selCoumn = e.Column;
+        //  //  }
+        //  //  //this.treeListView1.Sort();
+        //  //};
       }
       catch (Exception ex)
       {
@@ -544,8 +675,8 @@ namespace GettingStartedTree
       }
       MessageBox.Show(string.Format("Обновлено {0} счетчиков", lstMv.Count), "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
       FillTreeList();
-    } 
-  
+    }
+
 
     public void ReadMetersValue(List<TreeListNodeModel> tLst, int count)
     {
@@ -591,28 +722,9 @@ namespace GettingStartedTree
                 ip_loc = item.ip;
                 if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
                 {
-                  //string num = item.meter_factory;
 
-                  //num = num.Substring(num.Length - 4, 4);
-                  //ushort addr = 0;
-                  //if (ushort.TryParse(num, out addr))
-                  //{
-                  //  byte[] buffer = new byte[128];
-                  //  byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
-                  //  Exception exp = EnMera102.Read(buf, 128, client, out buffer);
-                  //  if (exp == null)
-                  //  {
-                  //    float ds = (float)BitConverter.ToInt32(buffer, 9);
-                  //    item.value = Math.Round((ds / 100),2);
-                  //    item.is_true = true;
-                  //    item.updated = true;
-                  //    item.date_time = DateTime.Now;
-                  //  }
-                  //  else throw exp;
-                  //}
-                  //else throw new Exception("ошибка получения данных");
                   Exception ex;
-                  float? value=EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
+                  float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
                   if (ex == null && value.HasValue)
                   {
                     item.value = value.Value;
@@ -620,7 +732,8 @@ namespace GettingStartedTree
                     item.updated = true;
                     item.date_time = DateTime.Now;
                   }
-                  else {
+                  else
+                  {
                     throw new Exception("ошибка получения данных");
                   }
 
@@ -628,7 +741,7 @@ namespace GettingStartedTree
                 else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
                 {
                   Exception exp = null;
-                  float? value= Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
+                  float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
                   if (exp == null && value.HasValue)
                   {
                     item.value = value.Value;
@@ -640,39 +753,7 @@ namespace GettingStartedTree
                   {
                     throw new Exception("ошибка получения данных");
                   }
-                  //  string num = item.meter_factory;
 
-                  //  byte addr = 0;
-                  //  if (!string.IsNullOrEmpty(num))
-                  //  {
-                  //    if (char.IsDigit(num, 0))
-                  //    {
-                  //      try
-                  //      {
-                  //        num = num.Substring(num.Length - 2, 2);
-                  //        if (!byte.TryParse(num, out addr))
-                  //        {
-                  //          addr = 0;
-                  //        }
-                  //      }
-                  //      catch { addr = 0; }
-                  //    }
-                  //  }
-                  //  if (client == null)
-                  //    throw new Exception("Ошибка открытия соединения");
-                  //  Exception ex = null;
-                  //  var xx = Granelectro.ReadData(item.ip, client, addr, out ex);
-                  //  if (xx != null)
-                  //  {
-                  //    item.is_true = true;
-                  //    item.value = Math.Round((float)xx[0], 3);
-                  //    item.updated = true;
-                  //    item.date_time = DateTime.Now;
-                  //  }
-                  //}
-                  //else
-                  //{
-                  //  throw new Exception("Счетчик не поддерживается");
                 }
               }
               catch (Exception ex)
@@ -712,101 +793,7 @@ namespace GettingStartedTree
       }
     }
 
-    void ReadValueFromMeter(List<TreeListNodeModel> tLst)
-    {
-      //using (SimpleWaitForm si = new SimpleWaitForm())
-      //{
-      //  si.RunAction(new Action(() =>
-      //  {
-      //    string ip_loc = string.Empty;
-      //    TcpClient client = null;
-      //    foreach (var item in tLst)
-      //    {
-      //      si.SetLabelText(string.Format("Опрос счетчика {0} ip:{1}", item.name, item.ip));
-      //      try
-      //      {
-      //        if (client != null && ip_loc.Equals(item.ip))
-      //        {
 
-      //        }
-      //        else
-      //        {
-      //          if (client != null)
-      //          {
-      //            client.Close();
-      //            client = null;
-      //          }
-      //          client = GetConnection(item.ip, 10250);
-      //          if (client == null)
-      //            throw new Exception();
-      //        }
-      //        ip_loc = item.ip;
-      //        if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
-      //        {
-      //          string num = item.meter_factory;
-
-      //          num = num.Substring(num.Length - 4, 4);
-      //          ushort addr = 0;
-      //          if (ushort.TryParse(num, out addr))
-      //          {
-      //            byte[] buffer = new byte[128];
-      //            byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
-      //            Exception exp = EnMera102.Read(buf, 128, client, out buffer);
-      //            if (exp == null)
-      //            {
-      //              float ds = (float)BitConverter.ToInt32(buffer, 9);
-      //              item.value = (ds / 100);
-      //              item.is_true = true;
-      //            }
-      //            else throw exp;
-      //          }
-      //          else throw new Exception("ошибка получения данных");
-
-      //        }
-      //        else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
-      //        {
-      //          string num = item.meter_factory;
-
-      //          byte addr = 0;
-      //          if (!string.IsNullOrEmpty(num))
-      //          {
-      //            if (char.IsDigit(num, 0))
-      //            {
-      //              try
-      //              {
-      //                num = num.Substring(num.Length - 2, 2);
-      //                if (!byte.TryParse(num, out addr))
-      //                {
-      //                  addr = 0;
-      //                }
-      //              }
-      //              catch { addr = 0; }
-      //            }
-      //          }
-      //          if (client == null)
-      //            throw new Exception("Ошибка открытия соединения");
-      //          Exception ex = null;
-      //          var xx = Granelectro.ReadData(item.ip, client, addr, out ex);
-      //          if (xx != null)
-      //          {
-      //            item.is_true = true;
-      //            item.value = Math.Round((float)xx[0],3);
-      //          }
-      //        }
-      //        else
-      //        {
-      //          throw new Exception("Счетчик не поддерживается");
-      //        }
-      //      }
-      //      catch (Exception ex)
-      //      {
-      //      }
-      //    }
-      //    si.DialogResult = DialogResult.OK;
-      //  }));
-      //  si.ShowDialog();
-      //}
-    }
 
     TcpClient GetConnection(string host, int port)
     {
@@ -837,12 +824,13 @@ namespace GettingStartedTree
         __colapssed = true;
         this.button2.ImageIndex = 6;
       }
-      else {
+      else
+      {
         this.treeListView1.CollapseAll();
         __colapssed = false;
         this.button2.ImageIndex = 7;
       }
-      
+
     }
 
     private void treeListView1_MouseUp(object sender, MouseEventArgs e)
@@ -862,7 +850,7 @@ namespace GettingStartedTree
 
     private void menuTreeUpdate_Click(object sender, EventArgs e)
     {
-     
+
     }
 
     private void menuTreeUpdateNotTrue_Click(object sender, EventArgs e)
@@ -873,7 +861,7 @@ namespace GettingStartedTree
     private void menu_meter_change(object sender, EventArgs e)
     {
       TreeListNodeModel item = (TreeListNodeModel)this.treeListView1.SelectedObject;
-      
+
       MeterInfo meterInfo = new MeterInfo()
       {
         crud_record = CrudRecord.Edit,
@@ -891,7 +879,7 @@ namespace GettingStartedTree
         {
           meterInfo.meter_factory = mMrom.txtBoxPlant.Text;
           meterInfo.meter_type = mMrom.GetDeviceByIndex();
-          __db.SetCrudMeterInfo(new List<MeterInfo>(){ meterInfo});
+          __db.SetCrudMeterInfo(new List<MeterInfo>() { meterInfo });
           item.meter_factory = mMrom.txtBoxPlant.Text;
           item.meter_type = mMrom.GetDeviceByIndex();
         }
@@ -978,11 +966,12 @@ namespace GettingStartedTree
               }
               wf.DialogResult = DialogResult.OK;
             }
-            else {
+            else
+            {
               wf.DialogResult = DialogResult.Abort;
             }
 
-            
+
           }
           catch (Exception exp)
           {
@@ -998,19 +987,20 @@ namespace GettingStartedTree
             }
           }
         });
-        DialogResult result= wf.ShowDialog();
+        DialogResult result = wf.ShowDialog();
         if (result == DialogResult.OK)
         {
-          MessageBox.Show("Элемент обновлен успешно","Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          MessageBox.Show("Элемент обновлен успешно", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        else {
+        else
+        {
           MessageBox.Show("Ошибка обновленя элемента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
       }
 
     }
 
-    private void button3_Click(object sender, EventArgs e)
+    private void btnExportExcel(object sender, EventArgs e)
     {
       object[] cItem = new object[this.treeListView1.Items.Count];
       this.treeListView1.Items.CopyTo(cItem, 0);
@@ -1028,12 +1018,87 @@ namespace GettingStartedTree
           sf.SetLabelText("Формирую отчет по счетчикам");
 
           ExportExcel exportExcel = new ExportExcel();
-          
+
           exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes);
           sf.DialogResult = DialogResult.OK;
         });
         sf.ShowDialog();
       }
     }
+
+    private void treeListView1_MouseClick(object sender, MouseEventArgs e)
+    {
+      ListViewExtensions.SetSortIcon(this.treeListView1, 1, SortOrder.Ascending);
+      if (e.Button == MouseButtons.Right)
+      {
+        //Control p = this.GetChildAtPoint(e.Location);
+        this.menuTree.Show(Cursor.Position);
+      }
+
+    }
+
+    private void ctxMenuSortByName_Click(object sender, EventArgs e)
+    {
+      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
+      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
+      mItemNum.Checked = false;
+      mItemObj.Checked = true;
+      this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(1));
+    }
+
+    private void ctxMenuSortByNumber_Click(object sender, EventArgs e)
+    {
+      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
+      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
+      mItemNum.Checked = true;
+      mItemObj.Checked = false;
+      this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(1));
+    }
+
+    private void treeListView1_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+      //SortOrder sortOrder = SortOrder.Ascending;
+      //if (e.Column == 0)
+      //{
+      //  if (this.treeListView1.Columns[e.Column].Tag == null) {
+      //    this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //    sortOrder = SortOrder.Ascending;
+      //  }
+      //  else {
+      //    sortOrder = (SortOrder)this.treeListView1.Columns[e.Column].Tag;
+      //  }
+      //  __treeNodes.Sort((x, y) =>
+      //  {
+      //    if (sortOrder == SortOrder.Ascending)
+      //    {
+      //      return x.name.CompareTo(y.name);
+      //    }
+      //    else {
+      //      return y.name.CompareTo(x.name);
+      //    }
+      //  });
+
+      //  if (sortOrder == SortOrder.Ascending)
+      //  {
+      //    this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+      //  }
+      //  else {
+      //    this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //  }
+
+      //  ListViewExtensions.SetSortIcon(this.treeListView1, e.Column, sortOrder);
+      //}
+      //this.treeListView1.SetObjects(__treeNodes);
+      //ResetDelegate();
+      this.treeListView1.Sort(e.Column);
+    }
+
+    private void treeListView1_ColumnRightClick(object sender, ColumnClickEventArgs e)
+    {
+      this.ctxMeterMenu.Show(Cursor.Position);
+    }
+
+   
   }
 }
+

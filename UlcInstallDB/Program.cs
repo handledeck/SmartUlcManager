@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using UlcInstallDB.DB;
 using UlcWin;
 
 namespace UlcDbInstall
@@ -151,6 +152,8 @@ namespace UlcDbInstall
           db.CreateTableIfNotExists(typeof(MainEvents));
           db.CreateTableIfNotExists(typeof(MainLogs));
           db.CreateTableIfNotExists(typeof(MainStat));
+          db.CreateTableIfNotExists(typeof(MeterValue));
+          db.CreateTableIfNotExists(typeof(MeterInfo));
           bool tbl = db.CreateTableIfNotExists(typeof(MainUnitTypes));
           if (tbl)
           {

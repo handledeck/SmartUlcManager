@@ -87,6 +87,8 @@
     <Compile Include="DB\MainStat.cs" />
     <Compile Include="DB\MainUnitTypes.cs" />
     <Compile Include="DB\MainUser.cs" />
+    <Compile Include="DB\MeterInfo.cs" />
+    <Compile Include="DB\MeterValue.cs" />
     <Compile Include="DB\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

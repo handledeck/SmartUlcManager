@@ -467,7 +467,7 @@ namespace InterUlc.Db
               __ulcUser.Pwd = (string)dr[2];
               __ulcUser.NodesString = (string)dr[3];
               __ulcUser.Comment = (string)dr[4];
-              __ulcUser.AccsessLavel = (EnumAccsesLevel)((int)dr[5]);
+              __ulcUser.AccsessLavel = (EnumAccsesLevel)((short)dr[5]);
             }
             string al = DBAuthUtils.Decrypt(__ulcUser.Pwd, __ulcUser.User);
             int iAc;
@@ -1983,9 +1983,13 @@ namespace InterUlc.Db
     public void DeleteTreeItem(int id, string message, EnLogEvt? enLogEvt, SqlTreeNodes sqlTreeNodes)
     {
       string sql = string.Empty;
+      DbLogMsg dbLogMsg=null;
       var consql = new NpgsqlConnection(this.__connection);
       consql.Open();
-      DbLogMsg dbLogMsg = GetDbObjectPath(id, consql, sqlTreeNodes);
+      if (enLogEvt != null) {
+        dbLogMsg = GetDbObjectPath(id, consql, sqlTreeNodes);
+      }
+      
       sql = string.Format("DELETE FROM public.main_nodes WHERE id={0}", id);
       var cmd = new NpgsqlCommand(sql, consql);
       int rowf = cmd.ExecuteNonQuery();
