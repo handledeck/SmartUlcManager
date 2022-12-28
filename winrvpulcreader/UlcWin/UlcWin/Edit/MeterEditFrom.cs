@@ -40,6 +40,7 @@ namespace UlcWin.Edit
           this.comboBox1.SelectedIndex = 2;
         }
         this.txtBoxPlant.Text = __meter.meter_factory;
+        this.cbActMeter.Checked = meter.active == 1 ? true : false;
       }
       else {
         this.comboBox1.SelectedIndex = 1;

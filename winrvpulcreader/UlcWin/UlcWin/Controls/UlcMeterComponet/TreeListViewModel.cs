@@ -37,6 +37,9 @@ namespace UlcWin.Controls.UlcMeterComponet
       this.is_true = true;
     }
 
+    public int rs_active { get; set; }
+    public int meter_active { get; set; }
+
     public static MeterValue ConvertToMeterValue(TreeListNodeModel treeListNodeModel) {
       MeterValue meterValue;
       if (treeListNodeModel == null)

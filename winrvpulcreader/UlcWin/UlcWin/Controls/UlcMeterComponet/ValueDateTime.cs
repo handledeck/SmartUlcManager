@@ -12,5 +12,6 @@ namespace UlcWin.Controls.UlcMeterComponet
     public string dt { get; set; }
     public double value { get; set; }
     public bool is_true { get; set; }
+    public int meter_active { get; set; }
   }
 }

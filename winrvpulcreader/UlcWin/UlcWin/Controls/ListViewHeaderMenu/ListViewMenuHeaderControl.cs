@@ -12,10 +12,12 @@ using System.Windows.Forms;
 namespace UlcWin.Controls.ListViewHeaderMenu
 {
   public delegate void ColumnRightClickEvent(object sender, ColumnHeader e, Point point);
+  public delegate void ListViewRightClickEvent(object sender);
   public partial class ListViewMenuHeaderControl : ListView
   {
     Dictionary<int, Rectangle> columns = new Dictionary<int, Rectangle>();
     public event ColumnRightClickEvent ColumnRightClick;
+    public event ListViewRightClickEvent ListViewMouseRightClick;
     public ListViewMenuHeaderControl()
     {
       
@@ -57,6 +59,10 @@ namespace UlcWin.Controls.ListViewHeaderMenu
             break;
           }
         }
+      }
+      else if (m.Msg == 0x205 || m.Msg==204) {
+        if (this.ListViewMouseRightClick != null)
+          this.ListViewMouseRightClick(this);
       }
       base.WndProc(ref m);
     }

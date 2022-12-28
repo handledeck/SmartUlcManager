@@ -31,6 +31,7 @@ namespace UlcWin
     public int IsLight { get; set; }
     public string Comments { get; set; }
     public string  Meters { get; set; }
+    public int Rs_Stat { get; set; }
    
   }
 }

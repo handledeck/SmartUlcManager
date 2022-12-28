@@ -51,6 +51,7 @@ namespace GettingStartedTree
       this.panel1 = new System.Windows.Forms.Panel();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel2 = new System.Windows.Forms.Panel();
+      this.monthPicker1 = new UlcWin.ui.MonthPicker();
       this.button3 = new System.Windows.Forms.Button();
       this.panel3 = new System.Windows.Forms.Panel();
       this.button2 = new System.Windows.Forms.Button();
@@ -135,6 +136,7 @@ namespace GettingStartedTree
       // olvName
       // 
       this.olvName.AspectName = "name";
+      this.olvName.Sortable = false;
       this.olvName.Text = "Имя объекта";
       this.olvName.Width = 316;
       // 
@@ -142,6 +144,7 @@ namespace GettingStartedTree
       // 
       this.olvDateTime.AspectName = "date_time";
       this.olvDateTime.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvDateTime.Sortable = false;
       this.olvDateTime.Text = "Дата и время";
       this.olvDateTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvDateTime.Width = 152;
@@ -149,11 +152,13 @@ namespace GettingStartedTree
       // olvType
       // 
       this.olvType.AspectName = "unit_type_id";
+      this.olvType.Sortable = false;
       this.olvType.Text = "Тип";
       // 
       // olvIp
       // 
       this.olvIp.AspectName = "ip";
+      this.olvIp.Sortable = false;
       this.olvIp.Text = "IP адрес";
       this.olvIp.Width = 112;
       // 
@@ -161,6 +166,7 @@ namespace GettingStartedTree
       // 
       this.olvMeterFactory.AspectName = "meter_factory";
       this.olvMeterFactory.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvMeterFactory.Sortable = false;
       this.olvMeterFactory.Text = "Номер счетчика";
       this.olvMeterFactory.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvMeterFactory.Width = 146;
@@ -169,6 +175,7 @@ namespace GettingStartedTree
       // 
       this.olvValue.AspectName = "value";
       this.olvValue.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvValue.Sortable = false;
       this.olvValue.Text = "Данные (на начало суток)";
       this.olvValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValue.Width = 177;
@@ -182,12 +189,14 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(1, "err");
       this.imageList1.Images.SetKeyName(2, "nav_down");
       this.imageList1.Images.SetKeyName(3, "error");
-      this.imageList1.Images.SetKeyName(4, "error1");
+      this.imageList1.Images.SetKeyName(4, "error");
       this.imageList1.Images.SetKeyName(5, "database_refresh.png");
       this.imageList1.Images.SetKeyName(6, "text.png");
       this.imageList1.Images.SetKeyName(7, "text_tree.png");
       this.imageList1.Images.SetKeyName(8, "part");
       this.imageList1.Images.SetKeyName(9, "excel_exports.png");
+      this.imageList1.Images.SetKeyName(10, "error1");
+      this.imageList1.Images.SetKeyName(11, "stop");
       // 
       // objectListView1
       // 
@@ -289,6 +298,7 @@ namespace GettingStartedTree
       // 
       // panel2
       // 
+      this.panel2.Controls.Add(this.monthPicker1);
       this.panel2.Controls.Add(this.button3);
       this.panel2.Controls.Add(this.panel3);
       this.panel2.Controls.Add(this.button2);
@@ -299,6 +309,16 @@ namespace GettingStartedTree
       this.panel2.Name = "panel2";
       this.panel2.Size = new System.Drawing.Size(1075, 29);
       this.panel2.TabIndex = 1;
+      // 
+      // monthPicker1
+      // 
+      this.monthPicker1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.monthPicker1.CustomFormat = "MMMM yyyy";
+      this.monthPicker1.Location = new System.Drawing.Point(872, 6);
+      this.monthPicker1.Name = "monthPicker1";
+      this.monthPicker1.Size = new System.Drawing.Size(200, 20);
+      this.monthPicker1.TabIndex = 4;
+      this.monthPicker1.ValueChanged += new System.EventHandler(this.MeterValueChnged);
       // 
       // button3
       // 
@@ -354,20 +374,23 @@ namespace GettingStartedTree
             this.ctxMenuSortByName,
             this.ctxMenuSortByNumber});
       this.ctxMeterMenu.Name = "ctxMeterMenu";
+      this.ctxMeterMenu.ShowCheckMargin = true;
       this.ctxMeterMenu.ShowImageMargin = false;
-      this.ctxMeterMenu.Size = new System.Drawing.Size(224, 48);
+      this.ctxMeterMenu.Size = new System.Drawing.Size(249, 48);
       // 
       // ctxMenuSortByName
       // 
+      this.ctxMenuSortByName.Checked = true;
+      this.ctxMenuSortByName.CheckState = System.Windows.Forms.CheckState.Checked;
       this.ctxMenuSortByName.Name = "ctxMenuSortByName";
-      this.ctxMenuSortByName.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuSortByName.Size = new System.Drawing.Size(248, 22);
       this.ctxMenuSortByName.Text = "Сортировать по имени объекта";
       this.ctxMenuSortByName.Click += new System.EventHandler(this.ctxMenuSortByName_Click);
       // 
       // ctxMenuSortByNumber
       // 
       this.ctxMenuSortByNumber.Name = "ctxMenuSortByNumber";
-      this.ctxMenuSortByNumber.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuSortByNumber.Size = new System.Drawing.Size(248, 22);
       this.ctxMenuSortByNumber.Text = "Сортировка по номеру ТП";
       this.ctxMenuSortByNumber.Click += new System.EventHandler(this.ctxMenuSortByNumber_Click);
       // 
@@ -423,5 +446,6 @@ namespace GettingStartedTree
     private System.Windows.Forms.ContextMenuStrip ctxMeterMenu;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByName;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByNumber;
+    private UlcWin.ui.MonthPicker monthPicker1;
   }
 }

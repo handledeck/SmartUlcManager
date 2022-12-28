@@ -235,7 +235,8 @@ namespace UlcWin.Edit
             crud_record = CrudRecord.Add,
             ip = this.txtBoxIpAddress.Text,
             meter_factory = mMrom.txtBoxPlant.Text,
-            meter_type = mMrom.GetDeviceByIndex()
+            meter_type = mMrom.GetDeviceByIndex(),
+            
           });
           this.lstMeter.Items.Add(mMrom.GetDeviceByIndex()).SubItems.Add(mMrom.txtBoxPlant.Text);
         }
@@ -253,6 +254,6 @@ namespace UlcWin.Edit
     public int IsActive { get; set; }
     public int IsLight { get; set; }
     public string Comment { get; set; }
-
+    public int rs_stat { get; set; }
   }
 }

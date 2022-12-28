@@ -18,6 +18,8 @@ namespace UlcWin.Controls.UlcMeterComponet
     public string ip { get; set; }
     public string meter_type { get; set; }
     public string meter_factory { get; set; }
+    [Default(1,IntValue =1)]
+    public int active { get; set; }
     [Ignore]
     public CrudRecord crud_record { get; set; }
 

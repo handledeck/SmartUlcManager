@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace UlcWin.DB
     public string res { get; set; }
     public string tp { get; set; }
     public string ip { get; set; }
+   
     public ImeiStatAndRs Feature { get; set; }
 
     public static JsonSerializerOptions GetSerializeOption() {
@@ -32,10 +34,13 @@ namespace UlcWin.DB
       {
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(UnicodeRanges.BasicLatin,
          UnicodeRanges.Cyrillic),
-        WriteIndented = true
+        WriteIndented = true,
+        
       };
+     
       return options;
     }
+
 
     public static void ParseNodePath(string msg, ref DbLogMsg dbLogMsg) {
       string[] aMsg = msg.Split('\\');

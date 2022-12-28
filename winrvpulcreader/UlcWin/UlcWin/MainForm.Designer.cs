@@ -32,7 +32,7 @@ namespace UlcWin
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +106,8 @@ namespace UlcWin
       this.tsMenuItem_Patch = new System.Windows.Forms.ToolStripMenuItem();
       this.geniralSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsMenuItemReboot = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+      this.actRs485ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsSelectedItems = new System.Windows.Forms.ToolStripDropDownButton();
       this.tsSelectAll = new System.Windows.Forms.ToolStripMenuItem();
       this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -469,7 +471,6 @@ namespace UlcWin
       this.treeView1.TabIndex = 100000;
       this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
       this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-      this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
       // 
       // treeMenu
       // 
@@ -666,7 +667,6 @@ namespace UlcWin
       this.tabItemsControl.SelectedIndex = 0;
       this.tabItemsControl.Size = new System.Drawing.Size(1150, 289);
       this.tabItemsControl.TabIndex = 2;
-      this.tabItemsControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
       // 
       // tabControllers
       // 
@@ -821,8 +821,8 @@ namespace UlcWin
       // 
       // checkBoxComboBox1
       // 
-      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
+      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
@@ -898,7 +898,9 @@ namespace UlcWin
             this.tsMenuItem_Pgrm,
             this.tsMenuItem_Patch,
             this.geniralSettingsToolStripMenuItem,
-            this.tsMenuItemReboot});
+            this.tsMenuItemReboot,
+            this.toolStripSeparator8,
+            this.actRs485ToolStripMenuItem});
       this.tsDwnUpdate.Image = global::UlcWin.Properties.Resources.gear_replace;
       this.tsDwnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsDwnUpdate.Name = "tsDwnUpdate";
@@ -938,6 +940,19 @@ namespace UlcWin
       this.tsMenuItemReboot.Size = new System.Drawing.Size(197, 22);
       this.tsMenuItemReboot.Text = "Перезапуск устройств";
       this.tsMenuItemReboot.Click += new System.EventHandler(this.tsMenuItemReboot_Click);
+      // 
+      // toolStripSeparator8
+      // 
+      this.toolStripSeparator8.Name = "toolStripSeparator8";
+      this.toolStripSeparator8.Size = new System.Drawing.Size(194, 6);
+      // 
+      // actRs485ToolStripMenuItem
+      // 
+      this.actRs485ToolStripMenuItem.Name = "actRs485ToolStripMenuItem";
+      this.actRs485ToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+      this.actRs485ToolStripMenuItem.Text = "act rs-485";
+      this.actRs485ToolStripMenuItem.Visible = false;
+      this.actRs485ToolStripMenuItem.Click += new System.EventHandler(this.actRs485ToolStripMenuItem_Click);
       // 
       // tsSelectedItems
       // 
@@ -1029,7 +1044,6 @@ namespace UlcWin
       this.ulcMeterTreeView.Name = "ulcMeterTreeView";
       this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 256);
       this.ulcMeterTreeView.TabIndex = 0;
-      this.ulcMeterTreeView.Load += new System.EventHandler(this.ulcMeterTreeView_Load);
       // 
       // imgTabs
       // 
@@ -1340,7 +1354,6 @@ namespace UlcWin
             this.ctxMenuNumber});
       this.ctxMenuHeader.Name = "ctxMenuHeader";
       this.ctxMenuHeader.Size = new System.Drawing.Size(221, 48);
-      this.ctxMenuHeader.Opening += new System.ComponentModel.CancelEventHandler(this.ctxMenuHeader_Opening);
       // 
       // ctxMenuObject
       // 
@@ -1526,6 +1539,8 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripMenuItem ctxMenuObject;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuNumber;
     public System.Windows.Forms.ContextMenuStrip ctxMenuHeader;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+    private System.Windows.Forms.ToolStripMenuItem actRs485ToolStripMenuItem;
   }
 }
 

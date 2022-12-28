@@ -104,6 +104,26 @@ namespace InterUlc.Db
     //string __user_db_pwd = "pgp@ssdb";
     public bool __super_user = false;
     IPHostEntry __host = null;
+
+    public List<OrmDbLogs> GetAllLogsByEvent(int intLogEvet) {
+      List<OrmDbLogs> lstOrmDbLogs = null;
+      try
+      {
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(this.__connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          lstOrmDbLogs= db.Select<OrmDbLogs>(x=>x.log_event==intLogEvet);
+          return lstOrmDbLogs;
+        }
+      }
+      catch (Exception e)
+      {
+        return null;
+      }
+
+    }
+
+
     public bool DbTestConnection()
     {
       using (SimpleWaitForm sfrm = new SimpleWaitForm())
@@ -154,25 +174,38 @@ namespace InterUlc.Db
         cmd.CommandText = sql;
         ulcStatistic.AllUlc = (long)cmd.ExecuteScalar();
         //Всего не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi "+
+                            "left join main_ctrlinfo mc on mc.id = mi.id "+
+                            "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' "+
+                            "where(mc.unit_type_id = 1 or mc.unit_type_id = 0)  and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         long nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.NetErrorAll = ulcStatistic.All - nn;
+        ulcStatistic.NetErrorAll = nn;// ulcStatistic.All - nn;
         //Всего нет связи по RS
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and (mc.cdin >>7)=0 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
+        /* Учитывая активность по RS*/
+         sql=string.Format("WITH temporaryTable(id) as "+
+          "(SELECT * from main_ctrlinfo mc where mc.unit_type_id=1 and mc.rs_stat=1) "+
+           "select count(md.id) FROM temporaryTable, main_ctrldata md where temporaryTable.id=md.ctrl_id and md.\"current_time\" > '{0}' and (md.cdin >>7)=0",  DateTime.Now.ToString("yyyy-MM-dd"));
+
+
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and (mc.cdin >>7)=0 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         ulcStatistic.AllErrorRs = (long)cmd.ExecuteScalar();
         //Всего слабый сигнал GSM
         sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and  ((-113 + (mc.signal) * 2))<-100 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         ulcStatistic.AllErrorGsm = (long)cmd.ExecuteScalar();
-
-
         // Всего контроллеров ULC не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =1 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                            "left join main_ctrlinfo mc on mc.id = mi.id " +
+                            "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
+                            "where mc.unit_type_id = 1 and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
+
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =1 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.NetErrorUlc = ulcStatistic.AllUlc - nn;
+        ulcStatistic.NetErrorUlc = nn;//ulcStatistic.AllUlc -nn;
         // всего ulc ошибка RS 
         ulcStatistic.UlcErrorRs = ulcStatistic.AllErrorRs;
         //всего ulc GSM  
@@ -182,10 +215,15 @@ namespace InterUlc.Db
 
 
         // Всего контроллеров RVP не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =0 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =0 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                           "left join main_ctrlinfo mc on mc.id = mi.id " +
+                           "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
+                           "where mc.unit_type_id = 0 and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
+
         cmd.CommandText = sql;
         nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.NetErrorRvp = ulcStatistic.AllRvp - nn;
+        ulcStatistic.NetErrorRvp = nn;// ulcStatistic.AllRvp - nn;
         //всего рвп неисправность rs
         ulcStatistic.RvpErrorRs = 0;
         //всего rvp GSM
@@ -955,6 +993,7 @@ namespace InterUlc.Db
         int isLight = (int)dr_ip["light"];
         string comment = (string)dr_ip["comments"];
         string meters = "Н/Д";
+        int rs_stat= (int)dr_ip["rs_stat"];
         //string meter_factory = "Н/Д";
         if (dr_ip["meters"] != null)
         {
@@ -982,6 +1021,7 @@ namespace InterUlc.Db
           IsLight = isLight,
           Comments = comment,
           Meters = meters,
+          Rs_Stat = rs_stat
           //MeterFactory=meter_factory
 
         };
@@ -1057,7 +1097,7 @@ namespace InterUlc.Db
           {
             if (item.Value.UType == 1)
             {
-              if (!uc.SVERS.StartsWith("1.7.9"))
+              if (!uc.SVERS.StartsWith("1.7.9") && !uc.SVERS.StartsWith("1.7.10"))
               {
                 it.UseItemStyleForSubItems = false;
                 sver.ForeColor = Color.Red;
@@ -1095,7 +1135,6 @@ namespace InterUlc.Db
 
             if (!core.Contains("12.01.830-B006"))
             {
-
               it_core = "патч";
             }
             else
@@ -1123,7 +1162,16 @@ namespace InterUlc.Db
           it.SubItems.Add(uc.RAS.ToString());
           if (item.Value.UType == 1)
           {
-            it.SubItems.Add((uc.CDIN >> 7).ToString());
+            if (item.Value.Rs_Stat == 0)
+            {
+              ListViewItem.ListViewSubItem sbItem= it.SubItems.Add("X");
+              //it.UseItemStyleForSubItems = false;
+              //sbItem.BackColor = Color.LightGray;
+              //sbItem.ForeColor = Color.Gray;
+            }
+            else {
+              it.SubItems.Add((uc.CDIN >> 7).ToString());
+            }
           }
           else
           {
@@ -2185,6 +2233,7 @@ namespace InterUlc.Db
               ip_address = dbItemEditor.Ip,
               phone_num = dbItemEditor.Phone,
               unit_type_id = dbItemEditor.UType,
+              rs_stat= dbItemEditor.rs_stat==1 ? 1:0
             });
           //DbLogMsg dbLogMsg = new DbLogMsg()
           //{
@@ -2270,7 +2319,7 @@ namespace InterUlc.Db
           "and mc2.unit_type_id = {2}";
         string query_rs = "SELECT count(*) FROM main_nodes mn " +
           "right JOIN main_ctrldata mc ON mn.id = mc.ctrl_id " +
-          "right join main_ctrlinfo mc2 on mc.ctrl_id = mc2.id where mc.\"current_time\" > '{0}' " +
+          "right join main_ctrlinfo mc2 on mc.ctrl_id = mc2.id and mc2.rs_stat =1 where mc.\"current_time\" > '{0}' " +
           "and mn.parent_id = {1} " +
           "and mn.active = 1 " +
           "and mc2.unit_type_id = 1 "+

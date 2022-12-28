@@ -46,8 +46,11 @@
       this.clnEventNmae = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.clnItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+      this.ctxMenuLogItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.MenuLogsItemFeature = new System.Windows.Forms.ToolStripMenuItem();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
+      this.ctxMenuLogItem.SuspendLayout();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -176,6 +179,8 @@
       this.lstLogEvents.TabIndex = 1;
       this.lstLogEvents.UseCompatibleStateImageBehavior = false;
       this.lstLogEvents.View = System.Windows.Forms.View.Details;
+      this.lstLogEvents.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstLogEvents_MouseDoubleClick);
+      this.lstLogEvents.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LogMenuMouseUp);
       // 
       // clnDate
       // 
@@ -218,6 +223,20 @@
       this.imageList1.Images.SetKeyName(14, "document_delete.png");
       this.imageList1.Images.SetKeyName(15, "document_edit.png");
       // 
+      // ctxMenuLogItem
+      // 
+      this.ctxMenuLogItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuLogsItemFeature});
+      this.ctxMenuLogItem.Name = "ctxMenuLogItem";
+      this.ctxMenuLogItem.ShowImageMargin = false;
+      this.ctxMenuLogItem.Size = new System.Drawing.Size(112, 26);
+      // 
+      // MenuLogsItemFeature
+      // 
+      this.MenuLogsItemFeature.Name = "MenuLogsItemFeature";
+      this.MenuLogsItemFeature.Size = new System.Drawing.Size(111, 22);
+      this.MenuLogsItemFeature.Text = "Подробнее";
+      // 
       // LogsViewForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -235,6 +254,7 @@
       this.tableLayoutPanel1.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
       this.panel1.PerformLayout();
+      this.ctxMenuLogItem.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -257,5 +277,7 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.DateTimePicker cbDateTimeFrom;
+    private System.Windows.Forms.ContextMenuStrip ctxMenuLogItem;
+    private System.Windows.Forms.ToolStripMenuItem MenuLogsItemFeature;
   }
 }

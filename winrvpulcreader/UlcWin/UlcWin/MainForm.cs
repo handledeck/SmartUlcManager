@@ -100,6 +100,12 @@ namespace UlcWin
       this.tsResView.Enabled = false;
       //this.treeView1.Nodes.Clear();
       this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
+      this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
+    }
+
+    private void LstViewItm_ListViewMouseRightClick(object sender)
+    {
+      this.LvMenu.Show(Cursor.Position);
     }
 
     private void LstViewItm_ColumnRightClick(object sender, ColumnHeader e, Point point)
@@ -399,8 +405,6 @@ namespace UlcWin
           else
           {
             this.tsBtnEventShowHide.Enabled = false;
-           
-
           }
           
           //this.ctxMenuItemChange.Enabled = true;
@@ -642,9 +646,7 @@ namespace UlcWin
       {
         ctxMenuUpdateSelected.Enabled = false;
       }
-      //this.LvMenu.Visible = false;
-
-
+      //this.LvMenu.Visible = true;
     }
 
     private void __dtp_ValueChanged(object sender, EventArgs e)
@@ -1820,6 +1822,7 @@ namespace UlcWin
           ed.cbType.SelectedIndex = iip.UType;
           ed.cbFunction.SelectedIndex = iip.IsLight;
           ed.chBoxActive.Checked = iip.Active == 0 ? false : true;
+          ed.chBoxStat.Checked = iip.Rs_Stat == 0 ? false : true;
           ed.txtBoxComment.Text = iip.Comments;
           ed.txtBoxIpAddress.Text = iip.Ip;
           ed.txtBoxPhones.Text = iip.Phone;
@@ -1851,7 +1854,9 @@ namespace UlcWin
                 Phone = ed.txtBoxPhones.Text,
                 IsActive = ed.chBoxActive.Checked == true ? 1 : 0,
                 IsLight = ed.cbFunction.SelectedIndex,
-                UType = ed.cbType.SelectedIndex == 0 ? 0 : 1
+                UType = ed.cbType.SelectedIndex == 0 ? 0 : 1, 
+                rs_stat=ed.chBoxStat.Checked==true? 1:0
+                 
               }, this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
             __db.SetCrudMeterInfo(ed.__meterInfos);
             this.tsUpdate_Click(null, null);
@@ -3046,8 +3051,6 @@ namespace UlcWin
       }
     }
 
-
-
     private void tsBtnExport_Click(object sender, EventArgs e)
     {
       string fes = this.treeView1.SelectedNode.Parent.Text;
@@ -3418,21 +3421,7 @@ namespace UlcWin
 
     }
 
-    private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-    {
-      this.treeView1.SelectedNode = e.Node;
-      int x = 0;
-    }
-
-    private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      int x = 0;
-    }
-
-    private void ulcMeterTreeView_Load(object sender, EventArgs e)
-    {
-
-    }
+  
 
     private void LstViewItm_MouseClick(object sender, MouseEventArgs e)
     {
@@ -3461,7 +3450,18 @@ namespace UlcWin
       this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
     }
 
-    private void ctxMenuHeader_Opening(object sender, CancelEventArgs e)
+    private void actRs485ToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (StatRs485 rsForm =new StatRs485(this.__db, this.__lvItemChecked))
+      {
+       
+        rsForm.ShowDialog();
+      }
+
+     
+    }
+
+    private void LstViewItm_Click(object sender, EventArgs e)
     {
 
     }

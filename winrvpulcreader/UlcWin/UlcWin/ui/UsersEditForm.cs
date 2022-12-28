@@ -35,13 +35,17 @@ namespace UlcWin.ui
 
       }
       else {
-        this.btnDelete.Enabled = true;
-        if(this.ListUser.SelectedItems.Count>0)
-        this.btnEdit.Enabled = true;
+        if (this.ListUser.SelectedItems.Count > 0)
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+        }
         else
+        {
           this.btnEdit.Enabled = false;
+          this.btnDelete.Enabled = false;
+        }
       }
-      
     }
 
     void UpdateUsersList()
@@ -145,6 +149,7 @@ namespace UlcWin.ui
 
     private void btnDelete_Click(object sender, EventArgs e)
     {
+
       DialogResult result= MessageBox.Show("Удалить запись о пользователи: "+ this.ListUser.SelectedItems[0].SubItems[0].Text,
         "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
       if (result == DialogResult.Yes)
@@ -154,7 +159,7 @@ namespace UlcWin.ui
         if (res == 1)
         {
           this.__db.LogsInsertEvent(EnLogEvt.APP_DEL_USER, string.Format("{0}:{1}",
-            this.ListUser.SelectedItems[0].SubItems[1].Text, this.ListUser.SelectedItems[0].SubItems[2].Text));
+            this.ListUser.SelectedItems[0].SubItems[0].Text, this.ListUser.SelectedItems[0].SubItems[1].Text));
           MessageBox.Show("Запись успешно удалена", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
           UpdateUsersList();
         }

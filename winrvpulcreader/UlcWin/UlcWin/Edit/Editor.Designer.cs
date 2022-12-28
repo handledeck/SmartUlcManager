@@ -60,6 +60,7 @@
       this.txtBoxZtp = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxCity = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxState = new UlcWin.ui.TextBoxPlaceHolder();
+      this.chBoxStat = new System.Windows.Forms.CheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
       this.GrpMeter.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
@@ -69,7 +70,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(413, 471);
+      this.btnOk.Location = new System.Drawing.Point(410, 471);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(91, 27);
       this.btnOk.TabIndex = 4;
@@ -124,7 +125,7 @@
       this.chBoxActive.AutoSize = true;
       this.chBoxActive.Checked = true;
       this.chBoxActive.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chBoxActive.Location = new System.Drawing.Point(333, 120);
+      this.chBoxActive.Location = new System.Drawing.Point(331, 112);
       this.chBoxActive.Name = "chBoxActive";
       this.chBoxActive.Size = new System.Drawing.Size(171, 17);
       this.chBoxActive.TabIndex = 6;
@@ -300,7 +301,7 @@
       // 
       this.Отмена.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.Отмена.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.Отмена.Location = new System.Drawing.Point(512, 471);
+      this.Отмена.Location = new System.Drawing.Point(509, 471);
       this.Отмена.Name = "Отмена";
       this.Отмена.Size = new System.Drawing.Size(91, 27);
       this.Отмена.TabIndex = 23;
@@ -373,12 +374,25 @@
       this.txtBoxState.Size = new System.Drawing.Size(246, 21);
       this.txtBoxState.TabIndex = 12;
       // 
+      // chBoxStat
+      // 
+      this.chBoxStat.AutoSize = true;
+      this.chBoxStat.Checked = true;
+      this.chBoxStat.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chBoxStat.Location = new System.Drawing.Point(331, 135);
+      this.chBoxStat.Name = "chBoxStat";
+      this.chBoxStat.Size = new System.Drawing.Size(141, 17);
+      this.chBoxStat.TabIndex = 24;
+      this.chBoxStat.Text = "Статистстка RS-485";
+      this.chBoxStat.UseVisualStyleBackColor = true;
+      // 
       // Editor
       // 
       this.AcceptButton = this.btnOk;
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(616, 510);
+      this.ClientSize = new System.Drawing.Size(613, 510);
+      this.Controls.Add(this.chBoxStat);
       this.Controls.Add(this.Отмена);
       this.Controls.Add(this.GrpMeter);
       this.Controls.Add(this.btnOk);
@@ -448,5 +462,6 @@
         private System.Windows.Forms.ColumnHeader MeterType;
         private System.Windows.Forms.ColumnHeader MeterPlant;
     public System.Windows.Forms.ListView lstMeter;
+    public System.Windows.Forms.CheckBox chBoxStat;
   }
 }

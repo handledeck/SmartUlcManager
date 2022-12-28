@@ -35,15 +35,17 @@
       this.comboBox1 = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
-      this.txtBoxPlant = new UlcWin.ui.TextBoxPlaceHolder();
       this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+      this.cbActMeter = new System.Windows.Forms.CheckBox();
+      this.lineHorizont1 = new UlcWin.Controls.MeterProgress.LineHorizont(this.components);
+      this.txtBoxPlant = new UlcWin.ui.TextBoxPlaceHolder();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
       this.SuspendLayout();
       // 
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(339, 111);
+      this.btnOk.Location = new System.Drawing.Point(312, 127);
       this.btnOk.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(88, 23);
@@ -55,7 +57,7 @@
       // btnCancel
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnCancel.Location = new System.Drawing.Point(243, 111);
+      this.btnCancel.Location = new System.Drawing.Point(216, 127);
       this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(88, 23);
@@ -94,6 +96,33 @@
       this.label2.TabIndex = 5;
       this.label2.Text = "Заводской номер";
       // 
+      // errorProvider1
+      // 
+      this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+      this.errorProvider1.ContainerControl = this;
+      this.errorProvider1.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider1.Icon")));
+      // 
+      // cbActMeter
+      // 
+      this.cbActMeter.AutoSize = true;
+      this.cbActMeter.Checked = true;
+      this.cbActMeter.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.cbActMeter.Location = new System.Drawing.Point(236, 78);
+      this.cbActMeter.Name = "cbActMeter";
+      this.cbActMeter.Size = new System.Drawing.Size(137, 17);
+      this.cbActMeter.TabIndex = 25;
+      this.cbActMeter.Text = "Акитвность опроса";
+      this.cbActMeter.UseVisualStyleBackColor = true;
+      // 
+      // lineHorizont1
+      // 
+      this.lineHorizont1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.lineHorizont1.Location = new System.Drawing.Point(2, 112);
+      this.lineHorizont1.MaximumSize = new System.Drawing.Size(0, 2);
+      this.lineHorizont1.Name = "lineHorizont1";
+      this.lineHorizont1.Size = new System.Drawing.Size(408, 2);
+      this.lineHorizont1.TabIndex = 26;
+      // 
       // txtBoxPlant
       // 
       this.txtBoxPlant.CueText = "макс. 30 симв.";
@@ -103,17 +132,13 @@
       this.txtBoxPlant.Size = new System.Drawing.Size(193, 21);
       this.txtBoxPlant.TabIndex = 6;
       // 
-      // errorProvider1
-      // 
-      this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-      this.errorProvider1.ContainerControl = this;
-      this.errorProvider1.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider1.Icon")));
-      // 
       // MeterEditFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(440, 146);
+      this.ClientSize = new System.Drawing.Size(413, 162);
+      this.Controls.Add(this.lineHorizont1);
+      this.Controls.Add(this.cbActMeter);
       this.Controls.Add(this.txtBoxPlant);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
@@ -145,5 +170,7 @@
     public System.Windows.Forms.ComboBox comboBox1;
     public ui.TextBoxPlaceHolder txtBoxPlant;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-    }
+    private Controls.MeterProgress.LineHorizont lineHorizont1;
+    public System.Windows.Forms.CheckBox cbActMeter;
+  }
 }

@@ -117,11 +117,11 @@ namespace UlcWin.ui
             {
               List<OrmDbLogs> lstLogs = null;
               //IAsyncResult re= this.BeginInvoke(new Action(() => {
-              var xx = db.From<OrmDbLogs>().Where(x => x.current_time > dt_start.Date && x.current_time<dt_end.Date).
+              var xx = db.From<OrmDbLogs>().Where(x => x.current_time > dt_start.Date && x.current_time < dt_end.Date).
               And(x => id_usr == -1 ? x.id_user > -1 : x.id_user == id_usr).
-              And(x=>id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).
+              And(x => id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).
               Select().OrderByDescending(x => x.current_time);
-                lstLogs = db.SqlList<OrmDbLogs>(xx);
+              lstLogs = db.SqlList<OrmDbLogs>(xx);
               //}));
               //re.AsyncWaitHandle.WaitOne();
               List<ListViewItem> lst = new List<ListViewItem>();
@@ -134,7 +134,10 @@ namespace UlcWin.ui
                 itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
                 DbLogMsg dbLogMsg = EvtObjectWho(item.message, db);
                 if (dbLogMsg != null)
-                  itr.SubItems.Add(item.message); //dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+                {
+                  itr.Tag = dbLogMsg;
+                  itr.SubItems.Add(dbLogMsg.ip);
+                }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
                 else
                 {
                   itr.SubItems.Add(item.message);
@@ -142,34 +145,13 @@ namespace UlcWin.ui
                 itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
                 lst.Add(itr);
               }
-              IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() => {
+              IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() =>
+              {
                 this.lstLogEvents.Items.Clear();
                 this.lstLogEvents.Items.AddRange(lst.ToArray());
                 sfrm.DialogResult = DialogResult.OK;
               }));
-           // {
-              ////this.lstLogEvents.Items.Clear();
-              //  //List<ListViewItem> lst = new List<ListViewItem>();
-              //  //foreach (var item in lstLogs)
-              //  //{
-              //  //  ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
-              //  //  itr.SubItems.Add(item.host_from + ":" + item.usr_name);
-              //  //  itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
-              //  //  DbLogMsg dbLogMsg = EvtObjectWho(item.message,db);
-              //  //  if (dbLogMsg != null)
-              //  //    itr.SubItems.Add(item.message); //dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
-              //  //  else {
-              //  //    itr.SubItems.Add(item.message);
-              //  //  }
-              //  //  itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
-
-              //}
-
-              //sfrm.DialogResult = DialogResult.OK;
-            
-              //));
-        //res.AsyncWaitHandle.WaitOne();
-      }
+            }
             catch (Exception exp)
             {
               sfrm.DialogResult = DialogResult.Cancel;
@@ -289,6 +271,51 @@ namespace UlcWin.ui
       }
       if (__loaded)
         ReadAllLogs();
+    }
+
+
+    private void lstLogEvents_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+      if (this.lstLogEvents.SelectedItems.Count > 0)
+      {
+        if (this.lstLogEvents.SelectedItems[0].Tag != null)
+        {
+          using (LogDetailEvent lgEvt=new LogDetailEvent())
+          {
+            List<OrmDbLogs> ormDbLogs= __db.GetAllLogsByEvent(100);
+            foreach (var item in ormDbLogs)
+            {
+              try
+              {
+                DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(item.message, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
+                if (dbLogMsg.Feature != null) {
+                  int x = 0;
+                }
+              }
+              catch (Exception ex) { 
+              
+              }
+             
+            }
+
+            lgEvt.ShowDialog();
+          }
+        }
+        else
+        {
+          
+        }
+      }
+    }
+
+    private void LogMenuMouseUp(object sender, MouseEventArgs e)
+    {
+      if (e.Button ==  MouseButtons.Right) {
+        if (this.lstLogEvents.SelectedItems[0].Tag != null)
+        {
+          this.ctxMenuLogItem.Show(Cursor.Position);
+        }
+      }
     }
   }
 

@@ -24,14 +24,21 @@ namespace UlcWin.ui
     }
 
     public void ReInit() {
-
-      this.Text = "";
-      this.Items.Clear();
-      m_collectionList = null;
+      try
+      {
+        this.Text = "";
+        this.Items.Clear();
+        m_collectionList = null;
+      }
+      catch { }
     }
 
     protected override void OnTextUpdate(EventArgs e)
     {
+      try
+      {
+
+      
       if (m_collectionList == null)
       {
         m_collectionList = this.Items.OfType<object>().ToList();
@@ -50,6 +57,12 @@ namespace UlcWin.ui
       this.SelectionStart = this.Text.Length;
       this.DroppedDown = true;
       this.Cursor = Cursors.Default;
+      }
+      catch
+      {
+
+       
+      }
     }
 
     protected override void OnTextChanged(EventArgs e)
