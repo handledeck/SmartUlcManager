@@ -58,6 +58,8 @@ namespace GettingStartedTree
       this.treeListView1.EmptyListMsg = "Нет данных для просмотра";
       this.treeListView1.EmptyListMsgFont = new Font("Tahoma", 10);
       this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
+      HeaderControl h = new HeaderControl(this.treeListView1);
+      
     }
 
    
@@ -71,6 +73,7 @@ namespace GettingStartedTree
       FillTreeList(DateTime.Now);
       ResetDelegate();
       this.treeListView1.FormatRow += TreeListView1_FormatRow;
+      
     }
 
     private void FillTreeList(DateTime dtData)
@@ -299,6 +302,8 @@ namespace GettingStartedTree
 
     void ResetDelegate()
     {
+      
+
       this.treeListView1.CanExpandGetter = delegate (Object x)
       {
         TreeListNodeModel vv = (TreeListNodeModel)x;
@@ -436,6 +441,7 @@ namespace GettingStartedTree
         }
         return "";
       };
+
     }
 
     private void TreeListView1_SelectionChanged(object sender, EventArgs e)
@@ -759,7 +765,6 @@ namespace GettingStartedTree
           tasks.Add(tsk);
         }
 
-
         mp.Shown += delegate (object sender, EventArgs e)
         {
           Task.Factory.StartNew(() =>
@@ -1006,9 +1011,7 @@ namespace GettingStartedTree
         sf.RunAction(() =>
         {
           sf.SetLabelText("Формирую отчет по счетчикам");
-
           ExportExcel exportExcel = new ExportExcel();
-
           exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes);
           sf.DialogResult = DialogResult.OK;
         });
@@ -1024,7 +1027,6 @@ namespace GettingStartedTree
         //Control p = this.GetChildAtPoint(e.Location);
         this.menuTree.Show(Cursor.Position);
       }
-
     }
 
     private void ctxMenuSortByName_Click(object sender, EventArgs e)
@@ -1172,19 +1174,12 @@ namespace GettingStartedTree
               return 0;
             else
               return -1;
-
-
-
           });
           }
           catch (Exception exp)
           {
-
-
           }
-
         }
-
       }
       else if (e.Column == 2)
       {
@@ -1289,6 +1284,14 @@ namespace GettingStartedTree
     private void MeterValueChnged(object sender, EventArgs e)
     {
       TreeListView1_SelectionChanged(this.treeListView1, null);
+    }
+
+    private void textBox1_TextChanged(object sender, EventArgs e)
+    {
+      TextMatchFilter filter = TextMatchFilter.Prefix(this.treeListView1, this.textBox1.Text);// TextMatchFilter.Contains(this.treeListView1, this.textBox1.Text);
+      this.treeListView1.ModelFilter = filter;
+      this.treeListView1.DefaultRenderer = new HighlightTextRenderer(filter);
+      this.treeListView1.Update();
     }
   }
 

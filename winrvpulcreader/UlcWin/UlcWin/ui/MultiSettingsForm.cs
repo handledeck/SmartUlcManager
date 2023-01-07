@@ -175,7 +175,7 @@ namespace UlcWin.ui
                 };
                 DbLogMsg.ParseNodePath(__node_full_path, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE, msg);
+                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE, msg, itemIp.Id);
                 if (this.cbReboot.Checked)
                 {
                   string command = ZtpProtocol.RebootCommand(this.__pwd);

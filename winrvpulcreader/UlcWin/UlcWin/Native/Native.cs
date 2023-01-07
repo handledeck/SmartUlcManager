@@ -1,16 +1,96 @@
-﻿using System;
+﻿using BrightIdeasSoftware;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace UlcWin
 {
   public class NativeMethod
   {
 
+    public static IntPtr GetHeaderControl(ListView list)
+    {
+      return SendMessage(list.Handle, LVM_GETHEADER, 0, 0);
+    }
+
+    /// <summary>
+    /// Setup the given column of the listview to show the given image to the right of the text.
+    /// If the image index is -1, any previous image is cleared
+    /// </summary>
+    /// <param name="list">The listview to send a m to</param>
+    /// <param name="columnIndex">Index of the column to modify</param>
+    /// <param name="order"></param>
+    /// <param name="imageIndex">Index into the small image list</param>
+    public static void SetColumnImage(ListView list, int columnIndex, SortOrder order, int imageIndex)
+    {
+      IntPtr hdrCntl = GetHeaderControl(list);
+      if (hdrCntl.ToInt32() == 0)
+        return;
+
+      HDITEM item = new HDITEM();
+      item.mask = HDI_FORMAT;
+      IntPtr result = SendMessageHDItem(hdrCntl, HDM_GETITEM, columnIndex, ref item);
+
+      item.fmt &= ~(HDF_SORTUP | HDF_SORTDOWN | HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
+
+     //// if (NativeMethods.HasBuiltinSortIndicators())
+     // //{
+     //   if (order == SortOrder.Ascending)
+     //     item.fmt |= HDF_SORTUP;
+     //   if (order == SortOrder.Descending)
+     //     item.fmt |= HDF_SORTDOWN;
+     // //}
+     // else
+     // {
+        item.mask |= HDI_IMAGE;
+        item.fmt |= (HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
+        item.iImage = imageIndex;
+      //}
+
+      result = SendMessageHDItem(hdrCntl, HDM_SETITEM, columnIndex, ref item);
+    }
+
+    public void DrawSortIcon(ListView listView, int itemIndex) {
+      Rectangle r = GetHeaderDrawRect(listView, itemIndex);
+    }
+
+    public Rectangle GetHeaderDrawRect(ListView listView,int itemIndex)
+    {
+      Rectangle r = this.GetItemRect(listView,itemIndex);
+
+      // Tweak the text rectangle a little to improve aesthetics
+      r.Inflate(-3, 0);
+      r.Y -= 2;
+
+      return r;
+    }
+
+    
+
+    public Rectangle GetItemRect(ListView listView, int itemIndex)
+    {
+      const int HDM_FIRST = 0x1200;
+      const int HDM_GETITEMRECT = HDM_FIRST + 7;
+      RECT r = new RECT();
+      IntPtr hdrCntl = GetHeaderControl(listView);
+      SendMessageRECT(hdrCntl, HDM_GETITEMRECT, itemIndex, ref r);
+      return Rectangle.FromLTRB(r.left, r.top, r.right, r.bottom);
+    }
+
+    public static void SetSubItemImage(ListView list, int itemIndex, int subItemIndex, int imageIndex)
+    {
+      LVITEM lvItem = new LVITEM();
+      lvItem.mask = LVIF_IMAGE;
+      lvItem.iItem = itemIndex;
+      lvItem.iSubItem = subItemIndex;
+      lvItem.iImage = imageIndex;
+      SendMessageLVItem(list.Handle, LVM_SETITEM, 0, ref lvItem);
+    }
 
     public const int LVM_FIRST = 0x1000;
     public const int LVM_GETCOLUMN = LVM_FIRST + 95;

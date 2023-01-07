@@ -84,6 +84,11 @@ namespace UlcWin.Controls.UlcMeterComponet
     {
       throw new NotImplementedException();
     }
+
+    public void UpdateObject(int index, object modelObject)
+    {
+      throw new NotImplementedException();
+    }
   }
 }
 

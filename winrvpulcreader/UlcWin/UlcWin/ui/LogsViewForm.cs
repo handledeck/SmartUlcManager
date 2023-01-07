@@ -137,6 +137,8 @@ namespace UlcWin.ui
                 {
                   itr.Tag = dbLogMsg;
                   itr.SubItems.Add(dbLogMsg.ip);
+
+                  itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
                 }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
                 else
                 {
@@ -280,25 +282,32 @@ namespace UlcWin.ui
       {
         if (this.lstLogEvents.SelectedItems[0].Tag != null)
         {
-          using (LogDetailEvent lgEvt=new LogDetailEvent())
-          {
-            List<OrmDbLogs> ormDbLogs= __db.GetAllLogsByEvent(100);
-            foreach (var item in ormDbLogs)
-            {
-              try
-              {
-                DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(item.message, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-                if (dbLogMsg.Feature != null) {
-                  int x = 0;
-                }
-              }
-              catch (Exception ex) { 
-              
-              }
-             
-            }
+          DbLogMsg dbLm = (DbLogMsg)lstLogEvents.SelectedItems[0].Tag;
 
-            lgEvt.ShowDialog();
+          //OrmDbLogs ormDbLogs = (OrmDbLogs)this.lstLogEvents.SelectedItems[0].Tag;
+          if (dbLm.Feature != null) {
+            using (LogDetailEvent lgEvt = new LogDetailEvent())
+            {
+              CbsEvents cbsEvents = (CbsEvents)this.cbEvents.SelectedItem;
+              List<OrmDbLogs> ormDbLogs = __db.GetAllLogsByEvent(cbsEvents.ID);
+              foreach (var item in ormDbLogs)
+              {
+                try
+                {
+                  DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(item.message, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
+                  if (dbLogMsg.Feature != null)
+                  {
+                    int x = 0;
+                  }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+              }
+              lgEvt.ShowDialog();
+            }
           }
         }
         else

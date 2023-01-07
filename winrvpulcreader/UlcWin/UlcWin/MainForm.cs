@@ -101,6 +101,7 @@ namespace UlcWin
       //this.treeView1.Nodes.Clear();
       this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
       this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
+     
     }
 
     private void LstViewItm_ListViewMouseRightClick(object sender)
@@ -265,7 +266,7 @@ namespace UlcWin
       if (result == DialogResult.Yes)
       {
 
-        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT, string.Format("{0}", this.__db.__DbUserName));
+        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT, string.Format("{0}", this.__db.__DbUserName),-1);
         if (__settings_changed)
         {
           result = MessageBox.Show("Сохранить настройки приложения?", "Закрытие приложения",
@@ -283,6 +284,7 @@ namespace UlcWin
     private void Panel1_Paint(object sender, PaintEventArgs e)
     {
       ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle, Color.LightGray, ButtonBorderStyle.Solid);
+
     }
 
     private void StartForm_Shown(object sender, EventArgs e)
@@ -685,7 +687,7 @@ namespace UlcWin
 
             if (__db.DbTestConnection())
             {
-              this.__db.LogsInsertEvent(EnLogEvt.APP_CONNECT,string.Format("{0}",this.__db.__DbUserName));
+              this.__db.LogsInsertEvent(EnLogEvt.APP_CONNECT,string.Format("{0}",this.__db.__DbUserName),-1);
               __db.FillTreeByUser(this.treeView1);
               if (this.__sel_node != null)
               {
@@ -1262,60 +1264,74 @@ namespace UlcWin
           //this.ReadEvent();
           //siform.SetLabelText(string.Format("События: {0}", iip.Name));
           lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
-          //siform.
+          if (lst_ev != null)
+          {
+            // using (EventForm ef = new EventForm())
+            //{
+            this.BeginInvoke(new Action(() =>
+            {
+              this.LstViewEvent.Visible = true;
+            }));
+
+            List<ListViewItem> lstItems = new List<ListViewItem>();
+            foreach (var item in lst_ev)
+            {
+              //var lg = /*ef.listView1*/this.LstViewEvent.Groups.Add(item.Key.ToString("dd.MM.yyyy"), item.Key.ToString("dd.MM.yyyy"));
+
+              foreach (var it in item.Value)
+              {
+                var itev = new ListViewItem(new string[] { it.Date.ToString("dd.MM.yyyy HH:mm:ss"), Log.ParceLevel(it.EventLevel), it.Msg });//, lg);
+                switch (it.EventLevel)
+                {
+                  case EnumLogs.LOG_LVL.logDEBUG:
+                    itev.ImageIndex = 3;
+                    break;
+                  case EnumLogs.LOG_LVL.logINFO:
+                    itev.ImageIndex = 10;
+                    break;
+                  case EnumLogs.LOG_LVL.logWARNING:
+                    itev.ImageIndex = 4;
+                    break;
+                  case EnumLogs.LOG_LVL.logERROR:
+                    itev.ImageIndex = 6;
+                    break;
+                  case EnumLogs.LOG_LVL.logFATAL:
+                    itev.ImageIndex = 5;
+                    break;
+                  default:
+                    itev.ImageIndex = 0;
+                    break;
+                }
+                /*ef.listView1.Items*/
+                lstItems.Add(itev);
+                //this.LstViewEvent.Items.Add(itev);
+              }
+            }
+            this.BeginInvoke(new Action(() =>
+            {
+              this.LstViewEvent.Items.AddRange(lstItems.ToArray());
+            }));
+            
+            //ef.ShowDialog();
+            //// }
+          }
+          else
+          {
+            this.BeginInvoke(new Action(() =>
+            {
+              this.LstViewEvent.Visible = false;
+              this.lblNotExist.Text = "Нет сообщений";
+            }));
+            //this.tsEvent.Enabled = false;
+           
+          }
           siform.DialogResult = DialogResult.OK;
         }));
         siform.ShowDialog();
 
         //Dictionary<DateTime, List<UlcEvent>> lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
         //
-        if (lst_ev != null)
-        {
-          // using (EventForm ef = new EventForm())
-          //{
-          this.LstViewEvent.Visible = true;
 
-          foreach (var item in lst_ev)
-          {
-            //var lg = /*ef.listView1*/this.LstViewEvent.Groups.Add(item.Key.ToString("dd.MM.yyyy"), item.Key.ToString("dd.MM.yyyy"));
-
-            foreach (var it in item.Value)
-            {
-              var itev = new ListViewItem(new string[] { it.Date.ToString("dd.MM.yyyy HH:mm:ss"), it.Msg });//, lg);
-              switch (it.EventLevel)
-              {
-                case EnumLogs.LOG_LVL.logDEBUG:
-                  itev.ImageIndex = 3;
-                  break;
-                case EnumLogs.LOG_LVL.logINFO:
-                  itev.ImageIndex = 10;
-                  break;
-                case EnumLogs.LOG_LVL.logWARNING:
-                  itev.ImageIndex = 4;
-                  break;
-                case EnumLogs.LOG_LVL.logERROR:
-                  itev.ImageIndex = 6;
-                  break;
-                case EnumLogs.LOG_LVL.logFATAL:
-                  itev.ImageIndex = 5;
-                  break;
-                default:
-                  itev.ImageIndex = 0;
-                  break;
-              }
-              /*ef.listView1.Items*/
-              this.LstViewEvent.Items.Add(itev);
-            }
-          }
-          //ef.ShowDialog();
-          //// }
-        }
-        else
-        {
-          //this.tsEvent.Enabled = false;
-          this.LstViewEvent.Visible = false;
-          this.lblNotExist.Text = "Нет сообщений";
-        }
 
 
       }
@@ -1925,7 +1941,6 @@ namespace UlcWin
 
     private void LstViewItm_SelectedIndexChanged(object sender, EventArgs e)
     {
-
       if (!this.splitContainer2.Panel2Collapsed)
       {
         this.LstViewEvent.Items.Clear();
@@ -1933,7 +1948,6 @@ namespace UlcWin
         {
           var itm = this.LstViewItm.SelectedItems[0];
           ItemIp it = (ItemIp)itm.Tag;
-
           if (it.UType == (byte)UTypeController.RVP)
           {
             //this.LvMenu.Items["ctxMenuEvent"].Enabled = false;
@@ -1947,9 +1961,7 @@ namespace UlcWin
             //this.LvMenu.Items["tsMenuEvent"].Enabled = true;
             //this.LvMenu.Items["tsMenuReadCurrentLog"].Enabled = true;
             this.tsEvent.Enabled = true;
-
             this.ReadEvent();
-
           }
         }
         // this.tsLblMsg.Text = it.MsgConfig.Message;
@@ -2002,7 +2014,7 @@ namespace UlcWin
               dicEvt = new Dictionary<DateTime, List<Log>>();
               foreach (var item in lstLog)
               {
-                var dtg = new DateTime(item.dt.Year, item.dt.Month, item.dt.Day);
+                var dtg = new DateTime(item.event_time.Year, item.event_time.Month, item.event_time.Day);
                 if (!dicEvt.ContainsKey(dtg))
                 {
                   dicEvt.Add(dtg, new List<Log>() { item });
@@ -2046,9 +2058,9 @@ namespace UlcWin
               var grp = evf.listView1.Groups.Add(item.Key.ToString(dt_evtGrp), item.Key.ToString("dd.MM.yy"));
               foreach (var itdata in item.Value)
               {
-                ListViewItem itevt = new ListViewItem(itdata.dt.ToString(dt_evtLst), grp);
+                ListViewItem itevt = new ListViewItem(itdata.event_time.ToString(dt_evtLst), grp);
 
-                switch (itdata.Log_level)
+                switch (itdata.event_level)
                 {
                   case EnumLogs.LOG_LVL.logDEBUG:
                     itevt.ImageIndex = 2;
@@ -2069,25 +2081,26 @@ namespace UlcWin
                     itevt.ImageIndex = 0;
                     break;
                 }
-                itevt.SubItems.Add(itdata.EventMessage);
+                itevt.SubItems.Add(Log.ParceLevel((EnumLogs.LOG_LVL)itdata.event_level));
+                itevt.SubItems.Add(itdata.event_msg);
                 evf.listView1.Items.Add(itevt);
               }
             }
             if (evf.ShowDialog() == DialogResult.OK)
             {
-              using (SimpleWaitForm siForm = new SimpleWaitForm())
-              {
-                siForm.RunAction(new Action(() =>
-                {
-                  siForm.SetLabelText("Обновляю базу данных...");
-                  foreach (var item in dicEvt)
-                  {
-                    this.__db.InsertLogMsg(item.Value, it.Id);
-                  }
-                  siForm.DialogResult = DialogResult.OK;
-                }));
-                siForm.ShowDialog();
-              }
+              //using (SimpleWaitForm siForm = new SimpleWaitForm())
+              //{
+              //  siForm.RunAction(new Action(() =>
+              //  {
+              //    siForm.SetLabelText("Обновляю базу данных...");
+              //    foreach (var item in dicEvt)
+              //    {
+              //      this.__db.InsertLogMsg(item.Value, it.Id);
+              //    }
+              //    siForm.DialogResult = DialogResult.OK;
+              //  }));
+              //  siForm.ShowDialog();
+              //}
 
             }
           }
@@ -2901,11 +2914,12 @@ namespace UlcWin
         splitContainer2.Panel2.Show();
         tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window;
         tsBtnEventShowHide.ToolTipText = "Скрыть панель событий";
+        this.LstViewItm_SelectedIndexChanged(null, null);
       }
       else
       {
 
-        this.LstViewItm_SelectedIndexChanged(null, null);
+       
         this.splitContainer2.Panel2Collapsed = true;
         splitContainer2.Panel2.Hide();
         tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
@@ -3385,7 +3399,7 @@ namespace UlcWin
       {
         int res485 = 0;
         ItemIp itemIp = (ItemIp)item.Tag;
-        if (itemIp.Active == 1)
+        if (itemIp.Active == 1 && itemIp.Rs_Stat==1)
         {
           int.TryParse(item.SubItems[12].Text.Trim(), out res485);
           if (res485 != 1)
@@ -3420,8 +3434,6 @@ namespace UlcWin
       //ReadStatusListView();
 
     }
-
-  
 
     private void LstViewItm_MouseClick(object sender, MouseEventArgs e)
     {
@@ -3461,7 +3473,85 @@ namespace UlcWin
      
     }
 
-    private void LstViewItm_Click(object sender, EventArgs e)
+   
+    private void tabItemsControl_Selected(object sender, TabControlEventArgs e)
+    {
+      if (e.TabPageIndex == 1)
+      {
+        this.LstViewItm_SelectedIndexChanged(null, null);
+        this.splitContainer2.Panel2Collapsed = true;
+        splitContainer2.Panel2.Hide();
+        tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
+        tsBtnEventShowHide.ToolTipText = "Показать панель событий";
+        if (this.LstViewItm.SelectedItems.Count != 0)
+        {
+          ItemIp zx = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
+          int index = 0;
+          foreach (var item in ulcMeterTreeView.treeListView1.Roots)
+          {
+            Controls.UlcMeterComponet.TreeListNodeModel xx =(Controls.UlcMeterComponet.TreeListNodeModel) item;
+            if (zx.Ip == xx.ip) {
+              ulcMeterTreeView.treeListView1.Items[index].Selected = true;
+              ulcMeterTreeView.treeListView1.Select();
+              ulcMeterTreeView.treeListView1.EnsureVisible(index);
+              ulcMeterTreeView.treeListView1.Refresh();
+              break;
+            }
+            index++;
+          }
+          var ret = this.LstViewItm.SelectedItems[0];
+        }
+      }
+      else if (e.TabPageIndex == 0) {
+        if (ulcMeterTreeView.treeListView1.Items.Count != 0)
+        {
+          if (ulcMeterTreeView.treeListView1.SelectedItem!=null)
+          {
+            int index = 0;
+            Controls.UlcMeterComponet.TreeListNodeModel xx = (Controls.UlcMeterComponet.TreeListNodeModel)this.ulcMeterTreeView.treeListView1.SelectedItem.RowObject;
+            foreach (ListViewItem item in this.LstViewItm.Items)
+            {
+             
+              ItemIp zx = (ItemIp)item.Tag;
+              if (xx.ip == zx.Ip)
+              {
+                this.LstViewItm.Items[index].Selected = true;
+                this.LstViewItm.Select();
+                ulcMeterTreeView.treeListView1.EnsureVisible(index);
+                //ulcMeterTreeView.treeListView1.Refresh();
+                break;
+              }
+              index++;
+            }
+          }
+        }
+      }
+      
+      //if (this.splitContainer2.Panel2Collapsed)
+      //{
+
+      //  this.splitContainer2.Panel2Collapsed = false;
+      //  splitContainer2.Panel2.Show();
+      //  tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window;
+      //  tsBtnEventShowHide.ToolTipText = "Скрыть панель событий";
+      //}
+      //else
+      //{
+
+      //  this.LstViewItm_SelectedIndexChanged(null, null);
+      //  this.splitContainer2.Panel2Collapsed = true;
+      //  splitContainer2.Panel2.Hide();
+      //  tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
+      //  tsBtnEventShowHide.ToolTipText = "Показать панель событий";
+      //}
+    }
+
+    private void ulcMeterTreeView_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    private void LstViewItm_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
     {
 
     }

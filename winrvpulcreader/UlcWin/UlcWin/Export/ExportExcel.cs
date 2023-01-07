@@ -14,7 +14,6 @@ namespace UlcWin.Export
 {
   public class ExportExcel
   {
-
     ListView __listView = null;
     DataGridView __dataGridView1=null;
     string __summ = string.Empty;
@@ -248,8 +247,8 @@ namespace UlcWin.Export
           
           int header = 4;
           int index = 1;
-          excelWorksheet.Application.ActiveWindow.SplitRow = header;
-          excelWorksheet.Application.ActiveWindow.FreezePanes = true;
+          //excelWorksheet.Application.ActiveWindow.SplitRow = header;
+          //excelWorksheet.Application.ActiveWindow.FreezePanes = true;
           for (int i = 0; i < listView.Columns.Count; i++)
           {
             if (listView.Columns[i].Width != 0)
@@ -266,13 +265,19 @@ namespace UlcWin.Export
           //System.Collections.ArrayList xx = (System.Collections.ArrayList)ulcTreeView.treeListView1.Objects;
           for (int i = 0; i < treeNodes.Count; i++)
           {
+           
             TreeListNodeModel itm = (TreeListNodeModel)treeNodes[i];
+            if (itm.Nodes.Count > 1)
+            {
+              int z = 0;
+            }
             int coln = 1;
-            excelWorksheet.Cells[header, coln] = itm.original_name;
+            excelWorksheet.Cells[header, coln] = itm.name;
             excelWorksheet.Cells[header, coln].EntireRow.Font.Bold = true;
             header++;
             foreach (var item in itm.Nodes)
             {
+              coln = 1;
               XlRgbColor color = item.is_true ? XlRgbColor.rgbBlack : XlRgbColor.rgbDarkGray;
               excelWorksheet.Cells[header, coln] = item.name;
               excelWorksheet.Cells[header, coln].HorizontalAlignment = XlHAlign.xlHAlignCenter;

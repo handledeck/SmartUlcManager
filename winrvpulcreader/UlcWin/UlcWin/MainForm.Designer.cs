@@ -120,6 +120,7 @@ namespace UlcWin
       this.LstViewEvent = new System.Windows.Forms.ListView();
       this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.comm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tsEvent = new System.Windows.Forms.ToolStrip();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
       this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -667,6 +668,7 @@ namespace UlcWin
       this.tabItemsControl.SelectedIndex = 0;
       this.tabItemsControl.Size = new System.Drawing.Size(1150, 289);
       this.tabItemsControl.TabIndex = 2;
+      this.tabItemsControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabItemsControl_Selected);
       // 
       // tabControllers
       // 
@@ -1064,11 +1066,14 @@ namespace UlcWin
       this.LstViewEvent.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.LstViewEvent.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Date,
-            this.Evt});
+            this.Evt,
+            this.comm});
       this.LstViewEvent.Dock = System.Windows.Forms.DockStyle.Fill;
       this.LstViewEvent.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.LstViewEvent.FullRowSelect = true;
       this.LstViewEvent.HideSelection = false;
       this.LstViewEvent.Location = new System.Drawing.Point(0, 25);
+      this.LstViewEvent.MultiSelect = false;
       this.LstViewEvent.Name = "LstViewEvent";
       this.LstViewEvent.Size = new System.Drawing.Size(1152, 140);
       this.LstViewEvent.SmallImageList = this.imageList1;
@@ -1084,7 +1089,12 @@ namespace UlcWin
       // Evt
       // 
       this.Evt.Text = "Событие";
-      this.Evt.Width = 688;
+      this.Evt.Width = 193;
+      // 
+      // comm
+      // 
+      this.comm.Text = "Сообщение";
+      this.comm.Width = 534;
       // 
       // tsEvent
       // 
@@ -1541,6 +1551,7 @@ namespace UlcWin
     public System.Windows.Forms.ContextMenuStrip ctxMenuHeader;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     private System.Windows.Forms.ToolStripMenuItem actRs485ToolStripMenuItem;
+    private System.Windows.Forms.ColumnHeader comm;
   }
 }
 

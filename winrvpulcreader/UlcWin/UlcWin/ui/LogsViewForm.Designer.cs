@@ -48,6 +48,7 @@
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.ctxMenuLogItem = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.MenuLogsItemFeature = new System.Windows.Forms.ToolStripMenuItem();
+      this.cInObject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.ctxMenuLogItem.SuspendLayout();
@@ -167,7 +168,8 @@
             this.clnDate,
             this.clnUser,
             this.clnEventNmae,
-            this.clnItem});
+            this.clnItem,
+            this.cInObject});
       this.lstLogEvents.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lstLogEvents.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lstLogEvents.FullRowSelect = true;
@@ -200,7 +202,7 @@
       // clnItem
       // 
       this.clnItem.Text = "Объект";
-      this.clnItem.Width = 595;
+      this.clnItem.Width = 168;
       // 
       // imageList1
       // 
@@ -236,6 +238,11 @@
       this.MenuLogsItemFeature.Name = "MenuLogsItemFeature";
       this.MenuLogsItemFeature.Size = new System.Drawing.Size(111, 22);
       this.MenuLogsItemFeature.Text = "Подробнее";
+      // 
+      // cInObject
+      // 
+      this.cInObject.Text = "Комментарий";
+      this.cInObject.Width = 440;
       // 
       // LogsViewForm
       // 
@@ -279,5 +286,6 @@
     private System.Windows.Forms.DateTimePicker cbDateTimeFrom;
     private System.Windows.Forms.ContextMenuStrip ctxMenuLogItem;
     private System.Windows.Forms.ToolStripMenuItem MenuLogsItemFeature;
+    private System.Windows.Forms.ColumnHeader cInObject;
   }
 }

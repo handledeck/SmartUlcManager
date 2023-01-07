@@ -142,7 +142,7 @@ namespace UlcWin.ui
           lstViewItm.SubItems.Add(ulcUser.Id.ToString());
           lstViewItm.SubItems.Add(((short)ulcUser.AccsessLavel).ToString());
           this.__db.LogsInsertEvent(EnLogEvt.APP_NEW_USER, string.Format("{0}:{1}",
-            uForm.__ulcUser.User, uForm.__ulcUser.Comment));
+            uForm.__ulcUser.User, uForm.__ulcUser.Comment),-1);
         }
       }
     }
@@ -159,7 +159,7 @@ namespace UlcWin.ui
         if (res == 1)
         {
           this.__db.LogsInsertEvent(EnLogEvt.APP_DEL_USER, string.Format("{0}:{1}",
-            this.ListUser.SelectedItems[0].SubItems[0].Text, this.ListUser.SelectedItems[0].SubItems[1].Text));
+            this.ListUser.SelectedItems[0].SubItems[0].Text, this.ListUser.SelectedItems[0].SubItems[1].Text),-1);
           MessageBox.Show("Запись успешно удалена", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
           UpdateUsersList();
         }
@@ -263,7 +263,7 @@ namespace UlcWin.ui
               MessageBox.Show("Запись обновлена успешно", "Обновление БД", MessageBoxButtons.OK, MessageBoxIcon.Information);
               this.UpdateUsersList();
               this.__db.LogsInsertEvent(EnLogEvt.APP_EDIT_USER,
-                string.Format("{0}:{1}", uForm.__ulcUser.User, uForm.__ulcUser.Comment));
+                string.Format("{0}:{1}", uForm.__ulcUser.User, uForm.__ulcUser.Comment),-1);
             }
             else {
               MessageBox.Show("Ошибка обновления записи", "Обновление БД", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -51,19 +51,21 @@
     <ApplicationIcon>PCI-card_view.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ListViewPrinter, Version=2.7.1.31255, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.2.7.1.5\lib\ListViewPrinter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Npgsql, Version=5.0.10.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.5.0.10\lib\netstandard2.0\Npgsql.dll</HintPath>
     </Reference>
-    <Reference Include="ObjectListView, Version=2.5.1.28942, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\ObjectListView.dll</HintPath>
+    <Reference Include="ObjectListView, Version=2.7.1.31255, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.2.7.1.5\lib\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Common.6.0.2\lib\netstandard2.0\ServiceStack.Common.dll</HintPath>
@@ -79,6 +81,9 @@
     </Reference>
     <Reference Include="ServiceStack.Text, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Text.6.0.2\lib\netstandard2.0\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="SparkleLibrary, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.2.7.1.5\lib\SparkleLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -256,6 +261,7 @@
       <DependentUpon>MeterEditFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="Export\ExportExcel.cs" />
+    <Compile Include="Logs\Log.cs" />
     <Compile Include="Native\Native.cs" />
     <Compile Include="Native\NativeSort.cs" />
     <Compile Include="Statistics\StatRes.cs" />
@@ -308,7 +314,6 @@
       <DependentUpon>fota.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\EnumLogs.cs" />
-    <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\ParceLog.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -793,7 +798,6 @@
     <None Include="Resources\edit2.png" />
     <None Include="Resources\edit1.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
       <Visible>False</Visible>

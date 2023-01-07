@@ -8,7 +8,7 @@ namespace InterUlc.Logs
 {
   public class EnumLogs
   {
-    public enum LOG_LVL
+    public enum LOG_LVL:int
     {
       [Description("Отладка")]
       logDEBUG = 0,

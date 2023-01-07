@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,9 @@ namespace UlcWin.DB
     public string message { get; set; }
     public int log_event { get; set; }
     public string host_from { get; set; }
+
+    
+    public int ctrl_id { get; set; }
 
   }
 }

@@ -59,6 +59,7 @@ namespace GettingStartedTree
       this.ctxMeterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuSortByName = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuSortByNumber = new System.Windows.Forms.ToolStripMenuItem();
+      this.textBox1 = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -136,6 +137,7 @@ namespace GettingStartedTree
       // olvName
       // 
       this.olvName.AspectName = "name";
+      this.olvName.CellPadding = null;
       this.olvName.Sortable = false;
       this.olvName.Text = "Имя объекта";
       this.olvName.Width = 316;
@@ -143,6 +145,7 @@ namespace GettingStartedTree
       // olvDateTime
       // 
       this.olvDateTime.AspectName = "date_time";
+      this.olvDateTime.CellPadding = null;
       this.olvDateTime.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvDateTime.Sortable = false;
       this.olvDateTime.Text = "Дата и время";
@@ -152,12 +155,14 @@ namespace GettingStartedTree
       // olvType
       // 
       this.olvType.AspectName = "unit_type_id";
+      this.olvType.CellPadding = null;
       this.olvType.Sortable = false;
       this.olvType.Text = "Тип";
       // 
       // olvIp
       // 
       this.olvIp.AspectName = "ip";
+      this.olvIp.CellPadding = null;
       this.olvIp.Sortable = false;
       this.olvIp.Text = "IP адрес";
       this.olvIp.Width = 112;
@@ -165,6 +170,7 @@ namespace GettingStartedTree
       // olvMeterFactory
       // 
       this.olvMeterFactory.AspectName = "meter_factory";
+      this.olvMeterFactory.CellPadding = null;
       this.olvMeterFactory.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvMeterFactory.Sortable = false;
       this.olvMeterFactory.Text = "Номер счетчика";
@@ -174,6 +180,7 @@ namespace GettingStartedTree
       // olvValue
       // 
       this.olvValue.AspectName = "value";
+      this.olvValue.CellPadding = null;
       this.olvValue.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValue.Sortable = false;
       this.olvValue.Text = "Данные (на начало суток)";
@@ -222,12 +229,14 @@ namespace GettingStartedTree
       // olvDt
       // 
       this.olvDt.AspectName = "dt";
+      this.olvDt.CellPadding = null;
       this.olvDt.Text = "Дата и время";
       this.olvDt.Width = 140;
       // 
       // olvVal
       // 
       this.olvVal.AspectName = "value";
+      this.olvVal.CellPadding = null;
       this.olvVal.Text = "Данные";
       this.olvVal.Width = 123;
       // 
@@ -298,6 +307,7 @@ namespace GettingStartedTree
       // 
       // panel2
       // 
+      this.panel2.Controls.Add(this.textBox1);
       this.panel2.Controls.Add(this.monthPicker1);
       this.panel2.Controls.Add(this.button3);
       this.panel2.Controls.Add(this.panel3);
@@ -394,6 +404,14 @@ namespace GettingStartedTree
       this.ctxMenuSortByNumber.Text = "Сортировка по номеру ТП";
       this.ctxMenuSortByNumber.Click += new System.EventHandler(this.ctxMenuSortByNumber_Click);
       // 
+      // textBox1
+      // 
+      this.textBox1.Location = new System.Drawing.Point(202, 4);
+      this.textBox1.Name = "textBox1";
+      this.textBox1.Size = new System.Drawing.Size(167, 20);
+      this.textBox1.TabIndex = 5;
+      this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+      // 
       // UlcTreeView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,6 +430,7 @@ namespace GettingStartedTree
       this.panel1.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.panel2.ResumeLayout(false);
+      this.panel2.PerformLayout();
       this.ctxMeterMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
@@ -447,5 +466,6 @@ namespace GettingStartedTree
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByName;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByNumber;
     private UlcWin.ui.MonthPicker monthPicker1;
+    private System.Windows.Forms.TextBox textBox1;
   }
 }

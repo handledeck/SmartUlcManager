@@ -50,16 +50,17 @@ namespace InterUlc.Logs
           while (length < pack.Length)
           {
             var log = new Log();
+            uint inDateTime = BitConverter.ToUInt32(pack, length);
             DateTime? dtr = rtc_calendar_time_to_register_value(BitConverter.ToUInt32(pack, length));
             if (dtr != null)
-              log.dt = (DateTime)dtr;
+              log.event_time = (DateTime)dtr;
 
             length += 4;
-            log.Log_level = (LOG_LVL)pack[length++];
-            log.Log_type = pack[length++];
-            log.Log_Data = BitConverter.ToUInt16(pack, length);
+            log.event_level = (LOG_LVL)pack[length++];
+            log.event_type = pack[length++];
+            log.event_value = BitConverter.ToUInt16(pack, length);
             length += 2;
-            log.EventMessage = Log.ConvertToString(log);
+            log.event_msg = Log.ConvertToString(log);
             if (l == null)
               l = new List<Log>();
             l.Add(log);

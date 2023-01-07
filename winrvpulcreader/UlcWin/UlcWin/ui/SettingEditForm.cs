@@ -591,7 +591,7 @@ namespace UlcWin
                 };
                 DbLogMsg.ParseNodePath(__selItem.NodeFullPath, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE,msg);
+                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE,msg, __selItem.Id);
               }
               else
               {
@@ -617,7 +617,6 @@ namespace UlcWin
           DialogResult res = siForm.ShowDialog();
           if (res == DialogResult.OK)
           {
-           
             MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
           else
@@ -672,7 +671,7 @@ namespace UlcWin
                 if (answ.Equals("PWD:OK\r\n"))
                 {
                   wFrm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, true, itip.UType, 0);
-                  __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE, __command);
+                  __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE, __command, itip.Id);
                 }
                 else if (answ.Equals("PWD:ERROR\r\n"))
                 {

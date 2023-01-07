@@ -768,7 +768,7 @@ namespace InterUlc.Db
         consql.Close();
         
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(EnLogEvt.EDIT_NODE, msg);
+        LogsInsertEvent(EnLogEvt.EDIT_NODE, msg,idRecord);
         return rowf;
       }
       catch (Exception e)
@@ -800,7 +800,7 @@ namespace InterUlc.Db
             idR = db.Insert<OrmDbNodes>(ormDbNodes, selectIdentity: true);
             DbLogMsg dbLogMsg = GetDbObjectPath((int)idR.Value, db, sqlTreeNodes);
             string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-            LogsInsertEvent(EnLogEvt.ADD_NODE, msg);
+            LogsInsertEvent(EnLogEvt.ADD_NODE, msg,(int)idR);
             iTrz.Commit();
           }
 
@@ -1721,10 +1721,10 @@ namespace InterUlc.Db
 
     public Dictionary<DateTime, List<UlcEvent>> DbReadEvent(int id, DateTime dtserch)
     {
-
-      //select * from main_ctrlevent mc where mc.ctrl_id =13593 and date(mc.event_time) = '2021-11-19'
-      //between '2021-12-13' and '2021-12-14'
-      string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}'",
+      
+        //select * from main_ctrlevent mc where mc.ctrl_id =13593 and date(mc.event_time) = '2021-11-19'
+        //between '2021-12-13' and '2021-12-14'
+        string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}' order by mc.event_time ",
         id, dtserch.ToString("yyyy-MM-dd"));
       var con_ip = new NpgsqlConnection(this.__connection);
       var cmd_ip = new NpgsqlCommand(sql_ip, con_ip);
@@ -1741,21 +1741,25 @@ namespace InterUlc.Db
           {
             if (devt == null)
               devt = new Dictionary<DateTime, List<UlcEvent>>();
-            int ide = (int)dr_ip[0];
-            DateTime dt = (DateTime)dr_ip[1];
+            int ide = (int)dr_ip["id"];
+            DateTime dt = (DateTime)dr_ip["event_time"];
             DateTime dtl = new DateTime(dt.Year, dt.Month, dt.Day);
-            int evtLvl = (int)dr_ip[3];
-            string evt = (string)dr_ip[6];
+            int event_level = (int)dr_ip["event_level"];
+            LOG_LVL lOG_LVL = (LOG_LVL)event_level;
+            int event_type=(int)dr_ip["event_type"];
+            int event_value = (int)dr_ip["event_value"];
+            string evt=Log.ConvertToString(new Log() { event_type = (byte)event_type, event_value = (ushort)event_value, event_level= lOG_LVL });
+            //string evt = (string)dr_ip[6];
             if (!devt.ContainsKey(dtl))
             {
-              UlcEvent ev = new UlcEvent() { Date = dt, Msg = evt, EventLevel = (LOG_LVL)evtLvl };
+              UlcEvent ev = new UlcEvent() { Date = dt, Msg = evt, EventLevel = (LOG_LVL)event_level };
               List<UlcEvent> ls = new List<UlcEvent>();
               ls.Add(ev);
               devt.Add(dtl, ls);
             }
             else
             {
-              devt[dtl].Add(new UlcEvent() { Date = dt, Msg = evt, EventLevel = (LOG_LVL)evtLvl });
+              devt[dtl].Add(new UlcEvent() { Date = dt, Msg = evt, EventLevel = (LOG_LVL)event_level });
             }
 
           }
@@ -1981,7 +1985,7 @@ namespace InterUlc.Db
           DbLogMsg dbLogMsg= GetDbObjectPath((int)iId, db, SqlTreeNodes.FullTree);
           //DbLogMsg.ParseNodePath(full_path, ref dbLogMsg);
           string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-          LogsInsertEvent(EnLogEvt.ADD_ITEM, msg);
+          LogsInsertEvent(EnLogEvt.ADD_ITEM, msg,(int)iId);
           return iId;
         }
         catch (Exception exp)
@@ -2052,7 +2056,7 @@ namespace InterUlc.Db
 
         //DbLogMsg.ParseNodePath(message, ref dbLogMsg);
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(enLogEvt.Value, msg);
+        LogsInsertEvent(enLogEvt.Value, msg,(int)id);
       }
     }
 
@@ -2103,7 +2107,7 @@ namespace InterUlc.Db
         //};
         //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(enLogEvt.Value, msg);
+        LogsInsertEvent(enLogEvt.Value, msg,(int)id);
          
         }
         return result_node;
@@ -2130,9 +2134,9 @@ namespace InterUlc.Db
             string evt = Log.ConvertToString(item);
             var sql = "Select * from main_ctrlevent where event_time=@etime and event_type=@etype and event_level=@elevel and ctrl_id=@ctrlid";
             var cmd = new NpgsqlCommand(sql, this.__dbConnection);
-            cmd.Parameters.AddWithValue("etime", item.dt);
-            cmd.Parameters.AddWithValue("etype", item.Log_type);
-            cmd.Parameters.AddWithValue("elevel", (int)item.Log_level);
+            cmd.Parameters.AddWithValue("etime", item.event_time);
+            cmd.Parameters.AddWithValue("etype", item.event_type);
+            cmd.Parameters.AddWithValue("elevel", (int)item.event_level);
             cmd.Parameters.AddWithValue("ctrlid", idCtrl);
             //cmd.Parameters.AddWithValue("evalue", item.Log_Data);
             var dr_fes = cmd.ExecuteReader();
@@ -2145,10 +2149,10 @@ namespace InterUlc.Db
               sql = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id, event_msg) " +
                 "VALUES(@event_time, @event_type, @event_level, @ctrl_id, @event_msg)";
               cmd = new NpgsqlCommand(sql, this.__dbConnection);
-              cmd.Parameters.AddWithValue("event_time", item.dt);
-              cmd.Parameters.AddWithValue("event_type", item.Log_type);
+              cmd.Parameters.AddWithValue("event_time", item.event_time);
+              cmd.Parameters.AddWithValue("event_type", item.event_type);
               //cmd.Parameters.AddWithValue("event_value", item.Log_Data);
-              cmd.Parameters.AddWithValue("event_level", (int)item.Log_level);
+              cmd.Parameters.AddWithValue("event_level", (int)item.event_level);
               cmd.Parameters.AddWithValue("ctrl_id", idCtrl);
               cmd.Parameters.AddWithValue("event_msg", evt);
               cmd.ExecuteNonQuery();
@@ -2174,7 +2178,7 @@ namespace InterUlc.Db
 
     }
 
-    public void LogsInsertEvent(EnLogEvt enLogEvt, string message) {
+    public void LogsInsertEvent(EnLogEvt enLogEvt, string message,int ctrl_id) {
       try
       {
         var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
@@ -2190,7 +2194,8 @@ namespace InterUlc.Db
               usr_name = __super_user ? __DbUserName : __ulcUser.User,
               message = message,
               log_event = en,
-              host_from = __host.HostName//Dns.GetHostEntry(Dns.GetHostName()).HostName
+              host_from = __host.HostName,//Dns.GetHostEntry(Dns.GetHostName()).HostName,
+              ctrl_id=ctrl_id
             };
             db.Insert<OrmMainLogs>(mainLogs);
           }
@@ -2243,7 +2248,7 @@ namespace InterUlc.Db
           //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
           DbLogMsg dbLogMsg = GetDbObjectPath(dbItemEditor.Id, db, SqlTreeNodes.FullTree);
           string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-          LogsInsertEvent(EnLogEvt.EDIT_ITEM, msg);
+          LogsInsertEvent(EnLogEvt.EDIT_ITEM, msg, dbItemEditor.Id);
         //}
           //bdb.Commit();
           return true;

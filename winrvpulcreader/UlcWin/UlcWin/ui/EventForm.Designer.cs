@@ -37,6 +37,7 @@
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel1 = new System.Windows.Forms.Panel();
       this.btnSave = new System.Windows.Forms.Button();
+      this.evtDsc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.SuspendLayout();
@@ -45,7 +46,8 @@
       // 
       this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Date,
-            this.Evt});
+            this.Evt,
+            this.evtDsc});
       this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listView1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.listView1.HideSelection = false;
@@ -65,7 +67,7 @@
       // Evt
       // 
       this.Evt.Text = "Событие";
-      this.Evt.Width = 606;
+      this.Evt.Width = 168;
       // 
       // EvtImageList
       // 
@@ -110,6 +112,11 @@
       this.btnSave.UseVisualStyleBackColor = true;
       this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
       // 
+      // evtDsc
+      // 
+      this.evtDsc.Text = "Комментарий";
+      this.evtDsc.Width = 447;
+      // 
       // EventForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -136,5 +143,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSave;
-    }
+    private System.Windows.Forms.ColumnHeader evtDsc;
+  }
 }
