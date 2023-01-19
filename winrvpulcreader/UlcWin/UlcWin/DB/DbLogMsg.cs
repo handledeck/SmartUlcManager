@@ -21,11 +21,11 @@ namespace UlcWin.DB
 
   public class DbLogMsg
   {
-    public int id { get; set; }
-    public string fes { get; set; }
-    public string res { get; set; }
-    public string tp { get; set; }
-    public string ip { get; set; }
+    public int Id { get; set; }
+    public string Fes { get; set; }
+    public string Res { get; set; }
+    public string Tp { get; set; }
+    public string Ip { get; set; }
    
     public ImeiStatAndRs Feature { get; set; }
 
@@ -46,12 +46,12 @@ namespace UlcWin.DB
       string[] aMsg = msg.Split('\\');
       if (aMsg.Length == 2)
       {
-        dbLogMsg.fes = aMsg[0];
-        dbLogMsg.res = aMsg[1];
+        dbLogMsg.Fes = aMsg[0];
+        dbLogMsg.Res = aMsg[1];
       }
       else if(aMsg.Length == 1)
       {
-        dbLogMsg.fes = aMsg[0];
+        dbLogMsg.Fes = aMsg[0];
         //dbLogMsg.Res = "";
       }
 

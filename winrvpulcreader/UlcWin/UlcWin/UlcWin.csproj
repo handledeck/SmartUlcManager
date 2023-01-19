@@ -206,6 +206,7 @@
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MeterProgress\ProgressMeter.cs" />
+    <Compile Include="Controls\UlcMeterComponet\DbMeterView.cs" />
     <Compile Include="Controls\UlcMeterComponet\MeterComparer.cs" />
     <Compile Include="Controls\UlcMeterComponet\MeterInfo.cs" />
     <Compile Include="Controls\UlcMeterComponet\Meters.cs" />
@@ -522,6 +523,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -613,6 +615,8 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\UlcWin.Controls.MeterProgress.ProgressMeter.datasource" />
+    <None Include="Properties\DataSources\UlcWin.Controls.UlcMeterComponet.DbUlcShortView.datasource" />
+    <None Include="Properties\DataSources\UlcWin.DB.OrmDbConfig.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -787,6 +791,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PCI-card_view.ico" />
+    <None Include="Resources\error1.ico" />
+    <None Include="Resources\check21.ico" />
     <None Include="Resources\database_refresh.ico" />
     <None Include="Resources\gear.png" />
     <None Include="Resources\gear.ico" />

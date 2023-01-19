@@ -1,4 +1,5 @@
 ﻿#define STAT
+using BrightIdeasSoftware;
 using InterUlc.Db;
 using InterUlc.Logs;
 using Npgsql;
@@ -76,14 +77,15 @@ namespace UlcWin
       __tsAutoCompleteCmb.DropDown += __autoCompleteCmb_DropDown;
       __tsAutoCompleteCmb.SelectionChangeCommitted += __tsAutoCompleteCmb_SelectionChangeCommitted;
       ToolStripControlHost dtCtl = new ToolStripControlHost(__dtp);
-      ToolStripControlHost dtCtlCbBox = new ToolStripControlHost(this.checkBoxComboBox1);
-      dtCtlCbBox.Margin = new Padding(0, 0, 10, 0);
-      dtCtlCbBox.Alignment = ToolStripItemAlignment.Right;
-      this.tsResView.Items.Insert(1, dtCtlCbBox);
+      this.checkBoxComboBox1.Visible = false;
+      //ToolStripControlHost dtCtlCbBox = new ToolStripControlHost(this.checkBoxComboBox1);
+      //dtCtlCbBox.Margin = new Padding(0, 0, 10, 0);
+      //dtCtlCbBox.Alignment = ToolStripItemAlignment.Right;
+      //this.tsResView.Items.Insert(1, dtCtlCbBox);
       ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.__tsAutoCompleteCmb);
       dtCtrlCbFind.Alignment = ToolStripItemAlignment.Left;
       dtCtrlCbFind.Margin = new Padding(10, 0, 0, 0);
-      this.tsResView.Items.Insert(9, dtCtrlCbFind);
+      this.tsResView.Items.Insert(8, dtCtrlCbFind);
       //this.__tsAutoCompleteCmb.Visible = false;
       this.tsEvent.Items.Insert(1, dtCtl);
       this.tsEvent.Enabled = false;
@@ -101,22 +103,35 @@ namespace UlcWin
       //this.treeView1.Nodes.Clear();
       this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
       this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
-     
+      this.ulcMeterTreeView.__statusStrip = this.tsStatusLbl;
+      
     }
 
     private void LstViewItm_ListViewMouseRightClick(object sender)
     {
       this.LvMenu.Show(Cursor.Position);
+      
     }
-
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+    public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+    const int LVM_FIRST = 0x1000;
+    const int LVM_GETHEADER = LVM_FIRST + 31;
     private void LstViewItm_ColumnRightClick(object sender, ColumnHeader e, Point point)
     {
-      if (this.LstViewItm.Items.Count > 0) {
-        if (e.Index == 1)
-        {
-          this.ctxMenuHeader.Show(point);
-        }
-      }
+      //IntPtr hHeader = (IntPtr)SendMessage(LstViewItm.Handle, LVM_GETHEADER, (int)IntPtr.Zero, (int)IntPtr.Zero);
+      //BrightIdeasSoftware.ToolTipControl toolTipControl = new BrightIdeasSoftware.ToolTipControl();
+      //toolTipControl.Create(hHeader);
+      //toolTipControl.
+      //toolTipControl.AddTool(LstViewItm);
+      //this.toolTip1.Active = true;
+      //this.toolTip1.Show("aaa",LstViewItm, point, 5000);
+      this.ctxMenuHeader.Show(point);
+      //if (this.LstViewItm.Items.Count > 0) {
+      //  if (e.Index == 1)
+      //  {
+      //    this.ctxMenuHeader.Show(point);
+      //  }
+      //}
     }
 
     bool __settings_changed = false;
@@ -185,6 +200,7 @@ namespace UlcWin
     
     void LoadSetiings()
     {
+
       __aSettings_old = ASettings.LoadAppSettings();
       __aSettings_new = new ASettings();
       if (__aSettings_old == null)
@@ -197,15 +213,21 @@ namespace UlcWin
         for (int i = 3; i < LstViewItm.Columns.Count; i++)
         {
           int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
+          ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(LstViewItm.Columns[i].Text);
+          toolStripMenuItem.Checked = true;
+          ctxMenuHeader.Items.Add(toolStripMenuItem);
         }
         for (int i = 0; i < this.checkBoxComboBox1.Items.Count; i++)
         {
           this.checkBoxComboBox1.CheckBoxItems[i].Checked = true;
           this.checkBoxComboBox1.CheckBoxItems[i].Tag = i;
           __aSettings_old.CheckedItemVisible.Add(1);
+          int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
+          ((ToolStripMenuItem)ctxMenuHeader.Items[i]).Tag = i;
+          ((ToolStripMenuItem)ctxMenuHeader.Items[i]).CheckedChanged += MainForm_CheckedChanged;
+          ((ToolStripMenuItem)ctxMenuHeader.Items[i]).CheckOnClick = true;
           this.checkBoxComboBox1.CheckBoxItems[i].CheckedChanged += MainForm_CheckedChanged;
         }
-        
       }
       else
       {
@@ -215,21 +237,32 @@ namespace UlcWin
           if (i > 2)
           {
             int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
+            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(LstViewItm.Columns[i].Text);
+            toolStripMenuItem.Checked = true;
+            ctxMenuHeader.Items.Add(toolStripMenuItem);
+            toolStripMenuItem.CheckOnClick = true;
           }
         }
         for (int i = 0; i < __aSettings_old.CheckedItemVisible.Count; i++)
         {
+          //int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
+          
           if (__aSettings_old.CheckedItemVisible[i] == 0)
           {
+            
             this.checkBoxComboBox1.CheckBoxItems[i].Checked = false;
+            ((ToolStripMenuItem)ctxMenuHeader.Items[i]).Checked = false;
             this.LstViewItm.Columns[i + 3].Width = 0;
           }
           else
           {
             this.checkBoxComboBox1.CheckBoxItems[i].Checked = true;
+            ((ToolStripMenuItem)ctxMenuHeader.Items[i]).Checked = true;
           }
           this.checkBoxComboBox1.CheckBoxItems[i].Tag = i;
           this.checkBoxComboBox1.CheckBoxItems[i].CheckedChanged += MainForm_CheckedChanged;
+          ((ToolStripMenuItem)ctxMenuHeader.Items[i]).Tag = i;
+          ((ToolStripMenuItem)ctxMenuHeader.Items[i]).CheckedChanged += MainForm_CheckedChanged;
         }
         for (int i = 0; i < this.LstViewItm.Columns.Count; i++)
         {
@@ -241,12 +274,28 @@ namespace UlcWin
       }
     }
 
+    private void ToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+    {
+      int x = 0;
+    }
+
+    private void LoadForm_CheckedChanged(object sender, EventArgs e)
+    {
+      int x = 9;
+    }
+
+    private void ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+    {
+      throw new NotImplementedException();
+    }
+
     private void LstViewItm_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
     {
-        if (this.LstViewItm.Columns[e.ColumnIndex].Width != 0)
-        {
-          this.__aSettings_old.WidthColumnsDevice[e.ColumnIndex] = this.LstViewItm.Columns[e.ColumnIndex].Width;
-        }
+      if (this.LstViewItm.Columns[e.ColumnIndex].Width != 0)
+      {
+        this.__aSettings_old.WidthColumnsDevice[e.ColumnIndex] = this.LstViewItm.Columns[e.ColumnIndex].Width;
+        __settings_changed = true;
+      }
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -266,7 +315,7 @@ namespace UlcWin
       if (result == DialogResult.Yes)
       {
 
-        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT, string.Format("{0}", this.__db.__DbUserName),-1);
+        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT,/* string.Format("{0}", this.__db.__DbUserName)*/"0.0.0.0",-1);
         if (__settings_changed)
         {
           result = MessageBox.Show("Сохранить настройки приложения?", "Закрытие приложения",
@@ -304,14 +353,28 @@ namespace UlcWin
       //__init_showed = true;
       //this.LstViewItm_ColumnClick()
       this.LstViewItm.ColumnReordered += LstViewItm_ColumnReordered;
+      
     }
 
     private void MainForm_CheckedChanged(object sender, EventArgs e)
     {
-      CheckBoxComboBoxItem item = (CheckBoxComboBoxItem)sender;
+      int index = 0;
+      CheckState checkState;
+      if (sender.GetType() == typeof(ToolStripMenuItem))
+      {
+        ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)sender;
+        index = (int)toolStripMenuItem.Tag;
+        checkState = toolStripMenuItem.CheckState;
+      }
+      else {
+        CheckBoxComboBoxItem item = (CheckBoxComboBoxItem)sender;
+        index = (int)item.Tag;
+        checkState = item.CheckState;
+      }
+      
 
-      int index = (int)item.Tag;
-      if (item.CheckState == CheckState.Unchecked)
+      //int index = (int)item.Tag;
+      if (checkState == CheckState.Unchecked)
       {
         this.LstViewItm.Columns[index + 3].Width = 0;
         __aSettings_new.CheckedItemVisible[index] = 0;
@@ -321,8 +384,8 @@ namespace UlcWin
         this.LstViewItm.Columns[index + 3].Width = __aSettings_new.WidthColumnsDevice[index + 3];
         __aSettings_new.CheckedItemVisible[index] = 1;
       }
-      this.checkBoxComboBox1.ShowDropDown();
-
+     // this.checkBoxComboBox1.ShowDropDown();
+      __settings_changed = true;
     }
 
     void AdminUserAccses(bool isUserEditVisible,bool read_only)
@@ -687,7 +750,7 @@ namespace UlcWin
 
             if (__db.DbTestConnection())
             {
-              this.__db.LogsInsertEvent(EnLogEvt.APP_CONNECT,string.Format("{0}",this.__db.__DbUserName),-1);
+              this.__db.LogsInsertEvent(EnLogEvt.APP_CONNECT,/*string.Format("{0}",this.__db.__DbUserName)*/"0.0.0.0",-1);
               __db.FillTreeByUser(this.treeView1);
               if (this.__sel_node != null)
               {
@@ -848,8 +911,14 @@ namespace UlcWin
       }
 
       //this.tsStatusLbl.Visible = true;
-
-      ReadStatusListView();
+      if (this.tabItemsControl.SelectedIndex == 0)
+      {
+        ReadStatusListView();
+      }
+      else {
+        ulcMeterTreeView.RecalcStatusLebel();
+      }
+      
 
     }
 
@@ -1828,6 +1897,7 @@ namespace UlcWin
     {
       if (this.LstViewItm.SelectedItems.Count != 0)
       {
+        UNode uNode = (UNode)this.treeView1.SelectedNode;
         ItemIp iip = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
         using (Editor ed = new Editor(this.__db, true, iip))
         {
@@ -1874,6 +1944,11 @@ namespace UlcWin
                 rs_stat=ed.chBoxStat.Checked==true? 1:0
                  
               }, this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
+            foreach (var item in ed.__meterInfos)
+            {
+              item.ctrl_id = iip.Id;
+              item.parent_id = uNode.Id;
+            }
             __db.SetCrudMeterInfo(ed.__meterInfos);
             this.tsUpdate_Click(null, null);
           }
@@ -2160,12 +2235,15 @@ namespace UlcWin
                 long idRec=__db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
                   3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
                   this.treeView1.SelectedNode.FullPath, msgMeter);
-                foreach (var item in ed.__meterInfos)
+                if (ed.__meterInfos != null)
                 {
-                  item.parent_id = this.__sel_node.Id;
-                  item.ctrl_id = (int)idRec;
+                  foreach (var item in ed.__meterInfos)
+                  {
+                    item.parent_id = this.__sel_node.Id;
+                    item.ctrl_id = (int)idRec;
+                  }
+                  __db.SetCrudMeterInfo(ed.__meterInfos);
                 }
-                __db.SetCrudMeterInfo(ed.__meterInfos);
                 this.tsUpdate_Click(null, null);
               }
               else
@@ -2340,7 +2418,7 @@ namespace UlcWin
         sorter.Column = e.Column;
         //}
         
-        if (e.Column == 2)
+        if (e.Column == 3)
           sorter.UsbSorting = UlcSort.IP;
         else if (e.Column == 0)
           sorter.UsbSorting = UlcSort.DATETIME;
@@ -2352,7 +2430,9 @@ namespace UlcWin
           sorter.UsbSorting = UlcSort.TRAFFIC;
         }
         else if (e.Column == 1)
-          sorter.UsbSorting = UlcSort.NAME;
+          sorter.UsbSorting = UlcSort.DEFAULT;
+        else if (e.Column == 2)
+          sorter.UsbSorting = UlcSort.TP;
         else
           sorter.UsbSorting = UlcSort.DEFAULT;
         //selCoumn = e.Column;
@@ -2564,7 +2644,6 @@ namespace UlcWin
       this.tsStsLabelAll.Margin = new Padding((this.splitContainer1.SplitterDistance), 0, 0, 0);
 
     }
-
 
     private void toolStripButton3_Click_1(object sender, EventArgs e)
     {
@@ -3444,23 +3523,23 @@ namespace UlcWin
       }
     }
 
-    private void ctxMenuNumber_Click(object sender, EventArgs e)
-    {
-      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
-      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
-      mItemNum.Checked = true;
-      mItemObj.Checked = false;
-      this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
-    }
+    //private void ctxMenuNumber_Click(object sender, EventArgs e)
+    //{
+    //  ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
+    //  ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
+    //  mItemNum.Checked = true;
+    //  mItemObj.Checked = false;
+    //  this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
+    //}
 
-    private void ctxMenuObject_Click(object sender, EventArgs e)
-    {
-      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
-      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
-      mItemNum.Checked = false;
-      mItemObj.Checked = true;
-      this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
-    }
+    //private void ctxMenuObject_Click(object sender, EventArgs e)
+    //{
+    //  ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuNumber"];
+    //  ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMenuHeader.Items["ctxMenuObject"];
+    //  mItemNum.Checked = false;
+    //  mItemObj.Checked = true;
+    //  this.LstViewItm_ColumnClick(this.LstViewItm, new ColumnClickEventArgs(1));
+    //}
 
     private void actRs485ToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -3482,6 +3561,7 @@ namespace UlcWin
         this.splitContainer2.Panel2Collapsed = true;
         splitContainer2.Panel2.Hide();
         tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
+        this.ulcMeterTreeView.RecalcStatusLebel();
         tsBtnEventShowHide.ToolTipText = "Показать панель событий";
         if (this.LstViewItm.SelectedItems.Count != 0)
         {
@@ -3499,12 +3579,18 @@ namespace UlcWin
             }
             index++;
           }
+         
           var ret = this.LstViewItm.SelectedItems[0];
+          
+          
         }
       }
       else if (e.TabPageIndex == 0) {
         if (ulcMeterTreeView.treeListView1.Items.Count != 0)
         {
+          tsStatusLbl.Items[2].Visible = true;
+          tsStatusLbl.Items[4].Visible = true;
+          ReadStatusListView();
           if (ulcMeterTreeView.treeListView1.SelectedItem!=null)
           {
             int index = 0;
@@ -3546,15 +3632,8 @@ namespace UlcWin
       //}
     }
 
-    private void ulcMeterTreeView_Load(object sender, EventArgs e)
-    {
+  
 
-    }
-
-    private void LstViewItm_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
-    {
-
-    }
   }
 
 
@@ -3564,8 +3643,8 @@ namespace UlcWin
     DATETIME=2,
     SIGNAL=3,
     TRAFFIC=4,
-    NAME=5
-    
+    NAME=5,
+    TP=6
   }
 
   public enum SortObject { 
@@ -3644,23 +3723,53 @@ namespace UlcWin
           break;
         case UlcSort.NAME:
           {
-            ToolStripMenuItem item = (ToolStripMenuItem)loadForm.ctxMenuHeader.Items["ctxMenuObject"];
-            if (item.Checked) {
-              result = String.Compare(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
-            }
-            else
-            {
+            //ToolStripMenuItem item = (ToolStripMenuItem)loadForm.ctxMenuHeader.Items["ctxMenuObject"];
+            //if (item.Checked) {
+            //  result = String.Compare(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+            //}
+            //else
+            //{
               result = CompareName(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
-            }
+            //}
+            break;
           }
-          
-          break;
+        case UlcSort.TP: {
+            result = CompareTp(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+            break;
+          }
+        
         default:
           break;
       }
       if (Order == SortOrder.Descending)
         result *= -1;
       return result;
+    }
+
+    public int CompareTp(string first, string second)
+    {
+      Regex reg = new Regex(@"\d+$");
+      Match match = reg.Match(first.TrimEnd());
+      Match match1 = reg.Match(second.TrimEnd());
+      if (match.Success && match1.Success)
+      {
+        int fInt = 0;
+        int sInt = 0;
+        bool fb = int.TryParse(match.Value, out fInt);
+        bool sb = int.TryParse(match1.Value, out sInt);
+        if (!fb && !sb)
+        {
+          return -1;
+        }
+        else
+        {
+          if (fInt == sInt)
+            return 0;
+          if (fInt > sInt)
+            return 1;
+        }
+      }
+      return -1;
     }
 
     public int CompareName(string first, string second)

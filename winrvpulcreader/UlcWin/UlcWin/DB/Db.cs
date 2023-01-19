@@ -994,6 +994,7 @@ namespace InterUlc.Db
         string comment = (string)dr_ip["comments"];
         string meters = "Н/Д";
         int rs_stat= (int)dr_ip["rs_stat"];
+       
         //string meter_factory = "Н/Д";
         if (dr_ip["meters"] != null)
         {
@@ -1050,13 +1051,17 @@ namespace InterUlc.Db
         dr_ip = cmd_ip.ExecuteReader();
 
         ListViewItem it = new ListViewItem(DateTime.MinValue.ToString("dd.MM.yy HH:mm:ss"));
-        it.SubItems.Add(item.Value.Name);
+        //it.SubItems.Add(item.Value.Name);
+        string[] aTp = item.Value.Name.Split(',');
+        string tp = aTp.Length == 3 ? aTp[2].Trim() : "---";
+        it.SubItems.Add(string.Format("{0}({1})", aTp[0], aTp[1].Trim()));
+        it.SubItems.Add(tp);
         it.SubItems.Add(item.Value.Ip);
         if (item.Value.Phone.StartsWith("---"))
           item.Value.Phone = "нет информ...";
         it.SubItems.Add(item.Value.Phone);
         it.SubItems.Add(item.Value.UType == 0 ? "РВП-18" : "ULC 02");
-
+        
         if (dr_ip.Read())
         {
           DateTime dtRecord = (DateTime)dr_ip[1];
@@ -1186,9 +1191,9 @@ namespace InterUlc.Db
           {
             SetColorRow(it, Color.LightGray);
           }
+          /*it.SubItems.Add("---");
           it.SubItems.Add("---");
-          it.SubItems.Add("---");
-          it.SubItems.Add(item.Value.Meters);
+          it.SubItems.Add(item.Value.Meters);*/
 
         }
         else
@@ -1218,9 +1223,9 @@ namespace InterUlc.Db
           {
             SetColorRow(it, Color.Red);
           }
-          it.SubItems.Add("---");
-          it.SubItems.Add("---");
-          it.SubItems.Add(item.Value.Meters);
+          //it.SubItems.Add("---");
+          //it.SubItems.Add("---");
+          //it.SubItems.Add(item.Value.Meters);
 
           /*foreach (ListViewItem.ListViewSubItem itNotTrue in it.SubItems)
           {
@@ -1231,6 +1236,7 @@ namespace InterUlc.Db
         }
         ++__num;
         dr_ip.Close();
+       
         lstRes.Add(it);
         /*if (list != null)
         {
@@ -1766,7 +1772,9 @@ namespace InterUlc.Db
         }
         dr_ip.Close();
       }
-      catch { }
+      catch(Exception exp) {
+        int x = 0;
+      }
       finally {
         if (con_ip.State == System.Data.ConnectionState.Open)
           con_ip.Close();
@@ -2069,46 +2077,45 @@ namespace InterUlc.Db
       return options;
     }
 
-    public int DeleteResRecord(int id,string name, EnLogEvt? enLogEvt,string node_full_path)
+    public int DeleteResRecord(int id, string name, EnLogEvt? enLogEvt, string node_full_path)
     {
       try
       {
+        var consql = new NpgsqlConnection(this.__connection);
+        consql.Open();
+        DbLogMsg dbLogMsg = GetDbObjectPath(id, consql, SqlTreeNodes.FullTree);
+        var sql = string.Format("delete from main_ctrlevent where ctrl_id={0};", id);
+        var cmd = new NpgsqlCommand(sql, consql);
+        int result = cmd.ExecuteNonQuery();
 
-      var consql = new NpgsqlConnection(this.__connection);
-      consql.Open();
-      DbLogMsg dbLogMsg = GetDbObjectPath(id, consql, SqlTreeNodes.FullTree);
-      var sql = string.Format("delete from main_ctrlevent where ctrl_id={0};", id);
-      var cmd = new NpgsqlCommand(sql, consql);
-      int result = cmd.ExecuteNonQuery();
+        sql = string.Format("delete from main_ctrlcurrent where ctrl_id={0};", id);
+        cmd.CommandText = sql;
+        //cmd = new NpgsqlCommand(sql, consql);
+        result = cmd.ExecuteNonQuery();
+        sql = string.Format("delete from main_ctrlinfo where id={0};", id);
+        //cmd = new NpgsqlCommand(sql, consql);
+        cmd.CommandText = sql;
+        result = cmd.ExecuteNonQuery();
+        sql = string.Format("delete from main_nodes where id={0};", id);
+        cmd.CommandText = sql;
+        //cmd = new NpgsqlCommand(sql, consql);
+        int result_node = cmd.ExecuteNonQuery();
+        sql = string.Format("delete from meter_info where ctrl_id={0};", id);
+        cmd.CommandText = sql;
+        //cmd = new NpgsqlCommand(sql, consql);
+        result = cmd.ExecuteNonQuery();
+        consql.Close();
+        if (enLogEvt != null)
+        {
+          //DbLogMsg dbLogMsg = new DbLogMsg()
+          //{
+          //  Id = id,
+          //  Tp = name
+          //};
+          //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
+          string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
+          LogsInsertEvent(enLogEvt.Value, msg, (int)id);
 
-      sql = string.Format("delete from main_ctrlcurrent where ctrl_id={0};", id);
-      cmd.CommandText = sql;
-      //cmd = new NpgsqlCommand(sql, consql);
-      result = cmd.ExecuteNonQuery();
-      sql = string.Format("delete from main_ctrlinfo where id={0};", id);
-      //cmd = new NpgsqlCommand(sql, consql);
-      cmd.CommandText = sql;
-      result = cmd.ExecuteNonQuery();
-      sql = string.Format("delete from main_nodes where id={0};", id);
-      cmd.CommandText = sql;
-      //cmd = new NpgsqlCommand(sql, consql);
-      int result_node = cmd.ExecuteNonQuery();
-      sql = string.Format("delete from meter_info where ctrl_id={0};", id);
-      cmd.CommandText = sql;
-      //cmd = new NpgsqlCommand(sql, consql);
-      result = cmd.ExecuteNonQuery();
-      consql.Close();
-      if (enLogEvt!=null)
-      {
-        //DbLogMsg dbLogMsg = new DbLogMsg()
-        //{
-        //  Id = id,
-        //  Tp = name
-        //};
-        //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
-        string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(enLogEvt.Value, msg,(int)id);
-         
         }
         return result_node;
       }
@@ -2117,7 +2124,7 @@ namespace InterUlc.Db
         MessageBox.Show(e.Message, "Ошибка удаления записи", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return -1;
       }
-     
+
     }
 
     internal bool InsertLogMsg(List<Log> logs, int idCtrl)
@@ -2248,7 +2255,7 @@ namespace InterUlc.Db
           //DbLogMsg.ParseNodePath(node_full_path, ref dbLogMsg);
           DbLogMsg dbLogMsg = GetDbObjectPath(dbItemEditor.Id, db, SqlTreeNodes.FullTree);
           string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-          LogsInsertEvent(EnLogEvt.EDIT_ITEM, msg, dbItemEditor.Id);
+          LogsInsertEvent(EnLogEvt.SETTING_CHANGE, msg, dbItemEditor.Id);
         //}
           //bdb.Commit();
           return true;

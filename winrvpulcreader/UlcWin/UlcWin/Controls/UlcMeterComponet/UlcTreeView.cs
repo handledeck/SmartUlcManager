@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using UlcWin;
 using UlcWin.Controls.ListViewHeaderMenu;
 using UlcWin.Controls.UlcMeterComponet;
+using UlcWin.DB;
 using UlcWin.Drivers;
 using UlcWin.Edit;
 using UlcWin.Export;
@@ -32,7 +33,7 @@ namespace GettingStartedTree
     List<TreeListNodeModel> __treeNodes = new List<TreeListNodeModel>();
     List<ValueDateTime> __valueDateTimes = new List<ValueDateTime>();
     UlcWin.LoadForm __loadForm = null;
-    
+    internal StatusStrip __statusStrip;
     public UlcTreeView()
     {
       InitializeComponent();
@@ -44,7 +45,7 @@ namespace GettingStartedTree
       textOverlay.Font = new Font("Chiller", 36);
       textOverlay.Rotation = 0;
       TextOverlay textOverlay1 = this.treeListView1.EmptyListMsgOverlay as TextOverlay;
-
+      
       textOverlay1.TextColor = Color.Gray;
       textOverlay1.BackColor = Color.Transparent;
       textOverlay1.BorderColor = Color.Transparent;
@@ -57,12 +58,10 @@ namespace GettingStartedTree
       this.objectListView1.EmptyListMsgFont = new Font("Tahoma", 10);
       this.treeListView1.EmptyListMsg = "Нет данных для просмотра";
       this.treeListView1.EmptyListMsgFont = new Font("Tahoma", 10);
-      this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
-      HeaderControl h = new HeaderControl(this.treeListView1);
-      
+      //this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
+      // HeaderControl h = new HeaderControl(this.treeListView1);
+      splitMeter.Panel2Collapsed = true;
     }
-
-   
 
     public void SetValue(string connection, int parent_id)
     {
@@ -73,7 +72,36 @@ namespace GettingStartedTree
       FillTreeList(DateTime.Now);
       ResetDelegate();
       this.treeListView1.FormatRow += TreeListView1_FormatRow;
-      
+
+    }
+
+    public void RecalcStatusLebel() {
+      int all = 0;
+      int nData = 0;
+      int swOff = 0;
+      this.__statusStrip.Items[2].Visible = false;
+      this.__statusStrip.Items[4].Visible = false;
+      if (this.treeListView1.Items.Count != 0) {
+        foreach (TreeListNodeModel item in this.treeListView1.Roots)
+        {
+          foreach (TreeListNodeModel it in item.Nodes)
+          {
+            all+=1;
+            if (!it.is_true && it.meter_active==1)
+            {
+              nData+=1;
+            }
+
+            if (it.meter_active == 0)
+              swOff+=1;
+          }
+          
+        }
+        this.__statusStrip.Items[0].Text = string.Format("Всего:{0}", all);
+        this.__statusStrip.Items[1].Text = string.Format("Нет данных:{0}", nData);
+        this.__statusStrip.Items[3].Text = string.Format("Отключенных:{0}", swOff);
+      }
+
     }
 
     private void FillTreeList(DateTime dtData)
@@ -84,26 +112,14 @@ namespace GettingStartedTree
       this.objectListView1.SetObjects(null);
       try
       {
-        
+
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          //string sql = string.Format("select mn.id as idmain,mc.unit_type_id, mn.\"name\", mi.id, mi.ctrl_id, mi.parent_id,mi.ip ,mi.meter_type, mi.meter_factory, mv.value, mv.is_true,mv.date_time FROM meter_info mi " +
-          //             "left join main_nodes mn on mn.id = mi.ctrl_id " +
-          //             "left join main_ctrlinfo mc on mc.id =mn.id "+
-          //             "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' where mi.parent_id ={1}",
-          //             DateTime.Now.ToString("yyyy-MM-dd"),__parent_id);
-          /* string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home " +
-                                     "from meter_info mi " +
-                                     "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' " +
-                                     "left join main_nodes mn on mn.id = mi.ctrl_id " +
-                                     "left join main_ctrlinfo mc on mc.id = mi.ctrl_id " +
-                                     "where mi.parent_id = {1} and mn.active = 1", dtData.ToString("yyyy-MM-dd"), __parent_id);*/
-
-          string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home, mc.rs_stat as rs_stat, mi.active as meter_active,mi.ctrl_id from main_nodes mn " +
-                       "left join main_ctrlinfo mc on mc.id = mn.id "+
-                       "left join meter_info mi on mi.ctrl_id = mc.id "+
-                       "left join meter_value mv on mv.ctrl_id = mi.id and mv.date_time > '{0}' "+
+          string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home, mc.rs_stat as rs_stat, mi.active as meter_active,mi.ctrl_id, mn.active as controller_active from main_nodes mn " +
+                       "left join main_ctrlinfo mc on mc.id = mn.id " +
+                       "left join meter_info mi on mi.ctrl_id = mc.id " +
+                       "left join meter_value mv on mv.ctrl_id = mi.id and mv.date_time > '{0}' " +
                        "where mi.parent_id = {1}", dtData.ToString("yyyy-MM-dd"), __parent_id);
           IDbCommand cmd = db.CreateCommand();
           cmd.CommandText = sql;
@@ -111,24 +127,25 @@ namespace GettingStartedTree
           //Random random = new Random();
           while (reader.Read())
           {
-            int id=int.MaxValue;
-            string name=string.Empty;
-            string ip=string.Empty;
-            string meter_type= string.Empty;
-            string meter_factory= string.Empty;
-            DateTime dt=DateTime.MaxValue;
-            bool is_true=false;
-            int unit_type_id=int.MaxValue;
-            int id_home=int.MaxValue;
-            double value=double.MaxValue;
-            int rs_active= int.MaxValue;
-            int meter_active= int.MaxValue;
+            int id = int.MaxValue;
+            string name = string.Empty;
+            string ip = string.Empty;
+            string meter_type = string.Empty;
+            string meter_factory = string.Empty;
+            DateTime dt = DateTime.MaxValue;
+            bool is_true = false;
+            int unit_type_id = int.MaxValue;
+            int id_home = int.MaxValue;
+            double value = double.MaxValue;
+            int rs_active = int.MaxValue;
+            int meter_active = int.MaxValue;
             int ctrl_id = int.MaxValue;
+            int controller_active = int.MaxValue;
             try
             {
               id = (int)reader[0];
               //int unit_type_id = (int)reader[1];
-               name = (string)reader[1];
+              name = (string)reader[1];
               //int id = (int)reader[3];
               //int ctrl_id = (int)reader[4];
               //int parent_id = (int)reader[5];
@@ -137,25 +154,30 @@ namespace GettingStartedTree
               if (reader[3].GetType() == typeof(DBNull) || reader[4].GetType() == typeof(DBNull))
                 continue;
               meter_type = (string)reader[3];
-               meter_factory = (string)reader[4];
+              meter_factory = (string)reader[4];
               dt = reader[5].GetType() == typeof(DBNull) ? DateTime.MinValue : (DateTime)reader[5];
               value = reader[6].GetType() == typeof(DBNull) ? 0 : (double)reader[6];
               is_true = reader[7].GetType() == typeof(DBNull) ? false : (bool)reader[7];
-             unit_type_id = reader[8].GetType() == typeof(DBNull) ? -1 : (int)reader[8];
-             id_home = reader[9].GetType() == typeof(DBNull) ? -1 : (int)reader[9];
-              rs_active= reader[10].GetType() == typeof(DBNull) ? -1 : (int)reader[10];
+              unit_type_id = reader[8].GetType() == typeof(DBNull) ? -1 : (int)reader[8];
+              id_home = reader[9].GetType() == typeof(DBNull) ? -1 : (int)reader[9];
+              rs_active = reader[10].GetType() == typeof(DBNull) ? -1 : (int)reader[10];
               meter_active = reader[11].GetType() == typeof(DBNull) ? -1 : (int)reader[11];
               ctrl_id = reader[12].GetType() == typeof(DBNull) ? -1 : (int)reader[12];
+              controller_active = reader["controller_active"].GetType() == typeof(DBNull) ? -1 : (int)reader["controller_active"];
             }
-            catch (Exception el) {
+            catch (Exception el)
+            {
               int x = 0;
             }
             TreeListNodeModel mt = new TreeListNodeModel
             {
               name = name,
               is_true = true,
-               ip=ip,
-               unit_type_id=unit_type_id  
+              ip = ip,
+              unit_type_id = unit_type_id,
+              ctrl_id = ctrl_id,
+              controller_active = controller_active,
+              rs_active = Convert.ToBoolean(rs_active)
             };
             TreeListNodeModel treeListNodeModel = new TreeListNodeModel()
             {
@@ -169,8 +191,9 @@ namespace GettingStartedTree
               meter_factory = meter_factory,
               meter_type = meter_type,
               unit_type_id = unit_type_id,
-              rs_active = rs_active,
-              meter_active = meter_active
+              rs_active = Convert.ToBoolean(rs_active),
+              meter_active = meter_active,
+              controller_active = controller_active
             };
             if (!dic.ContainsKey(id_home))
             {
@@ -180,10 +203,13 @@ namespace GettingStartedTree
               {
                 mt.is_true = false;
               }
+             
               dic.Add(id_home, mt);
+              treeListNodeModel.ParentNode = dic[id_home];
             }
             else
             {
+              treeListNodeModel.ParentNode = dic[id_home];
               dic[id_home].Nodes.Add(treeListNodeModel);
               if (!treeListNodeModel.is_true)
               {
@@ -192,6 +218,7 @@ namespace GettingStartedTree
                   dic[id_home].is_part_true = true;
                 }
               }
+
             }
           }
           reader.Close();
@@ -220,23 +247,30 @@ namespace GettingStartedTree
             item.Value.id = item.Value.Nodes[0].id;
             item.Value.parent_id = __parent_id;
             item.Value.meter_active = item.Value.Nodes[0].meter_active;
-            item.Value.rs_active=item.Value.Nodes[0].rs_active;
+            item.Value.rs_active = item.Value.Nodes[0].rs_active;
+            item.Value.controller_active = item.Value.Nodes[0].controller_active;
+            //item.Value.ParentNode = item.Value;
           }
-          else if (item.Value.Nodes.Count > 1) {
-            item.Value.meter_active = 1;
+          else if (item.Value.Nodes.Count > 1)
+          {
+            item.Value.rs_active = item.Value.Nodes[0].rs_active;
             item.Value.date_time = DateTime.MinValue;
             item.Value.meter_factory = "......";
             item.Value.meter_type = "......";
+            item.Value.controller_active = item.Value.Nodes[0].controller_active;
+           // item.Value.ParentNode = item.Value;
             //item.Value.value = "......";
             foreach (var itNodes in item.Value.Nodes)
             {
               if (itNodes.is_true)
               {
                 item.Value.date_time = itNodes.date_time;
+                
                 break;
               }
             }
           }
+
           __treeNodes.Add(item.Value);
         }
         this.treeListView1.SetObjects(__treeNodes);
@@ -264,45 +298,81 @@ namespace GettingStartedTree
     {
 
       TreeListNodeModel vv = (TreeListNodeModel)e.Model;
-      if (vv.meter_active==0)
-        e.Item.ForeColor = Color.Gray;
+      if (vv.unit_type_id == 0)
+      {
+        olvRs.CheckBoxes = false;
+      }
+      else {
+        if (vv.ParentNode != null) {
+          olvRs.CheckBoxes = false;
+          
+        }
+         
+        else {
+          olvRs.CheckBoxes = true;
+        }
+       
+      }
       if (vv.Nodes == null)
       {
-        //e.ListView.FullRowSelect = true;
-        //TreeListView1_SelectionChanged(this.treeListView1, null);
-        //if (!vv.is_true)
-        //e.Item.ForeColor = Color.Gray;
-        //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
-
-      }
-      else
-      {
+        //if (vv.Nodes.Count > 1)
+        //  return;
         //if (vv.Nodes.Count == 1)
-        //{
-        //  vv.name = vv.name+"(" + vv.Nodes[0].name + ")";
-        //  vv.ip = vv.Nodes[0].ip;
-        //  vv.meter_type = vv.Nodes[0].meter_type;
-        //  vv.meter_factory = vv.Nodes[0].meter_factory;
-        //  vv.value = vv.Nodes[0].value;
-        //  vv.date_time = vv.Nodes[0].date_time;
-        //  vv.unit_type_id = vv.Nodes[0].unit_type_id;
+        //{ 
+        if (vv.meter_active == 0 || vv.controller_active == 0 || !vv.is_true)
+        {
+          e.Item.ForeColor = Color.Gray;
+        }
         //}
-        //e.ListView.FullRowSelect = false;
-
-        //if (!vv.is_true)
-        //  e.Item.ForeColor = Color.Gray;
-        //e.ListView.FullRowSelect = true;
-        //if (!vv.is_true)
-        //  e.Item.ForeColor = Color.Red;
-        //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
       }
+      else {
+        if (vv.Nodes.Count == 1)
+        { 
+        if (vv.meter_active == 0 || vv.controller_active == 0 || !vv.is_true)
+        {
+          e.Item.ForeColor = Color.Gray;
+        }
+        }
+      }
+      ////if (vv.meter_active == 0)
+      ////  e.Item.ForeColor = Color.Gray;
+      //if (vv.Nodes == null)
+      //{
+      //  //e.ListView.FullRowSelect = true;
+      //  //TreeListView1_SelectionChanged(this.treeListView1, null);
+      //  //if (!vv.is_true)
+      //  //e.Item.ForeColor = Color.Gray;
+      //  //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
+
+      //}
+      //else
+      //{
+      //  //if (vv.Nodes.Count == 1)
+      //  //{
+      //  //  vv.name = vv.name+"(" + vv.Nodes[0].name + ")";
+      //  //  vv.ip = vv.Nodes[0].ip;
+      //  //  vv.meter_type = vv.Nodes[0].meter_type;
+      //  //  vv.meter_factory = vv.Nodes[0].meter_factory;
+      //  //  vv.value = vv.Nodes[0].value;
+      //  //  vv.date_time = vv.Nodes[0].date_time;
+      //  //  vv.unit_type_id = vv.Nodes[0].unit_type_id;
+      //  //}
+      //  //e.ListView.FullRowSelect = false;
+
+      //  //if (!vv.is_true)
+      //  //  e.Item.ForeColor = Color.Gray;
+      //  //e.ListView.FullRowSelect = true;
+      //  //if (!vv.is_true)
+      //  //  e.Item.ForeColor = Color.Red;
+      //  //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
+      //}
     }
 
 
 
     void ResetDelegate()
     {
-      
+
 
       this.treeListView1.CanExpandGetter = delegate (Object x)
       {
@@ -339,6 +409,8 @@ namespace GettingStartedTree
         {
           if (vv.Nodes.Count < 2)
           {
+            if (vv.controller_active == 0)
+              return "error";
             if (vv.meter_active == 0)
             {
               return "stop";
@@ -348,7 +420,7 @@ namespace GettingStartedTree
               if (vv.is_true)
                 return "nav_down";
               else
-                return "error";
+                return "warning";
             }
 
 
@@ -362,12 +434,13 @@ namespace GettingStartedTree
               if (vv.is_true)
                 return "ok";
               else
-                return "error";
+                return "warning";
             }
 
           }
         }
-        else {
+        else
+        {
           if (vv.meter_active == 0)
           {
             return "stop";
@@ -375,7 +448,7 @@ namespace GettingStartedTree
           else
           {
             if (!vv.is_true)
-              return "error";
+              return "warning";
             else
               return "nav_down";
           }
@@ -442,12 +515,27 @@ namespace GettingStartedTree
         return "";
       };
 
+      this.olvRs.AspectToStringConverter = delegate (object x)
+      {
+        if (x != null)
+        {
+          bool? t = (bool)x;
+          if (t.HasValue)
+          {
+            if (t == false)
+              return "...";
+          }
+        }
+        return "";
+      };
+
     }
 
     private void TreeListView1_SelectionChanged(object sender, EventArgs e)
     {
       try
       {
+
         TreeListView treeListView = (TreeListView)sender;
         TreeListNodeModel treeListNodeModel = (TreeListNodeModel)treeListView.SelectedObject;
         if (treeListNodeModel != null)
@@ -459,7 +547,7 @@ namespace GettingStartedTree
               this.objectListView1.SetObjects(null);
               this.ctxMenuChange.Enabled = false;
               this.ctxTreeSimpleUpdate.Enabled = false;
-              return;
+              //return;
             }
             else
             {
@@ -482,13 +570,13 @@ namespace GettingStartedTree
           DateTime res = dtstart;
           //DateTime lstDt = dtstart;
 
-          for (int i = 0; i < DateTime.DaysInMonth(dtstart.Year,dtstart.Month); i++)
+          for (int i = 0; i < DateTime.DaysInMonth(dtstart.Year, dtstart.Month); i++)
           {
             lstVdt.Add(res.ToString("yyyy-MM-dd"), new ValueDateTime()
             {
               dt = res.ToString("yyyy-MM-dd"),
               is_true = false
-            }); 
+            });
             res = res.AddDays(1);
           }
           int id = treeListNodeModel.id;
@@ -510,24 +598,52 @@ namespace GettingStartedTree
                 string dt_str = dt.ToString("yyyy-MM-dd");
                 double value = (double)reader[1];
                 bool is_true = (bool)reader[2];
-               
-                
+
+
                 //if (!lstVdt.ContainsKey(dt_str))
                 //{
-                  lstVdt[dt_str] = new ValueDateTime()
-                  {
-                    dt = dt_str,
-                    id = id,
-                    value = Math.Round(value, 2),
-                    is_true = true
-                  };
+                lstVdt[dt_str] = new ValueDateTime()
+                {
+                  dt = dt_str,
+                  id = id,
+                  value = Math.Round(value, 2),
+                  is_true = true
+                };
                 //}
               }
               reader.Close();
+              string sql_cntrl = string.Format("select mn.id , mn.\"name\", mc.ip_address,mn.active ,mc.rs_stat,mn.light,mc.unit_type_id from main_nodes mn " +
+                                             "left join main_ctrlinfo mc on mc.id = mn.id " +
+                                              "where mn.id = {0}", treeListNodeModel.ctrl_id);
+              List<DbUlcShortView> ormDbConfig = db.Select<DbUlcShortView>(sql_cntrl);
+              __valueDateTimes = lstVdt.Values.ToList<ValueDateTime>();
+
+              this.objectListView1.SetObjects(__valueDateTimes);
+
+              //this.dbUlcShortViewBindingSource.DataSource= ormDbConfig.ToArray();
+              //if (ormDbConfig[0].unit_type_id == 0)
+              //{
+              //  this.dataGridView1.Columns[4].Visible = false;
+              //}
+              //else
+              //{
+              //  this.dataGridView1.Columns[4].Visible = true;
+              //}
+              this.dataGridView1.Rows.Clear();
+              if (ormDbConfig[0].active)
+              {
+                dataGridView1.Rows.Add(this.imageList1.Images["nav_down"],
+                  ormDbConfig[0].name, ormDbConfig[0].ip_address, ormDbConfig[0].rs_stat, ormDbConfig[0].light);
+              }
+              else
+              {
+                dataGridView1.Rows.Add(this.imageList1.Images["error"],
+                  ormDbConfig[0].name, ormDbConfig[0].ip_address, ormDbConfig[0].rs_stat, ormDbConfig[0].light);
+              }
+
             }
-            //this.objectListView1.Clear();
-            __valueDateTimes = lstVdt.Values.ToList<ValueDateTime>();
-            this.objectListView1.SetObjects(__valueDateTimes);
+           
+
           }
           catch (Exception exp)
           {
@@ -560,40 +676,7 @@ namespace GettingStartedTree
       int x = 0;
     }
 
-    private void treeListView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-    {
-      TreeListView treeListView = (TreeListView)sender;
-      TreeListNodeModel vv = (TreeListNodeModel)treeListView.SelectedObject;
-      //if (vv.Nodes.Count > 1)
-      //{
-      //  this.ctxMenuChange.Enabled = false;
-      //}
-      //else {
-      //  this.ctxMenuChange.Enabled = true;
-      //}
-      //if (vv.Nodes == null)
-      //{
-      //  //treeListView.FullRowSelect = true;
 
-      //  //ll.SubItems[5].BackColor = Color.Red;
-      //  //TreeListView1_SelectionChanged(this.treeListView1, null);
-      //  //if (!vv.is_true)
-      //  //  e.Item.ForeColor = Color.Gray;
-      //  //e.Item.Font = new Font("Courier New", e.Item.Font.Size);
-
-      //}
-      //else
-      //{
-      //  //treeListView.FullRowSelect = false;
-
-      //  //if (!vv.is_true)
-      //  //  e.Item.ForeColor = Color.Gray;
-      //  //e.ListView.FullRowSelect = true;
-      //  //if (!vv.is_true)
-      //  //  e.Item.ForeColor = Color.Red;
-      //  //e.Item.Font = new Font("Tahoma", e.Item.Font.Size);
-      //}
-    }
 
     private void tsUpdateMeterValue_Click(object sender, EventArgs e)
     {
@@ -877,9 +960,14 @@ namespace GettingStartedTree
           meterInfo.active = mMrom.cbActMeter.Checked ? 1 : 0;
           meterInfo.parent_id = __parent_id;
           __db.SetCrudMeterInfo(new List<MeterInfo>() { meterInfo });
+
+          FillTreeList(this.monthPicker1.Value);
+
         }
+        
       }
-      FillTreeList(this.monthPicker1.Value); 
+
+      
     }
 
     private void ctxTreeSimpleUpdate_Click(object sender, EventArgs e)
@@ -1058,7 +1146,7 @@ namespace GettingStartedTree
       {
         this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
         sortOrder = SortOrder.Ascending;
-       // __sortOrder = SortOrder.Ascending;
+        // __sortOrder = SortOrder.Ascending;
       }
       else
       {
@@ -1067,7 +1155,8 @@ namespace GettingStartedTree
         {
           this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
         }
-        else {
+        else
+        {
           this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
         }
       }
@@ -1183,7 +1272,8 @@ namespace GettingStartedTree
       }
       else if (e.Column == 2)
       {
-        try {
+        try
+        {
           __treeNodes.Sort((a, b) =>
           {
             if (sortOrder == SortOrder.Ascending)
@@ -1197,7 +1287,8 @@ namespace GettingStartedTree
               else
                 return -1;
             }
-            else {
+            else
+            {
               if (a.unit_type_id > b.unit_type_id)
               {
                 return 1;
@@ -1209,8 +1300,8 @@ namespace GettingStartedTree
             }
           });
         }
-        catch{}
-    }
+        catch { }
+      }
       else if (e.Column == 3)
       {
         __treeNodes.Sort((a, b) =>
@@ -1249,17 +1340,17 @@ namespace GettingStartedTree
         });
       }
 
-        //if (__sortOrder == SortOrder.Ascending)
-        //{
-        //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
-        //}
-        //else
-        //{
-        //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
-        //}
-       
-        this.treeListView1.SetObjects(__treeNodes);
-      if (e.Column == 0 || e.Column == 1 || e.Column == 2 || e.Column==3)
+      //if (__sortOrder == SortOrder.Ascending)
+      //{
+      //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+      //}
+      //else
+      //{
+      //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //}
+
+      this.treeListView1.SetObjects(__treeNodes);
+      if (e.Column == 0 || e.Column == 1 || e.Column == 2 || e.Column == 3)
       {
         NativeListView.SetColumnImage(this.treeListView1, e.Column, sortOrder, 0);
 
@@ -1286,14 +1377,38 @@ namespace GettingStartedTree
       TreeListView1_SelectionChanged(this.treeListView1, null);
     }
 
-    private void textBox1_TextChanged(object sender, EventArgs e)
+    private void treeListView1_SubItemChecking(object sender, SubItemCheckingEventArgs e)
     {
-      TextMatchFilter filter = TextMatchFilter.Prefix(this.treeListView1, this.textBox1.Text);// TextMatchFilter.Contains(this.treeListView1, this.textBox1.Text);
-      this.treeListView1.ModelFilter = filter;
-      this.treeListView1.DefaultRenderer = new HighlightTextRenderer(filter);
-      this.treeListView1.Update();
+      DialogResult result = DialogResult.Cancel;
+      if (e.NewValue == CheckState.Unchecked)
+      {
+        result = MessageBox.Show("Не учитывать контроллер в статистике по RS-485?", "Статистика RS-485", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      }
+      else {
+        result = MessageBox.Show("Учитывать контроллер в статистике по RS-485?", "Статистика RS-485", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      }
+      if (result == DialogResult.Yes)
+      {
+        TreeListNodeModel md = (TreeListNodeModel)e.RowObject;
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.ip_address == md.ip);
+          if (ormDbInfo != null)
+          {
+            ormDbInfo.rs_stat = e.NewValue == CheckState.Checked ? 1 : 0;
+            db.Update<OrmDbInfo>(ormDbInfo);
+          }
+          else
+          {
+            MessageBox.Show("Ошибка сохранения в БД");
+          }
+        }
+      }
+      else {
+        e.NewValue = e.CurrentValue;
+      }
     }
   }
-
 }
 

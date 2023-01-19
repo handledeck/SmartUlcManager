@@ -80,6 +80,7 @@ namespace UlcWin
       this.LstViewItm = new UlcWin.Controls.ListViewHeaderMenu.ListViewMenuHeaderControl(this.components);
       this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.ztp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.UType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -153,8 +154,7 @@ namespace UlcWin
       this.imageList2 = new System.Windows.Forms.ImageList(this.components);
       this.helpProvider1 = new System.Windows.Forms.HelpProvider();
       this.ctxMenuHeader = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.ctxMenuObject = new System.Windows.Forms.ToolStripMenuItem();
-      this.ctxMenuNumber = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.toolStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -175,7 +175,6 @@ namespace UlcWin
       this.tsEvent.SuspendLayout();
       this.LvMenu.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
-      this.ctxMenuHeader.SuspendLayout();
       this.SuspendLayout();
       // 
       // toolStrip1
@@ -693,6 +692,7 @@ namespace UlcWin
       this.LstViewItm.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Id,
             this.Name,
+            this.ztp,
             this.Ip,
             this.phone,
             this.UType,
@@ -739,9 +739,13 @@ namespace UlcWin
       this.Name.Text = "Имя объекта";
       this.Name.Width = 264;
       // 
+      // ztp
+      // 
+      this.ztp.Text = "ТП";
+      // 
       // Ip
       // 
-      this.Ip.Text = "IP адрес";
+      this.Ip.Text = "IP Адрес";
       this.Ip.Width = 120;
       // 
       // phone
@@ -774,7 +778,7 @@ namespace UlcWin
       // 
       // logs
       // 
-      this.logs.Text = "Сост. лога";
+      this.logs.Text = "Уровень лога";
       this.logs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.logs.Width = 66;
       // 
@@ -791,7 +795,7 @@ namespace UlcWin
       // 
       // schedule
       // 
-      this.schedule.Text = "Акт. расп.";
+      this.schedule.Text = "Активность расписания";
       this.schedule.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.schedule.Width = 72;
       // 
@@ -808,17 +812,17 @@ namespace UlcWin
       // 
       // active
       // 
-      this.active.Text = "Актив.";
+      this.active.Text = "Активнсть контроллера";
       this.active.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // isLight
       // 
-      this.isLight.Text = "освещ.";
+      this.isLight.Text = "Освещение";
       this.isLight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // comments
       // 
-      this.comments.Text = "Комент.";
+      this.comments.Text = "Коментарий";
       this.comments.Width = 120;
       // 
       // checkBoxComboBox1
@@ -828,7 +832,7 @@ namespace UlcWin
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
-      this.checkBoxComboBox1.Location = new System.Drawing.Point(179, 3);
+      this.checkBoxComboBox1.Location = new System.Drawing.Point(59, 3);
       this.checkBoxComboBox1.MaxDropDownItems = 15;
       this.checkBoxComboBox1.Name = "checkBoxComboBox1";
       this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
@@ -1359,27 +1363,8 @@ namespace UlcWin
       // 
       // ctxMenuHeader
       // 
-      this.ctxMenuHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxMenuObject,
-            this.ctxMenuNumber});
       this.ctxMenuHeader.Name = "ctxMenuHeader";
-      this.ctxMenuHeader.Size = new System.Drawing.Size(221, 48);
-      // 
-      // ctxMenuObject
-      // 
-      this.ctxMenuObject.Checked = true;
-      this.ctxMenuObject.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.ctxMenuObject.Name = "ctxMenuObject";
-      this.ctxMenuObject.Size = new System.Drawing.Size(220, 22);
-      this.ctxMenuObject.Text = "Сортировка по объекту";
-      this.ctxMenuObject.Click += new System.EventHandler(this.ctxMenuObject_Click);
-      // 
-      // ctxMenuNumber
-      // 
-      this.ctxMenuNumber.Name = "ctxMenuNumber";
-      this.ctxMenuNumber.Size = new System.Drawing.Size(220, 22);
-      this.ctxMenuNumber.Text = "Сортировка по номеру ТП";
-      this.ctxMenuNumber.Click += new System.EventHandler(this.ctxMenuNumber_Click);
+      this.ctxMenuHeader.Size = new System.Drawing.Size(61, 4);
       // 
       // LoadForm
       // 
@@ -1422,7 +1407,6 @@ namespace UlcWin
       this.LvMenu.ResumeLayout(false);
       this.tsStatusLbl.ResumeLayout(false);
       this.tsStatusLbl.PerformLayout();
-      this.ctxMenuHeader.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -1546,12 +1530,12 @@ namespace UlcWin
     private GettingStartedTree.UlcTreeView ulcMeterTreeView;
     private System.Windows.Forms.ImageList imgTabs;
     private ListViewMenuHeaderControl LstViewItm;
-    private System.Windows.Forms.ToolStripMenuItem ctxMenuObject;
-    private System.Windows.Forms.ToolStripMenuItem ctxMenuNumber;
     public System.Windows.Forms.ContextMenuStrip ctxMenuHeader;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     private System.Windows.Forms.ToolStripMenuItem actRs485ToolStripMenuItem;
     private System.Windows.Forms.ColumnHeader comm;
+    private System.Windows.Forms.ColumnHeader ztp;
+    private System.Windows.Forms.ToolTip toolTip1;
   }
 }
 

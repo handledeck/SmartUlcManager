@@ -33,9 +33,9 @@ namespace UlcWin.ui
         DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
         if (dbLogMsg == null)
           throw new Exception();
-        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.id);
+        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.Id);
         if (ormDbInfo != null)
-          dbLogMsg.ip = ormDbInfo.ip_address;
+          dbLogMsg.Ip = ormDbInfo.ip_address;
         return dbLogMsg;
       }
       catch (Exception e)
@@ -136,9 +136,9 @@ namespace UlcWin.ui
                 if (dbLogMsg != null)
                 {
                   itr.Tag = dbLogMsg;
-                  itr.SubItems.Add(dbLogMsg.ip);
+                  itr.SubItems.Add(dbLogMsg.Ip);
 
-                  itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
+                  itr.SubItems.Add(dbLogMsg.Fes + "/" + dbLogMsg.Res + "/" + dbLogMsg.Tp);
                 }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
                 else
                 {

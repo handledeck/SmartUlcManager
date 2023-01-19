@@ -37,9 +37,14 @@ namespace UlcWin.Controls.ListViewHeaderMenu
     protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
     {
       columns[e.ColumnIndex] = RectangleToScreen(e.Bounds);
+      
       e.DrawDefault = true;
+
       base.OnDrawColumnHeader(e);
+      
     }
+    
+
     protected override void WndProc(ref Message m)
     {
       if (m.Msg == 0x7b)//WM_CONTEXTMENU
@@ -60,10 +65,12 @@ namespace UlcWin.Controls.ListViewHeaderMenu
           }
         }
       }
+      
       else if (m.Msg == 0x205 || m.Msg==204) {
         if (this.ListViewMouseRightClick != null)
           this.ListViewMouseRightClick(this);
       }
+     
       base.WndProc(ref m);
     }
 

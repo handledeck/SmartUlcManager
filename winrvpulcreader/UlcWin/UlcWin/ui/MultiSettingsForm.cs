@@ -170,8 +170,8 @@ namespace UlcWin.ui
               {
                 DbLogMsg dbLogMsg = new DbLogMsg()
                 {
-                  id = itemIp.Id,
-                  tp = itemIp.Name
+                  Id = itemIp.Id,
+                  Tp = itemIp.Name
                 };
                 DbLogMsg.ParseNodePath(__node_full_path, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());

@@ -32,6 +32,7 @@ namespace GettingStartedTree
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UlcTreeView));
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.splitMeter = new System.Windows.Forms.SplitContainer();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
       this.olvName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvDateTime = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -39,7 +40,14 @@ namespace GettingStartedTree
       this.olvIp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvMeterFactory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvRs = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+      this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.status = new System.Windows.Forms.DataGridViewImageColumn();
+      this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.rs_active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.street_light = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.olvDt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvVal = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -59,12 +67,16 @@ namespace GettingStartedTree
       this.ctxMeterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuSortByName = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuSortByNumber = new System.Windows.Forms.ToolStripMenuItem();
-      this.textBox1 = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitMeter)).BeginInit();
+      this.splitMeter.Panel1.SuspendLayout();
+      this.splitMeter.Panel2.SuspendLayout();
+      this.splitMeter.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       this.menuTree.SuspendLayout();
       this.panel1.SuspendLayout();
@@ -82,7 +94,7 @@ namespace GettingStartedTree
       // 
       // splitContainer1.Panel1
       // 
-      this.splitContainer1.Panel1.Controls.Add(this.treeListView1);
+      this.splitContainer1.Panel1.Controls.Add(this.splitMeter);
       // 
       // splitContainer1.Panel2
       // 
@@ -92,6 +104,24 @@ namespace GettingStartedTree
       this.splitContainer1.SplitterWidth = 3;
       this.splitContainer1.TabIndex = 0;
       // 
+      // splitMeter
+      // 
+      this.splitMeter.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitMeter.Location = new System.Drawing.Point(0, 0);
+      this.splitMeter.Name = "splitMeter";
+      this.splitMeter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitMeter.Panel1
+      // 
+      this.splitMeter.Panel1.Controls.Add(this.treeListView1);
+      // 
+      // splitMeter.Panel2
+      // 
+      this.splitMeter.Panel2.Controls.Add(this.dataGridView1);
+      this.splitMeter.Size = new System.Drawing.Size(838, 416);
+      this.splitMeter.SplitterDistance = 339;
+      this.splitMeter.TabIndex = 6;
+      // 
       // treeListView1
       // 
       this.treeListView1.AllColumns.Add(this.olvName);
@@ -100,13 +130,15 @@ namespace GettingStartedTree
       this.treeListView1.AllColumns.Add(this.olvIp);
       this.treeListView1.AllColumns.Add(this.olvMeterFactory);
       this.treeListView1.AllColumns.Add(this.olvValue);
+      this.treeListView1.AllColumns.Add(this.olvRs);
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvName,
             this.olvDateTime,
             this.olvType,
             this.olvIp,
             this.olvMeterFactory,
-            this.olvValue});
+            this.olvValue,
+            this.olvRs});
       this.treeListView1.Cursor = System.Windows.Forms.Cursors.Default;
       this.treeListView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.treeListView1.FullRowSelect = true;
@@ -122,15 +154,16 @@ namespace GettingStartedTree
       this.treeListView1.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
       this.treeListView1.ShowFilterMenuOnRightClick = false;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(838, 416);
+      this.treeListView1.Size = new System.Drawing.Size(838, 339);
       this.treeListView1.SmallImageList = this.imageList1;
       this.treeListView1.TabIndex = 4;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
       this.treeListView1.VirtualMode = true;
+      this.treeListView1.SubItemChecking += new System.EventHandler<BrightIdeasSoftware.SubItemCheckingEventArgs>(this.treeListView1_SubItemChecking);
       this.treeListView1.ColumnRightClick += new BrightIdeasSoftware.ColumnRightClickEventHandler(this.treeListView1_ColumnRightClick);
       this.treeListView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.treeListView1_ColumnClick);
-      this.treeListView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.treeListView1_ItemSelectionChanged);
+      this.treeListView1.SelectedIndexChanged += new System.EventHandler(this.TreeListView1_SelectionChanged);
       this.treeListView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeListView1_MouseClick);
       this.treeListView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeListView1_MouseUp);
       // 
@@ -138,24 +171,27 @@ namespace GettingStartedTree
       // 
       this.olvName.AspectName = "name";
       this.olvName.CellPadding = null;
+      this.olvName.IsEditable = false;
       this.olvName.Sortable = false;
       this.olvName.Text = "Имя объекта";
-      this.olvName.Width = 316;
+      this.olvName.Width = 285;
       // 
       // olvDateTime
       // 
       this.olvDateTime.AspectName = "date_time";
       this.olvDateTime.CellPadding = null;
       this.olvDateTime.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvDateTime.IsEditable = false;
       this.olvDateTime.Sortable = false;
       this.olvDateTime.Text = "Дата и время";
       this.olvDateTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.olvDateTime.Width = 152;
+      this.olvDateTime.Width = 128;
       // 
       // olvType
       // 
       this.olvType.AspectName = "unit_type_id";
       this.olvType.CellPadding = null;
+      this.olvType.IsEditable = false;
       this.olvType.Sortable = false;
       this.olvType.Text = "Тип";
       // 
@@ -163,6 +199,7 @@ namespace GettingStartedTree
       // 
       this.olvIp.AspectName = "ip";
       this.olvIp.CellPadding = null;
+      this.olvIp.IsEditable = false;
       this.olvIp.Sortable = false;
       this.olvIp.Text = "IP адрес";
       this.olvIp.Width = 112;
@@ -172,6 +209,7 @@ namespace GettingStartedTree
       this.olvMeterFactory.AspectName = "meter_factory";
       this.olvMeterFactory.CellPadding = null;
       this.olvMeterFactory.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvMeterFactory.IsEditable = false;
       this.olvMeterFactory.Sortable = false;
       this.olvMeterFactory.Text = "Номер счетчика";
       this.olvMeterFactory.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -182,11 +220,21 @@ namespace GettingStartedTree
       this.olvValue.AspectName = "value";
       this.olvValue.CellPadding = null;
       this.olvValue.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvValue.IsEditable = false;
       this.olvValue.Sortable = false;
-      this.olvValue.Text = "Данные (на начало суток)";
+      this.olvValue.Text = "Данные";
       this.olvValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.olvValue.Width = 177;
+      this.olvValue.Width = 100;
       this.olvValue.WordWrap = true;
+      // 
+      // olvRs
+      // 
+      this.olvRs.AspectName = "rs_active";
+      this.olvRs.CellPadding = null;
+      this.olvRs.CheckBoxes = true;
+      this.olvRs.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvRs.Text = "Статистика RS485";
+      this.olvRs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // imageList1
       // 
@@ -195,7 +243,7 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(0, "ok");
       this.imageList1.Images.SetKeyName(1, "err");
       this.imageList1.Images.SetKeyName(2, "nav_down");
-      this.imageList1.Images.SetKeyName(3, "error");
+      this.imageList1.Images.SetKeyName(3, "warning");
       this.imageList1.Images.SetKeyName(4, "error");
       this.imageList1.Images.SetKeyName(5, "database_refresh.png");
       this.imageList1.Images.SetKeyName(6, "text.png");
@@ -204,6 +252,58 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(9, "excel_exports.png");
       this.imageList1.Images.SetKeyName(10, "error1");
       this.imageList1.Images.SetKeyName(11, "stop");
+      // 
+      // dataGridView1
+      // 
+      this.dataGridView1.AllowUserToAddRows = false;
+      this.dataGridView1.AllowUserToDeleteRows = false;
+      this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+      this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+      this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.status,
+            this.Name,
+            this.ip,
+            this.rs_active,
+            this.street_light});
+      this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+      this.dataGridView1.Name = "dataGridView1";
+      this.dataGridView1.RowHeadersVisible = false;
+      this.dataGridView1.Size = new System.Drawing.Size(838, 73);
+      this.dataGridView1.TabIndex = 5;
+      // 
+      // status
+      // 
+      this.status.FillWeight = 53.35477F;
+      this.status.HeaderText = "Активность";
+      this.status.Name = "status";
+      // 
+      // Name
+      // 
+      this.Name.FillWeight = 203.0457F;
+      this.Name.HeaderText = "Имя объекта";
+      this.Name.Name = "Name";
+      // 
+      // ip
+      // 
+      this.ip.FillWeight = 91.31186F;
+      this.ip.HeaderText = "Ip адрес";
+      this.ip.Name = "ip";
+      // 
+      // rs_active
+      // 
+      this.rs_active.FillWeight = 52.28768F;
+      this.rs_active.HeaderText = "Учет RS-485 в статистике";
+      this.rs_active.Name = "rs_active";
+      this.rs_active.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+      this.rs_active.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+      // 
+      // street_light
+      // 
+      this.street_light.HeaderText = "Уличное освещение";
+      this.street_light.Name = "street_light";
       // 
       // objectListView1
       // 
@@ -307,7 +407,6 @@ namespace GettingStartedTree
       // 
       // panel2
       // 
-      this.panel2.Controls.Add(this.textBox1);
       this.panel2.Controls.Add(this.monthPicker1);
       this.panel2.Controls.Add(this.button3);
       this.panel2.Controls.Add(this.panel3);
@@ -404,33 +503,29 @@ namespace GettingStartedTree
       this.ctxMenuSortByNumber.Text = "Сортировка по номеру ТП";
       this.ctxMenuSortByNumber.Click += new System.EventHandler(this.ctxMenuSortByNumber_Click);
       // 
-      // textBox1
-      // 
-      this.textBox1.Location = new System.Drawing.Point(202, 4);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(167, 20);
-      this.textBox1.TabIndex = 5;
-      this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-      // 
       // UlcTreeView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.panel1);
       this.Margin = new System.Windows.Forms.Padding(2);
-      this.Name = "UlcTreeView";
+      //this.Name = "UlcTreeView";
       this.Size = new System.Drawing.Size(1083, 459);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
+      this.splitMeter.Panel1.ResumeLayout(false);
+      this.splitMeter.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitMeter)).EndInit();
+      this.splitMeter.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
       this.menuTree.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.panel2.ResumeLayout(false);
-      this.panel2.PerformLayout();
       this.ctxMeterMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
@@ -466,6 +561,13 @@ namespace GettingStartedTree
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByName;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuSortByNumber;
     private UlcWin.ui.MonthPicker monthPicker1;
-    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.DataGridView dataGridView1;
+    private System.Windows.Forms.SplitContainer splitMeter;
+    private System.Windows.Forms.DataGridViewImageColumn status;
+    private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+    private System.Windows.Forms.DataGridViewTextBoxColumn ip;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn rs_active;
+    private System.Windows.Forms.DataGridViewTextBoxColumn street_light;
+    private BrightIdeasSoftware.OLVColumn olvRs;
   }
 }
