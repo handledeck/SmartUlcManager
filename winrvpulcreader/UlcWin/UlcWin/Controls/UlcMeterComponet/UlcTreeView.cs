@@ -2,6 +2,7 @@
 using InterUlc.Db;
 using ServiceStack.OrmLite;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,6 +35,8 @@ namespace GettingStartedTree
     List<ValueDateTime> __valueDateTimes = new List<ValueDateTime>();
     UlcWin.LoadForm __loadForm = null;
     internal StatusStrip __statusStrip;
+    List<TreeListNodeModel> __search_model;
+    int sort_column_num = 0;
     public UlcTreeView()
     {
       InitializeComponent();
@@ -52,7 +55,7 @@ namespace GettingStartedTree
       textOverlay1.BorderWidth = 0.0f;
       textOverlay1.Font = new Font("Chiller", 36);
       textOverlay1.Rotation = 0;
-      this.treeListView1.SetObjects(__treeNodes);
+      //this.treeListView1.SetObjects(__treeNodes);
       this.objectListView1.SetObjects(__valueDateTimes);
       this.objectListView1.EmptyListMsg = "Нет данных для просмотра";
       this.objectListView1.EmptyListMsgFont = new Font("Tahoma", 10);
@@ -61,8 +64,10 @@ namespace GettingStartedTree
       //this.treeListView1.SelectionChanged += TreeListView1_SelectionChanged;
       // HeaderControl h = new HeaderControl(this.treeListView1);
       splitMeter.Panel2Collapsed = true;
+      
     }
 
+    
     public void SetValue(string connection, int parent_id)
     {
       this.__connection = connection;
@@ -273,19 +278,37 @@ namespace GettingStartedTree
 
           __treeNodes.Add(item.Value);
         }
-        this.treeListView1.SetObjects(__treeNodes);
+        this.__search_model = new List<TreeListNodeModel>();
+        this.__search_model.AddRange(__treeNodes.ToArray());
+        this.treeListView1.SetObjects(__search_model.ToArray());
         ResetDelegate();
         if (__treeNodes.Count == 0)
         {
           this.button1.Enabled = false;
           this.button2.Enabled = false;
           this.button3.Enabled = false;
+          this.label1.Enabled = false;
+          this.textBox1.Enabled = false;
+          this.treeListView1.ContextMenuStrip = null;
         }
         else
         {
           this.button1.Enabled = true;
           this.button2.Enabled = true;
           this.button3.Enabled = true;
+          this.label1.Enabled = true;
+          this.textBox1.Enabled = true;
+          this.treeListView1.ContextMenuStrip = this.menuTree;
+          this.textBox1.Text = "";
+
+          if (this.sortOrder == SortOrder.Ascending)
+          {
+            this.sortOrder = SortOrder.Descending;
+          }
+          else if (this.sortOrder == SortOrder.Descending) {
+            this.sortOrder = SortOrder.Ascending;
+          }
+          this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(sort_column_num));
         }
       }
       catch (Exception ex)
@@ -481,6 +504,34 @@ namespace GettingStartedTree
         //}
 
 
+      };
+
+      this.olvTp.AspectToStringConverter = delegate (object x)
+      {
+        string name = (string)x;
+        string[] aTp = name.Split(',');
+        if (aTp.Length == 3)
+        {
+          return aTp[2].Trim();
+        }
+        else
+        {
+          return "---";
+        }
+      };
+
+      this.olvName.AspectToStringConverter = delegate (object x)
+      {
+        string name = (string)x;
+        string[] aTp = name.Split(',');
+        if (aTp.Length == 3)
+        {
+          return string.Format("{0}({1})",aTp[0].Trim(),aTp[1].Trim());
+        }
+        else
+        {
+          return aTp[0];
+        }
       };
 
       this.olvDateTime.AspectToStringConverter = delegate (object x)
@@ -688,7 +739,7 @@ namespace GettingStartedTree
         bool add = false;
         foreach (var it in model.Nodes)
         {
-          if (!it.is_true)
+          if (!it.is_true && it.rs_active)
           {
             if (!add)
             {
@@ -909,20 +960,23 @@ namespace GettingStartedTree
 
     }
 
-    private void treeListView1_MouseUp(object sender, MouseEventArgs e)
-    {
-      if (this.treeListView1.Items.Count > 0)
-      {
-        if (e.Button == MouseButtons.Right)
-        {
-          this.menuTree.Visible = true;
-        }
-        else
-        {
-          this.menuTree.Visible = false;
-        }
-      }
-    }
+    //private void treeListView1_MouseUp(object sender, MouseEventArgs e)
+    //{
+    //  if (this.treeListView1.Items.Count > 0)
+    //  {
+    //    if (e.Button == MouseButtons.Right)
+    //    {
+    //      this.menuTree.Visible = true;
+    //    }
+    //    else
+    //    {
+    //      this.menuTree.Visible = false;
+    //    }
+    //  }
+    //  else {
+    //    this.menuTree.Visible = false;
+    //  }
+    //}
 
     private void menuTreeUpdate_Click(object sender, EventArgs e)
     {
@@ -994,7 +1048,7 @@ namespace GettingStartedTree
               float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
               if (ex == null && value.HasValue)
               {
-                item.value = value.Value;
+                item.value =Math.Round(value.Value,2);
                 item.is_true = true;
                 item.updated = true;
                 item.date_time = DateTime.Now;
@@ -1011,7 +1065,7 @@ namespace GettingStartedTree
               float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
               if (exp == null && value.HasValue)
               {
-                item.value = value.Value;
+                item.value = Math.Round(value.Value,2);
                 item.is_true = true;
                 item.updated = true;
                 item.date_time = DateTime.Now;
@@ -1109,252 +1163,518 @@ namespace GettingStartedTree
 
     private void treeListView1_MouseClick(object sender, MouseEventArgs e)
     {
-      ListViewExtensions.SetSortIcon(this.treeListView1, 1, SortOrder.Ascending);
+      //ListViewExtensions.SetSortIcon(this.treeListView1, 1, SortOrder.Ascending);
       if (e.Button == MouseButtons.Right)
       {
+        if (this.treeListView1.Items.Count ==0)
+        {
+          this.menuTree.Hide();
+        }
         //Control p = this.GetChildAtPoint(e.Location);
-        this.menuTree.Show(Cursor.Position);
+        //this.menuTree.Show(Cursor.Position);
       }
     }
 
     private void ctxMenuSortByName_Click(object sender, EventArgs e)
     {
-      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
-      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
-      mItemNum.Checked = false;
-      mItemObj.Checked = true;
-      this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(0));
+      //ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
+      //ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
+      //mItemNum.Checked = false;
+      //mItemObj.Checked = true;
+      //this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(0));
     }
 
     private void ctxMenuSortByNumber_Click(object sender, EventArgs e)
     {
-      ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
-      ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
-      mItemNum.Checked = true;
-      mItemObj.Checked = false;
-      this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(0));
+      //ToolStripMenuItem mItemNum = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByNumber"];
+      //ToolStripMenuItem mItemObj = (ToolStripMenuItem)ctxMeterMenu.Items["ctxMenuSortByName"];
+      //mItemNum.Checked = true;
+      //mItemObj.Checked = false;
+      //this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(0));
     }
 
-    //SortOrder __sortOrder = SortOrder.None;
-
-    private void treeListView1_ColumnClick(object sender, ColumnClickEventArgs e)
+    SortOrder __sortOrder = SortOrder.None;
+    
+    class comp : IComparer<TreeListNodeModel>
     {
       SortOrder sortOrder = SortOrder.None;
-      if (this.treeListView1.Items.Count == 0)
-        return;
-      if (this.treeListView1.Columns[e.Column].Tag == null)
+      UlcSort ulcSort = UlcSort.NAME;
+      public comp(SortOrder sortOrder, UlcSort ulcSort)
       {
-        this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
-        sortOrder = SortOrder.Ascending;
-        // __sortOrder = SortOrder.Ascending;
+        this.sortOrder = sortOrder;
+        this.ulcSort = ulcSort;
       }
-      else
-      {
-        sortOrder = (SortOrder)this.treeListView1.Columns[e.Column].Tag;
-        if (sortOrder == SortOrder.Ascending)
+
+      int ParceTp(string x, string y) {
+
+        Regex reg = new Regex(@"\d+$");
+        Match match = reg.Match(x.TrimEnd());
+        Match match1 = reg.Match(y.TrimEnd());
+        if (match.Success && match1.Success)
         {
-          this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
-        }
-        else
-        {
-          this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
-        }
-      }
-      if (e.Column == 0)
-      {
-        if (this.ctxMenuSortByName.Checked)
-        {
-          __treeNodes.Sort((a, b) =>
+          int fInt = 0;
+          int sInt = 0;
+          bool fb = int.TryParse(match.Value, out fInt);
+          bool sb = int.TryParse(match1.Value, out sInt);
+
+          if (!fb && !sb)
           {
+            return -1;
+          }
+          else
+          {
+            if (fInt == sInt)
+              return 0;
             if (sortOrder == SortOrder.Ascending)
             {
-              return a.name.CompareTo(b.name);
+              if (fInt > sInt)
+                return 1;
+              else return -1;
             }
             else
             {
-              return b.name.CompareTo(a.name);
+              if (fInt < sInt)
+                return 1;
+              else return -1;
             }
-          });
-        }
-        else if (this.ctxMenuSortByNumber.Checked)
-        {
-          try
-          {
-            __treeNodes.Sort((a, b) =>
-            {
-              if (a == null || b == null)
-                return -1;
-              Regex reg = new Regex(@"\d+$");
-              Match match = reg.Match(a.name.TrimEnd());
-              Match match1 = reg.Match(b.name.TrimEnd());
-              if (match.Success && match1.Success)
-              {
-                int fInt = 0;
-                int sInt = 0;
-                bool fb = int.TryParse(match.Value, out fInt);
-                bool sb = int.TryParse(match1.Value, out sInt);
-                if (!fb && !sb)
-                {
-                  return -1;
-                }
-
-                if (sortOrder == SortOrder.Ascending)
-                {
-                  if (fInt == sInt)
-                    return 0;
-                  if (fInt > sInt)
-                    return 1;
-                  else return -1;
-
-                }
-                else
-                {
-                  if (fInt == sInt)
-                    return 0;
-                  if (fInt < sInt)
-                    return 1;
-                  else return -1;
-                }
-              }
-              return -1;
-            });
           }
-          catch { }
+        }
+        return 0;
+      }
+
+      public int CompareDateTime(DateTime? dtF, DateTime? dtS)
+      {
+        //DateTime dtF;
+        //DateTime dtS;
+        //bool bF = DateTime.TryParse(first, out dtF);
+        //bool bS = DateTime.TryParse(second, out dtS);
+        ////DateTime fst = DateTime.Parse(first);
+        ////DateTime scd = DateTime.Parse(second);
+        //if (!bF || !bS)
+        //  return 0;
+        if (dtF == dtS)
+          return 0;
+        if (dtF > dtS)
+          return 1;
+        return -1;
+      }
+
+      public int CompareIpAddresses(System.Net.IPAddress first, System.Net.IPAddress second)
+      {
+        var int1 = this.ToUint32(first);
+        var int2 = this.ToUint32(second);
+        if (int1 == int2)
+          return 0;
+        if (this.sortOrder == SortOrder.Ascending)
+        {
+          if (int1 > int2)
+            return 1;
+        }
+        else if (this.sortOrder == SortOrder.Descending)
+        {
+          if (int1 < int2)
+            return 1;
+        }
+        return -1;
+      }
+
+      public int Compare(TreeListNodeModel x, TreeListNodeModel y)
+      {
+        if (x == null || y == null)
+          return 0; ;
+        if (ulcSort == UlcSort.DATETIME)
+          return CompareDateTime(x.date_time, y.date_time);
+        else if (ulcSort == UlcSort.IP)
+          return CompareIpAddresses(System.Net.IPAddress.Parse(x.ip), System.Net.IPAddress.Parse(y.ip));
+        else if (ulcSort == UlcSort.TP)
+          return ParceTp(x.name, y.name);
+        else if (ulcSort == UlcSort.CONTROLER_TYPE) {
+          return CompareControllerType(x, y);
+        }
+        //switch (ulcSort)
+        //{
+        //  case UlcSort.IP:
+        //    return CompareTp(x.ip, y.ip);
+        //  case UlcSort.DATETIME:
+        //    CompareDateTime(x.date_time, y.date_time);
+        //    break;
+        //  case UlcSort.TP:
+        //    return ParceTp(x.name, y.name);
+
+          //}
+        return 0;
+      }
+
+      public int CompareControllerType(TreeListNodeModel x, TreeListNodeModel y) {
+        try
+        {
+          if (x.unit_type_id == y.unit_type_id)
+            return 0;
+          if (this.sortOrder == SortOrder.Ascending)
+          {
+            if (x.unit_type_id > y.unit_type_id)
+              return 1;
+          }
+          else if (this.sortOrder == SortOrder.Descending)
+          {
+            if (x.unit_type_id < y.unit_type_id)
+              return 1;
+          }
+          return -1;
+        }
+        catch (Exception)
+        {
+
+          return -1;
+        }
+       
+      }
+
+      public uint ToUint32(System.Net.IPAddress ipAddress)
+      {
+        var bytes = ipAddress.GetAddressBytes();
+
+        return ((uint)(bytes[0] << 24)) |
+               ((uint)(bytes[1] << 16)) |
+               ((uint)(bytes[2] << 8)) |
+               ((uint)(bytes[3]));
+      }
+    }
+
+
+    SortOrder sortOrder = SortOrder.None;
+    private void treeListView1_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+      
+      if (e.Column>4)
+      {
+        NativeListView.SetColumnImage(this.treeListView1, sort_column_num, SortOrder.None, -1);
+        return;
+      }
+      //sortOrder = SortOrder.None;
+      var clTag = this.treeListView1.Columns[e.Column].Tag;
+      if (clTag != null)
+      {
+        sortOrder = (SortOrder)clTag;
+      }
+      else {
+        sortOrder = SortOrder.Ascending;
+        this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      }
+      if (e.Column == 0)
+      {
+        if (sortOrder == SortOrder.Ascending)
+        {
+          __treeNodes = __treeNodes.OrderBy(x => x.name).ToList();
+        }
+        else if (sortOrder == SortOrder.Descending)
+        {
+          __treeNodes = __treeNodes.OrderByDescending(x => x.name).ToList();
         }
       }
       else if (e.Column == 1)
       {
-        sortOrder = (SortOrder)this.treeListView1.Columns[e.Column].Tag;
         if (sortOrder == SortOrder.Ascending)
         {
-          try
-          {
-            __treeNodes.Sort((a, b) =>
-        {
-
-          if (a.date_time > b.date_time)
-          {
-            return 1;
-          }
-          else if (a.date_time == b.date_time)
-            return 0;
-          else
-            return -1;
-        });
-          }
-          catch (Exception exx)
-          {
-            throw;
-          }
-
+          __treeNodes.Sort(new comp(SortOrder.Ascending, UlcSort.TP));
         }
         else
         {
-          try
-          {
-            __treeNodes.Sort((a, b) =>
-          {
-
-            if (a.date_time < b.date_time)
-            {
-              return 1;
-            }
-            else if (a.date_time == b.date_time)
-              return 0;
-            else
-              return -1;
-          });
-          }
-          catch (Exception exp)
-          {
-          }
+          __treeNodes.Sort(new comp(SortOrder.Descending, UlcSort.TP));
         }
+
       }
       else if (e.Column == 2)
       {
-        try
+        if (sortOrder == SortOrder.Ascending)
         {
-          __treeNodes.Sort((a, b) =>
-          {
-            if (sortOrder == SortOrder.Ascending)
-            {
-              if (a.unit_type_id < b.unit_type_id)
-              {
-                return 1;
-              }
-              else if (a.unit_type_id == b.unit_type_id)
-                return 0;
-              else
-                return -1;
-            }
-            else
-            {
-              if (a.unit_type_id > b.unit_type_id)
-              {
-                return 1;
-              }
-              else if (a.unit_type_id == b.unit_type_id)
-                return 0;
-              else
-                return -1;
-            }
-          });
+          __treeNodes = __treeNodes.OrderBy(x => x.date_time).ToList();
         }
-        catch { }
+        else
+        {
+          __treeNodes = __treeNodes.OrderByDescending(x => x.date_time).ToList();
+        }
+      }
+      else if (e.Column == 4)
+      {
+          __treeNodes.Sort(new comp(sortOrder, UlcSort.IP));
       }
       else if (e.Column == 3)
       {
-        __treeNodes.Sort((a, b) =>
-        {
-          try
-          {
-            if (a != null && b != null)
-            {
-
-              System.Net.IPAddress ipOne = System.Net.IPAddress.Parse(a.ip);
-              System.Net.IPAddress ipTwo = System.Net.IPAddress.Parse(b.ip);
-              var int1 = this.ToUint32(ipOne);
-              var int2 = this.ToUint32(ipTwo);
-              if (int1 == int2)
-                return 0;
-              if (sortOrder == SortOrder.Ascending)
-              {
-                if (int1 > int2)
-                  return 1;
-              }
-              else if (sortOrder == SortOrder.Descending)
-              {
-                if (int2 > int1)
-                  return 1;
-              }
-              else
-                return -1;
-            }
-            return -1;
-          }
-          catch (Exception)
-          {
-            return -1;
-          }
-
-        });
+        __treeNodes.Sort(new comp(sortOrder, UlcSort.CONTROLER_TYPE));
       }
-
-      //if (__sortOrder == SortOrder.Ascending)
+      //__treeNodes.Sort(new comp(sortOrder));
+      this.treeListView1.SetObjects(__treeNodes);
+      if (sortOrder == SortOrder.Ascending)
+      {
+        NativeListView.SetColumnImage(this.treeListView1, e.Column, SortOrder.Descending, 1);
+        this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+      }
+      else
+      {
+        NativeListView.SetColumnImage(this.treeListView1, e.Column, SortOrder.Ascending, 1);
+        this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      }
+      if (sort_column_num != e.Column)
+      {
+        NativeListView.SetColumnImage(this.treeListView1, sort_column_num, SortOrder.None, -1);
+      }
+      //if (e.Column == 1 || e.Column == 4)
       //{
-      //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+
+      //  //__treeNodes.Sort(new comp(__sortOrder));
+
+      //  //this.treeListView1.SetObjects(__treeNodes);
+      //  //this.treeListView1.Update();
+      //  if(this.treeListView1.Columns[e.Column].Tag)
+      //  NativeListView.SetColumnImage(this.treeListView1, e.Column, __sortOrder, 1);
+      //}
+      // NativeListView.SetColumnImage(this.treeListView1, e.Column, __sortOrder, 1);
+      sort_column_num = e.Column;
+
+
+      // // listView.Tag
+
+      //}
+      //else if (e.Column == 4)
+      //{
+
+
+      //  ListView listView = (ListView)this.treeListView1;
+
+      //  //listView.Tag
+
+      //}
+
+      //ListView listView = (ListView)this.treeListView1;
+      ////listView.Columns[e.Column].t
+      //if (e.Column == 0) {
+      //  if (__sortOrder == SortOrder.None)
+      //    __sortOrder = SortOrder.Ascending;
+
+      //NativeListView.SetColumnImage(this.treeListView1, e.Column, __sortOrder, 0);
+      //}
+      //this.treeListView1.CustomSorter = delegate (OLVColumn column, SortOrder order) {
+      //  int x = 0;
+      //  //this.incidentListView.ListViewItemSorter = new ColumnComparer(
+      //  //        this.isEmergencyColumn, SortOrder.Descending, column, order);
+      //};
+      //SortOrder sortOrder = SortOrder.None;
+      //if (this.treeListView1.Items.Count == 0)
+      //  return;
+      //if (this.treeListView1.Columns[e.Column].Tag == null)
+      //{
+      //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //  sortOrder = SortOrder.Ascending;
+      //  // __sortOrder = SortOrder.Ascending;
       //}
       //else
       //{
-      //  this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //  sortOrder = (SortOrder)this.treeListView1.Columns[e.Column].Tag;
+      //  if (sortOrder == SortOrder.Ascending)
+      //  {
+      //    this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+      //  }
+      //  else
+      //  {
+      //    this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      //  }
+      //}
+      //if (e.Column == 0)
+      //{
+      //  if (this.ctxMenuSortByName.Checked)
+      //  {
+      //    __treeNodes.Sort((a, b) =>
+      //    {
+      //      if (sortOrder == SortOrder.Ascending)
+      //      {
+      //        return a.name.CompareTo(b.name);
+      //      }
+      //      else
+      //      {
+      //        return b.name.CompareTo(a.name);
+      //      }
+      //    });
+      //  }
+      //  else if (this.ctxMenuSortByNumber.Checked)
+      //  {
+      //    try
+      //    {
+      //      __treeNodes.Sort((a, b) =>
+      //      {
+      //        if (a == null || b == null)
+      //          return -1;
+      //        Regex reg = new Regex(@"\d+$");
+      //        Match match = reg.Match(a.name.TrimEnd());
+      //        Match match1 = reg.Match(b.name.TrimEnd());
+      //        if (match.Success && match1.Success)
+      //        {
+      //          int fInt = 0;
+      //          int sInt = 0;
+      //          bool fb = int.TryParse(match.Value, out fInt);
+      //          bool sb = int.TryParse(match1.Value, out sInt);
+      //          if (!fb && !sb)
+      //          {
+      //            return -1;
+      //          }
+
+      //          if (sortOrder == SortOrder.Ascending)
+      //          {
+      //            if (fInt == sInt)
+      //              return 0;
+      //            if (fInt > sInt)
+      //              return 1;
+      //            else return -1;
+
+      //          }
+      //          else
+      //          {
+      //            if (fInt == sInt)
+      //              return 0;
+      //            if (fInt < sInt)
+      //              return 1;
+      //            else return -1;
+      //          }
+      //        }
+      //        return -1;
+      //      });
+      //    }
+      //    catch { }
+      //  }
+      //}
+      //else if (e.Column == 1)
+      //{
+      //  sortOrder = (SortOrder)this.treeListView1.Columns[e.Column].Tag;
+      //  if (sortOrder == SortOrder.Ascending)
+      //  {
+      //    try
+      //    {
+      //      __treeNodes.Sort((a, b) =>
+      //  {
+
+      //    if (a.date_time > b.date_time)
+      //    {
+      //      return 1;
+      //    }
+      //    else if (a.date_time == b.date_time)
+      //      return 0;
+      //    else
+      //      return -1;
+      //  });
+      //    }
+      //    catch (Exception exx)
+      //    {
+      //      throw;
+      //    }
+
+      //  }
+      //  else
+      //  {
+      //    try
+      //    {
+      //      __treeNodes.Sort((a, b) =>
+      //    {
+
+      //      if (a.date_time < b.date_time)
+      //      {
+      //        return 1;
+      //      }
+      //      else if (a.date_time == b.date_time)
+      //        return 0;
+      //      else
+      //        return -1;
+      //    });
+      //    }
+      //    catch (Exception exp)
+      //    {
+      //    }
+      //  }
+      //}
+      //else if (e.Column == 2)
+      //{
+      //  try
+      //  {
+      //    __treeNodes.Sort((a, b) =>
+      //    {
+      //      if (sortOrder == SortOrder.Ascending)
+      //      {
+      //        if (a.unit_type_id < b.unit_type_id)
+      //        {
+      //          return 1;
+      //        }
+      //        else if (a.unit_type_id == b.unit_type_id)
+      //          return 0;
+      //        else
+      //          return -1;
+      //      }
+      //      else
+      //      {
+      //        if (a.unit_type_id > b.unit_type_id)
+      //        {
+      //          return 1;
+      //        }
+      //        else if (a.unit_type_id == b.unit_type_id)
+      //          return 0;
+      //        else
+      //          return -1;
+      //      }
+      //    });
+      //  }
+      //  catch { }
+      //}
+      //else if (e.Column == 3)
+      //{
+      //  __treeNodes.Sort((a, b) =>
+      //  {
+      //    try
+      //    {
+      //      if (a != null && b != null)
+      //      {
+
+      //        System.Net.IPAddress ipOne = System.Net.IPAddress.Parse(a.ip);
+      //        System.Net.IPAddress ipTwo = System.Net.IPAddress.Parse(b.ip);
+      //        var int1 = this.ToUint32(ipOne);
+      //        var int2 = this.ToUint32(ipTwo);
+      //        if (int1 == int2)
+      //          return 0;
+      //        if (sortOrder == SortOrder.Ascending)
+      //        {
+      //          if (int1 > int2)
+      //            return 1;
+      //        }
+      //        else if (sortOrder == SortOrder.Descending)
+      //        {
+      //          if (int2 > int1)
+      //            return 1;
+      //        }
+      //        else
+      //          return -1;
+      //      }
+      //      return -1;
+      //    }
+      //    catch (Exception)
+      //    {
+      //      return -1;
+      //    }
+
+      //  });
       //}
 
-      this.treeListView1.SetObjects(__treeNodes);
-      if (e.Column == 0 || e.Column == 1 || e.Column == 2 || e.Column == 3)
-      {
-        NativeListView.SetColumnImage(this.treeListView1, e.Column, sortOrder, 0);
+      ////if (__sortOrder == SortOrder.Ascending)
+      ////{
+      ////  this.treeListView1.Columns[e.Column].Tag = SortOrder.Descending;
+      ////}
+      ////else
+      ////{
+      ////  this.treeListView1.Columns[e.Column].Tag = SortOrder.Ascending;
+      ////}
 
-      }// this.treeListView1.Columns[e.Column].Tag = sortOrder;
+      //this.treeListView1.SetObjects(__treeNodes);
+      //if (e.Column == 0 || e.Column == 1 || e.Column == 2 || e.Column == 3)
+      //{
+      //  NativeListView.SetColumnImage(this.treeListView1, e.Column, sortOrder, 0);
+
+      //}// this.treeListView1.Columns[e.Column].Tag = sortOrder;
     }
 
     public uint ToUint32(System.Net.IPAddress ipAddress)
@@ -1369,7 +1689,7 @@ namespace GettingStartedTree
 
     private void treeListView1_ColumnRightClick(object sender, ColumnClickEventArgs e)
     {
-      this.ctxMeterMenu.Show(Cursor.Position);
+     // this.ctxMeterMenu.Show(Cursor.Position);
     }
 
     private void MeterValueChnged(object sender, EventArgs e)
@@ -1408,6 +1728,38 @@ namespace GettingStartedTree
       else {
         e.NewValue = e.CurrentValue;
       }
+    }
+
+    private void textBox1_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void treeListView1_AfterSorting(object sender, AfterSortingEventArgs e)
+    {
+      __sortOrder = e.SortOrder;
+    }
+
+    
+
+    private void textBox1_TextChanged_1(object sender, EventArgs e)
+    {
+      
+      
+        //TreeListNodeModel[] treeListNodeModels = (from TreeListNodeModel item in this.__search_model select (TreeListNodeModel)item).ToArray();
+       
+      //__treeNodes.AddRange(treeListNodeModels);
+      
+
+      TreeListNodeModel[] listViewItem = __search_model.Where(i => string.IsNullOrEmpty(this.textBox1.Text) ||
+       i.name.Contains(this.textBox1.Text) ||
+       i.ip.Contains(this.textBox1.Text)).Select(c => c).ToArray();
+      __treeNodes.Clear();
+      __treeNodes.AddRange(listViewItem);
+      this.treeListView1.SetObjects(__treeNodes);
+       //i.date_time.Value.Contains(this.textBox1.Text)).Select(c => c).ToArray();
+      //LstViewItm.Items.AddRange(listViewItem);
+      
     }
   }
 }

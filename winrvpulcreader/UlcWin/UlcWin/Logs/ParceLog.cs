@@ -99,5 +99,18 @@ namespace InterUlc.Logs
       
 
     }
+
+    public static uint rtc_calendar_time_to_register_value(DateTime dateTime)
+    {
+      uint register_value;
+      register_value = (uint)((dateTime.Year - 2000) << 26);
+      register_value |= (uint)(dateTime.Month<< 22);
+      register_value |= (uint)(dateTime.Day << 17);
+      register_value |= (uint)((dateTime.Hour) << 12);
+      register_value |= (uint)(dateTime.Minute << 6);
+      register_value |= (uint)(dateTime.Second << 0);
+      return register_value;
+    }
+
   }
 }

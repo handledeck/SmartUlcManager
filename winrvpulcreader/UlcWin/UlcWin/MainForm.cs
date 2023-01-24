@@ -82,10 +82,11 @@ namespace UlcWin
       //dtCtlCbBox.Margin = new Padding(0, 0, 10, 0);
       //dtCtlCbBox.Alignment = ToolStripItemAlignment.Right;
       //this.tsResView.Items.Insert(1, dtCtlCbBox);
-      ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.__tsAutoCompleteCmb);
-      dtCtrlCbFind.Alignment = ToolStripItemAlignment.Left;
-      dtCtrlCbFind.Margin = new Padding(10, 0, 0, 0);
-      this.tsResView.Items.Insert(8, dtCtrlCbFind);
+      //ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.__tsAutoCompleteCmb);
+      //ToolStripControlHost dtCtrlCbFind = new ToolStripControlHost(this.textBox1);
+      //dtCtrlCbFind.Alignment = ToolStripItemAlignment.Left;
+      //dtCtrlCbFind.Margin = new Padding(10, 0, 0, 0);
+      //this.tsResView.Items.Insert(8, dtCtrlCbFind);
       //this.__tsAutoCompleteCmb.Visible = false;
       this.tsEvent.Items.Insert(1, dtCtl);
       this.tsEvent.Enabled = false;
@@ -810,7 +811,8 @@ namespace UlcWin
         __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,
           __sel_node.Text);
         this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
-
+        __its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
+        this.tsFilterText.Text = "";
         this.tsMnuTreeAddItem.Enabled = false;
         this.tsTreeBtnAdd.Enabled = false;
         if (this.LstViewItm.Items.Count == 0)
@@ -1594,7 +1596,7 @@ namespace UlcWin
           if (!uc.SVERS.StartsWith("1.7.9"))
           {
             selItem.UseItemStyleForSubItems = false;
-            selItem.SubItems[5].ForeColor = Color.Red;
+            selItem.SubItems[6].ForeColor = Color.Red;
           }
           else
           {
@@ -1602,9 +1604,9 @@ namespace UlcWin
           }
         }
       }
-      selItem.SubItems[5].Text = uc.SVERS;
+      selItem.SubItems[6].Text = uc.SVERS;
       //si[0].SubItems[6].Text = signal.ToString() + " dBm";
-      ListViewItem.ListViewSubItem sit = selItem.SubItems[6];
+      ListViewItem.ListViewSubItem sit = selItem.SubItems[7];
       sit.Text = signal.ToString() + " dBm";
       if (signal <= -100)
       {
@@ -1617,15 +1619,15 @@ namespace UlcWin
         //selItem.UseItemStyleForSubItems = true;
       }
       DateTime? dtr = ParceLog.rtc_calendar_time_to_register_value(uc.FMW);
-      selItem.SubItems[7].Text = dtr != null ? ((DateTime)dtr).ToString("dd-MM-yyyy HH:mm:ss") : "----";
+      selItem.SubItems[8].Text = dtr != null ? ((DateTime)dtr).ToString("dd-MM-yyyy HH:mm:ss") : "----";
       string lvl = Log.ParceLevel(uc.LOGSLVL);
       if (sItem.UType == 1)
       {
-        selItem.SubItems[8].Text = lvl;
+        selItem.SubItems[9].Text = lvl;
       }
       else
       {
-        selItem.SubItems[8].Text = "нет";
+        selItem.SubItems[9].Text = "нет";
       }
 
       string it_core = "----";
@@ -1643,22 +1645,22 @@ namespace UlcWin
           it_core = "ok";
         }
       }
-      selItem.SubItems[9].Text = it_core;
+      selItem.SubItems[10].Text = it_core;
       if (!string.IsNullOrEmpty(uc.IMEI))
-        selItem.SubItems[10].Text = uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8);
+        selItem.SubItems[11].Text = uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8);
       else
-        selItem.SubItems[10].Text = "----";
+        selItem.SubItems[11].Text = "----";
 
-      selItem.SubItems[11].Text = uc.RAS.ToString();
+      selItem.SubItems[12].Text = uc.RAS.ToString();
       if (sItem.UType == 1)
       {
-        selItem.SubItems[12].Text = ((uc.CDIN >> 7).ToString());
+        selItem.SubItems[13].Text = ((uc.CDIN >> 7).ToString());
       }
       else
       {
-        selItem.SubItems[12].Text = "нет";
+        selItem.SubItems[14].Text = "нет";
       }
-      selItem.SubItems[13].Text = (((double)(uc.TRAFC / 1024)).ToString() + " KB");
+      selItem.SubItems[14].Text = (((double)(uc.TRAFC / 1024)).ToString() + " KB");
     }
 
     ListViewItem GetSelectedRow()
@@ -1756,7 +1758,7 @@ namespace UlcWin
             ++notTrue;
         }
 
-        string[] sig = item.SubItems[6].Text.Split(' ');
+        string[] sig = item.SubItems[7].Text.Split(' ');
         if (sig.Length > 0)
         {
           int n = 0;
@@ -1772,7 +1774,7 @@ namespace UlcWin
           this.tsStsRssBad.Visible = true;
           this.tsStsIMEI.Visible = true;
           int num;
-          bool rs = int.TryParse(item.SubItems[12].Text, out num);
+          bool rs = int.TryParse(item.SubItems[13].Text, out num);
           if (rs)
           {
 
@@ -1782,7 +1784,7 @@ namespace UlcWin
                 rsBad++;
               }
           }
-          string imai = item.SubItems[10].Text;
+          string imai = item.SubItems[11].Text;
           if (!string.IsNullOrEmpty(imai))
           {
             long im_num;
@@ -2422,17 +2424,19 @@ namespace UlcWin
           sorter.UsbSorting = UlcSort.IP;
         else if (e.Column == 0)
           sorter.UsbSorting = UlcSort.DATETIME;
-        else if (e.Column == 6)
+        else if (e.Column == 7)
         {
           sorter.UsbSorting = UlcSort.SIGNAL;
         }
-        else if (e.Column == 13) {
+        else if (e.Column == 14) {
           sorter.UsbSorting = UlcSort.TRAFFIC;
         }
         else if (e.Column == 1)
           sorter.UsbSorting = UlcSort.DEFAULT;
         else if (e.Column == 2)
           sorter.UsbSorting = UlcSort.TP;
+        else if (e.Column == 13)
+          sorter.UsbSorting = UlcSort.RS;
         else
           sorter.UsbSorting = UlcSort.DEFAULT;
         //selCoumn = e.Column;
@@ -3480,10 +3484,10 @@ namespace UlcWin
         ItemIp itemIp = (ItemIp)item.Tag;
         if (itemIp.Active == 1 && itemIp.Rs_Stat==1)
         {
-          int.TryParse(item.SubItems[12].Text.Trim(), out res485);
+          int.TryParse(item.SubItems[13].Text.Trim(), out res485);
           if (res485 != 1)
           {
-            Meters[] mtr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(item.SubItems[19].Text, typeof(Meters[]));
+            Meters[] mtr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(itemIp.Meters, typeof(Meters[]));
             ItemCallBack li = new ItemCallBack(item);
             if (li.meters == null)
               li.meters = new List<Meters>();
@@ -3631,20 +3635,39 @@ namespace UlcWin
       //  tsBtnEventShowHide.ToolTipText = "Показать панель событий";
       //}
     }
+    ListViewItem[] __its_parent;
+    private void textBox1_TextChanged(object sender, EventArgs e)
+    {
+      //if (__its_parent == null)
+      //{
+      //  __its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
+      //}
 
-  
-
+      ListViewItem[] listViewItem = __its_parent.Where(i => string.IsNullOrEmpty(tsFilterText.Text) ||
+       i.SubItems[0].Text.Contains(tsFilterText.Text) ||
+       i.SubItems[1].Text.Contains(tsFilterText.Text) ||
+        i.SubItems[2].Text.Contains(tsFilterText.Text) ||
+        i.SubItems[3].Text.Contains(tsFilterText.Text)).Select(c => c).ToArray();
+      LstViewItm.BeginUpdate();
+      LstViewItm.Items.Clear();
+      LstViewItm.Items.AddRange(listViewItem);
+      LstViewItm.EndUpdate();
+      //// LstViewItm.Items.AddRange(/*c => new ListViewItem(new string[] { c.SubItems[0].Text,c.SubItems[1].Text}));.ToArray());*/
+    }
   }
 
 
-  public enum UlcSort { 
-    DEFAULT=0,
-    IP=1,
-    DATETIME=2,
-    SIGNAL=3,
-    TRAFFIC=4,
-    NAME=5,
-    TP=6
+  public enum UlcSort
+  {
+    DEFAULT = 0,
+    IP = 1,
+    DATETIME = 2,
+    SIGNAL = 3,
+    TRAFFIC = 4,
+    NAME = 5,
+    TP = 6,
+    CONTROLER_TYPE = 7,
+    RS = 8
   }
 
   public enum SortObject { 
@@ -3737,13 +3760,46 @@ namespace UlcWin
             result = CompareTp(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
             break;
           }
-        
+        case UlcSort.RS:
+          result = CompareRS(itemA.SubItems[Column].Text, itemB.SubItems[Column].Text);
+          break;
         default:
           break;
       }
       if (Order == SortOrder.Descending)
         result *= -1;
       return result;
+    }
+
+
+    public int CompareRS(string first, string second) {
+      int fInt = 0;
+      int sInt = 0;
+      bool fb;
+      bool sb;
+      if (first.Equals("X"))
+        first = "2";
+      else if (second.Equals("X"))
+        second = "2";
+      Regex reg = new Regex(@"\d+$");
+      Match match = reg.Match(first.TrimEnd());
+      Match match1 = reg.Match(second.TrimEnd());
+      if (match.Success && match1.Success)
+      {
+        fb = int.TryParse(match.Value, out fInt);
+        sb = int.TryParse(match1.Value, out sInt);
+        if (!fb && !sb)
+        {
+          return -1;
+        }
+
+        if (fInt == sInt)
+          return 0;
+        if (fInt > sInt)
+          return 1;
+
+      }
+      return -1;
     }
 
     public int CompareTp(string first, string second)

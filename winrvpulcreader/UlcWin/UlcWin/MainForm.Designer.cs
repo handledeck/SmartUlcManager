@@ -114,6 +114,7 @@ namespace UlcWin
       this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
       this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
       this.tsUpdate = new System.Windows.Forms.ToolStripButton();
+      this.tsFilterText = new System.Windows.Forms.ToolStripTextBox();
       this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
       this.tabMeter = new System.Windows.Forms.TabPage();
       this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
@@ -154,7 +155,6 @@ namespace UlcWin
       this.imageList2 = new System.Windows.Forms.ImageList(this.components);
       this.helpProvider1 = new System.Windows.Forms.HelpProvider();
       this.ctxMenuHeader = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.toolStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -712,11 +712,11 @@ namespace UlcWin
       this.LstViewItm.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.LstViewItm.FullRowSelect = true;
       this.LstViewItm.HideSelection = false;
-      this.LstViewItm.Location = new System.Drawing.Point(3, 28);
+      this.LstViewItm.Location = new System.Drawing.Point(3, 36);
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
       this.LstViewItm.OwnerDraw = true;
-      this.LstViewItm.Size = new System.Drawing.Size(1136, 231);
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 223);
       this.LstViewItm.SmallImageList = this.imageList1;
       this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
       this.LstViewItm.TabIndex = 0;
@@ -832,7 +832,7 @@ namespace UlcWin
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
-      this.checkBoxComboBox1.Location = new System.Drawing.Point(59, 3);
+      this.checkBoxComboBox1.Location = new System.Drawing.Point(108, 73);
       this.checkBoxComboBox1.MaxDropDownItems = 15;
       this.checkBoxComboBox1.Name = "checkBoxComboBox1";
       this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
@@ -851,18 +851,20 @@ namespace UlcWin
             this.tsDwnUpdate,
             this.tsSelectedItems,
             this.tsBtnEventShowHide,
-            this.tsUpdate});
+            this.tsUpdate,
+            this.tsFilterText});
       this.tsResView.Location = new System.Drawing.Point(3, 3);
       this.tsResView.Name = "tsResView";
-      this.tsResView.Size = new System.Drawing.Size(1136, 25);
+      this.tsResView.Padding = new System.Windows.Forms.Padding(5);
+      this.tsResView.Size = new System.Drawing.Size(1136, 33);
       this.tsResView.TabIndex = 1;
       this.tsResView.Text = "toolStrip2";
       // 
       // tsLblFind
       // 
       this.tsLblFind.Name = "tsLblFind";
-      this.tsLblFind.Size = new System.Drawing.Size(42, 22);
-      this.tsLblFind.Text = "Поиск";
+      this.tsLblFind.Size = new System.Drawing.Size(48, 20);
+      this.tsLblFind.Text = "Фильтр";
       // 
       // tsComboBoxDev
       // 
@@ -871,18 +873,19 @@ namespace UlcWin
       this.tsComboBoxDev.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.tsComboBoxDev.Items.AddRange(new object[] {
             "РВП-18",
-            "ULC 02"});
+            "ULC 02",
+            "ВСЕ"});
       this.tsComboBoxDev.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
       this.tsComboBoxDev.Name = "tsComboBoxDev";
       this.tsComboBoxDev.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-      this.tsComboBoxDev.Size = new System.Drawing.Size(75, 25);
+      this.tsComboBoxDev.Size = new System.Drawing.Size(75, 23);
       this.tsComboBoxDev.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
       // 
       // toolStripSeparator9
       // 
       this.toolStripSeparator9.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
       this.toolStripSeparator9.Name = "toolStripSeparator9";
-      this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+      this.toolStripSeparator9.Size = new System.Drawing.Size(6, 23);
       // 
       // tsBtnExport
       // 
@@ -891,7 +894,7 @@ namespace UlcWin
       this.tsBtnExport.Image = global::UlcWin.Properties.Resources.excel_exports;
       this.tsBtnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsBtnExport.Name = "tsBtnExport";
-      this.tsBtnExport.Size = new System.Drawing.Size(23, 22);
+      this.tsBtnExport.Size = new System.Drawing.Size(23, 20);
       this.tsBtnExport.Text = "Экспорт";
       this.tsBtnExport.ToolTipText = "Экспорт в Excel";
       this.tsBtnExport.Click += new System.EventHandler(this.tsBtnExport_Click);
@@ -912,7 +915,7 @@ namespace UlcWin
       this.tsDwnUpdate.Name = "tsDwnUpdate";
       this.tsDwnUpdate.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
       this.tsDwnUpdate.RightToLeftAutoMirrorImage = true;
-      this.tsDwnUpdate.Size = new System.Drawing.Size(34, 22);
+      this.tsDwnUpdate.Size = new System.Drawing.Size(34, 20);
       this.tsDwnUpdate.Text = "Обновление";
       // 
       // tsMenuItem_Pgrm
@@ -971,7 +974,7 @@ namespace UlcWin
       this.tsSelectedItems.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsSelectedItems.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
       this.tsSelectedItems.Name = "tsSelectedItems";
-      this.tsSelectedItems.Size = new System.Drawing.Size(29, 22);
+      this.tsSelectedItems.Size = new System.Drawing.Size(29, 20);
       this.tsSelectedItems.Text = "tsSelectedItems";
       // 
       // tsSelectAll
@@ -997,7 +1000,7 @@ namespace UlcWin
       this.tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
       this.tsBtnEventShowHide.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsBtnEventShowHide.Name = "tsBtnEventShowHide";
-      this.tsBtnEventShowHide.Size = new System.Drawing.Size(23, 22);
+      this.tsBtnEventShowHide.Size = new System.Drawing.Size(23, 20);
       this.tsBtnEventShowHide.Text = "tsBtnEventShowHide";
       this.tsBtnEventShowHide.Click += new System.EventHandler(this.toolStripButton3_Click_3);
       // 
@@ -1009,10 +1012,18 @@ namespace UlcWin
       this.tsUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tsUpdate.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
       this.tsUpdate.Name = "tsUpdate";
-      this.tsUpdate.Size = new System.Drawing.Size(23, 22);
+      this.tsUpdate.Size = new System.Drawing.Size(23, 20);
       this.tsUpdate.Text = "Обновить";
       this.tsUpdate.Visible = false;
       this.tsUpdate.Click += new System.EventHandler(this.tsUpdate_Click);
+      // 
+      // tsFilterText
+      // 
+      this.tsFilterText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.tsFilterText.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.tsFilterText.Name = "tsFilterText";
+      this.tsFilterText.Size = new System.Drawing.Size(200, 23);
+      this.tsFilterText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
       // 
       // usrFesStatistics1
       // 
@@ -1168,7 +1179,7 @@ namespace UlcWin
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Size = new System.Drawing.Size(224, 336);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1535,7 +1546,7 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripMenuItem actRs485ToolStripMenuItem;
     private System.Windows.Forms.ColumnHeader comm;
     private System.Windows.Forms.ColumnHeader ztp;
-    private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.ToolStripTextBox tsFilterText;
   }
 }
 

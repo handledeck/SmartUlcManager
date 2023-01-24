@@ -986,14 +986,44 @@ namespace InterUlc.Db
       {
         int id = (int)dr_ip["id"];
         string name = (string)dr_ip["name"];
-        string ip = (string)dr_ip["ip_address"];
-        string phone = (string)dr_ip["phone_num"];
-        int uType = (int)dr_ip["unit_type_id"];
-        int active = (int)dr_ip["active"];
-        int isLight = (int)dr_ip["light"];
-        string comment = (string)dr_ip["comments"];
-        string meters = "Н/Д";
-        int rs_stat= (int)dr_ip["rs_stat"];
+        string ip;
+        string phone;
+        int uType;
+        int active;
+        int isLight;
+        string comment;
+        string meters;
+        int rs_stat;
+        if (dr_ip["ip_address"].GetType() == typeof(DBNull))
+          ip = "---";
+        else
+        ip = (string)dr_ip["ip_address"];
+        if (dr_ip["phone_num"].GetType() == typeof(DBNull))
+          phone = "---";
+        else
+        phone = (string)dr_ip["phone_num"];
+        if (dr_ip["unit_type_id"].GetType() == typeof(DBNull))
+          uType = 0;
+        else
+          uType = (int)dr_ip["unit_type_id"];
+
+        if (dr_ip["active"].GetType() == typeof(DBNull))
+          active = 0;
+        else
+          active = (int)dr_ip["active"];
+        if (dr_ip["light"].GetType() == typeof(DBNull))
+          isLight = 0;
+        else
+          isLight = (int)dr_ip["light"];
+        if (dr_ip["comments"].GetType() == typeof(DBNull))
+          comment = "";
+        else
+          comment = (string)dr_ip["comments"];
+        meters = "Н/Д";
+        if (dr_ip["rs_stat"].GetType() == typeof(DBNull))
+          rs_stat = 0;
+        else
+          rs_stat = (int)dr_ip["rs_stat"];
        
         //string meter_factory = "Н/Д";
         if (dr_ip["meters"] != null)
@@ -1131,7 +1161,7 @@ namespace InterUlc.Db
           }
           else
           {
-            it.SubItems.Add("нет");
+            it.SubItems.Add("---");
           }
           string it_core = "----";
           if (!string.IsNullOrEmpty(uc.CORV))
@@ -1180,7 +1210,7 @@ namespace InterUlc.Db
           }
           else
           {
-            it.SubItems.Add("нет");
+            it.SubItems.Add("X");
           }
           if (item.Value.UlcConfig != null)
             it.SubItems.Add(((double)(item.Value.UlcConfig.TRAFC / 1024)).ToString() + " KB");
@@ -1730,7 +1760,7 @@ namespace InterUlc.Db
       
         //select * from main_ctrlevent mc where mc.ctrl_id =13593 and date(mc.event_time) = '2021-11-19'
         //between '2021-12-13' and '2021-12-14'
-        string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}' order by mc.event_time ",
+        string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}' order by mc.id ",
         id, dtserch.ToString("yyyy-MM-dd"));
       var con_ip = new NpgsqlConnection(this.__connection);
       var cmd_ip = new NpgsqlCommand(sql_ip, con_ip);
