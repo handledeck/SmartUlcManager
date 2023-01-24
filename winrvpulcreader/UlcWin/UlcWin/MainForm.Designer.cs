@@ -438,7 +438,7 @@ namespace UlcWin
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-      this.splitContainer1.Size = new System.Drawing.Size(1443, 460);
+      this.splitContainer1.Size = new System.Drawing.Size(1443, 555);
       this.splitContainer1.SplitterDistance = 287;
       this.splitContainer1.TabIndex = 2;
       // 
@@ -449,7 +449,7 @@ namespace UlcWin
       this.panel2.Location = new System.Drawing.Point(0, 25);
       this.panel2.Name = "panel2";
       this.panel2.Padding = new System.Windows.Forms.Padding(1);
-      this.panel2.Size = new System.Drawing.Size(287, 435);
+      this.panel2.Size = new System.Drawing.Size(287, 530);
       this.panel2.TabIndex = 1;
       // 
       // treeView1
@@ -466,7 +466,7 @@ namespace UlcWin
       this.treeView1.Margin = new System.Windows.Forms.Padding(0);
       this.treeView1.Name = "treeView1";
       this.treeView1.SelectedImageIndex = 0;
-      this.treeView1.Size = new System.Drawing.Size(285, 433);
+      this.treeView1.Size = new System.Drawing.Size(285, 528);
       this.treeView1.StateImageList = this.imageList1;
       this.treeView1.TabIndex = 100000;
       this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
@@ -642,8 +642,8 @@ namespace UlcWin
       this.splitContainer2.Panel2.Controls.Add(this.LstViewEvent);
       this.splitContainer2.Panel2.Controls.Add(this.tsEvent);
       this.splitContainer2.Panel2.Controls.Add(this.lblNotExist);
-      this.splitContainer2.Size = new System.Drawing.Size(1152, 460);
-      this.splitContainer2.SplitterDistance = 291;
+      this.splitContainer2.Size = new System.Drawing.Size(1152, 555);
+      this.splitContainer2.SplitterDistance = 351;
       this.splitContainer2.TabIndex = 0;
       // 
       // panel1
@@ -653,7 +653,7 @@ namespace UlcWin
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
       this.panel1.Padding = new System.Windows.Forms.Padding(1);
-      this.panel1.Size = new System.Drawing.Size(1152, 291);
+      this.panel1.Size = new System.Drawing.Size(1152, 351);
       this.panel1.TabIndex = 2;
       // 
       // tabItemsControl
@@ -665,7 +665,7 @@ namespace UlcWin
       this.tabItemsControl.Location = new System.Drawing.Point(1, 1);
       this.tabItemsControl.Name = "tabItemsControl";
       this.tabItemsControl.SelectedIndex = 0;
-      this.tabItemsControl.Size = new System.Drawing.Size(1150, 289);
+      this.tabItemsControl.Size = new System.Drawing.Size(1150, 349);
       this.tabItemsControl.TabIndex = 2;
       this.tabItemsControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabItemsControl_Selected);
       // 
@@ -679,7 +679,7 @@ namespace UlcWin
       this.tabControllers.Location = new System.Drawing.Point(4, 23);
       this.tabControllers.Name = "tabControllers";
       this.tabControllers.Padding = new System.Windows.Forms.Padding(3);
-      this.tabControllers.Size = new System.Drawing.Size(1142, 262);
+      this.tabControllers.Size = new System.Drawing.Size(1142, 322);
       this.tabControllers.TabIndex = 0;
       this.tabControllers.Text = "Контроллеры";
       this.tabControllers.UseVisualStyleBackColor = true;
@@ -716,7 +716,7 @@ namespace UlcWin
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
       this.LstViewItm.OwnerDraw = true;
-      this.LstViewItm.Size = new System.Drawing.Size(1136, 223);
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 283);
       this.LstViewItm.SmallImageList = this.imageList1;
       this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
       this.LstViewItm.TabIndex = 0;
@@ -1035,7 +1035,7 @@ namespace UlcWin
       this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
       this.usrFesStatistics1.Name = "usrFesStatistics1";
       this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 256);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 316);
       this.usrFesStatistics1.TabIndex = 1;
       this.usrFesStatistics1.Value = null;
       this.usrFesStatistics1.Visible = false;
@@ -1090,7 +1090,7 @@ namespace UlcWin
       this.LstViewEvent.Location = new System.Drawing.Point(0, 25);
       this.LstViewEvent.MultiSelect = false;
       this.LstViewEvent.Name = "LstViewEvent";
-      this.LstViewEvent.Size = new System.Drawing.Size(1152, 140);
+      this.LstViewEvent.Size = new System.Drawing.Size(1152, 175);
       this.LstViewEvent.SmallImageList = this.imageList1;
       this.LstViewEvent.TabIndex = 1;
       this.LstViewEvent.UseCompatibleStateImageBehavior = false;
@@ -1150,7 +1150,7 @@ namespace UlcWin
       this.lblNotExist.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lblNotExist.Location = new System.Drawing.Point(0, 0);
       this.lblNotExist.Name = "lblNotExist";
-      this.lblNotExist.Size = new System.Drawing.Size(1152, 165);
+      this.lblNotExist.Size = new System.Drawing.Size(1152, 200);
       this.lblNotExist.TabIndex = 2;
       this.lblNotExist.Text = "Нет информации";
       this.lblNotExist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1179,7 +1179,7 @@ namespace UlcWin
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 336);
+      this.LvMenu.Size = new System.Drawing.Size(224, 314);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1303,7 +1303,7 @@ namespace UlcWin
             this.tsStsNetBad,
             this.tsStsRssBad,
             this.tsStsIMEI});
-      this.tsStatusLbl.Location = new System.Drawing.Point(0, 490);
+      this.tsStatusLbl.Location = new System.Drawing.Point(0, 585);
       this.tsStatusLbl.Name = "tsStatusLbl";
       this.tsStatusLbl.Size = new System.Drawing.Size(1443, 22);
       this.tsStatusLbl.TabIndex = 3;
@@ -1381,7 +1381,7 @@ namespace UlcWin
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1443, 512);
+      this.ClientSize = new System.Drawing.Size(1443, 607);
       this.Controls.Add(this.splitContainer1);
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
