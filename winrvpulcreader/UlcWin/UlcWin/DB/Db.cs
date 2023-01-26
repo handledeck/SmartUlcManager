@@ -1649,7 +1649,7 @@ namespace InterUlc.Db
 
             if (lstMax[0].IMEI != ulcCfg.IMEI)
             {
-              dbLogs.Feature = new ImeiStatAndRs()
+              dbLogs.feature = new ImeiStatAndRs()
               {
                 old_imei = GetShortImei(lstMax[0].IMEI.ToString()),
                 new_imei = GetShortImei(ulcCfg.IMEI.ToString()),
@@ -1755,13 +1755,13 @@ namespace InterUlc.Db
       }
     }
 
-    public Dictionary<DateTime, List<UlcEvent>> DbReadEvent(int id, DateTime dtserch)
+    public Dictionary<DateTime, List<UlcEvent>> DbReadEvent(int id, DateTime from, DateTime to)
     {
       
         //select * from main_ctrlevent mc where mc.ctrl_id =13593 and date(mc.event_time) = '2021-11-19'
         //between '2021-12-13' and '2021-12-14'
-        string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}' order by mc.id ",
-        id, dtserch.ToString("yyyy-MM-dd"));
+        string sql_ip = string.Format("select * from main_ctrlevent mc where mc.ctrl_id ={0} and mc.event_time > '{1}' and mc.event_time < '{2}' order by mc.id ",
+        id, from.ToString("yyyy-MM-dd"),to.ToString("yyyy-MM-dd"));
       var con_ip = new NpgsqlConnection(this.__connection);
       var cmd_ip = new NpgsqlCommand(sql_ip, con_ip);
       Dictionary<DateTime, List<UlcEvent>> devt = null;

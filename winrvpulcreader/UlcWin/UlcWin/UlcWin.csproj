@@ -188,6 +188,12 @@
     <Compile Include="Controls\ChBoxCombo\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EventLogCheckBoxPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EventLogCheckBoxPanel.Designer.cs">
+      <DependentUpon>EventLogCheckBoxPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListViewHeaderMenu\ListViewMenuHeaderControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -207,7 +213,31 @@
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MeterProgress\ProgressMeter.cs" />
+    <Compile Include="Controls\PopupControl\ComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PopupControl\ComboBox.Designer.cs">
+      <DependentUpon>ComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PopupControl\GripBounds.cs" />
+    <Compile Include="Controls\PopupControl\NativeMethods.cs" />
+    <Compile Include="Controls\PopupControl\Popup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PopupControl\Popup.Designer.cs">
+      <DependentUpon>Popup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PopupControl\PopupAnimations.cs" />
+    <Compile Include="Controls\PopupControl\PopupComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PopupControl\PopupComboBox.Designer.cs">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UlcMeterComponet\DbMeterView.cs" />
+    <Compile Include="Controls\UlcMeterComponet\EventDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\UlcMeterComponet\MeterComparer.cs" />
     <Compile Include="Controls\UlcMeterComponet\MeterInfo.cs" />
     <Compile Include="Controls\UlcMeterComponet\Meters.cs" />
@@ -486,6 +516,9 @@
     <EmbeddedResource Include="Controls\ChBoxCombo\PopupComboBox.resx">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EventLogCheckBoxPanel.resx">
+      <DependentUpon>EventLogCheckBoxPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MeterProgress\MeterProgress.resx">
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </EmbeddedResource>
@@ -614,6 +647,7 @@
     <EmbeddedResource Include="ui\WaitForm.resx">
       <DependentUpon>WaitForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Controls\PopupControl\PopupControl.csproj" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\UlcWin.Controls.MeterProgress.ProgressMeter.datasource" />
     <None Include="Properties\DataSources\UlcWin.Controls.UlcMeterComponet.DbUlcShortView.datasource" />

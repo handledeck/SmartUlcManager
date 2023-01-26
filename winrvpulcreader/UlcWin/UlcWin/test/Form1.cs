@@ -15,6 +15,13 @@ namespace UlcWin.test
     public Form1()
     {
       InitializeComponent();
+      this.eventDateTimePicker1.ValueChanging += EventDateTimePicker1_ValueChanging;
+    }
+
+    private void EventDateTimePicker1_ValueChanging(object sender, CancelEventArgs e)
+    {
+      if(this.eventDateTimePicker1.Value!=DateTime.Now)
+      e.Cancel=true;
     }
   }
 }

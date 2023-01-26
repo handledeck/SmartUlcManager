@@ -45,10 +45,11 @@
       this.clnUser = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.clnEventNmae = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.clnItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.cInObject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.ctxMenuLogItem = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.MenuLogsItemFeature = new System.Windows.Forms.ToolStripMenuItem();
-      this.cInObject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.popupComboBox1 = new PopupControl.PopupComboBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.ctxMenuLogItem.SuspendLayout();
@@ -65,15 +66,16 @@
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(3);
-      this.tableLayoutPanel1.RowCount = 2;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.107926F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.89207F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(1247, 710);
+      this.tableLayoutPanel1.RowCount = 3;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.937373F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.58916F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.47347F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1105, 599);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.popupComboBox1);
       this.panel1.Controls.Add(this.label4);
       this.panel1.Controls.Add(this.cbDateTimeFrom);
       this.panel1.Controls.Add(this.cbEvents);
@@ -85,7 +87,7 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(7, 7);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1233, 36);
+      this.panel1.Size = new System.Drawing.Size(1091, 34);
       this.panel1.TabIndex = 0;
       // 
       // label4
@@ -109,16 +111,16 @@
       // cbEvents
       // 
       this.cbEvents.FormattingEnabled = true;
-      this.cbEvents.Location = new System.Drawing.Point(793, 6);
+      this.cbEvents.Location = new System.Drawing.Point(610, 6);
       this.cbEvents.Name = "cbEvents";
-      this.cbEvents.Size = new System.Drawing.Size(275, 21);
+      this.cbEvents.Size = new System.Drawing.Size(224, 21);
       this.cbEvents.TabIndex = 5;
       this.cbEvents.SelectedIndexChanged += new System.EventHandler(this.cbEvents_SelectedIndexChanged);
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(720, 9);
+      this.label3.Location = new System.Drawing.Point(671, 12);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(58, 13);
       this.label3.TabIndex = 4;
@@ -127,7 +129,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(423, 9);
+      this.label2.Location = new System.Drawing.Point(386, 12);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(89, 13);
       this.label2.TabIndex = 3;
@@ -137,7 +139,7 @@
       // 
       this.cbUsers.DisplayMember = "Text";
       this.cbUsers.FormattingEnabled = true;
-      this.cbUsers.Location = new System.Drawing.Point(518, 6);
+      this.cbUsers.Location = new System.Drawing.Point(481, 9);
       this.cbUsers.Name = "cbUsers";
       this.cbUsers.Size = new System.Drawing.Size(196, 21);
       this.cbUsers.TabIndex = 2;
@@ -174,9 +176,9 @@
       this.lstLogEvents.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.lstLogEvents.FullRowSelect = true;
       this.lstLogEvents.HideSelection = false;
-      this.lstLogEvents.Location = new System.Drawing.Point(7, 50);
+      this.lstLogEvents.Location = new System.Drawing.Point(7, 48);
       this.lstLogEvents.Name = "lstLogEvents";
-      this.lstLogEvents.Size = new System.Drawing.Size(1233, 653);
+      this.lstLogEvents.Size = new System.Drawing.Size(1091, 474);
       this.lstLogEvents.SmallImageList = this.imageList1;
       this.lstLogEvents.TabIndex = 1;
       this.lstLogEvents.UseCompatibleStateImageBehavior = false;
@@ -197,12 +199,17 @@
       // clnEventNmae
       // 
       this.clnEventNmae.Text = "Событие";
-      this.clnEventNmae.Width = 225;
+      this.clnEventNmae.Width = 150;
       // 
       // clnItem
       // 
       this.clnItem.Text = "Объект";
-      this.clnItem.Width = 168;
+      this.clnItem.Width = 120;
+      // 
+      // cInObject
+      // 
+      this.cInObject.Text = "Комментарий";
+      this.cInObject.Width = 240;
       // 
       // imageList1
       // 
@@ -239,16 +246,20 @@
       this.MenuLogsItemFeature.Size = new System.Drawing.Size(111, 22);
       this.MenuLogsItemFeature.Text = "Подробнее";
       // 
-      // cInObject
+      // popupComboBox1
       // 
-      this.cInObject.Text = "Комментарий";
-      this.cInObject.Width = 440;
+      this.popupComboBox1.DropDownControl = null;
+      this.popupComboBox1.FormattingEnabled = true;
+      this.popupComboBox1.Location = new System.Drawing.Point(854, 6);
+      this.popupComboBox1.Name = "popupComboBox1";
+      this.popupComboBox1.Size = new System.Drawing.Size(232, 21);
+      this.popupComboBox1.TabIndex = 8;
       // 
       // LogsViewForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1247, 710);
+      this.ClientSize = new System.Drawing.Size(1105, 599);
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.MaximizeBox = false;
@@ -287,5 +298,6 @@
     private System.Windows.Forms.ContextMenuStrip ctxMenuLogItem;
     private System.Windows.Forms.ToolStripMenuItem MenuLogsItemFeature;
     private System.Windows.Forms.ColumnHeader cInObject;
+    private PopupControl.PopupComboBox popupComboBox1;
   }
 }

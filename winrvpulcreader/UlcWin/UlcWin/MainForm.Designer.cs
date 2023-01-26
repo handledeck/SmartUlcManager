@@ -119,14 +119,18 @@ namespace UlcWin
       this.tabMeter = new System.Windows.Forms.TabPage();
       this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
       this.imgTabs = new System.Windows.Forms.ImageList(this.components);
+      this.tabEventController = new System.Windows.Forms.TabControl();
+      this.tabEventCtrl = new System.Windows.Forms.TabPage();
       this.LstViewEvent = new System.Windows.Forms.ListView();
       this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.comm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tsEvent = new System.Windows.Forms.ToolStrip();
-      this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+      this.EvtIntervalLbl = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
       this.lblNotExist = new System.Windows.Forms.Label();
+      this.tabEventSystem = new System.Windows.Forms.TabPage();
       this.LvMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuUpdateSelected = new System.Windows.Forms.ToolStripMenuItem();
@@ -172,6 +176,8 @@ namespace UlcWin
       this.tabControllers.SuspendLayout();
       this.tsResView.SuspendLayout();
       this.tabMeter.SuspendLayout();
+      this.tabEventController.SuspendLayout();
+      this.tabEventCtrl.SuspendLayout();
       this.tsEvent.SuspendLayout();
       this.LvMenu.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
@@ -438,7 +444,7 @@ namespace UlcWin
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-      this.splitContainer1.Size = new System.Drawing.Size(1443, 555);
+      this.splitContainer1.Size = new System.Drawing.Size(1443, 640);
       this.splitContainer1.SplitterDistance = 287;
       this.splitContainer1.TabIndex = 2;
       // 
@@ -449,7 +455,7 @@ namespace UlcWin
       this.panel2.Location = new System.Drawing.Point(0, 25);
       this.panel2.Name = "panel2";
       this.panel2.Padding = new System.Windows.Forms.Padding(1);
-      this.panel2.Size = new System.Drawing.Size(287, 530);
+      this.panel2.Size = new System.Drawing.Size(287, 615);
       this.panel2.TabIndex = 1;
       // 
       // treeView1
@@ -466,7 +472,7 @@ namespace UlcWin
       this.treeView1.Margin = new System.Windows.Forms.Padding(0);
       this.treeView1.Name = "treeView1";
       this.treeView1.SelectedImageIndex = 0;
-      this.treeView1.Size = new System.Drawing.Size(285, 528);
+      this.treeView1.Size = new System.Drawing.Size(285, 613);
       this.treeView1.StateImageList = this.imageList1;
       this.treeView1.TabIndex = 100000;
       this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
@@ -639,11 +645,9 @@ namespace UlcWin
       // 
       // splitContainer2.Panel2
       // 
-      this.splitContainer2.Panel2.Controls.Add(this.LstViewEvent);
-      this.splitContainer2.Panel2.Controls.Add(this.tsEvent);
-      this.splitContainer2.Panel2.Controls.Add(this.lblNotExist);
-      this.splitContainer2.Size = new System.Drawing.Size(1152, 555);
-      this.splitContainer2.SplitterDistance = 351;
+      this.splitContainer2.Panel2.Controls.Add(this.tabEventController);
+      this.splitContainer2.Size = new System.Drawing.Size(1152, 640);
+      this.splitContainer2.SplitterDistance = 404;
       this.splitContainer2.TabIndex = 0;
       // 
       // panel1
@@ -653,7 +657,7 @@ namespace UlcWin
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
       this.panel1.Padding = new System.Windows.Forms.Padding(1);
-      this.panel1.Size = new System.Drawing.Size(1152, 351);
+      this.panel1.Size = new System.Drawing.Size(1152, 404);
       this.panel1.TabIndex = 2;
       // 
       // tabItemsControl
@@ -665,7 +669,7 @@ namespace UlcWin
       this.tabItemsControl.Location = new System.Drawing.Point(1, 1);
       this.tabItemsControl.Name = "tabItemsControl";
       this.tabItemsControl.SelectedIndex = 0;
-      this.tabItemsControl.Size = new System.Drawing.Size(1150, 349);
+      this.tabItemsControl.Size = new System.Drawing.Size(1150, 402);
       this.tabItemsControl.TabIndex = 2;
       this.tabItemsControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabItemsControl_Selected);
       // 
@@ -679,7 +683,7 @@ namespace UlcWin
       this.tabControllers.Location = new System.Drawing.Point(4, 23);
       this.tabControllers.Name = "tabControllers";
       this.tabControllers.Padding = new System.Windows.Forms.Padding(3);
-      this.tabControllers.Size = new System.Drawing.Size(1142, 322);
+      this.tabControllers.Size = new System.Drawing.Size(1142, 375);
       this.tabControllers.TabIndex = 0;
       this.tabControllers.Text = "Контроллеры";
       this.tabControllers.UseVisualStyleBackColor = true;
@@ -716,7 +720,7 @@ namespace UlcWin
       this.LstViewItm.MultiSelect = false;
       this.LstViewItm.Name = "LstViewItm";
       this.LstViewItm.OwnerDraw = true;
-      this.LstViewItm.Size = new System.Drawing.Size(1136, 283);
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 336);
       this.LstViewItm.SmallImageList = this.imageList1;
       this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
       this.LstViewItm.TabIndex = 0;
@@ -1002,6 +1006,7 @@ namespace UlcWin
       this.tsBtnEventShowHide.Name = "tsBtnEventShowHide";
       this.tsBtnEventShowHide.Size = new System.Drawing.Size(23, 20);
       this.tsBtnEventShowHide.Text = "tsBtnEventShowHide";
+      this.tsBtnEventShowHide.ToolTipText = "Панель журнала сообщений";
       this.tsBtnEventShowHide.Click += new System.EventHandler(this.toolStripButton3_Click_3);
       // 
       // tsUpdate
@@ -1035,7 +1040,7 @@ namespace UlcWin
       this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
       this.usrFesStatistics1.Name = "usrFesStatistics1";
       this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 316);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 369);
       this.usrFesStatistics1.TabIndex = 1;
       this.usrFesStatistics1.Value = null;
       this.usrFesStatistics1.Visible = false;
@@ -1047,7 +1052,7 @@ namespace UlcWin
       this.tabMeter.Location = new System.Drawing.Point(4, 23);
       this.tabMeter.Name = "tabMeter";
       this.tabMeter.Padding = new System.Windows.Forms.Padding(3);
-      this.tabMeter.Size = new System.Drawing.Size(1142, 262);
+      this.tabMeter.Size = new System.Drawing.Size(1142, 375);
       this.tabMeter.TabIndex = 1;
       this.tabMeter.Text = "Счетчики";
       this.tabMeter.UseVisualStyleBackColor = true;
@@ -1059,7 +1064,7 @@ namespace UlcWin
       this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
       this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
       this.ulcMeterTreeView.Name = "ulcMeterTreeView";
-      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 256);
+      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 369);
       this.ulcMeterTreeView.TabIndex = 0;
       // 
       // imgTabs
@@ -1075,6 +1080,34 @@ namespace UlcWin
       this.imgTabs.Images.SetKeyName(6, "odbs_database.ico");
       this.imgTabs.Images.SetKeyName(7, "page_white_go.ico");
       this.imgTabs.Images.SetKeyName(8, "PCI-card.ico");
+      this.imgTabs.Images.SetKeyName(9, "flash.png");
+      this.imgTabs.Images.SetKeyName(10, "bookmark.png");
+      // 
+      // tabEventController
+      // 
+      this.tabEventController.Controls.Add(this.tabEventCtrl);
+      this.tabEventController.Controls.Add(this.tabEventSystem);
+      this.tabEventController.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabEventController.ImageList = this.imgTabs;
+      this.tabEventController.Location = new System.Drawing.Point(0, 0);
+      this.tabEventController.Name = "tabEventController";
+      this.tabEventController.SelectedIndex = 0;
+      this.tabEventController.Size = new System.Drawing.Size(1152, 232);
+      this.tabEventController.TabIndex = 5;
+      // 
+      // tabEventCtrl
+      // 
+      this.tabEventCtrl.Controls.Add(this.LstViewEvent);
+      this.tabEventCtrl.Controls.Add(this.tsEvent);
+      this.tabEventCtrl.Controls.Add(this.lblNotExist);
+      this.tabEventCtrl.ImageIndex = 9;
+      this.tabEventCtrl.Location = new System.Drawing.Point(4, 23);
+      this.tabEventCtrl.Name = "tabEventCtrl";
+      this.tabEventCtrl.Padding = new System.Windows.Forms.Padding(3);
+      this.tabEventCtrl.Size = new System.Drawing.Size(1144, 205);
+      this.tabEventCtrl.TabIndex = 0;
+      this.tabEventCtrl.Text = "Журнал сообщений контроллера";
+      this.tabEventCtrl.UseVisualStyleBackColor = true;
       // 
       // LstViewEvent
       // 
@@ -1087,10 +1120,10 @@ namespace UlcWin
       this.LstViewEvent.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.LstViewEvent.FullRowSelect = true;
       this.LstViewEvent.HideSelection = false;
-      this.LstViewEvent.Location = new System.Drawing.Point(0, 25);
+      this.LstViewEvent.Location = new System.Drawing.Point(3, 28);
       this.LstViewEvent.MultiSelect = false;
       this.LstViewEvent.Name = "LstViewEvent";
-      this.LstViewEvent.Size = new System.Drawing.Size(1152, 175);
+      this.LstViewEvent.Size = new System.Drawing.Size(1138, 174);
       this.LstViewEvent.SmallImageList = this.imageList1;
       this.LstViewEvent.TabIndex = 1;
       this.LstViewEvent.UseCompatibleStateImageBehavior = false;
@@ -1116,44 +1149,54 @@ namespace UlcWin
       this.tsEvent.BackColor = System.Drawing.SystemColors.ControlLight;
       this.tsEvent.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.tsEvent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-      this.tsEvent.Location = new System.Drawing.Point(0, 0);
+            this.EvtIntervalLbl,
+            this.toolStripLabel2,
+            this.toolStripLabel3});
+      this.tsEvent.Location = new System.Drawing.Point(3, 3);
       this.tsEvent.Name = "tsEvent";
-      this.tsEvent.Size = new System.Drawing.Size(1152, 25);
+      this.tsEvent.Size = new System.Drawing.Size(1138, 25);
       this.tsEvent.TabIndex = 3;
       this.tsEvent.Text = "toolStrip2";
       // 
-      // toolStripButton1
+      // EvtIntervalLbl
       // 
-      this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButton1.Image = global::UlcWin.Properties.Resources.arrow_left_blue;
-      this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButton1.Name = "toolStripButton1";
-      this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-      this.toolStripButton1.Text = "toolStripButton1";
-      this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+      this.EvtIntervalLbl.Name = "EvtIntervalLbl";
+      this.EvtIntervalLbl.Size = new System.Drawing.Size(69, 22);
+      this.EvtIntervalLbl.Text = "Интервал   ";
       // 
-      // toolStripButton2
+      // toolStripLabel2
       // 
-      this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButton2.Image = global::UlcWin.Properties.Resources.arrow_right_blue;
-      this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButton2.Name = "toolStripButton2";
-      this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-      this.toolStripButton2.Text = "toolStripButton2";
-      this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+      this.toolStripLabel2.Name = "toolStripLabel2";
+      this.toolStripLabel2.Size = new System.Drawing.Size(28, 22);
+      this.toolStripLabel2.Text = "   с  ";
+      // 
+      // toolStripLabel3
+      // 
+      this.toolStripLabel3.Name = "toolStripLabel3";
+      this.toolStripLabel3.Size = new System.Drawing.Size(39, 22);
+      this.toolStripLabel3.Text = "   по   ";
       // 
       // lblNotExist
       // 
       this.lblNotExist.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lblNotExist.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.lblNotExist.Location = new System.Drawing.Point(0, 0);
+      this.lblNotExist.Location = new System.Drawing.Point(3, 3);
       this.lblNotExist.Name = "lblNotExist";
-      this.lblNotExist.Size = new System.Drawing.Size(1152, 200);
+      this.lblNotExist.Size = new System.Drawing.Size(1138, 199);
       this.lblNotExist.TabIndex = 2;
       this.lblNotExist.Text = "Нет информации";
       this.lblNotExist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // tabEventSystem
+      // 
+      this.tabEventSystem.ImageIndex = 10;
+      this.tabEventSystem.Location = new System.Drawing.Point(4, 23);
+      this.tabEventSystem.Name = "tabEventSystem";
+      this.tabEventSystem.Padding = new System.Windows.Forms.Padding(3);
+      this.tabEventSystem.Size = new System.Drawing.Size(1144, 205);
+      this.tabEventSystem.TabIndex = 1;
+      this.tabEventSystem.Text = "Журнал сообщений системы";
+      this.tabEventSystem.UseVisualStyleBackColor = true;
       // 
       // LvMenu
       // 
@@ -1303,7 +1346,7 @@ namespace UlcWin
             this.tsStsNetBad,
             this.tsStsRssBad,
             this.tsStsIMEI});
-      this.tsStatusLbl.Location = new System.Drawing.Point(0, 585);
+      this.tsStatusLbl.Location = new System.Drawing.Point(0, 670);
       this.tsStatusLbl.Name = "tsStatusLbl";
       this.tsStatusLbl.Size = new System.Drawing.Size(1443, 22);
       this.tsStatusLbl.TabIndex = 3;
@@ -1381,7 +1424,7 @@ namespace UlcWin
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1443, 607);
+      this.ClientSize = new System.Drawing.Size(1443, 692);
       this.Controls.Add(this.splitContainer1);
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
@@ -1403,7 +1446,6 @@ namespace UlcWin
       this.tsTreePanel.PerformLayout();
       this.splitContainer2.Panel1.ResumeLayout(false);
       this.splitContainer2.Panel2.ResumeLayout(false);
-      this.splitContainer2.Panel2.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
       this.splitContainer2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
@@ -1413,6 +1455,9 @@ namespace UlcWin
       this.tsResView.ResumeLayout(false);
       this.tsResView.PerformLayout();
       this.tabMeter.ResumeLayout(false);
+      this.tabEventController.ResumeLayout(false);
+      this.tabEventCtrl.ResumeLayout(false);
+      this.tabEventCtrl.PerformLayout();
       this.tsEvent.ResumeLayout(false);
       this.tsEvent.PerformLayout();
       this.LvMenu.ResumeLayout(false);
@@ -1454,8 +1499,6 @@ namespace UlcWin
     private System.Windows.Forms.Label lblNotExist;
     private System.Windows.Forms.StatusStrip tsStatusLbl;
     private System.Windows.Forms.ToolStrip tsEvent;
-    private System.Windows.Forms.ToolStripButton toolStripButton1;
-    private System.Windows.Forms.ToolStripButton toolStripButton2;
     private System.Windows.Forms.ColumnHeader logs;
     private System.Windows.Forms.ColumnHeader core;
     private System.Windows.Forms.ToolStripSeparator ctxSeparateEdit;
@@ -1547,6 +1590,12 @@ namespace UlcWin
     private System.Windows.Forms.ColumnHeader comm;
     private System.Windows.Forms.ColumnHeader ztp;
     private System.Windows.Forms.ToolStripTextBox tsFilterText;
+    private System.Windows.Forms.TabControl tabEventController;
+    private System.Windows.Forms.TabPage tabEventCtrl;
+    private System.Windows.Forms.TabPage tabEventSystem;
+    private System.Windows.Forms.ToolStripLabel EvtIntervalLbl;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel3;
   }
 }
 

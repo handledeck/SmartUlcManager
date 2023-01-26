@@ -200,6 +200,12 @@ namespace UlcWin
     public DateTime Date { get; set; }
     public LOG_LVL EventLevel { get; set; }
     public string Msg { get; set; }
+
+    public override string ToString()
+    {
+
+      return this.Date.ToString();
+    }
   }
 }
 

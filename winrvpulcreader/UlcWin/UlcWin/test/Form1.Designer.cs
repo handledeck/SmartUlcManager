@@ -28,7 +28,15 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.eventDateTimePicker1 = new UlcWin.Controls.UlcMeterComponet.EventDateTimePicker();
       this.SuspendLayout();
+      // 
+      // eventDateTimePicker1
+      // 
+      this.eventDateTimePicker1.Location = new System.Drawing.Point(189, 132);
+      this.eventDateTimePicker1.Name = "eventDateTimePicker1";
+      this.eventDateTimePicker1.Size = new System.Drawing.Size(200, 20);
+      this.eventDateTimePicker1.TabIndex = 0;
       // 
       // Form1
       // 
@@ -36,12 +44,15 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
       this.ClientSize = new System.Drawing.Size(800, 450);
+      this.Controls.Add(this.eventDateTimePicker1);
       this.Name = "Form1";
       this.Text = "Form1";
       this.ResumeLayout(false);
 
     }
 
-        #endregion
-    }
+    #endregion
+
+    private Controls.UlcMeterComponet.EventDateTimePicker eventDateTimePicker1;
+  }
 }

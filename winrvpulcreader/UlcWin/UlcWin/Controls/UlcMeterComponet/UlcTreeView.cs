@@ -1065,7 +1065,7 @@ namespace GettingStartedTree
               float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
               if (exp == null && value.HasValue)
               {
-                item.value = Math.Round(value.Value,2);
+                item.value = Math.Round(value.Value);
                 item.is_true = true;
                 item.updated = true;
                 item.date_time = DateTime.Now;

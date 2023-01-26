@@ -586,8 +586,8 @@ namespace UlcWin
                 siForm.DialogResult = DialogResult.OK;
                 DbLogMsg dbLogMsg = new DbLogMsg()
                 {
-                  Id = __selItem.Id,
-                  Tp = __selItem.Name
+                  id = __selItem.Id,
+                  tp = __selItem.Name
                 };
                 DbLogMsg.ParseNodePath(__selItem.NodeFullPath, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());

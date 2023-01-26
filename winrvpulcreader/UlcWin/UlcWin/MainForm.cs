@@ -44,7 +44,8 @@ namespace UlcWin
     UlcWin.win.WaitForm __frm = null;
     List<ItemCallBack> __lip = null;
     UNode __sel_node = null;
-    DateTimePicker __dtp = null;
+    Controls.UlcMeterComponet.EventDateTimePicker __dtp_from = null;
+    Controls.UlcMeterComponet.EventDateTimePicker __dtp_to = null;
     List<int> __coluns_width = null;
     List<ListViewItem> __lvItemChecked = null;
     AutoCompleteCombobox __tsAutoCompleteCmb = null;
@@ -53,6 +54,8 @@ namespace UlcWin
     ASettings __aSettings_new = null;
     public delegate TcpClient GetConnectionDelegate(string host, int port);
     public delegate void PingDelegate(ItemCallBack pitem, bool result);
+    private DateTime __previousValueFrom = DateTime.Now;
+    private DateTime __previousValueTo = DateTime.Now;
     public LoadForm()
     {
       InitializeComponent();
@@ -65,9 +68,15 @@ namespace UlcWin
       this.LstViewItm.Visible = false;
       this.tsResView.Visible = false;
       this.ulcMeterTreeView.Visible = false;
-      __dtp = new DateTimePicker();
-      __dtp.ValueChanged += __dtp_ValueChanged;
-      this.checkBoxComboBox1.DropDownHeight = 390;
+      __dtp_from = new Controls.UlcMeterComponet.EventDateTimePicker();
+      __dtp_from.Name = "from";
+      __dtp_from.ValueChanging += __dtp_from_ValueChanging;
+      __dtp_from.ValueChanged += __dtp_ValueChanged;
+      __dtp_to = new Controls.UlcMeterComponet.EventDateTimePicker();
+      __dtp_to.Name = "to";
+      __dtp_to.ValueChanging += __dtp_to_ValueChanging;
+      __dtp_to.ValueChanged += __dtp_ValueChanged;
+      this.checkBoxComboBox1.DropDownHeight = 350;
       __coluns_width = new List<int>();
       __tsAutoCompleteCmb = new AutoCompleteCombobox();
       __tsAutoCompleteCmb.Font = this.checkBoxComboBox1.Font;
@@ -76,7 +85,8 @@ namespace UlcWin
       __tsAutoCompleteCmb.KeyUp += __autoCompleteCmb_KeyUp;
       __tsAutoCompleteCmb.DropDown += __autoCompleteCmb_DropDown;
       __tsAutoCompleteCmb.SelectionChangeCommitted += __tsAutoCompleteCmb_SelectionChangeCommitted;
-      ToolStripControlHost dtCtl = new ToolStripControlHost(__dtp);
+      ToolStripControlHost dtCtl__from = new ToolStripControlHost(__dtp_from);
+      ToolStripControlHost dtCtl__to = new ToolStripControlHost(__dtp_to);
       this.checkBoxComboBox1.Visible = false;
       //ToolStripControlHost dtCtlCbBox = new ToolStripControlHost(this.checkBoxComboBox1);
       //dtCtlCbBox.Margin = new Padding(0, 0, 10, 0);
@@ -88,7 +98,8 @@ namespace UlcWin
       //dtCtrlCbFind.Margin = new Padding(10, 0, 0, 0);
       //this.tsResView.Items.Insert(8, dtCtrlCbFind);
       //this.__tsAutoCompleteCmb.Visible = false;
-      this.tsEvent.Items.Insert(1, dtCtl);
+      this.tsEvent.Items.Insert(2, dtCtl__from);
+      this.tsEvent.Items.Insert(4, dtCtl__to);
       this.tsEvent.Enabled = false;
       this.tsTreePanel.Enabled = false;
       this.__lvItemChecked = new List<ListViewItem>();
@@ -106,6 +117,42 @@ namespace UlcWin
       this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
       this.ulcMeterTreeView.__statusStrip = this.tsStatusLbl;
       
+    }
+
+    bool CheckDateTimeEvent()
+    {
+      DateTime dt_f = new DateTime(__dtp_from.Value.Year, __dtp_from.Value.Month, __dtp_from.Value.Day);
+      DateTime dt_t = new DateTime(__dtp_to.Value.Year, __dtp_to.Value.Month, __dtp_to.Value.Day);
+      if (dt_f > dt_t || dt_t < dt_f)
+      {
+        MessageBox.Show("Дата и время начала должна быть больше конечной даты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return false;
+      }
+      else
+        return true;
+    }
+
+    private void __dtp_to_ValueChanging(object sender, CancelEventArgs e)
+    {
+      if (!CheckDateTimeEvent())
+        e.Cancel = true;
+      else
+        e.Cancel = false;
+    }
+
+    private void __dtp_from_ValueChanging(object sender, CancelEventArgs e)
+    {
+      if (!CheckDateTimeEvent())
+        e.Cancel = true;
+      else
+        e.Cancel = false;
+    }
+
+    private void __dtp_ValueChanged(object sender, EventArgs e)
+    {
+      this.ReadEvent();
+      __previousValueFrom = __dtp_from.Value;
+      __previousValueTo = __dtp_to.Value;
     }
 
     private void LstViewItm_ListViewMouseRightClick(object sender)
@@ -274,21 +321,7 @@ namespace UlcWin
         __aSettings_new = (ASettings)__aSettings_old.Clone();
       }
     }
-
-    private void ToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
-    {
-      int x = 0;
-    }
-
-    private void LoadForm_CheckedChanged(object sender, EventArgs e)
-    {
-      int x = 9;
-    }
-
-    private void ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-    {
-      throw new NotImplementedException();
-    }
+   
 
     private void LstViewItm_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
     {
@@ -316,7 +349,7 @@ namespace UlcWin
       if (result == DialogResult.Yes)
       {
 
-        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT,/* string.Format("{0}", this.__db.__DbUserName)*/"0.0.0.0",-1);
+        this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT,/* string.Format("{0}", this.__db.__DbUserName)*/"",-1);
         if (__settings_changed)
         {
           result = MessageBox.Show("Сохранить настройки приложения?", "Закрытие приложения",
@@ -466,11 +499,11 @@ namespace UlcWin
           this.tsSelectedItems.Enabled = true;
           if (this.LstViewItm.SelectedItems.Count != 0)
           {
-            this.tsBtnEventShowHide.Enabled = true;
+            ///////////////////this.tsBtnEventShowHide.Enabled = true;
           }
           else
           {
-            this.tsBtnEventShowHide.Enabled = false;
+            /////////////////////////////this.tsBtnEventShowHide.Enabled = false;
           }
           
           //this.ctxMenuItemChange.Enabled = true;
@@ -486,7 +519,7 @@ namespace UlcWin
         else
         {
           this.tsSelectedItems.Enabled = false;
-          this.tsBtnEventShowHide.Enabled = false;
+          ///////////////////////////////////this.tsBtnEventShowHide.Enabled = false;
           this.LstViewEvent.Visible = false;
           this.ctxMenuItemChange.Enabled = false;
           this.ctxMenuItemDelete.Enabled = false;
@@ -541,12 +574,16 @@ namespace UlcWin
         this.tsDwnUpdate.Visible = false;
        
       }
-      if (this.LstViewItm.Items.Count == 0)
-      {
-        this.splitContainer2.Panel2Collapsed = true;
-        splitContainer2.Panel2.Hide();
-        tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
-      }
+      //if (this.LstViewItm.Items.Count == 0)
+      //{
+      //  this.splitContainer2.Panel2Collapsed = true;
+      //  splitContainer2.Panel2.Hide();
+      //  tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
+      //}
+      //else {
+      //  this.splitContainer2.Panel2Collapsed = false;
+      //  splitContainer2.Panel2.Show();
+      //}
     }
 
     //void ReadOnlyUserAccses()
@@ -715,10 +752,8 @@ namespace UlcWin
       //this.LvMenu.Visible = true;
     }
 
-    private void __dtp_ValueChanged(object sender, EventArgs e)
-    {
-      this.ReadEvent();
-    }
+    
+   
 
     public bool InitDB()
     {
@@ -786,6 +821,7 @@ namespace UlcWin
     }
     private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
+     
       this.LstViewEvent.Items.Clear();
       TreeView tree = (TreeView)sender;
       __sel_node = (UNode)tree.SelectedNode;
@@ -808,8 +844,7 @@ namespace UlcWin
         DateTime dt = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
         this.LstViewItm.Visible = false;
         this.LstViewItm.Items.Clear();
-        __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,
-          __sel_node.Text);
+        __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
         this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
         __its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
         this.tsFilterText.Text = "";
@@ -920,8 +955,9 @@ namespace UlcWin
       else {
         ulcMeterTreeView.RecalcStatusLebel();
       }
-      
 
+      //this.splitContainer2.Panel2Collapsed = false;
+      //splitContainer2.Panel2.Show();
     }
 
     void ReinitFind()
@@ -1297,7 +1333,8 @@ namespace UlcWin
 
     public void ReadEvent()
     {
-      DateTime dt = this.__dtp.Value;
+      DateTime dt_from = this.__dtp_from.Value;
+      DateTime dt_to = this.__dtp_to.Value.AddDays(1);
       var si = this.LstViewItm.SelectedItems;
       ItemIp iip = (ItemIp)si[0].Tag;
       if (iip.UType == 1)
@@ -1306,85 +1343,57 @@ namespace UlcWin
         this.LstViewEvent.Items.Clear();
         Dictionary<DateTime, List<UlcEvent>> lst_ev = null;
         SimpleWaitForm siform = new SimpleWaitForm();
-
-        //InWaitControl inWaitControl = new InWaitControl();
-        //inWaitControl.Left = (this.splitContainer2.Panel2.ClientSize.Width - inWaitControl.Width) / 2;
-        //inWaitControl.Top = (this.splitContainer2.Panel2.ClientSize.Height - inWaitControl.Height) / 2;
-        //this.splitContainer2.Panel2.Controls.Add(inWaitControl);
-
-        //inWaitControl.BringToFront();
-        //inWaitControl.Show();
-        //IAsyncResult result = this.BeginInvoke(new Action(() =>
-        //{
-        //  lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
-        //  //this.splitContainer2.Panel2.Controls.Remove(inWaitControl);
-        //}));
-        //result.AsyncWaitHandle.WaitOne();
-
-        //Task tsk = new Task(new Action(() =>
-        //{
-        //  lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
-        //}));
-        //tsk.Start();
-        //bool isComp=tsk.Wait(5000);
-        //this.splitContainer2.Panel2.Controls.Remove(inWaitControl);
-        //siform.FormBorderStyle = FormBorderStyle.None;
-        //siform.tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+        this.LstViewEvent.Items.Clear();
         siform.RunAction(new Action(() =>
         {
-          //this.ReadEvent();
-          //siform.SetLabelText(string.Format("События: {0}", iip.Name));
-          lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
+          lst_ev = __db.DbReadEvent(iip.Id, dt_from,dt_to);
           if (lst_ev != null)
           {
-            // using (EventForm ef = new EventForm())
-            //{
             this.BeginInvoke(new Action(() =>
             {
               this.LstViewEvent.Visible = true;
             }));
 
             List<ListViewItem> lstItems = new List<ListViewItem>();
+            List<UlcEvent> ulcEvents = new List<UlcEvent>();
             foreach (var item in lst_ev)
             {
-              //var lg = /*ef.listView1*/this.LstViewEvent.Groups.Add(item.Key.ToString("dd.MM.yyyy"), item.Key.ToString("dd.MM.yyyy"));
-
-              foreach (var it in item.Value)
+              foreach (var itm in item.Value)
               {
-                var itev = new ListViewItem(new string[] { it.Date.ToString("dd.MM.yyyy HH:mm:ss"), Log.ParceLevel(it.EventLevel), it.Msg });//, lg);
-                switch (it.EventLevel)
-                {
-                  case EnumLogs.LOG_LVL.logDEBUG:
-                    itev.ImageIndex = 3;
-                    break;
-                  case EnumLogs.LOG_LVL.logINFO:
-                    itev.ImageIndex = 10;
-                    break;
-                  case EnumLogs.LOG_LVL.logWARNING:
-                    itev.ImageIndex = 4;
-                    break;
-                  case EnumLogs.LOG_LVL.logERROR:
-                    itev.ImageIndex = 6;
-                    break;
-                  case EnumLogs.LOG_LVL.logFATAL:
-                    itev.ImageIndex = 5;
-                    break;
-                  default:
-                    itev.ImageIndex = 0;
-                    break;
-                }
-                /*ef.listView1.Items*/
-                lstItems.Add(itev);
-                //this.LstViewEvent.Items.Add(itev);
+                ulcEvents.Add(itm);
               }
+            }
+            List<UlcEvent> ulcEvtSort = ulcEvents.OrderBy(x => x.Date).ToList();
+            foreach (var it in ulcEvtSort)
+            {
+              var itev = new ListViewItem(new string[] { it.Date.ToString("dd.MM.yyyy HH:mm:ss"), Log.ParceLevel(it.EventLevel), it.Msg });//, lg);
+              switch (it.EventLevel)
+              {
+                case EnumLogs.LOG_LVL.logDEBUG:
+                  itev.ImageIndex = 3;
+                  break;
+                case EnumLogs.LOG_LVL.logINFO:
+                  itev.ImageIndex = 10;
+                  break;
+                case EnumLogs.LOG_LVL.logWARNING:
+                  itev.ImageIndex = 4;
+                  break;
+                case EnumLogs.LOG_LVL.logERROR:
+                  itev.ImageIndex = 6;
+                  break;
+                case EnumLogs.LOG_LVL.logFATAL:
+                  itev.ImageIndex = 5;
+                  break;
+                default:
+                  itev.ImageIndex = 0;
+                  break;
+              }
+              lstItems.Add(itev);
             }
             this.BeginInvoke(new Action(() =>
             {
               this.LstViewEvent.Items.AddRange(lstItems.ToArray());
             }));
-            
-            //ef.ShowDialog();
-            //// }
           }
           else
           {
@@ -1393,20 +1402,13 @@ namespace UlcWin
               this.LstViewEvent.Visible = false;
               this.lblNotExist.Text = "Нет сообщений";
             }));
-            //this.tsEvent.Enabled = false;
-           
           }
           siform.DialogResult = DialogResult.OK;
         }));
         siform.ShowDialog();
-
-        //Dictionary<DateTime, List<UlcEvent>> lst_ev = __db.DbReadEvent(iip.Id, dt);// DateTime.Now);
-        //
-
-
-
       }
     }
+
     private void NotTrueMenuClick(object sender, EventArgs e)
     {
       if (__lip == null)
@@ -2016,6 +2018,7 @@ namespace UlcWin
       ReadStatusListView();
     }
 
+    bool __panel_event_log = false;
     private void LstViewItm_SelectedIndexChanged(object sender, EventArgs e)
     {
       if (!this.splitContainer2.Panel2Collapsed)
@@ -2363,18 +2366,18 @@ namespace UlcWin
     private void toolStripButton2_Click_1(object sender, EventArgs e)
     {
 
-      DateTime dt = __dtp.Value.AddDays(1);
+      DateTime dt = __dtp_from.Value.AddDays(1);
       //if (dt > DateTime.Now)
       //return;
-      this.__dtp.Value = dt;
+      this.__dtp_from.Value = dt;
       this.ReadEvent();
     }
 
     private void toolStripButton1_Click(object sender, EventArgs e)
     {
-      DateTime dt = __dtp.Value.AddDays(-1);
-      this.__dtp.Value = dt;
-      this.ReadEvent();
+      DateTime dt = __dtp_from.Value.AddDays(-1);
+      this.__dtp_from.Value = dt;
+      //this.ReadEvent();
     }
     
     private void LstViewItm_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -2988,9 +2991,12 @@ namespace UlcWin
       }
     }
 
+
+
     private void toolStripButton3_Click_3(object sender, EventArgs e)
     {
-      if (this.splitContainer2.Panel2Collapsed)
+     
+      if (!this.__panel_event_log)
       {
 
         this.splitContainer2.Panel2Collapsed = false;
@@ -2998,6 +3004,7 @@ namespace UlcWin
         tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window;
         tsBtnEventShowHide.ToolTipText = "Скрыть панель событий";
         this.LstViewItm_SelectedIndexChanged(null, null);
+        this.__panel_event_log = true;
       }
       else
       {
@@ -3007,6 +3014,7 @@ namespace UlcWin
         splitContainer2.Panel2.Hide();
         tsBtnEventShowHide.Image = global::UlcWin.Properties.Resources.window_split_ver;
         tsBtnEventShowHide.ToolTipText = "Показать панель событий";
+        this.__panel_event_log = false;
       }
 
     }
@@ -3590,6 +3598,11 @@ namespace UlcWin
         }
       }
       else if (e.TabPageIndex == 0) {
+        if (this.__panel_event_log)
+        {
+          this.splitContainer2.Panel2Collapsed = false;
+          splitContainer2.Panel2.Show();
+        }
         if (ulcMeterTreeView.treeListView1.Items.Count != 0)
         {
           tsStatusLbl.Items[2].Visible = true;

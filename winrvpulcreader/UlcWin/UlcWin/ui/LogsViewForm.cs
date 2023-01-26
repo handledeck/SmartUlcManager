@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin.Controls;
 using UlcWin.DB;
 
 namespace UlcWin.ui
@@ -17,13 +18,22 @@ namespace UlcWin.ui
   public partial class LogsViewForm : Form
   {
     DbReader __db = null;
+    EventLogCheckBoxPanel __eventLogCheckBoxPanel;
     public LogsViewForm(DbReader db)
     {
       __db = db;
       InitializeComponent();
+      __eventLogCheckBoxPanel = new EventLogCheckBoxPanel();
+      __eventLogCheckBoxPanel.ItemEventChecked += __eventLogCheckBoxPanel_ItemEventChecked;
+      this.popupComboBox1.DropDownControl = __eventLogCheckBoxPanel;
       this.Shown += LogsViewForm_Shown;
       //this.cbEvetCheckBox.DropDownHeight = 350;
       //this.cbEvetCheckBox.DropDownWidth = 280;
+    }
+
+    private void __eventLogCheckBoxPanel_ItemEventChecked(CbsEvents sender,ItemCheckEventArgs e)
+    {
+      int x = 0;
     }
 
     DbLogMsg EvtObjectWho(string message, IDbConnection db)
@@ -33,9 +43,9 @@ namespace UlcWin.ui
         DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
         if (dbLogMsg == null)
           throw new Exception();
-        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.Id);
+        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.id);
         if (ormDbInfo != null)
-          dbLogMsg.Ip = ormDbInfo.ip_address;
+          dbLogMsg.ip = ormDbInfo.ip_address;
         return dbLogMsg;
       }
       catch (Exception e)
@@ -118,8 +128,9 @@ namespace UlcWin.ui
               List<OrmDbLogs> lstLogs = null;
               //IAsyncResult re= this.BeginInvoke(new Action(() => {
               var xx = db.From<OrmDbLogs>().Where(x => x.current_time > dt_start.Date && x.current_time < dt_end.Date).
-              And(x => id_usr == -1 ? x.id_user > -1 : x.id_user == id_usr).
-              And(x => id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).
+              And(x=>x.log_event==0 || x.log_event==2 || x.log_event==3 || x.log_event==4 || x.log_event == 6 || x.log_event == 7 || x.log_event == 8 || x.log_event==100 || x.log_event==14).
+              /*And(x => id_usr == -1 ? x.id_user > -1 : x.id_user == id_usr).
+              And(x => id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).*/
               Select().OrderByDescending(x => x.current_time);
               lstLogs = db.SqlList<OrmDbLogs>(xx);
               //}));
@@ -136,13 +147,13 @@ namespace UlcWin.ui
                 if (dbLogMsg != null)
                 {
                   itr.Tag = dbLogMsg;
-                  itr.SubItems.Add(dbLogMsg.Ip);
+                  itr.SubItems.Add(dbLogMsg.ip);
 
-                  itr.SubItems.Add(dbLogMsg.Fes + "/" + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+                  itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
                 }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
                 else
                 {
-                  itr.SubItems.Add(item.message);
+                  //itr.SubItems.Add(item.message);
                 }
                 itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
                 lst.Add(itr);
@@ -174,6 +185,7 @@ namespace UlcWin.ui
         {
           List<OrmDbUsers> lstUser = db.Select<OrmDbUsers>();
           this.cbUsers.Items.Add("Все");
+          
           this.cbUsers.Items.AddRange(lstUser.ToArray());
           this.cbUsers.SelectedIndex = 0;
           GetEvetDescription();
@@ -194,13 +206,14 @@ namespace UlcWin.ui
     {
       CbsEvents cbsEvents = new CbsEvents() { ID = 0, EvtDesc = "Все" };
       this.cbEvents.Items.Add(cbsEvents);
-     
+      this.__eventLogCheckBoxPanel.AddCbsEvent(cbsEvents);
       foreach (EnLogEvt suit in (EnLogEvt[])Enum.GetValues(typeof(EnLogEvt)))
       {
         string desc=EvtDescription.GetDesc(suit);
         int id = (int)suit;
         cbsEvents = new CbsEvents() {  ID=id, EvtDesc=desc};
         this.cbEvents.Items.Add(cbsEvents);
+        this.__eventLogCheckBoxPanel.AddCbsEvent(cbsEvents);
         //int x=this.cbEvetCheckBox.Items.Add(cbsEvents);
         //this.cbEvetCheckBox.CheckBoxItems[x].Checked = true;
         //this.cbEvetCheckBox.CheckBoxItems[x].CheckedChanged += LogsViewForm_CheckedChanged;
@@ -285,7 +298,7 @@ namespace UlcWin.ui
           DbLogMsg dbLm = (DbLogMsg)lstLogEvents.SelectedItems[0].Tag;
 
           //OrmDbLogs ormDbLogs = (OrmDbLogs)this.lstLogEvents.SelectedItems[0].Tag;
-          if (dbLm.Feature != null) {
+          if (dbLm.feature != null) {
             using (LogDetailEvent lgEvt = new LogDetailEvent())
             {
               CbsEvents cbsEvents = (CbsEvents)this.cbEvents.SelectedItem;
@@ -295,7 +308,7 @@ namespace UlcWin.ui
                 try
                 {
                   DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(item.message, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-                  if (dbLogMsg.Feature != null)
+                  if (dbLogMsg.feature != null)
                   {
                     int x = 0;
                   }
