@@ -121,7 +121,7 @@ namespace GettingStartedTree
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home, mc.rs_stat as rs_stat, mi.active as meter_active,mi.ctrl_id, mn.active as controller_active from main_nodes mn " +
+          string sql = string.Format("select mi.id ,mn.\"name\",mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true, mc.unit_type_id, mc.id as id_home, mc.rs_stat as rs_stat, mi.active as meter_active,mi.ctrl_id, mn.active as controller_active, mv.value_month as mv_month from main_nodes mn " +
                        "left join main_ctrlinfo mc on mc.id = mn.id " +
                        "left join meter_info mi on mi.ctrl_id = mc.id " +
                        "left join meter_value mv on mv.ctrl_id = mi.id and mv.date_time > '{0}' " +
@@ -142,6 +142,7 @@ namespace GettingStartedTree
             int unit_type_id = int.MaxValue;
             int id_home = int.MaxValue;
             double value = double.MaxValue;
+            double value_month = double.MaxValue;
             int rs_active = int.MaxValue;
             int meter_active = int.MaxValue;
             int ctrl_id = int.MaxValue;
@@ -169,6 +170,7 @@ namespace GettingStartedTree
               meter_active = reader[11].GetType() == typeof(DBNull) ? -1 : (int)reader[11];
               ctrl_id = reader[12].GetType() == typeof(DBNull) ? -1 : (int)reader[12];
               controller_active = reader["controller_active"].GetType() == typeof(DBNull) ? -1 : (int)reader["controller_active"];
+              value_month = reader["mv_month"].GetType() == typeof(DBNull) ? 0 : (double)reader["mv_month"];
             }
             catch (Exception el)
             {
@@ -198,7 +200,8 @@ namespace GettingStartedTree
               unit_type_id = unit_type_id,
               rs_active = Convert.ToBoolean(rs_active),
               meter_active = meter_active,
-              controller_active = controller_active
+              controller_active = controller_active,
+              value_month=value_month
             };
             if (!dic.ContainsKey(id_home))
             {
@@ -254,6 +257,7 @@ namespace GettingStartedTree
             item.Value.meter_active = item.Value.Nodes[0].meter_active;
             item.Value.rs_active = item.Value.Nodes[0].rs_active;
             item.Value.controller_active = item.Value.Nodes[0].controller_active;
+            item.Value.value_month = item.Value.Nodes[0].value_month;
             //item.Value.ParentNode = item.Value;
           }
           else if (item.Value.Nodes.Count > 1)
@@ -850,7 +854,7 @@ namespace GettingStartedTree
                 ip_loc = item.ip;
                 if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
                 {
-
+                  MeterAllValues meterAllValues = EnMera318BY.GetSumAllValue(item.meter_factory, client);
                   Exception ex;
                   float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
                   if (ex == null && value.HasValue)
@@ -866,10 +870,22 @@ namespace GettingStartedTree
                   }
 
                 }
+                else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318"))
+                {
+                 
+                  float value = 0;
+                  if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+                    throw new Exception("ошибка получения данных");
+                  item.value = value;
+                  item.is_true = true;
+                  item.updated = true;
+                  item.date_time = DateTime.Now;
+                }
                 else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
                 {
+                  MeterAllValues meterAllValues = Granelectro.GetSumAllValue(item.meter_factory, client);
                   Exception exp = null;
-                  float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
+                  float? value = Granelectro.GetSumValue( EnGranSys.ACCUMULATED_ENERGY_DAY,item.meter_factory, client, out exp);
                   if (exp == null && value.HasValue)
                   {
                     item.value = value.Value;
@@ -1044,15 +1060,36 @@ namespace GettingStartedTree
               throw new Exception();
             if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
             {
-              Exception ex;
-              float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
-              if (ex == null && value.HasValue)
+              //Exception ex;
+              //float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
+              MeterAllValues meterAllValues = EnMera102.GetSumAllValue(item.meter_factory, client);
+              if (meterAllValues != null)
               {
-                item.value =Math.Round(value.Value,2);
+                item.value = meterAllValues.EnergySumDay.Value;
+                item.value_month = meterAllValues.EnergySumMonth.Value;
                 item.is_true = true;
                 item.updated = true;
                 item.date_time = DateTime.Now;
-                wf.SetLabelText(value.Value.ToString());
+                wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
+              }
+              else {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+            else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318"))
+            {
+              MeterAllValues meterAllValues= EnMera318BY.GetSumAllValue(item.meter_factory, client);
+              //float value = 0;
+              //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+              //throw new Exception("ошибка получения данных");
+              if (meterAllValues != null)
+              {
+                item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
               }
               else
               {
@@ -1061,15 +1098,18 @@ namespace GettingStartedTree
             }
             else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
             {
-              Exception exp = null;
-              float? value = Granelectro.GetSumDayValue(item.meter_factory, client, out exp);
-              if (exp == null && value.HasValue)
+              MeterAllValues meterAllValues= Granelectro.GetSumAllValue(item.meter_factory, client);
+              if (meterAllValues != null)
               {
-                item.value = Math.Round(value.Value);
+                //float? value = Granelectro.GetSumValue(EnGranSys.ACCUMULATED_ENERGY_DAY, item.meter_factory, client, out exp);
+                //if (exp == null && value.HasValue)
+                //{
+                item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value,2);
                 item.is_true = true;
                 item.updated = true;
                 item.date_time = DateTime.Now;
-                wf.SetLabelText(value.Value.ToString());
+                wf.SetLabelText(meterAllValues.EnergySumDay.ToString());
               }
               else
               {
@@ -1086,12 +1126,18 @@ namespace GettingStartedTree
                 {
                   try
                   {
-                    MeterValue mv = db.Single<MeterValue>(x => x.date_time > dtc && x.ctrl_id == item.ctrl_id);
+                    MeterValue mv = db.Single<MeterValue>(x => x.date_time > dtc && x.ctrl_id == item.id);
                     if (mv != null)
                     {
-                      item.id = mv.id;
+                      //item.id = mv.id;
+                      mv.value = Math.Round(item.value.Value, 2);
+                      mv.value_month = Math.Round(item.value_month.Value,2);
+                      mv.date_time = DateTime.Now;
+                      mv.is_true = true;
+                      db.Save<MeterValue>(mv);
                     }
-                    db.Save<MeterValue>(TreeListNodeModel.ConvertToMeterValue(item));
+                    else
+                      db.Insert<MeterValue>(TreeListNodeModel.ConvertToMeterValue(item));
                     dbTrans.Commit();
                   }
                   catch

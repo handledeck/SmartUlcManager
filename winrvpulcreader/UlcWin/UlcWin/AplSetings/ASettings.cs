@@ -15,6 +15,10 @@ namespace UlcWin.AplSetings
     public List<int> CheckedItemVisible { get; set; }
     public List<int> WidthColumnsDevice { get; set; }
     public List<int> DisplayIndexes { get; set; }
+    public List<int> DisplayEventChecked{ get; set; }
+
+    public bool Settings_changed { get; set; }
+
     static string __connect_file = "appdevice.bin";
 
     public object Clone()

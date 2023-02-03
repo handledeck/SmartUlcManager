@@ -22,6 +22,7 @@ namespace UlcWin.Controls.UlcMeterComponet
     public string meter_factory { get; set; }
     public double value { get; set; }
     public bool is_true { get; set; }
+    public double value_month { get; set; }
 
     public static bool CheckTableDb(string connection)
     {

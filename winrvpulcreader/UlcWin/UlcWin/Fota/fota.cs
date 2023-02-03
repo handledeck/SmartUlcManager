@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.DB;
 using Ztp.Protocol;
 
@@ -632,7 +633,7 @@ namespace UlcWin.Fota
     public TaskRunOff runOff { get; set; }
     public Task TaskOwn { get; set; }
     public ItemIp ItmIp { get; set; }
-    public List<Meters> meters { get; set; }
+    public List<MeterInfo> meters { get; set; }
     public bool IsUpdateAvalabe { get; set; }
     public bool IsMeterTrue { get; set; }
 

@@ -41,6 +41,7 @@ namespace GettingStartedTree
       this.olvIp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvMeterFactory = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvValueMonth = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvRs = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.menuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuChange = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,8 +99,8 @@ namespace GettingStartedTree
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.objectListView1);
-      this.splitContainer1.Size = new System.Drawing.Size(1075, 416);
-      this.splitContainer1.SplitterDistance = 838;
+      this.splitContainer1.Size = new System.Drawing.Size(1099, 547);
+      this.splitContainer1.SplitterDistance = 856;
       this.splitContainer1.SplitterWidth = 3;
       this.splitContainer1.TabIndex = 0;
       // 
@@ -117,8 +118,8 @@ namespace GettingStartedTree
       // splitMeter.Panel2
       // 
       this.splitMeter.Panel2.Controls.Add(this.dataGridView1);
-      this.splitMeter.Size = new System.Drawing.Size(838, 416);
-      this.splitMeter.SplitterDistance = 339;
+      this.splitMeter.Size = new System.Drawing.Size(856, 547);
+      this.splitMeter.SplitterDistance = 445;
       this.splitMeter.TabIndex = 6;
       // 
       // treeListView1
@@ -130,6 +131,7 @@ namespace GettingStartedTree
       this.treeListView1.AllColumns.Add(this.olvIp);
       this.treeListView1.AllColumns.Add(this.olvMeterFactory);
       this.treeListView1.AllColumns.Add(this.olvValue);
+      this.treeListView1.AllColumns.Add(this.olvValueMonth);
       this.treeListView1.AllColumns.Add(this.olvRs);
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvName,
@@ -139,6 +141,7 @@ namespace GettingStartedTree
             this.olvIp,
             this.olvMeterFactory,
             this.olvValue,
+            this.olvValueMonth,
             this.olvRs});
       this.treeListView1.ContextMenuStrip = this.menuTree;
       this.treeListView1.Cursor = System.Windows.Forms.Cursors.Default;
@@ -156,7 +159,7 @@ namespace GettingStartedTree
       this.treeListView1.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
       this.treeListView1.ShowFilterMenuOnRightClick = false;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(838, 339);
+      this.treeListView1.Size = new System.Drawing.Size(856, 445);
       this.treeListView1.SmallImageList = this.imageList1;
       this.treeListView1.TabIndex = 4;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
@@ -178,7 +181,8 @@ namespace GettingStartedTree
       this.olvName.Sortable = false;
       this.olvName.Text = "Имя объекта";
       this.olvName.ToolTipText = "Имя объекта";
-      this.olvName.Width = 285;
+      this.olvName.Width = 230;
+      this.olvName.WordWrap = true;
       // 
       // olvTp
       // 
@@ -242,11 +246,22 @@ namespace GettingStartedTree
       this.olvValue.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValue.IsEditable = false;
       this.olvValue.Sortable = false;
-      this.olvValue.Text = "Данные";
+      this.olvValue.Text = "Сутки";
       this.olvValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.olvValue.ToolTipText = "Показания счетчика";
-      this.olvValue.Width = 100;
+      this.olvValue.ToolTipText = "Показания счетчика на начало суток";
+      this.olvValue.Width = 65;
       this.olvValue.WordWrap = true;
+      // 
+      // olvValueMonth
+      // 
+      this.olvValueMonth.AspectName = "value_month";
+      this.olvValueMonth.CellPadding = null;
+      this.olvValueMonth.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvValueMonth.Text = "Месяц";
+      this.olvValueMonth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.olvValueMonth.ToolTipText = "Показания счетчика на начало месяц";
+      this.olvValueMonth.Width = 65;
+      this.olvValueMonth.WordWrap = true;
       // 
       // olvRs
       // 
@@ -334,7 +349,7 @@ namespace GettingStartedTree
       this.dataGridView1.Location = new System.Drawing.Point(0, 0);
       this.dataGridView1.Name = "dataGridView1";
       this.dataGridView1.RowHeadersVisible = false;
-      this.dataGridView1.Size = new System.Drawing.Size(838, 73);
+      this.dataGridView1.Size = new System.Drawing.Size(856, 98);
       this.dataGridView1.TabIndex = 5;
       // 
       // status
@@ -383,7 +398,7 @@ namespace GettingStartedTree
       this.objectListView1.Margin = new System.Windows.Forms.Padding(2);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.ShowGroups = false;
-      this.objectListView1.Size = new System.Drawing.Size(234, 416);
+      this.objectListView1.Size = new System.Drawing.Size(240, 547);
       this.objectListView1.TabIndex = 4;
       this.objectListView1.UseCompatibleStateImageBehavior = false;
       this.objectListView1.View = System.Windows.Forms.View.Details;
@@ -409,7 +424,7 @@ namespace GettingStartedTree
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1083, 459);
+      this.panel1.Size = new System.Drawing.Size(1107, 590);
       this.panel1.TabIndex = 2;
       // 
       // tableLayoutPanel1
@@ -425,7 +440,7 @@ namespace GettingStartedTree
       this.tableLayoutPanel1.RowCount = 2;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(1083, 459);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1107, 590);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
       // panel2
@@ -441,7 +456,7 @@ namespace GettingStartedTree
       this.panel2.Location = new System.Drawing.Point(4, 4);
       this.panel2.Margin = new System.Windows.Forms.Padding(2);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(1075, 29);
+      this.panel2.Size = new System.Drawing.Size(1099, 29);
       this.panel2.TabIndex = 1;
       // 
       // label1
@@ -466,7 +481,7 @@ namespace GettingStartedTree
       // 
       this.monthPicker1.Anchor = System.Windows.Forms.AnchorStyles.Right;
       this.monthPicker1.CustomFormat = "MMMM yyyy";
-      this.monthPicker1.Location = new System.Drawing.Point(872, 6);
+      this.monthPicker1.Location = new System.Drawing.Point(896, 6);
       this.monthPicker1.Name = "monthPicker1";
       this.monthPicker1.Size = new System.Drawing.Size(200, 20);
       this.monthPicker1.TabIndex = 4;
@@ -527,7 +542,7 @@ namespace GettingStartedTree
       this.Controls.Add(this.panel1);
       this.Margin = new System.Windows.Forms.Padding(2);
       //this.Name = "UlcTreeView";
-      this.Size = new System.Drawing.Size(1083, 459);
+      this.Size = new System.Drawing.Size(1107, 590);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -586,5 +601,6 @@ namespace GettingStartedTree
     private BrightIdeasSoftware.OLVColumn olvTp;
     private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Label label1;
+    private BrightIdeasSoftware.OLVColumn olvValueMonth;
   }
 }

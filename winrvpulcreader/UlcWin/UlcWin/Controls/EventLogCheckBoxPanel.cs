@@ -11,24 +11,49 @@ using UlcWin.ui;
 
 namespace UlcWin.Controls
 {
-  public delegate void EventItemChecked(CbsEvents sender,ItemCheckEventArgs e);
+  public delegate void EventItemChecked(CbsEvents sender, ItemCheckEventArgs e);
+  public delegate void EventCheckBoxSelected();
   public partial class EventLogCheckBoxPanel : UserControl
   {
-    public event EventItemChecked ItemEventChecked;  
+    public event EventItemChecked ItemEventChecked;
+    bool __loaded = false;
+    public event EventCheckBoxSelected EventCheckBoxSelected;
     public EventLogCheckBoxPanel()
     {
       InitializeComponent();
+
     }
 
-    public void AddCbsEvent(CbsEvents cbsEvents) {
-      this.checkedListBox1.Items.Add(cbsEvents);
+    public void AddCbsEvent(List<CbsEvents> cbsEvents)
+    {
+
+      foreach (var item in cbsEvents)
+      {
+        int index = this.checkedListBox1.Items.Add(item);
+        this.checkedListBox1.SetItemChecked(index, item.Checked);
+      }
+      __loaded = true;
     }
 
     private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
     {
-      CbsEvents cbsEvents=(CbsEvents)this.checkedListBox1.Items[e.Index];
-      if (ItemEventChecked != null)
-        ItemEventChecked(cbsEvents,e);
+
+      if (__loaded)
+      {
+        CbsEvents cbsEvents = (CbsEvents)this.checkedListBox1.Items[e.Index];
+        if (ItemEventChecked != null)
+          ItemEventChecked(cbsEvents, e);
+      }
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      if (EventCheckBoxSelected != null) {
+        EventCheckBoxSelected();
+      }
+      
+
     }
   }
+ 
 }

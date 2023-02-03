@@ -130,7 +130,6 @@ namespace UlcWin
       this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
       this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
       this.lblNotExist = new System.Windows.Forms.Label();
-      this.tabEventSystem = new System.Windows.Forms.TabPage();
       this.LvMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuUpdateSelected = new System.Windows.Forms.ToolStripMenuItem();
@@ -415,7 +414,7 @@ namespace UlcWin
       this.tsBtnEventLog.Size = new System.Drawing.Size(73, 27);
       this.tsBtnEventLog.Text = "Журнал";
       this.tsBtnEventLog.ToolTipText = "Журнал событий";
-      this.tsBtnEventLog.Click += new System.EventHandler(this.toolStripButton3_Click_4);
+      this.tsBtnEventLog.Click += new System.EventHandler(this.tsLogShowDialog);
       // 
       // tsBtnAbout
       // 
@@ -1086,7 +1085,6 @@ namespace UlcWin
       // tabEventController
       // 
       this.tabEventController.Controls.Add(this.tabEventCtrl);
-      this.tabEventController.Controls.Add(this.tabEventSystem);
       this.tabEventController.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tabEventController.ImageList = this.imgTabs;
       this.tabEventController.Location = new System.Drawing.Point(0, 0);
@@ -1187,17 +1185,6 @@ namespace UlcWin
       this.lblNotExist.Text = "Нет информации";
       this.lblNotExist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // tabEventSystem
-      // 
-      this.tabEventSystem.ImageIndex = 10;
-      this.tabEventSystem.Location = new System.Drawing.Point(4, 23);
-      this.tabEventSystem.Name = "tabEventSystem";
-      this.tabEventSystem.Padding = new System.Windows.Forms.Padding(3);
-      this.tabEventSystem.Size = new System.Drawing.Size(1144, 205);
-      this.tabEventSystem.TabIndex = 1;
-      this.tabEventSystem.Text = "Журнал сообщений системы";
-      this.tabEventSystem.UseVisualStyleBackColor = true;
-      // 
       // LvMenu
       // 
       this.LvMenu.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1222,7 +1209,7 @@ namespace UlcWin
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Size = new System.Drawing.Size(224, 336);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1592,7 +1579,6 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripTextBox tsFilterText;
     private System.Windows.Forms.TabControl tabEventController;
     private System.Windows.Forms.TabPage tabEventCtrl;
-    private System.Windows.Forms.TabPage tabEventSystem;
     private System.Windows.Forms.ToolStripLabel EvtIntervalLbl;
     private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     private System.Windows.Forms.ToolStripLabel toolStripLabel3;

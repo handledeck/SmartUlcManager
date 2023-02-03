@@ -16,7 +16,7 @@ namespace UlcWin.Edit
   {
 
     public Controls.UlcMeterComponet.MeterInfo __meter = null;
-    string[] __meters = new string[] { "CC-301(Гранэлектро)", "CC-101(Гранэлектро)", "CE102BY(Энергомера)" };
+    string[] __meters = new string[] { "CC-301(Гранэлектро)", "CC-101(Гранэлектро)", "CE102BY(Энергомера)", "CE318BY(Энергомера)" };
     public MeterEditFrom(Controls.UlcMeterComponet.MeterInfo meter)
     {
       __meter = meter;
@@ -38,6 +38,10 @@ namespace UlcWin.Edit
         else if (__meter.meter_type.StartsWith("СЕ102BY"))
         {
           this.comboBox1.SelectedIndex = 2;
+        }
+        else if (__meter.meter_type.StartsWith("CE318BY"))
+        {
+          this.comboBox1.SelectedIndex = 3;
         }
         this.txtBoxPlant.Text = __meter.meter_factory;
         this.cbActMeter.Checked = meter.active == 1 ? true : false;
@@ -72,6 +76,9 @@ namespace UlcWin.Edit
           break;
         case 2:
           result = "CE102BY";
+          break;
+        case 3:
+          result = "CE318BY";
           break;
         default:
           result = string.Empty;

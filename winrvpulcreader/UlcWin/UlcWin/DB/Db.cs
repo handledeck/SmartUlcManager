@@ -467,11 +467,14 @@ namespace InterUlc.Db
       return exc;
     }
 
+
+
     public bool CheckForUserConnection()
     {
       NpgsqlConnection consql = null;
       try
       {
+        
         this.__connection = string.Format("Host={0};Port={3};Username={1};Password={2};Database=ctrl_mon_dev",
        this.__dBIpAddress, this.__DbUserName, this.__DbPassword, 5432);
         var sql = string.Format("select * from main_user where usr='{0}'", this.__DbUserName);
@@ -505,7 +508,7 @@ namespace InterUlc.Db
               __ulcUser.Pwd = (string)dr[2];
               __ulcUser.NodesString = (string)dr[3];
               __ulcUser.Comment = (string)dr[4];
-              __ulcUser.AccsessLavel = (EnumAccsesLevel)((short)dr[5]);
+              __ulcUser.AccsessLavel = (EnumAccsesLevel)((int)dr[5]);
             }
             string al = DBAuthUtils.Decrypt(__ulcUser.Pwd, __ulcUser.User);
             int iAc;
@@ -557,7 +560,7 @@ namespace InterUlc.Db
           ulcUser.Pwd = (string)dr[2];
           ulcUser.NodesString = (string)dr[3];
           ulcUser.Comment = (string)dr[4];
-          int lvl = (short)dr[5];
+          int lvl = (int)dr[5];
           ulcUser.AccsessLavel = (EnumAccsesLevel)lvl;
           ulcUserList.Add(ulcUser);
         }
@@ -610,6 +613,17 @@ namespace InterUlc.Db
       //cmd.ExecuteNonQuery();
     }
 
+    public List<MeterInfo> GetMetrsById(int id)
+    {
+      List<MeterInfo> meterInfos = null;
+      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(this.__connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        meterInfos = db.Select<MeterInfo>(x => x.ctrl_id == id);
+      }
+      return meterInfos;
+    }
+
     public int UpdateUserRecord(UlcUser ulcUser,string old_name_user)//*int id, string user, string pwd, string comment, string items*/)
     {
       try
@@ -639,12 +653,15 @@ namespace InterUlc.Db
     {
       try
       {
-        string sql = string.Format("DROP USER \"{0}\";", name);
+        string sql = string.Format("REVOKE ulc_read_write from {0}", name);
         cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
+        int x = cmd.ExecuteNonQuery();
+        sql = string.Format("DROP USER \"{0}\";", name);
+        cmd.CommandText = sql;
+        x = cmd.ExecuteNonQuery();
       }
-      catch { 
-      
+      catch(Exception exp) {
+        int x = 0;
       }
     }
 
@@ -692,7 +709,6 @@ namespace InterUlc.Db
     }
 
 
-
     void SetGrandUser(UlcUser ulcUser, IDbCommand cmd) {
       try
       {
@@ -700,21 +716,23 @@ namespace InterUlc.Db
         cmd.CommandText = string.Format("CREATE USER \"{0}\" WITH PASSWORD '{1}'" +
             " NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN NOREPLICATION NOBYPASSRLS CONNECTION LIMIT -1",
             ulcUser.User, ulcUser.Pwd);
-        cmd.ExecuteNonQuery();
-        if (ulcUser.AccsessLavel == EnumAccsesLevel.Read)
-        {
-          cmd.CommandText = string.Format("GRANT ulc_read TO \"{0}\";", ulcUser.User);
-          cmd.ExecuteNonQuery();
-        }
-        else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
-        {
+        int result=cmd.ExecuteNonQuery();
+        //if (ulcUser.AccsessLavel == EnumAccsesLevel.Read)
+        //{
+        //  cmd.CommandText = string.Format("GRANT ulc_read TO \"{0}\";", ulcUser.User);
+        //  result=cmd.ExecuteNonQuery();
+        //}
+        //else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
+        //{
           cmd.CommandText = string.Format("GRANT ulc_read_write TO \"{0}\";", ulcUser.User);
-          cmd.ExecuteNonQuery();
-        }
-       
+          result=cmd.ExecuteNonQuery();
+       // }
+        cmd.CommandText = string.Format("ALTER ROLE {0} with password '{1}'", ulcUser.User, ulcUser.Pwd);
+        result=cmd.ExecuteNonQuery();
+
       }
-      catch (Exception e){ 
-      
+      catch (Exception e){
+        int x = 0;
       }
     }
 
@@ -1240,7 +1258,7 @@ namespace InterUlc.Db
           it.SubItems.Add("----");
           it.SubItems.Add("----");
           it.SubItems.Add("----");
-          it.SubItems.Add("----");
+          it.SubItems.Add("0");
           it.SubItems.Add("----");
           it.SubItems.Add(item.Value.Active.ToString());
           it.SubItems.Add(item.Value.IsLight.ToString());

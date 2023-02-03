@@ -19,34 +19,89 @@ namespace UlcWin.ui
   {
     DbReader __db = null;
     EventLogCheckBoxPanel __eventLogCheckBoxPanel;
-    public LogsViewForm(DbReader db)
+    AplSetings.ASettings __aSettings = null;
+    List<OrmDbLogs> __ormDbLogs;
+    public LogsViewForm(DbReader db,AplSetings.ASettings aSettings)
     {
       __db = db;
       InitializeComponent();
+      __aSettings = aSettings;
+
       __eventLogCheckBoxPanel = new EventLogCheckBoxPanel();
       __eventLogCheckBoxPanel.ItemEventChecked += __eventLogCheckBoxPanel_ItemEventChecked;
       this.popupComboBox1.DropDownControl = __eventLogCheckBoxPanel;
+      //this.popupComboBox1.DropDownClosed += PopupComboBox1_DropDownClosed;
+      //this.__eventLogCheckBoxPanel.EventCheckBoxSelected += __eventLogCheckBoxPanel_EventCheckBoxSelected;
+      this.popupComboBox1.Text = "Выбор событий";
+      
+      if (__aSettings.DisplayEventChecked == null)
+      {
+        __aSettings.DisplayEventChecked = new List<int>() { 14,100};
+        __aSettings.Settings_changed = true;
+      }
       this.Shown += LogsViewForm_Shown;
+      __aSettings = aSettings;
+      
       //this.cbEvetCheckBox.DropDownHeight = 350;
       //this.cbEvetCheckBox.DropDownWidth = 280;
     }
 
-    private void __eventLogCheckBoxPanel_ItemEventChecked(CbsEvents sender,ItemCheckEventArgs e)
+
+    private void __eventLogCheckBoxPanel_ItemEventChecked(CbsEvents sender, ItemCheckEventArgs e)
     {
-      int x = 0;
+      if (e.NewValue == CheckState.Checked)
+      {
+        __aSettings.DisplayEventChecked.Add(sender.ID);
+        __aSettings.Settings_changed = true;
+      }
+      else
+      {
+        __aSettings.DisplayEventChecked.Remove(sender.ID);
+        __aSettings.Settings_changed = true;
+      }
+
+      //this.lstLogEvents.Clear();
+      //this.lstLogEvents.VirtualMode = false;
+      RefreshListEvents();
+     
+      //this.lstLogEvents.Clear();
+      this.lstLogEvents.VirtualListSize = __sortList.Count;
+      this.lstLogEvents.VirtualMode = true;
+      //this.lstLogEvents.Refresh();
+      this.lstLogEvents.Update();
     }
 
-    DbLogMsg EvtObjectWho(string message, IDbConnection db)
+    private void __eventLogCheckBoxPanec_ItemEventChecked(CbsEvents sender,ItemCheckEventArgs e)
+    {
+      if (e.NewValue == CheckState.Checked)
+      {
+        __aSettings.DisplayEventChecked.Add(sender.ID);
+        __aSettings.Settings_changed = true;
+      }
+      else
+      {
+        __aSettings.DisplayEventChecked.Remove(sender.ID);
+        __aSettings.Settings_changed = false;
+      }
+      ReadAllLogs();
+      this.__eventLogCheckBoxPanel.Show();
+    }
+
+    DbLogMsg EvtObjectWho(string message)
     {
       try
       {
-        DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
-        if (dbLogMsg == null)
-          throw new Exception();
-        OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.id);
-        if (ormDbInfo != null)
-          dbLogMsg.ip = ormDbInfo.ip_address;
-        return dbLogMsg;
+        var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(message, typeof(DbLogMsg));
+          if (dbLogMsg == null)
+            throw new Exception();
+          OrmDbInfo ormDbInfo = db.Single<OrmDbInfo>(x => x.id == dbLogMsg.id);
+          if (ormDbInfo != null)
+            dbLogMsg.ip = ormDbInfo.ip_address;
+          return dbLogMsg;
+        }
       }
       catch (Exception e)
       {
@@ -103,122 +158,231 @@ namespace UlcWin.ui
       return indx;
     }
 
-    public void ReadAllLogs()
-    {
-      using (SimpleWaitForm sfrm = new SimpleWaitForm())
-      {
-        DateTime dt_start = this.cbDateTimeFrom.Value;
-        DateTime dt_end_val = this.cbDateTimeBy.Value;
-        DateTime dt_end = dt_end_val.AddDays(1);
-        string usr = string.Empty;
-        int id_usr = -1;
-        int id_evet = -1;
-        if (this.cbUsers.SelectedIndex != 0)
-          id_usr = ((OrmDbUsers)this.cbUsers.SelectedItem).id;
-        if (this.cbEvents.SelectedIndex != 0)
-          id_evet = ((CbsEvents)this.cbEvents.SelectedItem).ID;
-        sfrm.RunAction(new Action(() =>
-        {
-          sfrm.SetLabelText("Формирую журнал сообщений...");
-          var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
-          using (var db = dbFactory.Open())
-          {
-            try
-            {
-              List<OrmDbLogs> lstLogs = null;
-              //IAsyncResult re= this.BeginInvoke(new Action(() => {
-              var xx = db.From<OrmDbLogs>().Where(x => x.current_time > dt_start.Date && x.current_time < dt_end.Date).
-              And(x=>x.log_event==0 || x.log_event==2 || x.log_event==3 || x.log_event==4 || x.log_event == 6 || x.log_event == 7 || x.log_event == 8 || x.log_event==100 || x.log_event==14).
-              /*And(x => id_usr == -1 ? x.id_user > -1 : x.id_user == id_usr).
-              And(x => id_evet == -1 ? x.log_event > -1 : x.log_event == id_evet).*/
-              Select().OrderByDescending(x => x.current_time);
-              lstLogs = db.SqlList<OrmDbLogs>(xx);
-              //}));
-              //re.AsyncWaitHandle.WaitOne();
-              List<ListViewItem> lst = new List<ListViewItem>();
-              foreach (var item in lstLogs)
-              {
-                ListViewItem itr = new ListViewItem(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
 
-                //ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
-                itr.SubItems.Add(item.host_from + ":" + item.usr_name);
-                itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
-                DbLogMsg dbLogMsg = EvtObjectWho(item.message, db);
-                if (dbLogMsg != null)
-                {
-                  itr.Tag = dbLogMsg;
-                  itr.SubItems.Add(dbLogMsg.ip);
-
-                  itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
-                }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
-                else
-                {
-                  //itr.SubItems.Add(item.message);
-                }
-                itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
-                lst.Add(itr);
-              }
-              IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() =>
-              {
-                this.lstLogEvents.Items.Clear();
-                this.lstLogEvents.Items.AddRange(lst.ToArray());
-                sfrm.DialogResult = DialogResult.OK;
-              }));
-            }
-            catch (Exception exp)
-            {
-              sfrm.DialogResult = DialogResult.Cancel;
-            }
-          }
-        }
-        ));
-        DialogResult result = sfrm.ShowDialog();
-      }
+    string GetSqlRequestByDate() {
+      DateTime dt_start = this.cbDateTimeFrom.Value;
+      DateTime dt_end_val = this.cbDateTimeBy.Value;
+      DateTime dt_end = dt_end_val.AddDays(1);
+      StringBuilder sb = new StringBuilder();
+      string sql = string.Format("SELECT * FROM main_logs ml where ml.\"current_time\" > '{0}' and ml.\"current_time\" < '{1}'", dt_start.Date, dt_end.Date);
+      sb.Append(sql);
+      //foreach (var item in __aSettings.DisplayEventChecked)
+      //{
+      //  string or = string.Format("ml.log_event = {0} or ", item.ToString());
+      //  sb.Append(or);
+      //}
+      //sb.Remove(sb.Length - 3, 3);
+      //sb.Append(")");
+      return sb.ToString();
     }
-    bool __loaded = false;
-    private void LogsViewForm_Shown(object sender, EventArgs e)
-    {
+
+    
+
+    List<OrmDbLogs> GetAllLogsPeriod() {
+      List<OrmDbLogs> ormDbLogs = null;
       var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
       using (var db = dbFactory.Open())
       {
         try
         {
-          List<OrmDbUsers> lstUser = db.Select<OrmDbUsers>();
-          this.cbUsers.Items.Add("Все");
-          
-          this.cbUsers.Items.AddRange(lstUser.ToArray());
-          this.cbUsers.SelectedIndex = 0;
-          GetEvetDescription();
-          this.cbEvents.SelectedIndex = 0;
-          ReadAllLogs();
-          __loaded = true;
+          string sb=GetSqlRequestByDate();
+          ormDbLogs = db.Select<OrmDbLogs>(sb).ToList();
+          foreach (var item in ormDbLogs)
+          {
+            item.dbLogMsg = EvtObjectWho(item.message.ToLower());
+          }
+          return ormDbLogs.OrderByDescending(x => x.current_time).ToList();
         }
-        catch (Exception ep)
-        {
-
+        catch (Exception exp) {
+          return null;
         }
-
       }
+    }
+
+    List<OrmDbLogs> __sortList=new List<OrmDbLogs>();
+    void RefreshListEvents() {
+
+      __sortList.Clear();
+      //List<ListViewItem> lst = new List<ListViewItem>();
+      foreach (var item in __ormDbLogs)
+      {
+        if (__aSettings.DisplayEventChecked.Contains(item.log_event))
+          __sortList.Add(item);
+      }
+      //__sortList = __ormDbLogs.Select(x =>
+      //{
+      //  if (__aSettings.DisplayEventChecked.Contains(x.log_event))
+      //  {
+      //    return x;
+      //  }
+      //  else return null;
+       
+      //}).OrderBy(x => x.current_time).ToList();
+     
+      
+
+      //foreach (var item in sortList)
+      //{
+      //  ListViewItem itr = new ListViewItem(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+
+      //  //ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+      //  itr.SubItems.Add(item.host_from + ":" + item.usr_name);
+      //  itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)item.log_event));
+      //  DbLogMsg dbLogMsg = EvtObjectWho(item.message);
+      //  if (dbLogMsg != null)
+      //  {
+      //    itr.Tag = dbLogMsg;
+      //    itr.SubItems.Add(dbLogMsg.ip);
+
+      //    itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
+      //  }//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+      //  else
+      //  {
+      //    //itr.SubItems.Add(item.message);
+      //  }
+      //  itr.ImageIndex = SetIconEvent((EnLogEvt)item.log_event);
+      //  lst.Add(itr);
+      //}
+      //IAsyncResult res = this.lstLogEvents.BeginInvoke(new Action(() =>
+      //{
+      //  this.lstLogEvents.Items.Clear();
+      //  this.lstLogEvents.Items.AddRange(lst.ToArray());
+
+
+      //}));
+    }
+
+    public void ReadAllLogs()
+    {
+      //lstLogEvents.VirtualMode = false;
+      using (SimpleWaitForm sfrm = new SimpleWaitForm())
+      {
+
+        sfrm.RunAction(new Action(() =>
+        {
+          sfrm.SetLabelText("Формирую журнал сообщений...");
+          __ormDbLogs = GetAllLogsPeriod();
+          RefreshListEvents();
+          sfrm.DialogResult = DialogResult.OK;
+        }));
+        DialogResult result = sfrm.ShowDialog(this.lstLogEvents);
+        if (result == DialogResult.OK)
+        {
+          if (__sortList.Count > 0)
+          {
+            lstLogEvents.VirtualMode = true;
+            lstLogEvents.VirtualListSize = __sortList.Count;
+          }
+          else
+          {
+            lstLogEvents.VirtualMode = false;
+          }
+        }
+      }
+      
+    }
+
+    bool __loaded = false;
+    private void LogsViewForm_Shown(object sender, EventArgs e)
+    {
+      ReadAllLogs();
+      GetEvetDescription();
+      //if (__sortList.Count > 0) {
+
+        
+      //}
+      
+      //var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
+      //using (var db = dbFactory.Open())
+      //{
+      //  try
+      //  {
+      //    List<OrmDbUsers> lstUser = db.Select<OrmDbUsers>();
+      //    //this.cbUsers.Items.Add("Все");
+
+      //    this.cbUsers.Items.AddRange(lstUser.ToArray());
+      //    this.cbUsers.SelectedIndex = 0;
+      //    GetEvetDescription();
+      //    this.cbEvents.SelectedIndex = 0;
+      //    ReadAllLogs();
+      //    __loaded = true;
+      //  }
+      //  catch (Exception ep)
+      //  {
+
+      //  }
+
+      //}
 
     }
+
+    private void lstLogEvents_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+    {
+      try
+      {
+        ListViewItem itr = new ListViewItem(__sortList[e.ItemIndex].current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+        itr.Tag = __sortList[e.ItemIndex];
+        //ListViewItem itr = this.lstLogEvents.Items.Add(item.current_time.ToString("dd.MM.yyyy HH:mm:ss"));
+        itr.SubItems.Add(__sortList[e.ItemIndex].host_from /*+ ":" + __sortList[e.ItemIndex].usr_name*/);
+        itr.SubItems.Add(EvtDescription.GetDesc((EnLogEvt)__sortList[e.ItemIndex].log_event));
+        itr.SubItems.Add(__sortList[e.ItemIndex].dbLogMsg!=null ? __sortList[e.ItemIndex].dbLogMsg.ip:"");
+        if (__sortList[e.ItemIndex].dbLogMsg != null)
+        {
+          string msg = __sortList[e.ItemIndex].dbLogMsg.fes + "/" + __sortList[e.ItemIndex].dbLogMsg.res + "/" + __sortList[e.ItemIndex].dbLogMsg.tp;
+          itr.SubItems.Add(msg);// __sortList[e.ItemIndex].dbLogMsg.));
+          if (__sortList[e.ItemIndex].dbLogMsg.feature != null)
+          {
+            itr.SubItems.Add(string.Format("{1}(rs-485:{0})", __sortList[e.ItemIndex].dbLogMsg.feature.rs_status.ToString(),
+              __sortList[e.ItemIndex].dbLogMsg.feature.rs_last_request));
+          }
+          else
+            itr.SubItems.Add("");
+        }
+        else {
+          itr.SubItems.Add("");
+          itr.SubItems.Add("");
+        }
+        //DbLogMsg dbLogMsg = EvtObjectWho(__sortList[e.ItemIndex].message);
+        //if (dbLogMsg != null)
+        //{
+        //  itr.Tag = dbLogMsg;
+        //  itr.SubItems.Add(dbLogMsg.ip);
+
+        //  itr.SubItems.Add(dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp);
+        //}//dbLogMsg.Ip + dbLogMsg.Fes + " / " + dbLogMsg.Res + "/" + dbLogMsg.Tp);
+        //else
+        //{
+        //  itr.SubItems.Add("");
+        //}
+        itr.ImageIndex = SetIconEvent((EnLogEvt)__sortList[e.ItemIndex].log_event);
+        e.Item = itr;
+      }
+      catch (Exception ex)
+      {
+
+       // throw;
+      }
+    }
+
     List<CbsEvents> lst = new List<CbsEvents>();
     void GetEvetDescription()
     {
-      CbsEvents cbsEvents = new CbsEvents() { ID = 0, EvtDesc = "Все" };
-      this.cbEvents.Items.Add(cbsEvents);
-      this.__eventLogCheckBoxPanel.AddCbsEvent(cbsEvents);
+      //CbsEvents cbsEvents = new CbsEvents() { ID = 0, EvtDesc = "Все" };
+      //this.cbEvents.Items.Add(cbsEvents);
+      //this.__eventLogCheckBoxPanel.AddCbsEvent(cbsEvents);
+      List<CbsEvents> lst = new List<CbsEvents>();
       foreach (EnLogEvt suit in (EnLogEvt[])Enum.GetValues(typeof(EnLogEvt)))
       {
         string desc=EvtDescription.GetDesc(suit);
         int id = (int)suit;
-        cbsEvents = new CbsEvents() {  ID=id, EvtDesc=desc};
+        CbsEvents cbsEvents = new CbsEvents() {  ID=id, EvtDesc=desc, Checked=__aSettings.DisplayEventChecked.Contains(id)? true:false };
         this.cbEvents.Items.Add(cbsEvents);
-        this.__eventLogCheckBoxPanel.AddCbsEvent(cbsEvents);
+        lst.Add(cbsEvents);
         //int x=this.cbEvetCheckBox.Items.Add(cbsEvents);
         //this.cbEvetCheckBox.CheckBoxItems[x].Checked = true;
         //this.cbEvetCheckBox.CheckBoxItems[x].CheckedChanged += LogsViewForm_CheckedChanged;
       }
-
+      this.__eventLogCheckBoxPanel.AddCbsEvent(lst);
     }
 
     //StringBuilder b = new StringBuilder();
@@ -284,7 +448,6 @@ namespace UlcWin.ui
         MessageBox.Show("Начальная дата не может быть больше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-      if (__loaded)
         ReadAllLogs();
     }
 
@@ -330,12 +493,64 @@ namespace UlcWin.ui
       }
     }
 
-    private void LogMenuMouseUp(object sender, MouseEventArgs e)
+   
+
+    private void popupComboBox1_DropDown(object sender, EventArgs e)
     {
-      if (e.Button ==  MouseButtons.Right) {
-        if (this.lstLogEvents.SelectedItems[0].Tag != null)
+      int x = 0;
+    }
+
+    private void lstLogEvents_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      ListView.SelectedIndexCollection col = lstLogEvents.SelectedIndices;
+      if (col.Count == 0)
+        return;
+      this.lstViewArchEvent.Items.Clear();
+      if (lstLogEvents.Items[col[0]].Tag != null)
+      {
+        OrmDbLogs ormDbLogs = (OrmDbLogs)lstLogEvents.Items[col[0]].Tag;
+        if (ormDbLogs != null)
         {
-          this.ctxMenuLogItem.Show(Cursor.Position);
+          var dbFactory = new OrmLiteConnectionFactory(this.__db.__connection, PostgreSqlDialect.Provider);
+          using (var db = dbFactory.Open())
+          {
+            try
+            {
+              List<OrmDbLogs> lst;
+              if (ormDbLogs.dbLogMsg == null)
+                return;
+              lst = db.Select<OrmDbLogs>(x => x.ctrl_id == ormDbLogs.dbLogMsg.id && ormDbLogs.log_event==x.log_event);
+              if (lst.Count > 0)
+              {
+                foreach (var item in lst)
+                {
+                  ListViewItem listViewItem = this.lstViewArchEvent.Items.Add(item.current_time.ToString("dd.MM.yyyy hh:mm:ss"));
+                  DbLogMsg dbLogMsg= EvtObjectWho(item.message.ToLower());
+                  if (dbLogMsg != null)
+                  {
+                    string msg = dbLogMsg.fes + "/" + dbLogMsg.res + "/" + dbLogMsg.tp;
+                    listViewItem.SubItems.Add(msg);
+                    if (dbLogMsg.feature != null) {
+                      listViewItem.SubItems.Add(string.Format("{1} (rs-485:{0})",dbLogMsg.feature.rs_status,dbLogMsg.feature.rs_last_request));
+                    }
+                    else
+                      listViewItem.SubItems.Add("");
+                  }
+                  else {
+                    listViewItem.SubItems.Add("");
+                  }
+                }
+                this.lstViewArchEvent.Visible = true;
+              }
+              else {
+                this.lstViewArchEvent.Visible = false;
+              }
+            }
+            catch (Exception exp)
+            {
+              int x = 0;
+            }
+          }
         }
       }
     }
@@ -345,6 +560,7 @@ namespace UlcWin.ui
     public int ID { get; set; }
     public string EvtDesc  { get; set; }
 
+    public bool Checked { get; set; }
     public override string ToString()
     {
       return EvtDesc;

@@ -16,6 +16,7 @@ namespace UlcWin.Controls.UlcMeterComponet
     public string meter_type { get; set; }
     public string meter_factory { get; set; }
     public double? value { get; set; }
+    public double? value_month { get; set; }
     public bool is_true { get; set; }
     public int? unit_type_id { get; set; }
     public bool updated { get; set; }
@@ -49,14 +50,15 @@ namespace UlcWin.Controls.UlcMeterComponet
         return null;
       meterValue = new MeterValue()
       {
-        ctrl_id = treeListNodeModel.ctrl_id,
+        ctrl_id = treeListNodeModel.id,
         date_time = treeListNodeModel.date_time.Value,
-        id = treeListNodeModel.id,
+        //id = treeListNodeModel.id,
         ip = treeListNodeModel.ip,
         is_true = treeListNodeModel.is_true,
         meter_factory = treeListNodeModel.meter_factory,
         meter_type = treeListNodeModel.meter_type,
-        value = treeListNodeModel.value.Value
+        value = treeListNodeModel.value.Value,
+        value_month = treeListNodeModel.value_month.Value
       };
       return meterValue;
     }

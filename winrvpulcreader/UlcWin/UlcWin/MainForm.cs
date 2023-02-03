@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.AplSetings;
 using UlcWin.Controls.ListViewHeaderMenu;
+using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.DB;
 using UlcWin.Drivers;
 using UlcWin.Edit;
@@ -182,10 +183,10 @@ namespace UlcWin
       //}
     }
 
-    bool __settings_changed = false;
+    //bool __settings_changed = false;
     private void LstViewItm_ColumnReordered(object sender, ColumnReorderedEventArgs e)
     {
-      __settings_changed = true;
+      __aSettings_new.Settings_changed = true;
     }
 
     private void __tsAutoCompleteCmb_SelectionChangeCommitted(object sender, EventArgs e)
@@ -270,11 +271,16 @@ namespace UlcWin
           this.checkBoxComboBox1.CheckBoxItems[i].Checked = true;
           this.checkBoxComboBox1.CheckBoxItems[i].Tag = i;
           __aSettings_old.CheckedItemVisible.Add(1);
-          int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
+          //int id = this.checkBoxComboBox1.Items.Add(LstViewItm.Columns[i].Text);
           ((ToolStripMenuItem)ctxMenuHeader.Items[i]).Tag = i;
           ((ToolStripMenuItem)ctxMenuHeader.Items[i]).CheckedChanged += MainForm_CheckedChanged;
           ((ToolStripMenuItem)ctxMenuHeader.Items[i]).CheckOnClick = true;
           this.checkBoxComboBox1.CheckBoxItems[i].CheckedChanged += MainForm_CheckedChanged;
+        }
+        if (__aSettings_old.DisplayEventChecked == null)
+        {
+          __aSettings_old.DisplayEventChecked = new List<int>() { 14, 100 };
+          __aSettings_old.Settings_changed = true;
         }
       }
       else
@@ -325,22 +331,23 @@ namespace UlcWin
 
     private void LstViewItm_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
     {
-      if (this.LstViewItm.Columns[e.ColumnIndex].Width != 0)
+      if (__form_shown)
       {
-        this.__aSettings_old.WidthColumnsDevice[e.ColumnIndex] = this.LstViewItm.Columns[e.ColumnIndex].Width;
-        __settings_changed = true;
+        if (this.LstViewItm.Columns[e.ColumnIndex].Width != 0)
+        {
+          this.__aSettings_old.WidthColumnsDevice[e.ColumnIndex] = this.LstViewItm.Columns[e.ColumnIndex].Width;
+          __aSettings_new.Settings_changed= true;
+        }
       }
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      this.__aSettings_new.DisplayIndexes = null;
+      //this.__aSettings_new.DisplayIndexes = null;
       this.__aSettings_new.DisplayIndexes = new List<int>();
       for (int i = 0; i < this.LstViewItm.Columns.Count; i++)
       {
         this.__aSettings_new.DisplayIndexes.Add(this.LstViewItm.Columns[i].DisplayIndex);
-        
-        
       }
       this.__aSettings_new.WidthColumnsDevice = this.__aSettings_old.WidthColumnsDevice;
       this.__aSettings_new.CheckedItemVisible = this.__aSettings_old.CheckedItemVisible;
@@ -348,9 +355,9 @@ namespace UlcWin
         MessageBoxButtons.YesNo, MessageBoxIcon.Question);
       if (result == DialogResult.Yes)
       {
-
         this.__db.LogsInsertEvent(EnLogEvt.APP_EXIT,/* string.Format("{0}", this.__db.__DbUserName)*/"",-1);
-        if (__settings_changed)
+       
+        if (__aSettings_new.Settings_changed)
         {
           result = MessageBox.Show("Сохранить настройки приложения?", "Закрытие приложения",
             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -370,6 +377,8 @@ namespace UlcWin
 
     }
 
+    bool __form_shown = false;
+
     private void StartForm_Shown(object sender, EventArgs e)
     {
       this.splitContainer2.Panel2Collapsed = true;
@@ -387,7 +396,7 @@ namespace UlcWin
       //__init_showed = true;
       //this.LstViewItm_ColumnClick()
       this.LstViewItm.ColumnReordered += LstViewItm_ColumnReordered;
-      
+      __form_shown = true;
     }
 
     private void MainForm_CheckedChanged(object sender, EventArgs e)
@@ -418,8 +427,8 @@ namespace UlcWin
         this.LstViewItm.Columns[index + 3].Width = __aSettings_new.WidthColumnsDevice[index + 3];
         __aSettings_new.CheckedItemVisible[index] = 1;
       }
-     // this.checkBoxComboBox1.ShowDropDown();
-      __settings_changed = true;
+      // this.checkBoxComboBox1.ShowDropDown();
+      __aSettings_new.Settings_changed = true;
     }
 
     void AdminUserAccses(bool isUserEditVisible,bool read_only)
@@ -1928,12 +1937,12 @@ namespace UlcWin
           {
             string msgMeter = string.Empty;
             string name = RemChar(ed.txtBoxState.Text) + " ," + RemChar(ed.txtBoxCity.Text) + " ," + RemChar(ed.txtBoxZtp.Text);
-            List<Meters> lmt = new List<Meters>();
-            foreach (ListViewItem eIt in ed.lstMeter.Items)
-            {
-              lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
-            }
-            msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
+            //List<Meters> lmt = new List<Meters>();
+            //foreach (ListViewItem eIt in ed.lstMeter.Items)
+            //{
+            //  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
+            //}
+            //msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
             __db.EditResRecord(
               new DbItemEditor()
               {
@@ -2042,10 +2051,10 @@ namespace UlcWin
             //this.LvMenu.Items["tsMenuReadCurrentLog"].Enabled = true;
             this.tsEvent.Enabled = true;
             this.ReadEvent();
+           
+            // this.tsLblMsg.Text = it.MsgConfig.Message;
           }
         }
-        // this.tsLblMsg.Text = it.MsgConfig.Message;
-
       }
     }
 
@@ -2227,12 +2236,12 @@ namespace UlcWin
               int index = CheckForPresentRecord(ed.txtBoxIpAddress.Text, name);
               if (index == -1)
               {
-                List<Meters> lmt = new List<Meters>();
-                foreach (ListViewItem eIt in ed.lstMeter.Items)
-                {
-                  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
-                }
-                msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
+                //List<Meters> lmt = new List<Meters>();
+                //foreach (ListViewItem eIt in ed.lstMeter.Items)
+                //{
+                //  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
+                //}
+                //msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
                 int ind = ed.cbType.SelectedIndex;
                 int active = ed.chBoxActive.Checked ? 1 : 0;
                 int light = ed.cbFunction.SelectedIndex;
@@ -2672,7 +2681,7 @@ namespace UlcWin
       this.tsBtnStatistics.Visible = false;
       this.tsBtnUsersEdit.Visible = false;
       this.tsBtnEventLog.Visible = false;
-     
+      this.ulcMeterTreeView.Visible = false;
       bool con_db = InitDB();
       if (con_db)
       {
@@ -3227,18 +3236,14 @@ namespace UlcWin
     private void testmeterToolStripMenuItem_Click(object sender, EventArgs e)
     {
       ItemIp itemIp = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
-      if (!string.IsNullOrEmpty(itemIp.Meters) && itemIp.Meters!="Н/Д")
+      //if (!string.IsNullOrEmpty(itemIp.Meters) && itemIp.Meters!="Н/Д")
+      //{
+      List<Controls.UlcMeterComponet.MeterInfo> meterInfos = __db.GetMetrsById(itemIp.Id);
+      if (meterInfos.Count > 0)
       {
-        Meters[] arMetr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(itemIp.Meters, typeof(Meters[]));
-        if (arMetr != null)
+        using (MeterForm mf = new MeterForm(itemIp, meterInfos, this.GetConnection))
         {
-          if (arMetr.Length > 0)
-          {
-            using (MeterForm mf = new MeterForm(itemIp, arMetr, this.GetConnection))
-            {
-              mf.ShowDialog();
-            }
-          }
+          mf.ShowDialog();
         }
       }
       else
@@ -3255,10 +3260,12 @@ namespace UlcWin
     }
 
 
-    private void toolStripButton3_Click_4(object sender, EventArgs e)
+    private void tsLogShowDialog(object sender, EventArgs e)
     {
-      using (LogsViewForm logsViewForm=new LogsViewForm(this.__db))
+
+      using (LogsViewForm logsViewForm=new LogsViewForm(this.__db,this.__aSettings_new))
       {
+       
         logsViewForm.ShowDialog();
       }
     }
@@ -3317,7 +3324,7 @@ namespace UlcWin
               throw new Exception("Ошибка соединения");
             bool request = false;
             Exception exc = null;
-            foreach (Meters itM in ositem.meters)
+            foreach (MeterInfo itM in ositem.meters)
             {
               if (itM.meter_type.Contains("CE102") || itM.meter_type.Contains("СЕ102"))
               {
@@ -3355,29 +3362,17 @@ namespace UlcWin
                 }
                 //else throw new Exception("ошибка получения данных");
               }
-              else if (itM.meter_type.Contains("СС") || itM.meter_type.Contains("СС"))
+              if (itM.meter_type.Contains("CE318") || itM.meter_type.Contains("СЕ318"))
               {
                 string num = itM.meter_factory;
-                byte addr = 0;
-                if (char.IsDigit(num, 0))
+                ushort addr = 0;
+                float value = 0;
+                if (!ushort.TryParse(num, out addr))
+                  throw new Exception("ошибка получения данных");
+                if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, itM.meter_factory, client, 10000, out value))
                 {
-                  num = num.Substring(num.Length - 2, 2);
-                  if (!byte.TryParse(num, out addr))
-                  {
-                    addr = 0;
-                  }
-                }
-                else {
-                  addr = 0;
-                }
-                if (client == null)
-                  throw new Exception("Ошибка открытия соединения");
-                Exception ex = null;
-                var xx = Granelectro.ReadData(itip.Ip, client, addr,out ex);
-                if (ex == null)
-                {
+                  __frm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, true, itM.meter_type, value.ToString() + " (обновляю)");
                   item.IsMeterTrue = true;
-                  __frm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, true, itM.meter_type, xx[0].ToString() + " (обновляю)");
                   string msg = UpdateNotTrueMeters(itip.Ip);
                   if (!string.IsNullOrEmpty(msg))
                   {
@@ -3386,7 +3381,6 @@ namespace UlcWin
                       Date = DateTime.Now,
                       Message = msg
                     };
-                   
                     request = true;
                     break;
                   }
@@ -3394,7 +3388,34 @@ namespace UlcWin
                 else
                 {
                   item.IsMeterTrue = false;
-                  
+                }
+              }
+              else if (itM.meter_type.Contains("СС") || itM.meter_type.Contains("СС"))
+              {
+                string num = itM.meter_factory;
+                if (client == null)
+                  throw new Exception("Ошибка открытия соединения");
+                Exception ex = null;
+                float? val = Granelectro.GetSumValue(EnGranSys.ACCUMULATED_ENERGY_DAY, num, client, out ex);
+                if (ex == null)
+                {
+                  item.IsMeterTrue = true;
+                  __frm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, true, itM.meter_type, val.Value.ToString() + " (обновляю)");
+                  string msg = UpdateNotTrueMeters(itip.Ip);
+                  if (!string.IsNullOrEmpty(msg))
+                  {
+                    itip.MsgConfig = new DataMsg()
+                    {
+                      Date = DateTime.Now,
+                      Message = msg
+                    };
+                    request = true;
+                    break;
+                  }
+                }
+                else
+                {
+                  item.IsMeterTrue = false;
                 }
               }
               else
@@ -3481,7 +3502,7 @@ namespace UlcWin
 
     private void ctxNotTrueMeter_Click(object sender, EventArgs e)
     {
-      List<Meters[]> mt = new List<Meters[]>();
+      //List<Meters[]> mt = new List<Meters[]>();
       if (__lip == null)
         __lip = new List<ItemCallBack>();
       else
@@ -3495,17 +3516,18 @@ namespace UlcWin
           int.TryParse(item.SubItems[13].Text.Trim(), out res485);
           if (res485 != 1)
           {
-            Meters[] mtr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(itemIp.Meters, typeof(Meters[]));
+            List<MeterInfo> meterInfos= __db.GetMetrsById(itemIp.Id);
+            //Meters[] mtr = (Meters[])System.Text.Json.JsonSerializer.Deserialize(itemIp.Meters, typeof(Meters[]));
             ItemCallBack li = new ItemCallBack(item);
             if (li.meters == null)
-              li.meters = new List<Meters>();
-            li.meters.AddRange(mtr);
+              li.meters = meterInfos;
             __lip.Add(li);
             //break;
           }
         }
       }
-
+      if (__lip.Count == 0)
+        return;
       DialogResult result = ReadParam(ReadMeters, StateWaitForm.StateOverSimple);
       this.LstViewItm.Items.Clear();
       this.__lip.Clear();
@@ -3592,7 +3614,7 @@ namespace UlcWin
             index++;
           }
          
-          var ret = this.LstViewItm.SelectedItems[0];
+          //var ret = this.LstViewItm.SelectedItems[0];
           
           
         }
@@ -3608,24 +3630,33 @@ namespace UlcWin
           tsStatusLbl.Items[2].Visible = true;
           tsStatusLbl.Items[4].Visible = true;
           ReadStatusListView();
+          
           if (ulcMeterTreeView.treeListView1.SelectedItem!=null)
           {
-            int index = 0;
             Controls.UlcMeterComponet.TreeListNodeModel xx = (Controls.UlcMeterComponet.TreeListNodeModel)this.ulcMeterTreeView.treeListView1.SelectedItem.RowObject;
-            foreach (ListViewItem item in this.LstViewItm.Items)
+            var xxx= this.LstViewItm.FindItemWithText(xx.ip);
+            if (xxx != null)
             {
-             
-              ItemIp zx = (ItemIp)item.Tag;
-              if (xx.ip == zx.Ip)
-              {
-                this.LstViewItm.Items[index].Selected = true;
-                this.LstViewItm.Select();
-                ulcMeterTreeView.treeListView1.EnsureVisible(index);
-                //ulcMeterTreeView.treeListView1.Refresh();
-                break;
-              }
-              index++;
+              this.LstViewItm.Select();
+              this.LstViewItm.Items[xxx.Index].Selected = true;
+              this.LstViewItm.EnsureVisible(xxx.Index);
             }
+            //ulcMeterTreeView.treeListView1.EnsureVisible(xxx.Index);
+            //foreach (ListViewItem item in this.LstViewItm.Items)
+            //{
+
+            //  ItemIp zx = (ItemIp)item.Tag;
+            //  if (xx.ip == zx.Ip)
+            //  {
+
+            //    this.LstViewItm.Items[index].Selected = true;
+            //    this.LstViewItm.Select();
+            //    ulcMeterTreeView.treeListView1.EnsureVisible(index);
+            //    //ulcMeterTreeView.treeListView1.Refresh();
+            //    break;
+            //  }
+            //  index++;
+            //}
           }
         }
       }

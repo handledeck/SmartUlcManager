@@ -233,8 +233,12 @@ namespace UlcWin.ui
           ListViewItem li = this.ListUser.SelectedItems[0];
           uForm.txtBoxName.Text=li.SubItems[0].Text;//.Text = li.SubItems[0].Text;
           uForm.txtBoxComment.Text=li.SubItems[1].Text;//.Text = li.SubItems[1].Text;
+          
           uForm.txtBoxPwd.Text = "";//li.SubItems[2].Text;
-          uForm.cbLevel.SelectedIndex = int.Parse(li.SubItems[5].Text);
+          if (li.SubItems[5].Text == "2")
+            uForm.cbLevel.SelectedIndex = 1;// int.Parse(li.SubItems[5].Text);
+          else
+            uForm.cbLevel.SelectedIndex = int.Parse(li.SubItems[5].Text);
           //uForm.txtBoxPwdRepeat.Text = li.SubItems[2].Text;
           uForm.__id_record = int.Parse(li.SubItems[4].Text);
           uForm.__dicNode = lstNodes;

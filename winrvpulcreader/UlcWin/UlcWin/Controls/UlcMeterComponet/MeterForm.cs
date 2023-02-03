@@ -19,18 +19,18 @@ namespace UlcWin.ui
   {
     
     ItemIp __itemIp = null;
-    Meters[] __meters = null;
+    List<Controls.UlcMeterComponet.MeterInfo> __meterInfos = null;
     GetConnection __getConnection = null;
-    public MeterForm(ItemIp itemIp, Meters[] meters, GetConnection getConnection)
+    public MeterForm(ItemIp itemIp, List<Controls.UlcMeterComponet.MeterInfo> meterInfos, GetConnection getConnection)
     {
       this.__itemIp = itemIp;
-      this.__meters = meters;
+      __meterInfos = meterInfos;
       this.__getConnection = getConnection;
 
       InitializeComponent();
       this.pictureBox1.Visible = false;
       this.lblObject.Text = itemIp.Name + ":" + itemIp.Ip;
-      foreach (var item in __meters)
+      foreach (var item in __meterInfos)
       {
         ListViewItem its = this.lstViewMeter.Items.Add(item.meter_type);
         its.SubItems.Add(item.meter_factory);
@@ -74,52 +74,33 @@ namespace UlcWin.ui
               if (item.SubItems[0].Text.Contains("СЕ102") || item.SubItems[0].Text.Contains("CE102"))
               {
                 string num = item.SubItems[1].Text;
-
-                num = num.Substring(num.Length - 4, 4);
-                ushort addr = 0;
-                if (ushort.TryParse(num, out addr))
-                {
-                  byte[] buffer = new byte[128];
-                  byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSum, new byte[] { 0 }, 1, addr);
-                  //TcpClient client = this.__getConnection(this.__itemIp.Ip, 10250);
-                  //Application.DoEvents();
-                  Exception exp = EnMera102.Read(buf, 128, client, out buffer);
-                  if (exp == null)
-                  {
-                    float ds = (float)BitConverter.ToInt32(buffer, 9);
-                    item.SubItems[2].Text = (ds / 100).ToString();
-                  }
-                  else throw exp;
+                Exception exp = null;
+                float? ds= EnMera102.GetSumDayValue(num, client, out exp);
+                if (exp == null) {
+                  item.SubItems[2].Text = (ds.Value / 100).ToString();
                 }
                 else throw new Exception("ошибка получения данных");
-
+              }
+              else if (item.SubItems[0].Text.Contains("СЕ318") || item.SubItems[0].Text.Contains("CE318")) {
+                string num = item.SubItems[1].Text;
+                float value = 0;
+                if(!EnMera318BY.GetValue( EnMera318Fun.EnergyStartDay,num,client,10000,out value))
+                  throw new Exception("ошибка получения данных");
+                item.SubItems[2].Text = value.ToString();
               }
               else if (item.SubItems[0].Text.Contains("СС") || item.SubItems[0].Text.Contains("СС"))
               {
                 string num = item.SubItems[1].Text;
-                byte addr = 0;
-                if (char.IsDigit(num, 0))
-                {
-                  try
-                  {
-                    num = num.Substring(num.Length - 2, 2);
-                    if (!byte.TryParse(num, out addr))
-                    {
-                      addr = 0;
-                    }
-                  }
-                  catch { addr = 0; }
-                }
                 if (client == null)
                   throw new Exception("Ошибка открытия соединения");
                 Exception ex = null;
-                var xx = Granelectro.ReadData(__itemIp.Ip, client, addr,out ex);
-                if (xx == null)
+                float? val=Granelectro.GetSumValue( EnGranSys.ACCUMULATED_ENERGY_DAY,num, client, out ex);
+                if (!val.HasValue)
                 {
                   item.SubItems[2].Text = "ошибка получения данных";
                 }
                 else
-                  item.SubItems[2].Text = xx[0].ToString();
+                  item.SubItems[2].Text = val.ToString();
               }
               else
               {

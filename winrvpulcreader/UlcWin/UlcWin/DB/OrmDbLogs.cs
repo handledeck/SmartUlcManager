@@ -90,6 +90,10 @@ namespace UlcWin.DB
     public int log_event { get; set; }
     public string host_from { get; set; }
 
+    public int ctrl_id { get; set; }
+
+    [ServiceStack.DataAnnotations.Ignore]
+    public DbLogMsg dbLogMsg { get; set; }
     //[ServiceStack.DataAnnotations.Required]
     //[ServiceStack.DataAnnotations.Default(0)]
     //public long msg_all { get; set; }

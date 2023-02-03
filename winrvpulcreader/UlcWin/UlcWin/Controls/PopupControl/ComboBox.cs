@@ -121,14 +121,16 @@ namespace PopupControl
             SuspendMenuMode();
         }
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.ComboBox.DropDownClosed" /> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnDropDownClosed(EventArgs e)
-        {
-            ResumeMenuMode();
-            base.OnDropDownClosed(e);
-        }
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Forms.ComboBox.DropDownClosed" /> event.
+    /// </summary>
+    /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+    protected override void OnDropDownClosed(EventArgs e)
+    {
+      ResumeMenuMode();
+      base.OnDropDownClosed(e);
+
     }
+    }
+ 
 }

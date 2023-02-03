@@ -17,6 +17,7 @@ namespace UlcWin.DB
     public string old_imei { get; set; }
     public string new_imei { get; set; }
     public string rs_status { get; set; }
+    public string rs_last_request { get; set; }
   }
 
   public class DbLogMsg

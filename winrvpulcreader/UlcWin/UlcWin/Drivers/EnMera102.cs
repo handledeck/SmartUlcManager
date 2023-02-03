@@ -18,6 +18,7 @@ namespace UlcWin.Drivers
       ReadCurrent = 0x0502,
       WriteDateTime = 0x0121,
       ReadTariffSum = 0x0131,
+      ReadTariffSumOfMonth = 0x0130,
       ReadTariffSumOfDay = 0x012F,
       ReadPower = 0x0132,
       ReadMiddle3Power = 0x012E,
@@ -163,19 +164,29 @@ namespace UlcWin.Drivers
       //return bres;
     }
 
+    public static MeterAllValues GetSumAllValue(string meter_factory, TcpClient client) {
+      MeterAllValues meterAllValues = new MeterAllValues();
+      Exception exp = null;
+      meterAllValues.EnergySumDay = GetSumDayValue(meter_factory, client, out exp);
+      if (exp != null)
+        return null;
+      meterAllValues.EnergySumMonth= GetSumMonthValue(meter_factory, client, out exp);
+      if (exp != null)
+        return null;
+      return meterAllValues;
+    }
+
     public static float? GetSumDayValue(string meter_factory, TcpClient client, out Exception exp)
     {
       exp = null;
       float? value = 0;
       try
       {
-        string num = meter_factory;
-        num = num.Substring(num.Length - 4, 4);
-        ushort addr = 0;
-        if (ushort.TryParse(num, out addr))
+        ushort? addr = GetParcedFactory(meter_factory);
+        if (addr.HasValue)
         {
           byte[] buffer = new byte[128];
-          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] { 1 }, 1, addr);
+          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] {/*1-на начало суток*/ 1 }, 1, addr.Value);
           exp = EnMera102.Read(buf, 128, client, out buffer);
           if (exp == null)
           {
@@ -194,7 +205,49 @@ namespace UlcWin.Drivers
         exp = e;
         return value;
       }
+    }
 
+    static ushort? GetParcedFactory(string num_factory)
+    {
+      ushort? value=null;
+      string num = num_factory.Substring(num_factory.Length - 4, 4);
+      ushort addr = 0;
+      if (ushort.TryParse(num, out addr))
+      {
+        value = addr;
+      }
+      return value;
+    }
+
+    public static float? GetSumMonthValue(string meter_factory, TcpClient client, out Exception exp)
+    {
+      exp = null;
+      float? value = 0;
+      try
+      {
+        ushort? addr = GetParcedFactory(meter_factory);
+        if (addr.HasValue)
+        {
+          byte[] buffer = new byte[128];
+          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSum, new byte[] { /*0-накопленная(текущая) 1-на начало месяца*/1 }, 1, addr.Value);
+          exp = EnMera102.Read(buf, 128, client, out buffer);
+          if (exp == null)
+          {
+            float ds = (float)BitConverter.ToInt32(buffer, 9);
+            value = (float)Math.Round((ds / 100), 2);
+            return value;
+          }
+          else throw exp;
+        }
+        else
+          throw new Exception("ошибка получения данных");
+      }
+      catch (Exception e)
+      {
+
+        exp = e;
+        return value;
+      }
     }
   }
 
