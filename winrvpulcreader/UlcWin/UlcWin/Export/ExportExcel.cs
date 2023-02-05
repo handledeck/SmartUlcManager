@@ -226,7 +226,7 @@ namespace UlcWin.Export
     }
 
 
-    public bool PrintMeterToExcel(string res,string fes, ListView listView, List<TreeListNodeModel> treeNodes)
+    public bool PrintMeterToExcel(string res,string fes, ListView listView, List<TreeListNodeModel> treeNodes, SimpleWaitForm sf)
     {
       Microsoft.Office.Interop.Excel.Application excelApp = null;
       Workbook excelWorkbook = null;
@@ -234,9 +234,11 @@ namespace UlcWin.Export
       
       try
       {
+        
         excelApp = new Microsoft.Office.Interop.Excel.Application();
         if (excelApp != null)
         {
+          sf.SetLabelText("Создаю новый документ");
           excelWorkbook = excelApp.Workbooks.Add();
           excelWorksheet = (Worksheet)excelWorkbook.Sheets.Add();
           excelWorksheet.Cells[1, 1] = res;
@@ -244,12 +246,13 @@ namespace UlcWin.Export
           excelWorksheet.Cells[2, 1].HorizontalAlignment = XlHAlign.xlHAlignRight;
           excelWorksheet.Cells[1, 1].Font.Size = 18;
           excelWorksheet.Cells[2, 1].Font.Size = 14;
-          
+
           int header = 4;
           int index = 1;
+          sf.SetLabelText("Формирую структуру документа");
           //excelWorksheet.Application.ActiveWindow.SplitRow = header;
           //excelWorksheet.Application.ActiveWindow.FreezePanes = true;
-          for (int i = 0; i < listView.Columns.Count; i++)
+          for (int i = 0; i < listView.Columns.Count - 1; i++)
           {
             if (listView.Columns[i].Width != 0)
             {
@@ -263,30 +266,39 @@ namespace UlcWin.Export
           }
           header++;
           //System.Collections.ArrayList xx = (System.Collections.ArrayList)ulcTreeView.treeListView1.Objects;
+          sf.SetLabelText("Обработка данных");
+          int all_tags = treeNodes.Count;
           for (int i = 0; i < treeNodes.Count; i++)
           {
-           
+            int xx = ((i * 100) / all_tags);
+
             TreeListNodeModel itm = (TreeListNodeModel)treeNodes[i];
             if (itm.Nodes.Count > 1)
             {
               int z = 0;
             }
             int coln = 1;
-            excelWorksheet.Cells[header, coln] = itm.name;
+            UlcObjectParce ulcObjectParce = UlcObjectParce.GetUlcObject(itm.name);
+            excelWorksheet.Cells[header, coln] = string.Format("{0}   ({1})", ulcObjectParce.location, ulcObjectParce.country);
             excelWorksheet.Cells[header, coln].EntireRow.Font.Bold = true;
             header++;
             foreach (var item in itm.Nodes)
             {
+              ulcObjectParce = UlcObjectParce.GetUlcObject(item.ParentNode.name);
               coln = 1;
               XlRgbColor color = item.is_true ? XlRgbColor.rgbBlack : XlRgbColor.rgbDarkGray;
               excelWorksheet.Cells[header, coln] = item.name;
               excelWorksheet.Cells[header, coln].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+              // excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = ulcObjectParce.tp;
               excelWorksheet.Cells[header, coln].Font.Color = color;
               coln += 1;
               excelWorksheet.Cells[header, coln] = item.date_time;
               excelWorksheet.Cells[header, coln].Font.Color = color;
               coln += 1;
-              excelWorksheet.Cells[header, coln] = (item.unit_type_id==1 ? "ULC-2" : "РВП-18");
+
+              excelWorksheet.Cells[header, coln] = (item.unit_type_id == 1 ? "ULC-2" : "РВП-18");
               excelWorksheet.Cells[header, coln].Font.Color = color;
               coln += 1;
               excelWorksheet.Cells[header, coln] = item.ip;
@@ -295,11 +307,16 @@ namespace UlcWin.Export
               excelWorksheet.Cells[header, coln] = item.meter_factory;
               excelWorksheet.Cells[header, coln].Font.Color = color;
               coln += 1;
+
               excelWorksheet.Cells[header, coln] = item.value;
               excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
+              excelWorksheet.Cells[header, coln] = item.value_month;
+              excelWorksheet.Cells[header, coln].Font.Color = color;
+              coln += 1;
               header++;
             }
-            
+            sf.SetLabelText(string.Format("Сформировано:{0}%", xx));
           }
           index = 1;
           for (int i = 0; i < listView.Columns.Count; i++)
@@ -313,9 +330,18 @@ namespace UlcWin.Export
           object name = excelApp.GetSaveAsFilename(Directory.GetCurrentDirectory(), "Excel Files (*.xls), *.xls");
           if (name.GetType() != typeof(bool))
           {
+            excelApp.DisplayAlerts = false;
             excelApp.ActiveWorkbook.SaveAs(name, XlFileFormat.xlWorkbookNormal);
+            excelWorkbook.Close();
           }
-          excelWorkbook.Close();
+          else
+          {
+            excelApp.Quit();
+            excelApp = null;
+          }
+        }
+        else {
+          MessageBox.Show("Ошибка создания отчета. Не могу создать Excel файл");
         }
         return true;
       }

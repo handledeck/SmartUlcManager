@@ -64,6 +64,27 @@ namespace UlcWin.Controls.UlcMeterComponet
     }
   }
 
+  public class UlcObjectParce {
+    public string location { get; set; }
+    public string country { get; set; }
+    public string tp { get; set; }
+
+    public static UlcObjectParce GetUlcObject(string message) {
+
+      string[] ulc_parce = message.Split(',');
+      if (ulc_parce.Length < 3)
+        return null;
+      else {
+        return new UlcObjectParce()
+        {
+          location = ulc_parce[0],
+          country = ulc_parce[1],
+          tp = ulc_parce[2]
+        };
+      } 
+       
+    }
+  }
   
 }
 

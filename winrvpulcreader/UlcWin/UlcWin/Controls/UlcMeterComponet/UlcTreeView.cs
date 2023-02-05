@@ -257,7 +257,7 @@ namespace GettingStartedTree
             item.Value.meter_active = item.Value.Nodes[0].meter_active;
             item.Value.rs_active = item.Value.Nodes[0].rs_active;
             item.Value.controller_active = item.Value.Nodes[0].controller_active;
-            item.Value.value_month = item.Value.Nodes[0].value_month;
+            item.Value.value_month = Math.Round(item.Value.Nodes[0].value_month.Value,2);
             //item.Value.ParentNode = item.Value;
           }
           else if (item.Value.Nodes.Count > 1)
@@ -1200,7 +1200,7 @@ namespace GettingStartedTree
         {
           sf.SetLabelText("Формирую отчет по счетчикам");
           ExportExcel exportExcel = new ExportExcel();
-          exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes);
+          exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes,sf);
           sf.DialogResult = DialogResult.OK;
         });
         sf.ShowDialog();
