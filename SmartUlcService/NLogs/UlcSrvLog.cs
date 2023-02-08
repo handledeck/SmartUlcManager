@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +22,12 @@ namespace SmartUlcService.NLogs
         ArchiveFileName = "${basedir}/logs/${date:format=yyyy-MM-dd HH-mm-ss}.log",
         MaxArchiveFiles = 3,
         MaxArchiveDays=5,
-        Layout = "${longdate}|${level:uppercase=true}|${message}",
+        Layout = "${longdate}|${level:uppercase=true}|${message}"
+        
       };
       var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
-      config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
-      config.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, logfile);
+      //config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Info, logconsole);
+      config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Info, logfile);
       NLog.LogManager.Configuration = config;
       Logger.Factory.Configuration = config;
       

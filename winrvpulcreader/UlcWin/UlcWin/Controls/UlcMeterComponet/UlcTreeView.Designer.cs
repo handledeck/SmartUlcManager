@@ -182,7 +182,6 @@ namespace GettingStartedTree
       this.olvName.Text = "Имя объекта";
       this.olvName.ToolTipText = "Имя объекта";
       this.olvName.Width = 230;
-      this.olvName.WordWrap = true;
       // 
       // olvTp
       // 
@@ -250,7 +249,6 @@ namespace GettingStartedTree
       this.olvValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValue.ToolTipText = "Показания счетчика на начало суток";
       this.olvValue.Width = 65;
-      this.olvValue.WordWrap = true;
       // 
       // olvValueMonth
       // 
@@ -261,7 +259,6 @@ namespace GettingStartedTree
       this.olvValueMonth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       this.olvValueMonth.ToolTipText = "Показания счетчика на начало месяц";
       this.olvValueMonth.Width = 65;
-      this.olvValueMonth.WordWrap = true;
       // 
       // olvRs
       // 

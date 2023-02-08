@@ -68,8 +68,9 @@ namespace InterUlc.UlcCfg
     public string CORV { get; set; }
     public long? TRAFC { get; set; }
     public int? DeviceType { get; set; }
+    [Ignore]
+    public object Tag { get; set; }
 
-    
 
 
     public static void CreateCurrentDataTable(string connString) {
@@ -100,6 +101,17 @@ namespace InterUlc.UlcCfg
       }
       catch (Exception e) {
         int x = 0;
+      }
+    }
+
+    public static UlcCfg TryExtarctFromMsg(string msg) {
+      UlcCfg ulcCfg = new UlcCfg();
+      if (ulcCfg.GetExtarctRvpConfig(msg)) {
+        return ulcCfg;
+      }
+      else
+      {
+        return null;
       }
     }
 

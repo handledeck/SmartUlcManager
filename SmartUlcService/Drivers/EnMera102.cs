@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace UlcWin.Drivers
+namespace InterUlc.Drivers
 {
   public class EnMera102
   {
@@ -17,6 +18,7 @@ namespace UlcWin.Drivers
       ReadCurrent = 0x0502,
       WriteDateTime = 0x0121,
       ReadTariffSum = 0x0131,
+      ReadTariffSumOfMonth = 0x0130,
       ReadTariffSumOfDay = 0x012F,
       ReadPower = 0x0132,
       ReadMiddle3Power = 0x012E,
@@ -32,19 +34,15 @@ namespace UlcWin.Drivers
       bool readed = true;
       NetworkStream requestInfo = client.GetStream();
       requestInfo.ReadTimeout = 10000;
-     
-     
-        try
+      try
+      {
+        requestInfo.Write(buf, 0, buf.Length);
+        int iTry = 0;
+        List<byte> x = new List<byte>();
+        byte bLast = 0x0;
+        while (readed)
         {
-          requestInfo.Write(buf, 0, buf.Length);
-          //requestInfo.Bridge.DeviceChannel(deviceInfo).Read(bufRead, 0, lenghtRead);
-          List<byte> x = new List<byte>();
-          byte bLast = 0x0;
-          while (readed)
-          {
-            int bl = (byte)requestInfo.ReadByte();
-        
-          
+          int bl = (byte)requestInfo.ReadByte();
           byte b = Convert.ToByte(bl);
           if (b == 0xC0)
           {
@@ -79,17 +77,20 @@ namespace UlcWin.Drivers
             }
           }
           else
-            throw new Exception();
+          {
+            if (iTry > 10)
+              throw new Exception();
+            iTry++;
           }
-          exp = null;
         }
-        catch (Exception e)
-        {
-          exp = e;
-          readed = false;
-        return e;
-          //continue;
-        }
+        exp = null;
+      }
+      catch (Exception e)
+      {
+        exp = e;
+        readed = false;
+        //continue;
+      }
         //finally {
         //  if (client.Connected)
         //    client.Close();
@@ -163,7 +164,94 @@ namespace UlcWin.Drivers
       //return bres;
     }
 
+    public static MeterAllValues GetSumAllValue(string meter_factory, TcpClient client) {
+      MeterAllValues meterAllValues = new MeterAllValues();
+      Exception exp = null;
+      meterAllValues.EnergySumDay = GetSumDayValue(meter_factory, client, out exp);
+      if (exp != null)
+        return null;
+      meterAllValues.EnergySumMonth= GetSumMonthValue(meter_factory, client, out exp);
+      if (exp != null)
+        return null;
+      return meterAllValues;
+    }
+
+    public static float? GetSumDayValue(string meter_factory, TcpClient client, out Exception exp)
+    {
+      exp = null;
+      float? value = 0;
+      try
+      {
+        ushort? addr = GetParcedFactory(meter_factory);
+        if (addr.HasValue)
+        {
+          byte[] buffer = new byte[128];
+          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSumOfDay, new byte[] {/*1-на начало суток*/ 1 }, 1, addr.Value);
+          exp = EnMera102.Read(buf, 128, client, out buffer);
+          if (exp == null)
+          {
+            float ds = (float)BitConverter.ToInt32(buffer, 9);
+            value = (float)Math.Round((ds / 100), 2);
+            return value;
+          }
+          else throw exp;
+        }
+        else
+          throw new Exception("ошибка получения данных");
+      }
+      catch (Exception e)
+      {
+
+        exp = e;
+        return value;
+      }
+    }
+
+    static ushort? GetParcedFactory(string num_factory)
+    {
+      ushort? value=null;
+      string num = num_factory.Substring(num_factory.Length - 4, 4);
+      ushort addr = 0;
+      if (ushort.TryParse(num, out addr))
+      {
+        value = addr;
+      }
+      return value;
+    }
+
+    public static float? GetSumMonthValue(string meter_factory, TcpClient client, out Exception exp)
+    {
+      exp = null;
+      float? value = 0;
+      try
+      {
+        ushort? addr = GetParcedFactory(meter_factory);
+        if (addr.HasValue)
+        {
+          byte[] buffer = new byte[128];
+          byte[] buf = EnMera102.packbuf(EnMera102.EnumFunEnMera.ReadTariffSum, new byte[] { /*0-накопленная(текущая) 1-на начало месяца*/1 }, 1, addr.Value);
+          exp = EnMera102.Read(buf, 128, client, out buffer);
+          if (exp == null)
+          {
+            float ds = (float)BitConverter.ToInt32(buffer, 9);
+            value = (float)Math.Round((ds / 100), 2);
+            return value;
+          }
+          else throw exp;
+        }
+        else
+          throw new Exception("ошибка получения данных");
+      }
+      catch (Exception e)
+      {
+
+        exp = e;
+        return value;
+      }
+    }
   }
+
+  
 
   public class EnmeraCrc
   {

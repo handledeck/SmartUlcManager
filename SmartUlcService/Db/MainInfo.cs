@@ -14,8 +14,9 @@ namespace InterUlc.Db
     public string phone_num { get; set; }
     public int arm_id { get; set; }
     public int unit_type_id { get; set; }
-    public string meter_type { get; set; }
-    public string meter_serial { get; set; }
+    public string meters { get; set; }
+    [ServiceStack.DataAnnotations.Default(1)]
+    public int rs_stat { get; set; }
   }
 
 

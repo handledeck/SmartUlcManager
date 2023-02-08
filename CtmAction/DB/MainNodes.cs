@@ -30,5 +30,10 @@ namespace DB
     public int? active { get; set; }
     public int? light { get; set; }
     public string  comments { get; set; }
+
+    public static string CreateTable() {
+      return ""; 
+    }
+
   }
 }

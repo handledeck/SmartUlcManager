@@ -27,5 +27,8 @@ namespace DB
     public int log_event { get; set; }
     public string host_from { get; set; }
 
+    [ServiceStack.DataAnnotations.Default(-1)]
+    public int ctrl_id { get; set; }
+
   }
 }

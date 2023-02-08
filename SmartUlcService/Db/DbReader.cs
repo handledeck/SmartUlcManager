@@ -3,8 +3,12 @@ using InterUlc.Logs;
 using InterUlc.UlcCfg;
 using Npgsql;
 using NpgsqlTypes;
+using ServiceStack.DataAnnotations;
 using ServiceStack.OrmLite;
+using ServiceStack.Script;
+using SmartUlcService.NLogs;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Net;
@@ -12,24 +16,28 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using WorkerService1;
+using WorkerService1.Db;
 
 namespace InterUlc.Db
 {
   public delegate void ItemRunComplite(Task tsk);
   public class DbReqestNotTrue {
 
-    public int ID { get; set; }
-    public string IPAddres { get; set; }
-    public string Message { get; set; }
-
-    public int TypeDevice { get; set; }
-    public List<Log> Logs { get; set; }
-
+    public int id { get; set; }
+    public string ip_address{ get; set; }
+    public string message { get; set; }
+    public int unit_type_id { get; set; }
+    public object tag { get; set; }
+    [Ignore]
+    public List<Log> logs { get; set; }
+    [Ignore]
     public ItemRunComplite EvtItemRunComplite { get; set; }
+    [Ignore]
     public Task OwnerTask { get; set; }
-
-    public List<byte[]> Binary { get; set; }
-
+    [Ignore]
+    public UlcCfg.UlcCfg UlcCnfg { get; set; }
+    
   }
 
   public class Node
@@ -76,8 +84,64 @@ namespace InterUlc.Db
       this.__dbConnection = new NpgsqlConnection(this.__connection);
     }
 
+    public void CheckRvpForStatistics()
+    {
+      //string sql = "select * from main_ctrlinfo mc where mc.unit_type_id =0";
+      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+                  __connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        List<MainInfo> mainInfos= db.Select<MainInfo>(x=>x.unit_type_id==0 && x.rs_stat==1);
+        List<MainInfo> lstUpdate = new List<MainInfo>();
+        foreach (var item in mainInfos)
+        {
+          if (item.rs_stat == 0) { 
+            item.rs_stat = 1;
+            lstUpdate.Add(item);
+          }
+        }
+        if (lstUpdate.Count > 0) {
+          db.Update<MainInfo>(lstUpdate.ToArray());
+        }
+        
+      }
+    }
 
-   public  void ReadStatistic(string connString)
+    // очистка базы
+    // удаление событий. храним 3 месяца
+    internal void ServiceDbData()
+    {
+      DateTime dtn = DateTime.Now;
+      DateTime dtEvent = dtn.AddDays(-30);
+      DateTime dtCurrent = dtn.AddMonths(-6);
+      try
+      {
+      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+                  __connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        IDbCommand dbCommand = db.CreateCommand();
+        string sql= string.Format("delete from main_ctrlevent me where me.event_time <'{0}'", dtEvent.ToString("yyyy-MM-dd"));
+        dbCommand.CommandText = sql;
+        int count=dbCommand.ExecuteNonQuery();
+        UlcSrvLog.Logger.Info("Очистка базы событий. Удалено: {0}", count);
+        sql = string.Format("delete from main_ctrlcurrent mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
+        dbCommand.CommandText = sql;
+        count = dbCommand.ExecuteNonQuery();
+        //UlcSrvLog.Logger.Info("Очистка базы данных. Удалено: {0}", count);
+        sql = string.Format("delete from main_ctrldata mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
+        dbCommand.CommandText = sql;
+        count = dbCommand.ExecuteNonQuery();
+        UlcSrvLog.Logger.Info("Очистка базы данных о состоянии. Удалено: {0}", count);
+      }
+      }
+      catch (Exception exp)
+      {
+        UlcSrvLog.Logger.Info("Ошибка очистки БД : {0}", exp.Message);
+      }
+    }
+
+      public void ReadStatistic(string connString)
     {
       try
       {
@@ -90,13 +154,13 @@ namespace InterUlc.Db
           using (var cmd = db.OpenCommand())
           {
 
-            var dat=cmd.ExecLongScalar("select count(*) from main_ctrlinfo");
+            var dat = cmd.ExecLongScalar("select count(*) from main_ctrlinfo");
             dat = cmd.ExecLongScalar("select count(*) from main_ctrlinfo mi where mi.unit_type_id=1");
-            dat=cmd.ExecLongScalar("select count(*) from main_ctrlinfo mi where mi.unit_type_id=0");
+            dat = cmd.ExecLongScalar("select count(*) from main_ctrlinfo mi where mi.unit_type_id=0");
             //не работает ком порт
             dat = cmd.ExecLongScalar(string.Format("select * from main_ctrldata where device_type =1 and((cdin >> 7) = 0) and \"current_time\" >'{0}'",
-              DateTime.UtcNow.ToString("yyyy-MM-dd")));
-            
+              DateTime.Now.ToString("yyyy-MM-dd")));
+
             List<MainInfo> lst = db.Select<MainInfo>("select count(*) from main_ctrlinfo mc where mc.unit_type_id =0");
 
           }
@@ -108,7 +172,7 @@ namespace InterUlc.Db
       }
     }
 
-    public void InsertMsgConfig(string message,int ctrlID)
+    public void InsertMsgConfig(string message, int ctrlID)
     {
       try
       {
@@ -140,12 +204,12 @@ namespace InterUlc.Db
       try
       {
         UlcCfg.UlcCfg ulcCfg = new UlcCfg.UlcCfg();
-        bool res = ulcCfg.GetExtarctRvpConfig(item.Message);
+        bool res = ulcCfg.GetExtarctRvpConfig(item.message);
         if (res)
         {
-          ulcCfg.ctrl_id = item.ID;
-          ulcCfg.current_time = DateTime.UtcNow;
-          ulcCfg.DeviceType = item.TypeDevice;
+          ulcCfg.ctrl_id = item.id;
+          ulcCfg.current_time = DateTime.Now;
+          ulcCfg.DeviceType = item.unit_type_id;
           conn.Insert<UlcCfg.UlcCfg>(ulcCfg);
         }
       }
@@ -199,25 +263,29 @@ namespace InterUlc.Db
       return options;
     }
 
-    
 
-    public string GetDbObjectPath(int id, IDbConnection connection) {
+
+    public DbLogs GetDbObjectPath(int id, IDbConnection connection) {
       string msg = string.Empty;
-      string sql = string.Format("select mn.id, mn.\"name\" as tp ,mn2.\"name\" as res,mn3.\"name\" as fes from main_nodes mn "+ 
-      "right join main_nodes mn2 on mn.parent_id = mn2.id "+
-      "right join main_nodes mn3 on mn2.parent_id = mn3.id "+
-      "where mn.id = {0}",id);
-      List<DbLogs> lst= connection.Select<DbLogs>(sql);
-      if (lst.Count > 0) {
+      string sql = string.Format("select mn.id, mn.\"name\" as tp ,mn2.\"name\" as res,mn3.\"name\" as fes, mc.ip_address as ip from main_nodes mn " +
+      "right join main_nodes mn2 on mn.parent_id = mn2.id " +
+      "right join main_nodes mn3 on mn2.parent_id = mn3.id " +
+      "right join main_ctrlinfo mc on mn.id =mc.id " +
+      "where mn.id = {0}", id);
+      DbLogs lst = connection.Single<DbLogs>(sql);
+      if (lst != null)
+      {
+        return lst;
         //msg = System.Text.Json.JsonSerializer.Serialize(lst[0], typeof(DbLogs), GetSerializeOption());
-        msg = string.Format("{0}/{1}/{2}",lst[0].Fes,lst[0].Res,lst[0].Tp);
+        //msg = string.Format("{0}/{1}/{2}",lst[0].Fes,lst[0].Res,lst[0].Tp);
       }
-      return msg;
+      else return null;
+
     }
 
-    public OrmDbConfig GetLastRecordById(IDbConnection connection,int id) {
+    public OrmDbConfig GetLastRecordById(IDbConnection connection, int id) {
       string sql = String.Format("SELECT * FROM main_ctrldata mc " +
-                  "WHERE ID = (SELECT MAX(ID) FROM main_ctrldata mc1 where mc1.ctrl_id = {0})",id);
+                  "WHERE ID = (SELECT MAX(ID) FROM main_ctrldata mc1 where mc1.ctrl_id = {0})", id);
       List<OrmDbConfig> lstMax = connection.Select<OrmDbConfig>(sql);
       if (lstMax.Count > 0)
       {
@@ -231,140 +299,251 @@ namespace InterUlc.Db
 
     string GetShortImei(string imei)
     {
+      if (imei.Length < 15)
+        return string.Empty;
+      else
       return imei.Substring(imei.Length - 7, imei.Length - 8);
     }
 
-    public void CheckDeviceIMEI(IDbConnection connection, UlcCfg.UlcCfg ulcCfg)
+    public void CheckDeviceIMEI(List<UlcCfg.UlcCfg> ulcCfgLst)
     {
-      string sql = string.Format("SELECT * FROM main_ctrldata mc " +
-            "WHERE id = (" +
-            "SELECT max(id) FROM main_ctrldata mc2 where mc2.ctrl_id = {0})", ulcCfg.ctrl_id);
-      List<UlcCfg.UlcCfg> lstMax = connection.Select<UlcCfg.UlcCfg>(sql);
-      if (lstMax.Count > 0)
+      List<MainLogs> lstLog = new List<MainLogs>();
+      var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+      using (var connection = dbFactory.Open())
       {
-        string msg = GetDbObjectPath(lstMax[0].ctrl_id, connection);
+        foreach (var ulcCfg in ulcCfgLst)
+        {
+          try
+          {
+            string sql = string.Format("SELECT * FROM main_ctrldata mc " +
+                  "WHERE id = (" +
+                  "SELECT max(id) FROM main_ctrldata mc2 where mc2.ctrl_id = {0})", ulcCfg.ctrl_id);
+            List<UlcCfg.UlcCfg> lstMax = connection.Select<UlcCfg.UlcCfg>(sql);
+            if (lstMax.Count > 0)
+            {
+              DbLogs dbLogs = GetDbObjectPath(lstMax[0].ctrl_id, connection);
 
-        if (lstMax[0].IMEI != ulcCfg.IMEI)
-        {
-          
-          int en = (int)EnLogEvent.ChangeIMEI;
-          OrmDbConfig ormDbConfig= GetLastRecordById(connection, ulcCfg.ctrl_id);
-          MainLogs mainLogs = new MainLogs()
+              string msg = string.Empty;
+              if (lstMax[0].IMEI != ulcCfg.IMEI)
+              {
+                try
+                {
+                  string oImei = GetShortImei(lstMax[0].IMEI.ToString());
+                  string nImei = GetShortImei(ulcCfg.IMEI.ToString());
+
+                  if (!string.IsNullOrEmpty(oImei) || !string.IsNullOrEmpty(nImei))
+                  {
+                    dbLogs.feature = new ImeiStatAndRs()
+                    {
+                      old_imei = oImei,// GetShortImei(lstMax[0].IMEI.ToString()),
+                      new_imei = nImei,//GetShortImei(ulcCfg.IMEI.ToString()),
+                      rs_status = (lstMax[0].CDIN >> 7).ToString(),
+                      rs_last_request = lstMax[0].current_time.ToString("dd.MM,yyyy hh:mm")
+                    };
+                    msg = System.Text.Json.JsonSerializer.Serialize(dbLogs, typeof(DbLogs), GetSerializeOption());
+                    int en = (int)EnLogEvent.ChangeIMEI;
+                    OrmDbConfig ormDbConfig = GetLastRecordById(connection, ulcCfg.ctrl_id);
+                    MainLogs mainLogs = new MainLogs()
+                    {
+                      current_time = DateTime.Now,
+                      id_user = 0,
+                      usr_name = "служба опроса",
+                      message = msg, //string.Format("{0}(dt:{1} imei:{2}=>{3} rs:{4})", msg, lstMax[0].current_time.ToString("dd.MM.yyyy HH:mm"),
+                                     //GetShortImei(lstMax[0].IMEI.ToString()), GetShortImei(ulcCfg.IMEI.ToString()), (lstMax[0].CDIN >> 7).ToString()),
+                      log_event = en,
+                      host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName,
+                      ctrl_id= ulcCfg.ctrl_id,
+                    };
+                    connection.Insert<MainLogs>(mainLogs);
+                  }
+                }
+                catch (Exception exp)
+                {
+                  throw;
+                }
+              }
+              else if ((DateTime.Now - lstMax[0].current_time).TotalDays > 2)
+              {
+                try
+                {
+                  msg = System.Text.Json.JsonSerializer.Serialize(dbLogs, typeof(DbLogs), GetSerializeOption());
+                  int en = (int)EnLogEvent.CHANGE_NET_STATE;
+                  MainLogs mainLogs = new MainLogs()
+                  {
+                    current_time = DateTime.Now,
+                    id_user = 0,
+                    usr_name = "служба опроса",
+                    message = msg,//string.Format("dt:{0}-{1}", ulcCfg.current_time.ToString("dd.MM.yyyy HH:mm"), msg),
+                    log_event = en,
+                    host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName,
+                    ctrl_id = ulcCfg.ctrl_id
+                  };
+                  long result=connection.Insert<MainLogs>(mainLogs);
+                }
+                catch (Exception exp)
+                {
+                  throw;
+                }
+              }
+            }
+          }
+          catch (Exception exp)
           {
-            current_time = DateTime.UtcNow,
-            id_user = 0,
-            usr_name = "служба опроса",
-            message = string.Format("{0}(dt:{1} imei:{2}=>{3} rs:{4})", msg, lstMax[0].current_time.ToString("dd.MM.yyyy HH:mm"),
-           GetShortImei(lstMax[0].IMEI.ToString()), GetShortImei(ulcCfg.IMEI.ToString()), (lstMax[0].CDIN >> 7).ToString()),
-            log_event = en,
-            host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName
-          };
-          connection.Insert<MainLogs>(mainLogs);
+            int x = 0;
+          }
         }
-        else if ((DateTime.Now - lstMax[0].current_time).TotalDays > 2)
+      }
+    }
+
+    public void UpdateMetersValue(List<MeterValue> meterValues)
+    {
+      List<MeterValue> mValues = new List<MeterValue>();
+      var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        foreach (var item in meterValues)
         {
-          int en = (int)EnLogEvent.CHANGE_NET_STATE;
-          MainLogs mainLogs = new MainLogs()
+          if (item.is_true)
           {
-            current_time = DateTime.UtcNow,
-            id_user = 0,
-            usr_name = "служба опроса",
-            message = string.Format("dt:{0}-{1}", ulcCfg.current_time.ToString("dd.MM.yyyy HH:mm"),msg),
-            log_event = en,
-            host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName
-          };
-          connection.Insert<MainLogs>(mainLogs);
+            using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
+            {
+              try
+              {
+                DateTime dtc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                MeterValue mv = db.Single<MeterValue>(x => x.date_time > dtc && x.ctrl_id == item.ctrl_id);
+                if (mv != null)
+                {
+                  item.id = mv.id;
+                }
+                db.Save<MeterValue>(item);
+
+                dbTrans.Commit();
+              }
+              catch
+              {
+                dbTrans.Rollback();
+              }
+            }
+          }
+        }
+      }
+    }
+
+    public void UpdateMsgRs(List<RsNotTrue> lstDevice)
+    {
+      var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        foreach (var item in lstDevice)
+        {
+          try
+          {
+            if (item.UlcCnfg != null)//!string.IsNullOrEmpty(item.Message))
+            {
+              if (item.is_true)
+              {
+                int xx = db.Update<MainCurrent>(new MainCurrent[] {new MainCurrent()
+                      { id= item.cur_id,
+                          ctrl_id= item.id,
+                          body= item.Message,
+                          current_time=DateTime.Now
+                        }
+                      });
+                item.UlcCnfg.id = item.data_id;
+                item.UlcCnfg.ctrl_id = item.id;
+                item.UlcCnfg.current_time = DateTime.Now;
+                item.UlcCnfg.DeviceType = item.device_type;
+                xx = db.Update<UlcCfg.UlcCfg>(new UlcCfg.UlcCfg[] { item.UlcCnfg });
+              }
+            }
+          }
+          catch (Exception ex)
+          {
+          }
         }
       }
     }
 
     public void InsertCfgMsg(List<DbReqestNotTrue> lstDbReqestNotTrue)
     {
-      int idCurrent = -1;
-      int idData = -1;
+      List<MainCurrent> mainCurrents = new List<MainCurrent>();
+      List<UlcCfg.UlcCfg> ulcCfgs = new List<UlcCfg.UlcCfg>();
       try
       {
-        var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
-        using (var db = dbFactory.Open())
+        foreach (var item in lstDbReqestNotTrue)
         {
-          
-          int i = 0;
-          foreach (var item in lstDbReqestNotTrue)
+          if (item.UlcCnfg != null)
+          {
+            UlcCfg.UlcCfg ulcCfg = item.UlcCnfg;
+            mainCurrents.Add(new MainCurrent()
+            { ctrl_id = item.id, body = item.message, current_time = DateTime.Now });
+            ulcCfg.ctrl_id = item.id;
+            ulcCfg.current_time = DateTime.Now;
+            ulcCfg.DeviceType = item.unit_type_id;
+            ulcCfgs.Add(ulcCfg);
+          }
+        }
+        if (ulcCfgs.Count == 0)
+          return;
+        CheckDeviceIMEI(ulcCfgs);
+      }
+      catch (Exception exp)
+      {
+        throw;
+      }
+      var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        
+        DateTime dtc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+        if (mainCurrents.Count > 0)
+        {
+          using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
           {
             try
             {
-              if (!string.IsNullOrEmpty(item.Message))
+              foreach (var item in mainCurrents)
               {
-                UlcCfg.UlcCfg ulcCfg = new UlcCfg.UlcCfg();
-                bool res = ulcCfg.GetExtarctRvpConfig(item.Message);
-                if (res)
-                {
-                  try
-                  {
-                    CheckForRecordInDb(item.ID, out idCurrent, out idData);
-                    if (idCurrent > -1)
-                    {
-                      int xx = db.Update<MainCurrent>(new MainCurrent[] {new MainCurrent()
-                      { id= idCurrent,
-                          ctrl_id= item.ID, 
-                          body= item.Message,
-                          current_time=DateTime.UtcNow 
-                        }
-                      });
-                      ulcCfg.id = idData;
-                      ulcCfg.ctrl_id = item.ID;
-                      ulcCfg.current_time = DateTime.UtcNow;
-                      ulcCfg.DeviceType = item.TypeDevice;
-                      if (ulcCfg.DeviceType == 1)
-                      {
-                        CheckDeviceIMEI(db, ulcCfg);
-                      }
-                      xx = db.Update<UlcCfg.UlcCfg>(new UlcCfg.UlcCfg[] { ulcCfg });
-                    }
-                    else
-                    {
-                      db.Insert<MainCurrent>(new MainCurrent[] { new MainCurrent()
-                      { ctrl_id=item.ID, body= item.Message, current_time=DateTime.UtcNow } });
-                      ulcCfg.ctrl_id = item.ID;
-                      ulcCfg.current_time = DateTime.UtcNow;
-                      ulcCfg.DeviceType = item.TypeDevice;
-                      if (ulcCfg.DeviceType == 1) {
-                        CheckDeviceIMEI(db, ulcCfg);
-                      }
-                      db.Insert<UlcCfg.UlcCfg>(new UlcCfg.UlcCfg[] { ulcCfg });
-                    }
-                  }
-                  catch(Exception exc)
-                  {
-                    int x = 0;
-                  }
-                }
+                MainCurrent mainCurrent = db.Single<MainCurrent>(x => x.ctrl_id == item.ctrl_id && x.current_time > item.current_time);
+                if (mainCurrent != null)
+                  item.id = mainCurrent.id;
+                db.Save<MainCurrent>(item);
               }
-              else
-              {
-                Console.WriteLine("error parcer:{0}", ++i);
-              }
+              dbTrans.Commit();
             }
-            catch (Exception e)
+            catch (Exception exp)
             {
-              int x = 0;
+              dbTrans.Rollback();
+            }
+          }
+          if (ulcCfgs.Count > 0)
+          {
+            
+            using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
+            {
+              try
+              {
+                foreach (var item in ulcCfgs)
+                {
+                  UlcCfg.UlcCfg cfg = db.Single<UlcCfg.UlcCfg>(x => x.ctrl_id == item.ctrl_id && x.current_time > item.current_time);
+                  if (cfg != null)
+                    item.id = cfg.id;
+                  db.Save<UlcCfg.UlcCfg>(item);
+                }
+                //db.Insert<MainCurrent>(mainCurrents.ToArray());
+                //db.Insert<UlcCfg.UlcCfg>(ulcCfgs.ToArray());
+                dbTrans.Commit();
+              }
+              catch (Exception exp)
+              {
+                dbTrans.Rollback();
+              }
             }
           }
         }
       }
-      catch (Exception exp)
-      {
-        int x = 0;
-      }
-
-      finally
-      {
-        if (this.__dbConnection.State == System.Data.ConnectionState.Open)
-        {
-          this.__dbConnection.Close();
-        }
-      }
     }
+
 
     public void InsertCfgMsg(Node node)
     {
@@ -380,7 +559,7 @@ namespace InterUlc.Db
         cmd.ExecuteNonQuery();
         this.__dbConnection.Close();
       }
-      catch{
+      catch {
       }
 
       finally
@@ -392,43 +571,25 @@ namespace InterUlc.Db
       }
     }
 
-    public List<DbReqestNotTrue> ReadNotTrueItems(DateTime dt) {
-      this.__dbConnection.Open();
-      var sql = string.Format("select * FROM main_ctrlinfo mc left join main_ctrlcurrent ci on ci.ctrl_id = mc.id and ci.\"current_time\" > '{0}' " +
-      "where ci.body isnull or ci.body = '' order by mc.unit_type_id",dt.ToString("yyyy-MM-dd"));
-      var cmd = new NpgsqlCommand(sql, this.__dbConnection);
-      List<DbReqestNotTrue> lstNotTrue = new List<DbReqestNotTrue>();
+    public List<DbReqestNotTrue> ReadNotTrueItems(DateTime dt)
+    {
+      List<DbReqestNotTrue> reqestNotTrues;
+      string s = string.Format("select mc.id, mc.ip_address ,mc.unit_type_id, mn.\"name\" as tag FROM main_ctrlinfo mc left join main_nodes mn on mc.id=mn.id left join main_ctrlcurrent ci on ci.ctrl_id = mc.id and ci.\"current_time\" > '{0}' where  mn.active =1 and ci.body isnull or ci.body = '' order by mc.unit_type_id", dt.ToString("yyyy-MM-dd"));
       try
       {
-        int inc = 0;
-        var dr = cmd.ExecuteReader();
-        while (dr.Read())
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+          __connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
         {
-
-          int id = (int)dr[0];
-          string ip = (string)dr[1];
-          int typedev = (int)dr[4];
-          //if (typedev == 1) {
-          //  System.Diagnostics.Debug.WriteLine(++inc);
-          //}
-          lstNotTrue.Add(new DbReqestNotTrue() { ID = id, IPAddres = ip, TypeDevice=typedev });
-          //if (lstNotTrue.Count > 20)
-           // break;
+          reqestNotTrues = db.Select<DbReqestNotTrue>(s);
         }
-        return lstNotTrue;
+
       }
-      catch
+      catch (Exception ex)
       {
         return null;
-
       }
-      finally {
-        this.__dbConnection.Close();
-      } 
-      //"INSERT INTO main_ctrlcurrent(\"current_time\", body, ctrl_id) " +
-      //"VALUES(@time, @body, @ctrl_id)";
-
-      
+      return reqestNotTrues;
     }
 
     internal void InsertLogMsg(Node node)
@@ -445,9 +606,9 @@ namespace InterUlc.Db
             string evt = Log.ConvertToString(item);
             var sql = "Select * from main_ctrlevent where event_time=@etime and event_type=@etype and event_level=@elevel and ctrl_id=@ctrlid";
             var cmd = new NpgsqlCommand(sql, this.__dbConnection);
-            cmd.Parameters.AddWithValue("etime", item.dt);
-            cmd.Parameters.AddWithValue("etype", item.Log_type);
-            cmd.Parameters.AddWithValue("elevel", (int)item.Log_level);
+            cmd.Parameters.AddWithValue("etime", item.event_time);
+            cmd.Parameters.AddWithValue("etype", item.event_type);
+            cmd.Parameters.AddWithValue("elevel", (int)item.event_level);
             cmd.Parameters.AddWithValue("ctrlid", node.Id);
             //cmd.Parameters.AddWithValue("evalue", item.Log_Data);
             var dr_fes = cmd.ExecuteReader();
@@ -460,10 +621,10 @@ namespace InterUlc.Db
               sql = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id, event_msg) " +
                 "VALUES(@event_time, @event_type, @event_level, @ctrl_id, @event_msg)";
               cmd = new NpgsqlCommand(sql, this.__dbConnection);
-              cmd.Parameters.AddWithValue("event_time", item.dt);
-              cmd.Parameters.AddWithValue("event_type", item.Log_type);
+              cmd.Parameters.AddWithValue("event_time", item.event_time);
+              cmd.Parameters.AddWithValue("event_type", item.event_type);
               //cmd.Parameters.AddWithValue("event_value", item.Log_Data);
-              cmd.Parameters.AddWithValue("event_level", (int)item.Log_level);
+              cmd.Parameters.AddWithValue("event_level", (int)item.event_level);
               cmd.Parameters.AddWithValue("ctrl_id", node.Id);
               cmd.Parameters.AddWithValue("event_msg", evt);
               cmd.ExecuteNonQuery();
@@ -496,28 +657,28 @@ namespace InterUlc.Db
       try
       {
         this.__dbConnection.Open();
-        
+
         List<Log> listToUpdate = new List<Log>();
         NpgsqlCommand cmd_sel = null;
         string sql_sel = "SELECT \"event_time\" FROM main_ctrlevent mc where mc.ctrl_id=@id ORDER BY mc.\"event_time\" DESC LIMIT 1";
         //"Select * from main_ctrlevent where event_time=@etime and event_type=@etype and event_level=@elevel and ctrl_id=@ctrlid";
         string sql_ins = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id, event_msg) VALUES";
-        
+
         int ii = 0;
         foreach (var item in lstItems)
         {
-          if (item.TypeDevice == 0)
+          if (item.unit_type_id == 0)
             continue;
           else
           {
-            if (item.Logs == null)
+            if (item.logs == null)
               continue;
           }
 
           try
           {
             cmd_sel = new NpgsqlCommand(sql_sel, this.__dbConnection);
-            cmd_sel.Parameters.AddWithValue("@id", item.ID);
+            cmd_sel.Parameters.AddWithValue("@id", item.id);
             //sql = string.Format("SELECT \"event_time\" FROM main_ctrlevent mc where mc.ctrl_id = {0} " +
             //"ORDER BY mc.\"event_time\" DESC LIMIT 1", item.ID);
 
@@ -529,9 +690,9 @@ namespace InterUlc.Db
               dr.Close();
               DateTime dtevt = (DateTime)dr[0];
 
-              foreach (var lItem in item.Logs)
+              foreach (var lItem in item.logs)
               {
-                if (lItem.dt > dtevt)
+                if (lItem.event_time > dtevt)
                 {
                   listToUpdate.Add(lItem);
                 }
@@ -578,7 +739,7 @@ namespace InterUlc.Db
               //{
               //  vlue = vlue.TrimEnd(',');
               //  cmd.CommandText = vlue;
-                
+
               //  //cmd = new NpgsqlCommand(vlue, this.__dbConnection);
               //  cmd.ExecuteNonQuery();
               //}
@@ -628,8 +789,6 @@ namespace InterUlc.Db
       }
     }
 
-
-
     public void SeptStatictics()
     {
       DateTime dt = DateTime.Now;
@@ -637,14 +796,12 @@ namespace InterUlc.Db
       ulcSmalllStatistic.current_time = DateTime.Now;
       try
       {
-       
-
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
           __connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-         List<UlcSmalllStatistic> lst = db.Select<UlcSmalllStatistic>(o => o.current_time > DateTime.Now.Date);
-           long id = db.Insert<UlcSmalllStatistic>(ulcSmalllStatistic, selectIdentity: true);
+          //List<UlcSmalllStatistic> lst = db.Select<UlcSmalllStatistic>(o => o.current_time > DateTime.Now.Date);
+          long id = db.Insert<UlcSmalllStatistic>(ulcSmalllStatistic, selectIdentity: true);
         }
       }
       catch (Exception ex)
@@ -653,29 +810,99 @@ namespace InterUlc.Db
       }
     }
 
-
-
-
-    public List<RsNotTrueData> GetNotTruerS485()
-    {
-
+    public List<MeterValue> GetNotTrueMeters() {
+      List<MeterInfo> rsMeters;
+      List<MeterValue> rsNotTrue=new List<MeterValue>();
       try
       {
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
           __connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          string sql = string.Format("select mn.id, mc.id as id_data, mn.ip_address, mn.meters from main_ctrlinfo mn , main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id = 1 and(mc.cdin >> 7) = 0 and mc.\"current_time\" > '{0}'",
-            DateTime.Now.ToString("yyyy-MM-dd"));
-          return db.Select<RsNotTrueData>(sql);
+          
+          string sql = string.Format("select mi.* from meter_info mi left join meter_value mv on mv.ctrl_id =mi.id and  mv.date_time >'{0}' where mv isnull and mi.active =1 and mi.meter_factory <>''", DateTime.Now.ToString("yyyy-MM-dd"));
+          //string sql = string.Format("select mi.id as ctrl_id,mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true " +
+          //                           "from meter_info mi " +
+          //                           "left join meter_value mv on mi.id = mv.ctrl_id and mv.date_time > '{0}' " +
+          //                           "left join main_nodes mn on mn.id = mi.ctrl_id " +
+          //                           "left join main_ctrlinfo mc on mc.id = mi.ctrl_id and mn.active = 1 " +
+          //                           "where mc.rs_stat =1 and mv.value isnull and mc.id notnull", DateTime.Now.ToString("yyyy-MM-dd"));
+
+
+          rsMeters = db.Select<MeterInfo>(sql);
+          
+          foreach (var item in rsMeters)
+          {
+            rsNotTrue.Add(new MeterValue()
+            {
+              ctrl_id = item.id,
+              ip = item.ip,
+              meter_factory = item.meter_factory,
+              meter_type = item.meter_type
+            });
+          }
 
         }
+        return rsNotTrue;
       }
       catch (Exception ex)
       {
         return null;
       }
     }
+
+    public List<RsNotTrue> GetNotTruerRS485()
+    {
+      List<RsNotTrue> rsNotTruesReturn = new List<RsNotTrue>();
+      try
+      {
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+          __connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          string sql = string.Format("select mn.id ,mn.ip_address,mi.meter_factory,mi.meter_type, mc.id as data_id,mc2.id as cur_id,mc.device_type from main_ctrlinfo mn " +
+                                  "left join main_ctrlcurrent mc2 on mn.id = mc2.ctrl_id and mc2.\"current_time\" > '{0}' " +
+                                  "left join meter_info mi on mi.ctrl_id = mn.id " +
+                                  "left join main_ctrldata mc on mc.ctrl_id = mn.id and(mc.cdin >> 7) = 0 " +
+                                  "where mn.unit_type_id = 1 and mc.\"current_time\" > '{0}' and mn.rs_stat =1", DateTime.Now.ToString("yyyy-MM-dd"));
+          List<RsNotTrue> rsNotTrues = db.Select<RsNotTrue>(sql);
+          foreach (var item in rsNotTrues)
+          {
+
+            if (!rsNotTruesReturn.Contains(item))//<RsNotTrue>(item, new RsNotTrueComparer()))
+            {
+              rsNotTruesReturn.Add(item);
+            }
+          }
+        }
+        return rsNotTruesReturn;
+      }
+      catch (Exception ex)
+      {
+        return null;
+      }
+    }
+
+
+    //public List<RsNotTrueData> GetNotTruerS485()
+    //{
+    //  try
+    //  {
+    //    var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+    //      __connection, PostgreSqlDialect.Provider);
+    //    using (var db = dbFactory.Open())
+    //    {
+    //      string sql = string.Format("select mn.id, mc.id as id_data, mn.ip_address, mn.meters from main_ctrlinfo mn , main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id = 1 and(mc.cdin >> 7) = 0 and mc.\"current_time\" > '{0}'",
+    //        DateTime.Now.ToString("yyyy-MM-dd"));
+    //      return db.Select<RsNotTrueData>(sql);
+
+    //    }
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    return null;
+    //  }
+    //}
 
     public UlcSmalllStatistic GetStatistic(DateTime dt)
     {
@@ -701,38 +928,49 @@ namespace InterUlc.Db
         cmd.CommandText = sql;
         ulcStatistic.allulc = (long)cmd.ExecuteScalar();
         //Всего не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                           "left join main_ctrlinfo mc on mc.id = mi.id " +
+                           "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
+                           "where(mc.unit_type_id = 1 or mc.unit_type_id = 0)  and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         long nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.neterrorall = ulcStatistic.all - nn;
+        ulcStatistic.neterrorall = nn;// ulcStatistic.all - nn;
         //Всего нет связи по RS
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and (mc.cdin >>7)=0 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        sql = string.Format("WITH temporaryTable(id) as " +
+           "(SELECT * from main_ctrlinfo mc where mc.unit_type_id=1 and mc.rs_stat=1) " +
+            "select count(md.id) FROM temporaryTable, main_ctrldata md where temporaryTable.id=md.ctrl_id and md.\"current_time\" > '{0}' and (md.cdin >>7)=0", DateTime.Now.ToString("yyyy-MM-dd"));
+        // sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and (mc.cdin >>7)=0 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         ulcStatistic.all_rs_errorrs = (long)cmd.ExecuteScalar();
         //Всего слабый сигнал GSM
         sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and  ((-113 + (mc.signal) * 2))<-100 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         ulcStatistic.allerrorgsm = (long)cmd.ExecuteScalar();
-
-
         // Всего контроллеров ULC не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =1 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =1 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                            "left join main_ctrlinfo mc on mc.id = mi.id " +
+                            "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
+                            "where mc.unit_type_id = 1 and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.neterrorulc = ulcStatistic.allulc - nn;
+        ulcStatistic.neterrorulc = nn;// ulcStatistic.allulc - nn;
         // всего ulc ошибка RS 
         ulcStatistic.ulc_rs_errorrs = ulcStatistic.all_rs_errorrs;
         //всего ulc GSM  
         sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and  ((-113 + (mc.signal) * 2))<-100 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         ulcStatistic.ulcerrorgsm = (long)cmd.ExecuteScalar();
-
-
         // Всего контроллеров RVP не на связи
-        sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =0 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mn.unit_type_id =0 and mc.\"current_time\" >'{0}'", dt.ToString("yyyy-MM-dd"));
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                          "left join main_ctrlinfo mc on mc.id = mi.id " +
+                          "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
+                          "where mc.unit_type_id = 0 and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         nn = (long)cmd.ExecuteScalar();
-        ulcStatistic.neterrorrvp = ulcStatistic.allrvp - nn;
+        ulcStatistic.neterrorrvp = nn;// ulcStatistic.allrvp - nn;
         //всего рвп неисправность rs
         ulcStatistic.rvp_rs_errorrs = 0;
         //всего rvp GSM
@@ -754,6 +992,69 @@ namespace InterUlc.Db
       }
       return ulcStatistic;
 
+    }
+
+    public void WriteEventMessage_1(List<DbReqestNotTrue> lstItems)
+    {
+     // string sql = "SELECT * FROM main_ctrlevent me where me.ctrl_id = {0} order by me.id desc limit 1";
+      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+            __connection, PostgreSqlDialect.Provider);
+      uint dt_val = ParceLog.rtc_calendar_datetime_to_register_value(DateTime.Now.AddDays(-30));
+      using (var db = dbFactory.Open())
+      {
+        foreach (var item in lstItems)
+        {
+          if (item.unit_type_id == 0)
+            continue;
+          try
+          {
+            if (item.logs == null)
+              continue;
+            List<Log> list = new List<Log>();
+            string sqlItem = string.Format("SELECT * FROM main_ctrlevent me where me.ctrl_id = {0} order by me.msg_all desc limit 1", item.id);
+            Log log = db.Single<Log>(sqlItem);
+            if (log != null)
+              dt_val = (uint)log.msg_all;
+            if (log != null)
+            {
+              for (int i = item.logs.Count - 1; i >= 0; i--)
+              {
+                if (item.logs[i].msg_all > dt_val)
+                {
+                  list.Add(item.logs[i]);
+                }
+                else
+                  break;
+              }
+              if (list.Count > 0)
+              {
+                db.Insert<Log>(list.ToArray());
+              }
+            }
+            //else
+            //{
+            //  for (int i = item.logs.Count - 1; i >= 0; i--)
+            //  {
+            //    if (item.logs[i].msg_all > dt_val)
+            //    {
+            //      list.Add(item.logs[i]);
+            //    }
+            //    else
+            //      break;
+            //  }
+            //  if (list.Count > 0)
+            //  {
+
+            //    db.Insert<Log>(list.ToArray());
+            //  }
+            //}
+          }
+          catch (Exception exc)
+          {
+            int x = 0;
+          }
+        }
+      }
     }
 
     public void WriteEventMessage(List<DbReqestNotTrue> lstItems)
@@ -785,36 +1086,33 @@ namespace InterUlc.Db
         int ii = 0;
         foreach (var item in lstItems)
         {
-          
-          if (item.TypeDevice == 0)
+          if (item.unit_type_id == 0)
             continue;
           else {
-            if (item.Logs == null)
+            if (item.logs == null)
               continue;
           }
           try
           {
             listToUpdate = new List<Log>();
-            DateTime dts = DateTime.Now.AddDays(-30);
+            DateTime dts = DateTime.Now.AddDays(-3);
             //sql = string.Format("SELECT \"event_time\" FROM main_ctrlevent mc where mc.ctrl_id = {0} " +
             //"ORDER BY mc.\"event_time\" DESC LIMIT 1", item.ID);
 
             //cmd.CommandText = sql;// = new NpgsqlCommand(sql, this.__dbConnection);
             cmd_sel = new NpgsqlCommand(sql_sel, this.__dbConnection);
-            cmd_sel.Parameters.AddWithValue("@id", item.ID);
+            cmd_sel.Parameters.AddWithValue("@id", item.id);
             var dr = cmd_sel.ExecuteReader();
             if (dr.HasRows)
             {
               dr.Read();
-              
               DateTime dtevt = (DateTime)dr[0];
               //DateTime dts = DateTime.Now.AddDays(-30);
-              foreach (var lItem in item.Logs)
+              foreach (var lItem in item.logs)
               {
-                if (lItem.dt>dts)
+                if (lItem.event_time>dts)
                 {
-                  if (lItem.dt > dtevt)
-                    
+                  if (lItem.event_time > dtevt)
                     //lstColumns.AddRecord(lItem.dt, lItem.Log_type, (int)lItem.Log_level, item.ID, lItem.EventMessage);
                   listToUpdate.Add(lItem);
                   //{ 
@@ -838,14 +1136,13 @@ namespace InterUlc.Db
               {
                 foreach (var itLog in listToUpdate)
                 {
-                  cmd_ins.Parameters[0].Value = itLog.dt;// lstColumns.__event_msg.ToArray();
-                  cmd_ins.Parameters[1].Value = itLog.Log_type;
-                  cmd_ins.Parameters[2].Value = (int)itLog.Log_level;
-                  cmd_ins.Parameters[3].Value = item.ID;
-                  cmd_ins.Parameters[4].Value = itLog.EventMessage;
+                  cmd_ins.Parameters[0].Value = itLog.event_time;// lstColumns.__event_msg.ToArray();
+                  cmd_ins.Parameters[1].Value = itLog.event_type;
+                  cmd_ins.Parameters[2].Value = (int)itLog.event_level;
+                  cmd_ins.Parameters[3].Value = item.id;
+                  cmd_ins.Parameters[4].Value = itLog.event_msg;
                   cmd_ins.ExecuteNonQuery();
                 }
-
                 tran.Commit();
               }
               catch (Exception e)
@@ -881,15 +1178,15 @@ namespace InterUlc.Db
               try
               {
                 int iCom = 0;
-                foreach (var itLog in item.Logs)
+                foreach (var itLog in item.logs)
                 {
-                  if (itLog.dt>dts)
+                  if (itLog.event_time >dts)
                   {
-                    cmd_ins.Parameters[0].Value = itLog.dt;// lstColumns.__event_msg.ToArray();
-                    cmd_ins.Parameters[1].Value = itLog.Log_type;
-                    cmd_ins.Parameters[2].Value = (int)itLog.Log_level;
-                    cmd_ins.Parameters[3].Value = item.ID;
-                    cmd_ins.Parameters[4].Value = itLog.EventMessage;
+                    cmd_ins.Parameters[0].Value = itLog.event_time;// lstColumns.__event_msg.ToArray();
+                    cmd_ins.Parameters[1].Value = itLog.event_type;
+                    cmd_ins.Parameters[2].Value = (int)itLog.event_level;
+                    cmd_ins.Parameters[3].Value = item.id;
+                    cmd_ins.Parameters[4].Value = itLog.event_msg;
                     cmd_ins.ExecuteNonQuery();
                     iCom++;
                   }
@@ -950,19 +1247,19 @@ namespace InterUlc.Db
       {
         try
         {
-          if (node.Logs != null)
+          if (node.logs != null)
           {
             //var con = new NpgsqlConnection(this.__connection);
             this.__dbConnection.Open();
-            foreach (var item in node.Logs)
+            foreach (var item in node.logs)
             {
               string evt = Log.ConvertToString(item);
               var sql = "Select * from main_ctrlevent where event_time=@etime and event_type=@etype and event_level=@elevel and ctrl_id=@ctrlid";
               var cmd = new NpgsqlCommand(sql, this.__dbConnection);
-              cmd.Parameters.AddWithValue("etime", item.dt);
-              cmd.Parameters.AddWithValue("etype", item.Log_type);
-              cmd.Parameters.AddWithValue("elevel", (int)item.Log_level);
-              cmd.Parameters.AddWithValue("ctrlid", node.ID);
+              cmd.Parameters.AddWithValue("etime", item.event_time);
+              cmd.Parameters.AddWithValue("etype", item.event_type);
+              cmd.Parameters.AddWithValue("elevel", (int)item.event_level);
+              cmd.Parameters.AddWithValue("ctrlid", node.id);
               //cmd.Parameters.AddWithValue("evalue", item.Log_Data);
               var dr_fes = cmd.ExecuteReader();
               bool res = dr_fes.Read();
@@ -973,11 +1270,11 @@ namespace InterUlc.Db
                 sql = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id, event_msg) " +
                   "VALUES(@event_time, @event_type, @event_level, @ctrl_id, @event_msg)";
                 cmd = new NpgsqlCommand(sql, this.__dbConnection);
-                cmd.Parameters.AddWithValue("event_time", item.dt);
-                cmd.Parameters.AddWithValue("event_type", item.Log_type);
+                cmd.Parameters.AddWithValue("event_time", item.event_time);
+                cmd.Parameters.AddWithValue("event_type", item.event_type);
                 //cmd.Parameters.AddWithValue("event_value", item.Log_Data);
-                cmd.Parameters.AddWithValue("event_level", (int)item.Log_level);
-                cmd.Parameters.AddWithValue("ctrl_id", node.ID);
+                cmd.Parameters.AddWithValue("event_level", (int)item.event_level);
+                cmd.Parameters.AddWithValue("ctrl_id", node.id);
                 cmd.Parameters.AddWithValue("event_msg", evt);
                 cmd.ExecuteNonQuery();
               }

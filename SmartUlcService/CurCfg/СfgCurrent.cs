@@ -105,8 +105,9 @@ namespace InterUlc.CurCfg
       {
         try
         {
-          if (!client.Connected)
+          if (i > 0)
           {
+           
             client = InterviewService.GetConnection(ip, 10251);
             if (client == null)
             {

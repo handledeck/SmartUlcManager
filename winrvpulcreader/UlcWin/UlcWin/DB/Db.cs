@@ -916,10 +916,12 @@ namespace InterUlc.Db
     }
 
     public Dictionary<int, string> GetTypeController() {
-      Dictionary<int, string> utype = null;
+
+      /*Dictionary<int, string> utype = null;
       var sql = "select * from main_unittypes order by id";
       var consql = new NpgsqlConnection(this.__connection);
       var cmd = new NpgsqlCommand(sql, consql);
+      
       consql.Open();
       var dr = cmd.ExecuteReader();
       while (dr.Read())
@@ -930,6 +932,11 @@ namespace InterUlc.Db
         utype.Add((int)dr[0], (string)dr[1]);
 
       }
+      return utype;
+      */
+      Dictionary<int, string> utype = new Dictionary<int, string>();
+      utype.Add(0, "РВП-18");
+      utype.Add(1, "ULC 2");
       return utype;
     }
 

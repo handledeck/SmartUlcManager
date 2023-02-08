@@ -5,8 +5,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UlcWin.Drivers
+namespace InterUlc.Drivers
 {
+
+  public enum EnGranSys {
+    /// <summary>42-Накопленая энергия на начало суток</summary>
+    ACCUMULATED_ENERGY_DAY = 42,
+    /// <summary>43-Накопленая энергия на начало месяца</summary>
+    ACCUMULATED_ENERGY_MONTH = 43,
+  }
 
   public class Granelectro
   {
@@ -15,17 +22,78 @@ namespace UlcWin.Drivers
     public const byte HEADER = 4;
     const byte LEN_OFFSET = 16;
     public const byte LEN_CRC = 2;
+    ///// <summary>42-Накопленая энергия на начало суток</summary>
+    //public const byte ACCUMULATED_ENERGY_DAY = 42;
+    ///// <summary>43-Накопленая энергия на начало месяца</summary>
+    //public const byte ACCUMULATED_ENERGY_MONTH = 43;
     public Granelectro()
     {
       //int lenght = HEADER + LEN_OFFSET + LEN_CRC;
       //byte[] bWrite = PreparePacket(0, FUNCTION, VOLTAGE, 0, 0, 0);
       //ReadData(bWrite, lenght);
     }
-    public static List<float> ReadData(string ip, TcpClient client,byte address, out Exception exception)// byte[] data, int checkLenght)
+
+    static byte? ParcseFactory(string meter_factory)
+    {
+      byte addr = 0;
+      byte? result = null;
+      if (meter_factory.Length > 2)
+      {
+        string num = meter_factory.Substring(meter_factory.Length - 2, 2);
+        if (byte.TryParse(num, out addr))
+        {
+          result = addr;
+        }
+      }
+      return result;
+    }
+
+    public static MeterAllValues GetSumAllValue(string meter_factory, TcpClient client)
+    {
+      Exception exc = null;
+      MeterAllValues meterAllValues = new MeterAllValues();
+      meterAllValues.EnergySumDay = GetSumValue(EnGranSys.ACCUMULATED_ENERGY_DAY, meter_factory, client, out exc);
+      if (exc != null)
+        return null;
+      meterAllValues.EnergySumMonth = GetSumValue(EnGranSys.ACCUMULATED_ENERGY_MONTH, meter_factory, client, out exc);
+      if (exc != null)
+        return null;
+      return meterAllValues;
+    }
+
+      public static float? GetSumValue(EnGranSys enGranSys, string meter_factory, TcpClient client, out Exception exp)
+    {
+      float? value=null;
+      exp = null;
+      try
+      {
+        byte? addr = ParcseFactory(meter_factory);
+        if (!addr.HasValue)
+          return value;
+        var xx = Granelectro.ReadData(enGranSys,client, addr.Value, out exp);
+        if (xx != null)
+        {
+          value = (float)Math.Round((float)xx[0], 3);
+          return value;
+        }
+        else
+        {
+          throw new Exception("Счетчик не поддерживается");
+        }
+      }
+      catch (Exception e)
+      {
+        exp = e;
+        return value;
+      }
+    }
+
+
+    static List<float> ReadData(EnGranSys enGranSys,TcpClient client,byte address, out Exception exception)// byte[] data, int checkLenght)
     {
       exception = null;
     int lenght = HEADER + LEN_OFFSET + LEN_CRC;
-    byte[] bWrite = PreparePacket(address, FUNCTION, VOLTAGE, 0, 0, 0);
+    byte[] bWrite = PreparePacket(address, FUNCTION, (byte)enGranSys /*ACCUMULATED_ENERGY_DAY*/, 0, 0, 0);
     List<float> lstF=null;
       
       NetworkStream stream = client.GetStream();
@@ -33,8 +101,6 @@ namespace UlcWin.Drivers
       try
       {
         byte[] read = new byte[lenght];
-        //client = new TcpClient(ip, 10250);
-        //NetworkStream stream = client.GetStream();
         stream.Write(bWrite, 0, bWrite.Length);
         int len = stream.Read(read, 0, read.Length);
         if (len == 0 || len != lenght)
@@ -71,7 +137,7 @@ namespace UlcWin.Drivers
       //}
     }
 
-    public static byte[] PreparePacket(byte adress, byte function, byte code, byte offset, byte rate, byte revision)
+    static byte[] PreparePacket(byte adress, byte function, byte code, byte offset, byte rate, byte revision)
     {
       byte[] _message = new byte[8];
       _message[0] = adress;

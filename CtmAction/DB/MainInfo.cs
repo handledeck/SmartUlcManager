@@ -22,6 +22,7 @@ namespace DB
     [Index]
     public int unit_type_id { get; set; }
     public string meters { get; set; }
-   
+    public int rs_stat { get; set; }
+
   }
 }

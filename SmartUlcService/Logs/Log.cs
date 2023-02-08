@@ -1,18 +1,23 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using static InterUlc.Logs.EnumLogs;
 
 namespace InterUlc.Logs
 {
+  [ServiceStack.DataAnnotations.Alias("main_ctrlevent")]
   public class Log
   {
-    public DateTime dt { get; set; }
-    public LOG_LVL Log_level { get; set; }
-    public byte Log_type { get; set; }
-    public ushort Log_Data { get; set; }
-    public string EventMessage { get; set; }
-    public List<byte[]> Binary { get; set; }
+    [AutoIncrement]
+    public int id { get; set; }
+    public DateTime event_time { get; set; }
+    public int event_level { get; set; }
+    public byte event_type { get; set; }
+    public int event_value { get; set; }
+    public string event_msg { get; set; }
+    public int ctrl_id { get; set; }
+    public ulong  msg_all { get; set; }
 
     public static string ParceLevel(LOG_LVL lvl)
     {
@@ -33,8 +38,8 @@ namespace InterUlc.Logs
       string result = string.Empty;
       //result += logEntry.dt.ToString("G") + ":";
       //result += $" [{ParceLevel((LOG_LVL)logEntry.Log_level)}]";
-      result += $"{TypeToString((LOG_TYPE)logEntry.Log_type)}";
-      result += $" ({CodeToString((LOG_TYPE)logEntry.Log_type, logEntry.Log_Data)})";
+      result += $"{TypeToString((LOG_TYPE)logEntry.event_type)}";
+      result += $" ({CodeToString((LOG_TYPE)logEntry.event_type, (ushort)logEntry.event_value)})";
 
       return result;
     }

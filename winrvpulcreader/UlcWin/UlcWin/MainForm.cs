@@ -282,6 +282,7 @@ namespace UlcWin
           __aSettings_old.DisplayEventChecked = new List<int>() { 14, 100 };
           __aSettings_old.Settings_changed = true;
         }
+        ASettings.SaveAppSettings(__aSettings_old);
       }
       else
       {
@@ -323,9 +324,8 @@ namespace UlcWin
           this.LstViewItm.Columns[i].DisplayIndex = __aSettings_old.DisplayIndexes[i];
 
         }
-
-        __aSettings_new = (ASettings)__aSettings_old.Clone();
       }
+      __aSettings_new = (ASettings)__aSettings_old.Clone();
     }
    
 

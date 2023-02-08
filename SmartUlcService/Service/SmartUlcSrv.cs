@@ -11,18 +11,21 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using WindowsService1;
+using WorkerService1;
 
 namespace SmartUlcService
 {
-  public partial class SmartUlcSrv : ServiceBase
+  public partial class SmartUlcSrv:ServiceBase
   {
     UlcScheduleJob __ulcScheduleJob=null;
     public SmartUlcSrv()
     {
-      InitializeComponent();
+      //InitializeComponent();
       UlcSrvLog.InitUlcSrvLog();
-      UlcSrvLog.Logger.Info("Инициализация службы");
+      //UlcSrvLog.Logger.Info("Инициализация службы");
     }
 
     //public void Execute(IJobExecutionContext context)
@@ -34,12 +37,13 @@ namespace SmartUlcService
     {
 
       //InterviewService interviewService = new InterviewService(Program.__configIni);
-      UlcSrvLog.Logger.Info("Старт службы");
-      __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler);
-      __ulcScheduleJob.Start();
+      UlcSrvLog.Logger.Info("...........Старт службы...........");
+      CancellationToken stoppingToken = new CancellationToken();
+      __ulcScheduleJob = new UlcScheduleJob(Program.__configIni.Scheduler, stoppingToken);
+       __ulcScheduleJob.Start();
     }
 
-    protected override void OnStop()
+    protected override  void OnStop()
     {
       __ulcScheduleJob.Stop();
       UlcSrvLog.Logger.Info("Служба остановлена");

@@ -14,7 +14,7 @@ namespace DB
     public int id { get; set; }
 
     [ServiceStack.DataAnnotations.Required]
-    public DateTime current_time { get; set; }
+    public DateTime event_time { get; set; }
 
     [ServiceStack.DataAnnotations.Required]
     public int event_type { get; set; }
@@ -28,8 +28,9 @@ namespace DB
     [ServiceStack.DataAnnotations.ForeignKey(typeof(MainInfo),OnDelete = "CASCADE")]
     [ServiceStack.DataAnnotations.Index]
     public int ctrl_id { get; set; }
-
     public string event_msg { get; set; }
+    [ServiceStack.DataAnnotations.Default(0)]
+    public UInt32 msg_all { get; set; }
 
 
   }

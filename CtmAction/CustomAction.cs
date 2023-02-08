@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using Db;
 using DB;
+using InterUlc.Db;
 using Microsoft.Deployment.WindowsInstaller;
 using ServiceStack.OrmLite;
 using UlcWin;
@@ -140,14 +142,15 @@ namespace CtmAction
     {
       exception = null;
       string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
-     __pSql.db_address, __pSql.db_port, __pSql.db_user, __pSql.db_pwd);
+      __pSql.db_address, __pSql.db_port, __pSql.db_user, __pSql.db_pwd);
+      //string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
+     //"localhost", 5432, "postgres", "root");
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
     connection, PostgreSqlDialect.Provider);
       try
       {
         using (var db = dbFactory.Open())
         {
-          //WriteStatusInstall("Cotlllllll", Color.Green);
           if (!db.Select<string>("SELECT datname FROM pg_database;").Contains("ctrl_mon_dev"))
           {
             int bCreate = db.ExecuteSql("create database ctrl_mon_dev");
@@ -160,19 +163,22 @@ namespace CtmAction
           db.CreateTableIfNotExists(typeof(MainEvents));
           db.CreateTableIfNotExists(typeof(MainLogs));
           db.CreateTableIfNotExists(typeof(MainStat));
-          bool tbl = db.CreateTableIfNotExists(typeof(MainUnitTypes));
-          if (tbl)
-          {
-            List<MainUnitTypes> lstDev = new List<MainUnitTypes>();
-            lstDev.Add(new MainUnitTypes() { Id = 1, Name = "ULC 2" });
-            lstDev.Add(new MainUnitTypes() { Id = 0, Name = "РВП-18" });
-            db.Insert<MainUnitTypes>(lstDev.ToArray());
-          }
+          db.CreateTableIfNotExists(typeof(MeterValue));
+          db.CreateTableIfNotExists(typeof(MeterInfo));
+          //bool tbl = db.CreateTableIfNotExists(typeof(MainUnitTypes));
+
+          //if (tbl)
+          //{
+          //  List<MainUnitTypes> lstDev = new List<MainUnitTypes>();
+          //  lstDev.Add(new MainUnitTypes() { Id = 1, Name = "ULC 2" });
+          //  lstDev.Add(new MainUnitTypes() { Id = 0, Name = "РВП-18" });
+          //  db.Insert<MainUnitTypes>(lstDev.ToArray());
+          //}
           db.CreateTableIfNotExists(typeof(MainUser));
-          db.CreateTableIfNotExists(typeof(MainArmSoft));
+          //db.CreateTableIfNotExists(typeof(MainArmSoft));
           MainUser mainUser = new MainUser()
           {
-            usr = __pSql.db_user,// this.txtDbSprUser.Text,
+            usr = "postgres",//__pSql.db_user,// this.txtDbSprUser.Text,
             level = -1,
             comment = "общая запись",
             items = "",

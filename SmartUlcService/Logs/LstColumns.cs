@@ -33,9 +33,9 @@ namespace InterUlc.Logs
     }
 
     public void AddRange(DbReqestNotTrue dbReqestNotTrue,int ctrlId) {
-      foreach (var item in dbReqestNotTrue.Logs)
+      foreach (var item in dbReqestNotTrue.logs)
       {
-        this.AddRecord(item.dt, item.Log_type, (int)item.Log_level, ctrlId, item.EventMessage);
+        this.AddRecord(item.event_time, item.event_type, (int)item.event_level, ctrlId, item.event_msg);
         //this.Count++;
       }
     }
