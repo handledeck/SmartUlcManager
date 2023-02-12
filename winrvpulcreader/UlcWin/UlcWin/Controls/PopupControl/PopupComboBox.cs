@@ -38,7 +38,7 @@ namespace PopupControl
         /// </summary>
         public PopupComboBox()
         {
-            this.dropDownHideTime = DateTime.UtcNow;
+            this.dropDownHideTime = DateTime.Now;
             InitializeComponent();
             base.DropDownHeight = base.DropDownWidth = 1;
             base.IntegralHeight = false;
@@ -77,7 +77,7 @@ namespace PopupControl
         private DateTime dropDownHideTime;
         private void dropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            dropDownHideTime = DateTime.UtcNow;
+            dropDownHideTime = DateTime.Now;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace PopupControl
         {
             if (dropDown != null)
             {
-                if ((DateTime.UtcNow - dropDownHideTime).TotalSeconds > 0.5)
+                if ((DateTime.Now - dropDownHideTime).TotalSeconds > 0.5)
                 {
                     if (DropDown != null)
                     {
@@ -127,7 +127,7 @@ namespace PopupControl
                 }
                 else
                 {
-                    dropDownHideTime = DateTime.UtcNow.Subtract(new TimeSpan(0, 0, 1));
+                    dropDownHideTime = DateTime.Now.Subtract(new TimeSpan(0, 0, 1));
                     Focus();
                 }
             }

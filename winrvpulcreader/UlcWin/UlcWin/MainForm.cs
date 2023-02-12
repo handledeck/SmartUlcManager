@@ -57,6 +57,8 @@ namespace UlcWin
     public delegate void PingDelegate(ItemCallBack pitem, bool result);
     private DateTime __previousValueFrom = DateTime.Now;
     private DateTime __previousValueTo = DateTime.Now;
+    UNode __node_to = null;
+    UNode __node_from = null;
     public LoadForm()
     {
       InitializeComponent();
@@ -117,7 +119,136 @@ namespace UlcWin
       this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
       this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
       this.ulcMeterTreeView.__statusStrip = this.tsStatusLbl;
+      this.treeView1.DragDrop += LstViewItm_DragDrop;
+      this.treeView1.DragOver += TreeView1_DragOver;
+      //this.treeView1.DragEnter += LstViewItm_DragEnter;
+      this.treeView1.AllowDrop = true;
+      this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
+    }
+
+
+    
+    private void TreeView1_DragOver(object sender, DragEventArgs e)
+    {
       
+      __node_to = (UNode)this.treeView1.GetNodeAt(this.treeView1.PointToClient(new Point(e.X, e.Y)));
+      if (__node_to != null)
+      {
+        if (__node_to.IsView && __node_to != this.treeView1.SelectedNode)
+        {
+          e.Effect = DragDropEffects.Copy;
+          //this.treeView1.SelectedNode = node;
+        }
+        else
+        {
+          if (!__node_to.IsExpanded)
+            __node_to.Expand();
+          e.Effect = DragDropEffects.Link;
+        }
+      }
+    }
+
+    private void LstViewItm_ItemDrag(object sender, ItemDragEventArgs e)
+    {
+       __node_from = (UNode)this.treeView1.SelectedNode;
+      LstViewItm.Sorting = SortOrder.None;
+      DoDragDrop(e.Item.ToString(), DragDropEffects.Copy | DragDropEffects.Move);
+    }
+
+    //private void LstViewItm_DragEnter(object sender, DragEventArgs e)
+    //{
+    //  //string typestring = "Type";
+    //  this.Text=e.Y.ToString();
+    //  //string s = e.Data.GetData(typestring.GetType()).ToString();
+    //  //string orig_string = s;
+    //  //s = s.Substring(s.IndexOf(":") + 1).Trim();
+    //  //s = s.Substring(1, s.Length - 2);
+    //  //this.treeView1.Nodes.Add(s);
+    //  //System.Collections.IEnumerator enumerator = LstViewItm.Items.GetEnumerator();
+    //  //int whichIdx = -1;
+    //  //int idx = 0;
+    //  //while (enumerator.MoveNext())
+    //  //{
+    //  //  string s2 = enumerator.Current.ToString();
+    //  //  if (s2.Equals(orig_string))
+    //  //  {
+    //  //    whichIdx = idx;
+    //  //    break;
+    //  //  }
+    //  //  idx++;
+    //  //}
+    //  //this.LstViewItm.Items.RemoveAt(whichIdx);
+    //}
+
+   
+
+    private void LstViewItm_DragDrop(object sender, DragEventArgs e)
+    {
+      List<ItemIp> itemIps = new List<ItemIp>();
+      
+      if (e.Effect == DragDropEffects.Copy)
+      {
+        if (__lvItemChecked.Count == 0)
+        {
+          ItemIp it = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
+          __lvItemChecked.Add(this.LstViewItm.SelectedItems[0]);
+          itemIps.Add(it);
+        }
+        else {
+          foreach (var item in __lvItemChecked)
+          {
+            ItemIp it = (ItemIp)item.Tag;//this.LstViewItm.SelectedItems[0].Tag;
+            itemIps.Add(it);
+          }
+        }
+
+        DialogResult result = MessageBox.Show(string.Format("Перенести контроллер(ы) в папку {0}?", __node_to.Text),
+          "Изменение папки", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (result == DialogResult.Yes)
+        {
+          
+          using (SimpleWaitForm wf = new SimpleWaitForm())
+          {
+            wf.RunAction(new Action(() =>
+            {
+              try
+              {
+                __db.SetItemParent(itemIps, __node_to.Id);
+              }
+              catch (Exception exp)
+              {
+                MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                wf.DialogResult = DialogResult.Abort;
+              }
+              wf.DialogResult = DialogResult.OK;
+            }));
+            if (wf.ShowDialog() == DialogResult.OK) {
+              foreach (var item in __lvItemChecked)
+              {
+                this.LstViewItm.Items.Remove(item);
+              }
+              
+              treeView1.Focus();
+            }
+            //this.Text = string.Format("from:{0}-{2} to:{1}-{3}", __node_from.Text, __node_to.Text, __node_from.Id, __node_to.Id);
+            //ListViewItem listViewItem = (ListViewItem)this.LstViewItm.SelectedItems[0].Clone();
+            __lvItemChecked.Clear();
+          }
+        }
+      }
+        //this.treeView1.SelectedNode = __node_to;
+        //var selItem = this.LstViewItm.Items.Add(listViewItem);
+        //this.LstViewItm.Items[selItem.Index].Selected = true;
+        //LstViewItm.Items[selItem.Index].Focused = true;
+        //LstViewItm.Items[selItem.Index].Selected = true;
+        //this.LstViewItm.Select();
+        //LstViewItm.Items[selItem.Index].EnsureVisible();
+        //
+        //this.Text = this.LstViewItm.SelectedItems[0].Text;
+      //if (e.Data.GetDataPresent(DataFormats.Text))
+      //  e.Effect = DragDropEffects.Copy;
+      //else
+      //  e.Effect = DragDropEffects.None;
     }
 
     bool CheckDateTimeEvent()
@@ -1186,8 +1317,6 @@ namespace UlcWin
         }
       }
     }
-
-
 
     public void ReadStateUlcs(/*List<ItemIp> iptems*/)
     {

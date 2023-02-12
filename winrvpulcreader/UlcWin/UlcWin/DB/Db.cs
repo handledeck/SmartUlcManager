@@ -123,6 +123,30 @@ namespace InterUlc.Db
 
     }
 
+   public void SetItemParent(List<ItemIp> itemIps, int new_parent) {
+      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(this.__connection, PostgreSqlDialect.Provider);
+      using (var db = dbFactory.Open())
+      {
+        foreach (var itemIp in itemIps)
+        {
+          OrmDbNodes ormDbNodes = db.Single<OrmDbNodes>(x => x.id == itemIp.Id);
+          List<MeterInfo> meterInfos = db.Select<MeterInfo>(x => x.parent_id == ormDbNodes.parent_id && x.ctrl_id == ormDbNodes.id);
+          ormDbNodes.parent_id = new_parent;
+          foreach (var item in meterInfos)
+          {
+            item.parent_id = new_parent;
+          }
+          int result = db.Update<OrmDbNodes>(ormDbNodes);
+          int res = db.Update<MeterInfo>(meterInfos.ToArray());
+        }
+       
+      }
+      //int x = 0;
+    }
+
+    void GetNodeInfo() { 
+    
+    }
 
     public bool DbTestConnection()
     {
@@ -566,6 +590,10 @@ namespace InterUlc.Db
         }
       }
       return ulcUserList;
+    }
+
+    void GetNodeItemInfo() { 
+      
     }
 
     public bool CheckForUserRecord(string userName)//*int id, string user, string pwd, string comment, string items*/)
@@ -1386,10 +1414,10 @@ namespace InterUlc.Db
                 if (res)
                 {
                   db.Insert<OrmDbCurrent>(new OrmDbCurrent()
-                  { ctrl_id = item.ctrl_id, current_time = DateTime.UtcNow, body = item.body });
+                  { ctrl_id = item.ctrl_id, current_time = DateTime.Now, body = item.body });
 
                   ormDataConfig.ctrl_id = item.ctrl_id;
-                  ormDataConfig.current_time = DateTime.UtcNow;
+                  ormDataConfig.current_time = DateTime.Now;
                   ormDataConfig.DeviceType = deviceType;
                   db.Insert<OrmDbConfig>(ormDataConfig);
                 }
@@ -1685,7 +1713,7 @@ namespace InterUlc.Db
               OrmDbConfig ormDbConfig = GetLastRecordById(connection, ulcCfg.ctrl_id);
               OrmDbLogs mainLogs = new OrmDbLogs()
               {
-                current_time = DateTime.UtcNow,
+                current_time = DateTime.Now,
                 id_user = 0,
                 usr_name = "служба опроса",
                 message = msg, //string.Format("{0}(dt:{1} imei:{2}=>{3} rs:{4})", msg, lstMax[0].current_time.ToString("dd.MM.yyyy HH:mm"),
@@ -1702,7 +1730,7 @@ namespace InterUlc.Db
               int en = (int)EnLogEvt.CHANGE_NET_STATE;
               OrmDbLogs mainLogs = new OrmDbLogs()
               {
-                current_time = DateTime.UtcNow,
+                current_time = DateTime.Now,
                 id_user = 0,
                 usr_name = "служба опроса",
                 message = msg,//string.Format("dt:{0}-{1}", ulcCfg.current_time.ToString("dd.MM.yyyy HH:mm"), msg),

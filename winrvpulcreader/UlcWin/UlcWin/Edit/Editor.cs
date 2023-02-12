@@ -37,7 +37,7 @@ namespace UlcWin.Edit
     {
       InitializeComponent();
     }
-
+    
     public Editor(DbReader db,bool addNew, ItemIp itemIp) {
       InitializeComponent();
       this.__db = db;

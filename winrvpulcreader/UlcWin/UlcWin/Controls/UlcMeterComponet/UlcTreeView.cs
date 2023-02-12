@@ -431,6 +431,8 @@ namespace GettingStartedTree
 
       this.olvName.ImageGetter = delegate (Object x)
       {
+        if (__edit__)
+          return null;
         TreeListNodeModel vv = (TreeListNodeModel)x;
         if (vv.Nodes != null)
         {
@@ -754,6 +756,8 @@ namespace GettingStartedTree
           }
         }
       }
+      if(tLst.Count==0)
+        MessageBox.Show("Нет недоставерных данных по счетчикам", "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
       ReadMetersValue(tLst, count);
       List<MeterValue> lstMv = new List<MeterValue>();
       foreach (var item in tLst)
@@ -798,15 +802,17 @@ namespace GettingStartedTree
               }
               dbTrans.Commit();
             }
-            catch
+            catch(Exception exp)
             {
               dbTrans.Rollback();
+              MessageBox.Show(exp.Message, "Ошибка обновления", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
           }
         }
       }
       MessageBox.Show(string.Format("Обновлено {0} счетчиков", lstMv.Count), "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      FillTreeList(this.monthPicker1.Value);
+
+      //FillTreeList(this.monthPicker1.Value);
     }
 
 
@@ -854,12 +860,13 @@ namespace GettingStartedTree
                 ip_loc = item.ip;
                 if (item.meter_type.Contains("СЕ102") || item.meter_type.Contains("CE102"))
                 {
-                  MeterAllValues meterAllValues = EnMera318BY.GetSumAllValue(item.meter_factory, client);
-                  Exception ex;
-                  float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
-                  if (ex == null && value.HasValue)
+                  //Exception ex;
+                  //float? value = EnMera102.GetSumDayValue(item.meter_factory, client, out ex);
+                  MeterAllValues meterAllValues = EnMera102.GetSumAllValue(item.meter_factory, client);
+                  if (meterAllValues != null)
                   {
-                    item.value = value.Value;
+                    item.value = meterAllValues.EnergySumDay.Value;
+                    item.value_month = meterAllValues.EnergySumMonth.Value;
                     item.is_true = true;
                     item.updated = true;
                     item.date_time = DateTime.Now;
@@ -868,27 +875,37 @@ namespace GettingStartedTree
                   {
                     throw new Exception("ошибка получения данных");
                   }
-
                 }
                 else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318"))
                 {
-                 
-                  float value = 0;
-                  if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+
+                  MeterAllValues meterAllValues = EnMera318BY.GetSumAllValue(item.meter_factory, client);
+                  //float value = 0;
+                  //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+                  //throw new Exception("ошибка получения данных");
+                  if (meterAllValues != null)
+                  {
+                    item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                    item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                    item.is_true = true;
+                    item.updated = true;
+                    item.date_time = DateTime.Now;
+                  }
+                  else
+                  {
                     throw new Exception("ошибка получения данных");
-                  item.value = value;
-                  item.is_true = true;
-                  item.updated = true;
-                  item.date_time = DateTime.Now;
+                  }
                 }
                 else if (item.meter_type.Contains("СС") || item.meter_type.Contains("СС"))
                 {
                   MeterAllValues meterAllValues = Granelectro.GetSumAllValue(item.meter_factory, client);
-                  Exception exp = null;
-                  float? value = Granelectro.GetSumValue( EnGranSys.ACCUMULATED_ENERGY_DAY,item.meter_factory, client, out exp);
-                  if (exp == null && value.HasValue)
+                  if (meterAllValues != null)
                   {
-                    item.value = value.Value;
+                    //float? value = Granelectro.GetSumValue(EnGranSys.ACCUMULATED_ENERGY_DAY, item.meter_factory, client, out exp);
+                    //if (exp == null && value.HasValue)
+                    //{
+                    item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                    item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
                     item.is_true = true;
                     item.updated = true;
                     item.date_time = DateTime.Now;
@@ -897,7 +914,6 @@ namespace GettingStartedTree
                   {
                     throw new Exception("ошибка получения данных");
                   }
-
                 }
               }
               catch (Exception ex)
@@ -1004,6 +1020,7 @@ namespace GettingStartedTree
       tsUpdateMeterValue_Click(null, null);
     }
 
+    bool __edit__ = false; 
     private void menu_meter_change(object sender, EventArgs e)
     {
       TreeListNodeModel item = (TreeListNodeModel)this.treeListView1.SelectedObject;
@@ -1022,16 +1039,18 @@ namespace GettingStartedTree
       {
         if (mMrom.ShowDialog() == DialogResult.OK)
         {
+          __edit__ = true;
           meterInfo.meter_factory = mMrom.txtBoxPlant.Text;
           meterInfo.meter_type = mMrom.GetDeviceByIndex();
           meterInfo.active = mMrom.cbActMeter.Checked ? 1 : 0;
-          item.meter_factory = mMrom.txtBoxPlant.Text;
-          item.meter_type = mMrom.GetDeviceByIndex();
           meterInfo.active = mMrom.cbActMeter.Checked ? 1 : 0;
           meterInfo.parent_id = __parent_id;
           __db.SetCrudMeterInfo(new List<MeterInfo>() { meterInfo });
-
-          FillTreeList(this.monthPicker1.Value);
+          item.meter_factory = meterInfo.meter_factory;
+          item.meter_type = meterInfo.meter_type;
+          item.meter_active = meterInfo.active;
+          __edit__ = false;
+          //FillTreeList(this.monthPicker1.Value);
 
         }
         
@@ -1072,7 +1091,8 @@ namespace GettingStartedTree
                 item.date_time = DateTime.Now;
                 wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
               }
-              else {
+              else
+              {
                 throw new Exception("ошибка получения данных");
               }
             }
