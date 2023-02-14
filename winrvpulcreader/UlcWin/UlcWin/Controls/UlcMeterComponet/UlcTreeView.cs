@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -67,7 +68,12 @@ namespace GettingStartedTree
       
     }
 
-    
+    public void UpdateForm() {
+      FillTreeList(DateTime.Now);
+      ResetDelegate();
+      this.treeListView1.FormatRow += TreeListView1_FormatRow;
+    }
+
     public void SetValue(string connection, int parent_id)
     {
       this.__connection = connection;
@@ -77,7 +83,16 @@ namespace GettingStartedTree
       FillTreeList(DateTime.Now);
       ResetDelegate();
       this.treeListView1.FormatRow += TreeListView1_FormatRow;
-
+      if (this.__db.__ulcUser.AccsessLavel == EnumAccsesLevel.Read)
+      {
+        ctxMenuChange.Visible = false;
+        toolStripSeparator1.Visible = false;
+      }
+      else
+      {
+        ctxMenuChange.Visible = true;
+        toolStripSeparator1.Visible = true;
+      }
     }
 
     public void RecalcStatusLebel() {
@@ -1214,6 +1229,11 @@ namespace GettingStartedTree
       string[] fpthArr = fpth.Split('\\');
       List<TreeListNodeModel> treeNodes = new List<TreeListNodeModel>();
       treeNodes.AddRange(__treeNodes.ToArray());
+      SaveFileDialog saveFileDialog = new SaveFileDialog();
+      saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+      saveFileDialog.RestoreDirectory = true;
+      saveFileDialog.Filter = "Excel |*.xlsx";
+      saveFileDialog.Title = "Сохранить данные в файле";
       using (SimpleWaitForm sf = new SimpleWaitForm())
       {
         sf.RunAction(() =>
@@ -1221,7 +1241,7 @@ namespace GettingStartedTree
           sf.SetLabelText("Формирую отчет по счетчикам");
           ExportExcel exportExcel = new ExportExcel();
           exportExcel.PrintMeterToExcel(fpthArr[0], fpthArr[1], listView3, treeNodes,sf);
-          sf.DialogResult = DialogResult.OK;
+          //sf.DialogResult = DialogResult.OK;
         });
         sf.ShowDialog();
       }

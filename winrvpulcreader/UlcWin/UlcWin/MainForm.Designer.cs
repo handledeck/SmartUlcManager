@@ -1209,7 +1209,7 @@ namespace UlcWin
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Size = new System.Drawing.Size(224, 336);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1416,7 +1416,7 @@ namespace UlcWin
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      //this.Name = "LoadForm";
+     // this.Name = "LoadForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

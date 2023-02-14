@@ -119,11 +119,11 @@ namespace UlcWin
       this.LstViewItm.ColumnRightClick += LstViewItm_ColumnRightClick;
       this.LstViewItm.ListViewMouseRightClick += LstViewItm_ListViewMouseRightClick;
       this.ulcMeterTreeView.__statusStrip = this.tsStatusLbl;
-      this.treeView1.DragDrop += LstViewItm_DragDrop;
-      this.treeView1.DragOver += TreeView1_DragOver;
-      //this.treeView1.DragEnter += LstViewItm_DragEnter;
-      this.treeView1.AllowDrop = true;
-      this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
+      //this.treeView1.DragDrop += LstViewItm_DragDrop;
+      //this.treeView1.DragOver += TreeView1_DragOver;
+      ////this.treeView1.DragEnter += LstViewItm_DragEnter;
+      //this.treeView1.AllowDrop = true;
+      //this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
     }
 
 
@@ -143,7 +143,7 @@ namespace UlcWin
         {
           if (!__node_to.IsExpanded)
             __node_to.Expand();
-          e.Effect = DragDropEffects.Link;
+          e.Effect = DragDropEffects.None;
         }
       }
     }
@@ -152,42 +152,24 @@ namespace UlcWin
     {
        __node_from = (UNode)this.treeView1.SelectedNode;
       LstViewItm.Sorting = SortOrder.None;
-      DoDragDrop(e.Item.ToString(), DragDropEffects.Copy | DragDropEffects.Move);
+      if (e.Button == MouseButtons.Left)
+      {
+       
+        DoDragDrop(e.Item.ToString(), DragDropEffects.Copy | DragDropEffects.Move);
+        this.Text = "dr";
+      }
+      else { }
     }
-
-    //private void LstViewItm_DragEnter(object sender, DragEventArgs e)
-    //{
-    //  //string typestring = "Type";
-    //  this.Text=e.Y.ToString();
-    //  //string s = e.Data.GetData(typestring.GetType()).ToString();
-    //  //string orig_string = s;
-    //  //s = s.Substring(s.IndexOf(":") + 1).Trim();
-    //  //s = s.Substring(1, s.Length - 2);
-    //  //this.treeView1.Nodes.Add(s);
-    //  //System.Collections.IEnumerator enumerator = LstViewItm.Items.GetEnumerator();
-    //  //int whichIdx = -1;
-    //  //int idx = 0;
-    //  //while (enumerator.MoveNext())
-    //  //{
-    //  //  string s2 = enumerator.Current.ToString();
-    //  //  if (s2.Equals(orig_string))
-    //  //  {
-    //  //    whichIdx = idx;
-    //  //    break;
-    //  //  }
-    //  //  idx++;
-    //  //}
-    //  //this.LstViewItm.Items.RemoveAt(whichIdx);
-    //}
-
-   
 
     private void LstViewItm_DragDrop(object sender, DragEventArgs e)
     {
-      List<ItemIp> itemIps = new List<ItemIp>();
       
+      if (e.Effect == DragDropEffects.None)
+        return;
+     
       if (e.Effect == DragDropEffects.Copy)
       {
+        List<ItemIp> itemIps = new List<ItemIp>();
         if (__lvItemChecked.Count == 0)
         {
           ItemIp it = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
@@ -206,7 +188,7 @@ namespace UlcWin
           "Изменение папки", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (result == DialogResult.Yes)
         {
-          
+
           using (SimpleWaitForm wf = new SimpleWaitForm())
           {
             wf.RunAction(new Action(() =>
@@ -222,18 +204,22 @@ namespace UlcWin
               }
               wf.DialogResult = DialogResult.OK;
             }));
-            if (wf.ShowDialog() == DialogResult.OK) {
+            if (wf.ShowDialog() == DialogResult.OK)
+            {
               foreach (var item in __lvItemChecked)
               {
                 this.LstViewItm.Items.Remove(item);
               }
-              
+
               treeView1.Focus();
             }
             //this.Text = string.Format("from:{0}-{2} to:{1}-{3}", __node_from.Text, __node_to.Text, __node_from.Id, __node_to.Id);
             //ListViewItem listViewItem = (ListViewItem)this.LstViewItm.SelectedItems[0].Clone();
             __lvItemChecked.Clear();
           }
+        }
+        else {
+          e.Effect = DragDropEffects.None;
         }
       }
         //this.treeView1.SelectedNode = __node_to;
@@ -571,9 +557,19 @@ namespace UlcWin
         this.ctxMenuItemDelete.Visible = false;
         this.ctxSeparateEdit.Visible = false;
         this.ctxMenuAtCommand.Visible = false;
+        //this.treeView1.DragDrop -= LstViewItm_DragDrop;
+        //this.treeView1.DragOver -= TreeView1_DragOver;
+        ////this.treeView1.DragEnter += LstViewItm_DragEnter;
+        //this.treeView1.AllowDrop = false;
+        //this.LstViewItm.ItemDrag -= LstViewItm_ItemDrag;
       }
       else
       {
+        //this.treeView1.DragDrop += LstViewItm_DragDrop;
+        //this.treeView1.DragOver += TreeView1_DragOver;
+        ////this.treeView1.DragEnter += LstViewItm_DragEnter;
+        //this.treeView1.AllowDrop = true;
+        //this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
         this.ctxMenuItemAdd.Visible = true;
         this.ctxMenuItemChange.Visible = true;
         this.ctxMenuItemDelete.Visible = true;
@@ -1338,7 +1334,7 @@ namespace UlcWin
           try
           {
 
-            client = GetTcpConnection(itip.Ip, __selected_device_type);
+            client = GetTcpConnection(itip.Ip, itip.UType == 0 ? 0 : 1);// __selected_device_type);
             //client = this.GetConnection(itip.Ip, 10251);//new TcpClient(item.IP, 10251);
             if (client == null)
               throw new Exception(string.Format("Error connect to:{0}", itip.Ip));
@@ -1440,6 +1436,7 @@ namespace UlcWin
         {
         }
       });
+      
     }
 
     private DialogResult ReadParam(Action function, StateWaitForm stateWaitForm, string lbtext)
@@ -2088,8 +2085,10 @@ namespace UlcWin
               }, this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
             foreach (var item in ed.__meterInfos)
             {
+              item.ip = ed.txtBoxIpAddress.Text;               
               item.ctrl_id = iip.Id;
               item.parent_id = uNode.Id;
+              item.crud_record = CrudRecord.Edit;
             }
             __db.SetCrudMeterInfo(ed.__meterInfos);
             this.tsUpdate_Click(null, null);
@@ -2104,6 +2103,7 @@ namespace UlcWin
       __db.ViewRes(this.LstViewItm, __sel_node.Id, DateTime.Now,
         (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,
         __sel_node.Text);
+      ulcMeterTreeView.UpdateForm();
       //this.tsLblAll.Text = "Всего:" + __db.__num.ToString();
       //this.tsLblNotTrue.Text = "Ошибки:" + __db.__notTrue.ToString();
     }
@@ -2695,7 +2695,7 @@ namespace UlcWin
     {
       tsPingMenuItem_Click(null, null);
     }
-    int __selected_device_type = 1;
+    //int __selected_device_type = 1;
     private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
       if (__sel_node != null)
@@ -2707,7 +2707,7 @@ namespace UlcWin
           __sel_node.Text);
       }
 
-      __selected_device_type = this.tsComboBoxDev.SelectedIndex;
+      //__selected_device_type = this.tsComboBoxDev.SelectedIndex;
 
       ReadStatusListView();
      

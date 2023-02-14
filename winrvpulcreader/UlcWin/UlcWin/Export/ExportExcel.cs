@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.Controls.UlcMeterComponet;
@@ -327,17 +328,27 @@ namespace UlcWin.Export
               index++;
             }
           }
-          object name = excelApp.GetSaveAsFilename(Directory.GetCurrentDirectory(), "Excel Files (*.xls), *.xls");
-          if (name.GetType() != typeof(bool))
+          sf.DialogResult = DialogResult.OK;
+
+          SaveFileDialog saveFileDialog = new SaveFileDialog();
+          saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+          saveFileDialog.RestoreDirectory = true;
+          saveFileDialog.Filter = "Excel |*.xlsx";
+          saveFileDialog.Title = "Сохранить данные в файле";
+          DialogResult result = DialogResult.Cancel;
+          EventWaitHandle eventWaitHandle = new AutoResetEvent(false);
+          Thread t = new Thread(()=>{
+            result = saveFileDialog.ShowDialog();
+            eventWaitHandle.Set();
+          });
+          t.SetApartmentState(ApartmentState.STA);
+          t.Start();
+          eventWaitHandle.WaitOne();
+          if (result == DialogResult.OK)
           {
             excelApp.DisplayAlerts = false;
-            excelApp.ActiveWorkbook.SaveAs(name, XlFileFormat.xlWorkbookNormal);
+            excelApp.ActiveWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal);
             excelWorkbook.Close();
-          }
-          else
-          {
-            excelApp.Quit();
-            excelApp = null;
           }
         }
         else {
