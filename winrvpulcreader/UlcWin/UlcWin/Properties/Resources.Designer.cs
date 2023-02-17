@@ -523,6 +523,26 @@ namespace UlcWin.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lightbulb {
+            get {
+                object obj = ResourceManager.GetObject("lightbulb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lightbulb_off {
+            get {
+                object obj = ResourceManager.GetObject("lightbulb_off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap monitor_go {
             get {
                 object obj = ResourceManager.GetObject("monitor_go", resourceCulture);

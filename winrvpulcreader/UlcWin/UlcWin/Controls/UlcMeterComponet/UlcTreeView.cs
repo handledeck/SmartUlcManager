@@ -120,6 +120,9 @@ namespace GettingStartedTree
         this.__statusStrip.Items[0].Text = string.Format("Всего:{0}", all);
         this.__statusStrip.Items[1].Text = string.Format("Нет данных:{0}", nData);
         this.__statusStrip.Items[3].Text = string.Format("Отключенных:{0}", swOff);
+        //int idx= imageList1.Images.IndexOfKey("meter_stop");
+
+        //this.__statusStrip.Items[3].Image = UlcWin.Properties.Resources.exclamation;//this.i this.imageList1.Images[0];
       }
 
     }
@@ -457,7 +460,7 @@ namespace GettingStartedTree
               return "error";
             if (vv.meter_active == 0)
             {
-              return "stop";
+              return "exc";
             }
             else
             {
@@ -487,7 +490,7 @@ namespace GettingStartedTree
         {
           if (vv.meter_active == 0)
           {
-            return "stop";
+            return "exc";
           }
           else
           {
@@ -579,7 +582,7 @@ namespace GettingStartedTree
           if (t.HasValue)
           {
             if (t == 1)
-              return "ULC 2";
+              return "ULC 02";
             else if (t == 0)
               return "РВП-18";
           }

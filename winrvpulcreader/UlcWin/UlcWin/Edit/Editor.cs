@@ -200,9 +200,11 @@ namespace UlcWin.Edit
 
     private void BtnDelete_Click(object sender, EventArgs e)
     {
+
       ((MeterInfo)this.lstMeter.SelectedItems[0].Tag).crud_record= CrudRecord.Delete;
       if (this.lstMeter.SelectedItems.Count != 0) {
         this.lstMeter.SelectedItems[0].Remove();
+        
       }
     }
 

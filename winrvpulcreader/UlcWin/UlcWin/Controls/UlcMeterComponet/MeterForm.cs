@@ -63,7 +63,6 @@ namespace UlcWin.ui
       this.btnCancel.Enabled = false;
       Task tsk = new Task(new Action(() =>
       {
-        
         TcpClient client = this.__getConnection(this.__itemIp.Ip, 10250);
         if (client != null)
         {
@@ -77,7 +76,7 @@ namespace UlcWin.ui
                 Exception exp = null;
                 float? ds= EnMera102.GetSumDayValue(num, client, out exp);
                 if (exp == null) {
-                  item.SubItems[2].Text = (ds.Value / 100).ToString();
+                  item.SubItems[2].Text = ds.Value.ToString();
                 }
                 else throw new Exception("ошибка получения данных");
               }

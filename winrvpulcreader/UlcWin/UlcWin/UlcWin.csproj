@@ -828,6 +828,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PCI-card_view.ico" />
+    <None Include="Resources\lightbulb_off.png" />
+    <None Include="Resources\lightbulb.png" />
     <None Include="Resources\error1.ico" />
     <None Include="Resources\check21.ico" />
     <None Include="Resources\database_refresh.ico" />
@@ -857,7 +859,9 @@
   <PropertyGroup>
     <PostBuildEvent>del /S/Q *.xml *.pdb
 xcopy /S /I /Q /Y /F ..\UlcWin\utils\* .\
-xcopy /S /I /Q /Y /F *.* ..\..\..\Msi\client\soft</PostBuildEvent>
+xcopy /S /I /Q /Y /F *.* ..\..\..\Msi\client\soft
+mklink /D ..\..\..\Msi\client\link soft
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>rmdir /s/q .\out

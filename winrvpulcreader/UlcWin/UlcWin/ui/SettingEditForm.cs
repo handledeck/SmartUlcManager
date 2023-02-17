@@ -39,8 +39,8 @@ namespace UlcWin
     Ztp.Enums.Device __device = Ztp.Enums.Device.Unknown;
     ItemIp __selItem;
     public RequestForm(string message, List<ListViewItem> items_checked,
-      GetConnectionDelegate getConnection, bool multiWrite, Ztp.Enums.Device device, ItemIp selItem, DbReader db) 
-      : this(message, getConnection, multiWrite,device, selItem,db)
+      GetConnectionDelegate getConnection, bool multiWrite, Ztp.Enums.Device device, ItemIp selItem, DbReader db)
+      : this(message, getConnection, multiWrite, device, selItem, db)
     {
       this.__db = db;
       this.__items_checked = items_checked;
@@ -54,13 +54,13 @@ namespace UlcWin
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       __config._devType = Ztp.Enums.Device.RVP;
       __config.Value = __ztpConfig;
-      
+
       // __config.Value = __ztpConfig;
       if (__config._devType == Ztp.Enums.Device.RVP)
       {
-       
+
       }
-     
+
       __config.Update();
       __planEditor.Value = __ztpConfig.Light;
 
@@ -69,7 +69,7 @@ namespace UlcWin
         __currentStateViewControl.Value = __ztpConfig;
 
       this.__planEditor.UseSchedulerVisible = true;
-      
+
       if (this.__planEditor.UseSchedulerEnable)
       {
         this.__planEditor.UseSchedulerEnable = true;
@@ -80,7 +80,8 @@ namespace UlcWin
       }
     }
 
-    void SetRVPConfigDevice() {
+    void SetRVPConfigDevice()
+    {
       //__config._devType = __device;
       __config.GsmTechShow(true);
       __config.ShowApnProperty = false;
@@ -121,10 +122,21 @@ namespace UlcWin
       this.__modBusSettings.TagTableVisible += __modBusSettings_TagTableVisible;
     }
 
-    void InitConfig() {
+    void InitConfig()
+    {
       __config.Value = __ztpConfig;
       __currentStateViewControl.Value = __ztpConfig;
-      
+      ZtpConfig config = __config.Value;
+      if (config.IsSwitchOn)
+      {
+        PicLightSwitcher.Image = UlcWin.Properties.Resources.lightbulb;
+        btnLightSwitcher.Text = "Отключить освещение";
+      }
+      else
+      {
+        PicLightSwitcher.Image = UlcWin.Properties.Resources.lightbulb_off;
+        btnLightSwitcher.Text = "Включить освещение";
+      }
       switch (__device)
       {
         case Ztp.Enums.Device.Unknown:
@@ -147,6 +159,7 @@ namespace UlcWin
       //__config.Dock = DockStyle.Fill;
       //__currentStateViewControl.Dock = DockStyle.Fill;
       InitConfig();
+
       this.tableLayoutPanel2.Controls.Add(__config);
       this.tableLayoutPanel2.Controls.Add(__currentStateViewControl);
       this.tabPage3.Controls.Add(__comPortEditor);
@@ -156,7 +169,7 @@ namespace UlcWin
     string __name_object = string.Empty;
 
     public RequestForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
-      Ztp.Enums.Device device, ItemIp selItem , DbReader db)
+      Ztp.Enums.Device device, ItemIp selItem, DbReader db)
     {
       InitializeComponent();
       this.btnSave.Visible = true;
@@ -178,7 +191,7 @@ namespace UlcWin
       //}
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
-      this.__device=device;
+      this.__device = device;
       this.__config._devType = device;
       //__config._devType = Ztp.Enums.Device.ULC2_2;
 
@@ -192,7 +205,7 @@ namespace UlcWin
 
       Application.Idle += Application_Idle;
       this.__getConnection = getConnection;
-      
+
     }
 
     private void __modBusSettings_TagTableVisible(bool value)
@@ -230,7 +243,7 @@ namespace UlcWin
           byte[] pack = ZtpProtocol.ModbusSetConfig(__pwd, __pkg, (ushort)__pkg.Length);
           try
           {
-            siForm.SetLabelText(string.Format("Соединяюсь с {0}-{1}",this.__name_object, this.__ztpConfig.IpOwn));
+            siForm.SetLabelText(string.Format("Соединяюсь с {0}-{1}", this.__name_object, this.__ztpConfig.IpOwn));
             TcpClient client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
             if (client == null)
               throw new Exception("Ошибка соединения...");
@@ -421,7 +434,7 @@ namespace UlcWin
       }
     }
 
-   
+
 
     private void btnAddSeason_Click(object sender, EventArgs e)
     {
@@ -518,7 +531,7 @@ namespace UlcWin
               throw new Exception("Ошибка чтения...");
             }
           }
-          catch(Exception ex)
+          catch (Exception ex)
           {
             siForm.DialogResult = DialogResult.Cancel;
           }
@@ -541,7 +554,7 @@ namespace UlcWin
           }
         }
       }
-     
+
     }
 
     void SingleSettingWrite()
@@ -591,7 +604,7 @@ namespace UlcWin
                 };
                 DbLogMsg.ParseNodePath(__selItem.NodeFullPath, ref dbLogMsg);
                 string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE,msg, __selItem.Id);
+                __db.LogsInsertEvent(DB.EnLogEvt.SETTING_CHANGE, msg, __selItem.Id);
               }
               else
               {
@@ -658,7 +671,7 @@ namespace UlcWin
             {
 
               client = this.__getConnection(itip.Ip, 10251);//new TcpClient(item.IP, 10251);
-                if (client == null)
+              if (client == null)
                 throw new Exception(string.Format("Error connect to:{0}", itip.Ip));
               NetworkStream stream = client.GetStream();
               stream.ReadTimeout = 15000;
@@ -724,7 +737,8 @@ namespace UlcWin
 
     }
 
-    TcpClient GetTcpConnection(string ip) {
+    TcpClient GetTcpConnection(string ip)
+    {
       TcpClient client = null;
       for (int i = 0; i < 2; i++)
       {
@@ -737,7 +751,7 @@ namespace UlcWin
           {
             break;
           }
-          else if(__device == Ztp.Enums.Device.RVP)
+          else if (__device == Ztp.Enums.Device.RVP)
           {
             if (client != null)
               client.Close();
@@ -753,24 +767,27 @@ namespace UlcWin
       return client;
     }
 
-    private void btnSave_Click(object sender, EventArgs e)
+
+    void getConfig(bool show_upapdate = true, NetworkStream stream = null)
     {
       SimpleWaitForm siForm = null;
       byte[] buffer = new byte[1024];
-    
+
       using (siForm = new SimpleWaitForm(new Action(() =>
       {
-        TcpClient client = null;
         byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
         try
         {
           siForm.SetLabelText(string.Format("Соединяюсь с {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
           //client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
-          client=GetTcpConnection(this.__ztpConfig.IpOwn);
-          if (client == null)
-            throw new Exception("Ошибка соединения...");
-          NetworkStream stream = client.GetStream();
-          stream.ReadTimeout = 10000;
+          if (stream == null)
+          {
+            TcpClient client = GetTcpConnection(this.__ztpConfig.IpOwn);
+            if (client == null)
+              throw new Exception("Ошибка соединения...");
+            stream = client.GetStream();
+            stream.ReadTimeout = 10000;
+          }
           stream.Write(bCfg, 0, bCfg.Length);
           siForm.SetLabelText(string.Format("Чтение конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
           bool read = false;
@@ -809,8 +826,12 @@ namespace UlcWin
         }
         finally
         {
-          if (client != null)
-            client.Close();
+          if (stream != null)
+          {
+            stream.Close();
+          }
+          //if (client != null)
+          //  client.Close();
         }
       })))
       {
@@ -818,42 +839,21 @@ namespace UlcWin
         if (res == DialogResult.OK)
         {
           InitConfig();
-          MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          if (show_upapdate)
+            MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         else
         {
           MessageBox.Show("Ошибка чтения конфигурации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
       }
-      //saveFileDialog1.Filter = "Bin files(*.bin)|*.bin";
-      //string drFileSettings = Application.StartupPath + "\\gnSettings";
-      //if (!Directory.Exists(drFileSettings))
-      //{
-      //  Directory.CreateDirectory(drFileSettings);
-      //}
-      //saveFileDialog1.InitialDirectory = drFileSettings;
 
-      //if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-      //  return;
-      //string filename = saveFileDialog1.FileName;
-      //__ztpConfig = __config.Value;
-      //__ztpConfig.ComPortSetting = this.__comPortEditor.Value;
-      //__ztpConfig.Light = this.__planEditor.Value;
-      //ZtpScheduler sched = __planEditor.Value.Scheduler;
-      //Exception ex = ZtpScheduler.CheckOverlap(sched, __ztpConfig.TimeZone,
-      //  __ztpConfig.Latitude, __ztpConfig.Longitude);
-      //if (ex != null)
-      //{
-      //  MessageBox.Show(ex.Message, "Ошибка расписания", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      //  return;
-      //}
-      //string ztp = ZtpProtocol.SerializeZtpConfig(__ztpConfig);
-      //byte[] bSetiings = System.Text.ASCIIEncoding.ASCII.GetBytes(ztp);
-      //FileStream wr = new FileStream(filename, FileMode.OpenOrCreate);
-      //wr.Write(bSetiings, 0, bSetiings.Length);
-      //wr.Flush();
-      //wr.Close();
-      //MessageBox.Show("Файл сохранен", "Сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+
+    private void btnSave_Click(object sender, EventArgs e)
+    {
+      getConfig();
     }
 
     private void btnFile_Click(object sender, EventArgs e)
@@ -877,8 +877,109 @@ namespace UlcWin
       this.Update();
     }
 
-   
+
+
+    private void pictureBox1_Click(object sender, EventArgs e)
+    {
+      string str =
+          "При ручном режиме управления освещением расписания освещения будут отключены. Для их повторного включения установите флажок 'Активность планов освещения' и запишите конфигурацию в контроллер\r\n";
+      DialogResult result= MessageBox.Show(str,"Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+      if (result == DialogResult.No)
+        return;
+      if (string.IsNullOrEmpty(__pwd))
+      {
+        using (PasswordForm frm = new PasswordForm())
+        {
+          if (frm.ShowDialog(this) == DialogResult.OK)
+          {
+            this.__pwd = frm.Value;
+          }
+          else
+          {
+            return;
+          }
+        }
+      }
+      SimpleWaitForm sf = null;
+      using (sf = new SimpleWaitForm(new Action(() =>
+    {
+      TcpClient client = null;
+      string command = ZtpProtocol.LightSwitchOnOffCommand(this.__pwd, !__ztpConfig.IsSwitchOn);
+      try
+      {
+        sf.SetLabelText(string.Format("Запись в контроллер {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
+        client = GetTcpConnection(__ztpConfig.IpOwn);
+        NetworkStream stream = client.GetStream();
+        stream.ReadTimeout = 10000;
+        byte[] bSend = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
+        byte[] bRead = new byte[1024];
+        stream.Write(bSend, 0, bSend.Length);
+        int len = stream.Read(bRead, 0, bRead.Length);
+        if (len > 0)
+        {
+          string answer = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, len);
+          if (!answer.Contains("PWD:OK"))
+          {
+            __pwd = "";
+            throw new Exception("Не верный пароль");
+          }
+          else
+          {
+            byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
+            sf.SetLabelText(string.Format("Чтение конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
+            stream.Write(bCfg, 0, bCfg.Length);
+            for (int i = 0; i < 2; i++)
+            {
+              len = stream.Read(bRead, 0, bRead.Length);
+              if (len == 0)
+                throw new Exception("Ошибка чтения конфигурации");
+              string message = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, len);
+              if (!string.IsNullOrEmpty(message))
+              {
+                int ind = message.IndexOf("CONFIG");
+                if (ind != -1)
+                {
+                  string msg = message.Substring(ind, message.Length - ind);
+                  __messgage = msg;
+                  __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(msg);
+                  sf.DialogResult = DialogResult.OK;
+                  break;
+                }
+              }
+              else
+              {
+                throw new Exception("Ошибка чтения...");
+              }
+            }
+          }
+        }
+      }
+      catch (Exception exp)
+      {
+        MessageBox.Show(exp.Message, "Ошибка управления освещением", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        sf.DialogResult = DialogResult.Abort;
+      }
+      finally
+      {
+        if (client != null)
+          client.Close();
+      }
+    })))
+      {
+        DialogResult res = sf.ShowDialog();
+        if (res == DialogResult.OK)
+        {
+          InitConfig();
+        }
+        else
+        {
+          MessageBox.Show("Ошибка чтения конфигурации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+      }
+    }
   }
 }
+ 
+
 
   

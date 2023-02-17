@@ -171,9 +171,10 @@ namespace UlcWin.Export
           header++;
           Microsoft.Office.Interop.Excel.XlRgbColor bed= Microsoft.Office.Interop.Excel.XlRgbColor.rgbRed;
           Microsoft.Office.Interop.Excel.XlRgbColor good = Microsoft.Office.Interop.Excel.XlRgbColor.rgbBlack;
+          int all_tags = this.__listView.Items.Count;
           for (int i = 0; i < this.__listView.Items.Count; i++)
           {
-            
+            int xx = ((i * 100) / all_tags);
             int coln = 1;
             ItemIp itemIp = (ItemIp)this.__listView.Items[i].Tag;
             ListViewItem lvi= this.__listView.Items[i];
@@ -195,6 +196,7 @@ namespace UlcWin.Export
               }
             }
             header++;
+            sfrm.SetLabelText(string.Format("Сформировано: {0}%", xx));
           }
           index = 1;
           for (int i = 0; i < this.__listView.Columns.Count; i++)
@@ -206,12 +208,30 @@ namespace UlcWin.Export
             }
           }
           sfrm.DialogResult = DialogResult.OK;
-          object name = excelApp.GetSaveAsFilename(Directory.GetCurrentDirectory(), "Excel Files (*.xls), *.xls");
-          if (name.GetType() != typeof(bool))
+          SaveFileDialog saveFileDialog = new SaveFileDialog();
+          saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+          saveFileDialog.RestoreDirectory = true;
+          saveFileDialog.Filter = "Excel File|*.xls";
+          saveFileDialog.Title = "Сохранить данные в файле";
+          DialogResult result = DialogResult.Cancel;
+          EventWaitHandle eventWaitHandle = new AutoResetEvent(false);
+          Thread t = new Thread(() => {
+            result = saveFileDialog.ShowDialog();
+            eventWaitHandle.Set();
+          });
+          t.SetApartmentState(ApartmentState.STA);
+          t.Start();
+          eventWaitHandle.WaitOne();
+          if (result == DialogResult.OK)
           {
-            excelApp.ActiveWorkbook.SaveAs(name,XlFileFormat.xlWorkbookNormal);
+            excelApp.DisplayAlerts = false;
+            excelApp.ActiveWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal);
+            excelWorkbook.Close();
           }
-          excelWorkbook.Close();
+          else {
+            object misValue = System.Reflection.Missing.Value;
+            excelWorkbook.Close(false,misValue,misValue);
+          }
         }
         return true;
       }
@@ -317,7 +337,7 @@ namespace UlcWin.Export
               coln += 1;
               header++;
             }
-            sf.SetLabelText(string.Format("Сформировано:{0}%", xx));
+            sf.SetLabelText(string.Format("Сформировано: {0}%", xx));
           }
           index = 1;
           for (int i = 0; i < listView.Columns.Count; i++)
@@ -329,11 +349,10 @@ namespace UlcWin.Export
             }
           }
           sf.DialogResult = DialogResult.OK;
-
           SaveFileDialog saveFileDialog = new SaveFileDialog();
           saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
           saveFileDialog.RestoreDirectory = true;
-          saveFileDialog.Filter = "Excel |*.xlsx";
+          saveFileDialog.Filter = "Excel File|*.xls";
           saveFileDialog.Title = "Сохранить данные в файле";
           DialogResult result = DialogResult.Cancel;
           EventWaitHandle eventWaitHandle = new AutoResetEvent(false);
@@ -348,7 +367,11 @@ namespace UlcWin.Export
           {
             excelApp.DisplayAlerts = false;
             excelApp.ActiveWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal);
-            excelWorkbook.Close();
+           
+          }
+          else {
+            object misValue = System.Reflection.Missing.Value;
+            excelWorkbook.Close(false, misValue, misValue);
           }
         }
         else {

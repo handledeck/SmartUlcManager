@@ -59,6 +59,7 @@ namespace UlcWin
     private DateTime __previousValueTo = DateTime.Now;
     UNode __node_to = null;
     UNode __node_from = null;
+
     public LoadForm()
     {
       InitializeComponent();
@@ -109,7 +110,7 @@ namespace UlcWin
       Application.Idle += Application_Idle;
       this.tsComboBoxDev.SelectedIndex = 1;
       this.Shown += StartForm_Shown;
-      this.Text = "Обозреватель работы контроллеров";
+      this.Text = "Система диагностики контроллеров";
       panel1.Paint += Panel1_Paint;
       panel2.Paint += Panel1_Paint;
       this.FormClosing += MainForm_FormClosing;
@@ -124,20 +125,22 @@ namespace UlcWin
       ////this.treeView1.DragEnter += LstViewItm_DragEnter;
       //this.treeView1.AllowDrop = true;
       //this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
+
     }
 
+    private void __db_UpdateListViewItems()
+    {
+      __its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
+    }
 
-    
     private void TreeView1_DragOver(object sender, DragEventArgs e)
     {
-      
       __node_to = (UNode)this.treeView1.GetNodeAt(this.treeView1.PointToClient(new Point(e.X, e.Y)));
       if (__node_to != null)
       {
         if (__node_to.IsView && __node_to != this.treeView1.SelectedNode)
         {
           e.Effect = DragDropEffects.Copy;
-          //this.treeView1.SelectedNode = node;
         }
         else
         {
@@ -154,9 +157,7 @@ namespace UlcWin
       LstViewItm.Sorting = SortOrder.None;
       if (e.Button == MouseButtons.Left)
       {
-       
         DoDragDrop(e.Item.ToString(), DragDropEffects.Copy | DragDropEffects.Move);
-        this.Text = "dr";
       }
       else { }
     }
@@ -183,7 +184,6 @@ namespace UlcWin
             itemIps.Add(it);
           }
         }
-
         DialogResult result = MessageBox.Show(string.Format("Перенести контроллер(ы) в папку {0}?", __node_to.Text),
           "Изменение папки", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (result == DialogResult.Yes)
@@ -505,7 +505,7 @@ namespace UlcWin
       this.tsUpdate.Enabled = false;
       this.tsSelectedItems.Enabled = false;
       this.tsDwnUpdate.Enabled = false;
-      toolStripButton3_Click_1(null, null);
+      InitDbAndApplication(null, null);
       this.tsStsLabelAll.Margin = new Padding((this.splitContainer1.SplitterDistance), 0, 0, 0);
       LoadSetiings();
      
@@ -514,6 +514,7 @@ namespace UlcWin
       //this.LstViewItm_ColumnClick()
       this.LstViewItm.ColumnReordered += LstViewItm_ColumnReordered;
       __form_shown = true;
+      __db.UpdateListViewItems += __db_UpdateListViewItems;
     }
 
     private void MainForm_CheckedChanged(object sender, EventArgs e)
@@ -557,11 +558,7 @@ namespace UlcWin
         this.ctxMenuItemDelete.Visible = false;
         this.ctxSeparateEdit.Visible = false;
         this.ctxMenuAtCommand.Visible = false;
-        //this.treeView1.DragDrop -= LstViewItm_DragDrop;
-        //this.treeView1.DragOver -= TreeView1_DragOver;
-        ////this.treeView1.DragEnter += LstViewItm_DragEnter;
-        //this.treeView1.AllowDrop = false;
-        //this.LstViewItm.ItemDrag -= LstViewItm_ItemDrag;
+        
       }
       else
       {
@@ -982,7 +979,7 @@ namespace UlcWin
         this.LstViewItm.Items.Clear();
         __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
         this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
-        __its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
+        //__its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
         this.tsFilterText.Text = "";
         this.tsMnuTreeAddItem.Enabled = false;
         this.tsTreeBtnAdd.Enabled = false;
@@ -2069,43 +2066,80 @@ namespace UlcWin
             //  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
             //}
             //msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
-            __db.EditResRecord(
-              new DbItemEditor()
-              {
-                Comment = ed.txtBoxComment.Text,
-                Id = iip.Id,
-                Ip = ed.txtBoxIpAddress.Text,
-                Name = name,
-                Phone = ed.txtBoxPhones.Text,
-                IsActive = ed.chBoxActive.Checked == true ? 1 : 0,
-                IsLight = ed.cbFunction.SelectedIndex,
-                UType = ed.cbType.SelectedIndex == 0 ? 0 : 1, 
-                rs_stat=ed.chBoxStat.Checked==true? 1:0
-                 
-              }, this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
+            DbItemEditor dbItemEditor = new DbItemEditor()
+            {
+              Comment = ed.txtBoxComment.Text,
+              Id = iip.Id,
+              Ip = ed.txtBoxIpAddress.Text,
+              Name = name,
+              Phone = ed.txtBoxPhones.Text,
+              IsActive = ed.chBoxActive.Checked == true ? 1 : 0,
+              IsLight = ed.cbFunction.SelectedIndex,
+              UType = ed.cbType.SelectedIndex == 0 ? 0 : 1,
+              rs_stat = ed.chBoxStat.Checked == true ? 1 : 0
+            };
+            iip.Name = dbItemEditor.Name;
+            iip.Ip = dbItemEditor.Ip;
+            iip.Comments = dbItemEditor.Comment;
+            iip.Phone = dbItemEditor.Phone;
+            iip.IsLight = dbItemEditor.IsLight;
+            iip.Rs_Stat = dbItemEditor.rs_stat;
+            iip.Active = dbItemEditor.IsActive;
+            __db.EditResRecord(dbItemEditor,this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
             foreach (var item in ed.__meterInfos)
             {
               item.ip = ed.txtBoxIpAddress.Text;               
               item.ctrl_id = iip.Id;
               item.parent_id = uNode.Id;
-              item.crud_record = CrudRecord.Edit;
+              //item.crud_record = CrudRecord.Edit;
             }
             __db.SetCrudMeterInfo(ed.__meterInfos);
-            this.tsUpdate_Click(null, null);
+            tsUpdate_Click(null,null);
+            txtBoxFilter_Cnanged(null, null);
+            //if (tsComboBoxDev.SelectedIndex == 2 || tsComboBoxDev.SelectedIndex == ed.cbType.SelectedIndex) 
+            //{ 
+
+            //}
+            //LstViewItm.SelectedItems[0].SubItems[1].Text= ed.txtBoxState.Text+ ","+ ed.txtBoxZtp.Text;
+            //LstViewItm.SelectedItems[0].SubItems[2].Text = ed.txtBoxZtp.Text;
+            //LstViewItm.SelectedItems[0].SubItems[3].Text = ed.txtBoxIpAddress.Text;
+            //LstViewItm.SelectedItems[0].SubItems[4].Text = ed.txtBoxPhones.Text;
+            //LstViewItm.SelectedItems[0].SubItems[5].Text = ed.cbType.SelectedIndex == 0 ? "РВП-18" : "ULC-02";
+            //LstViewItm.SelectedItems[0].SubItems[13].Text = ed.chBoxStat.Checked == true ? "1" : "X";
+            //LstViewItm.SelectedItems[0].SubItems[15].Text = ed.chBoxActive.Checked == true ? "1" : "0";
+            //LstViewItm.SelectedItems[0].SubItems[16].Text = ed.cbFunction.SelectedIndex.ToString();
+            //LstViewItm.SelectedItems[0].SubItems[17].Text = ed.txtBoxComment.Text;
+            //if (!ed.chBoxActive.Checked)
+            //{
+            //  this.LstViewItm.SelectedItems[0].UseItemStyleForSubItems = false;
+            //  foreach (ListViewItem.ListViewSubItem item in this.LstViewItm.SelectedItems[0].SubItems)
+            //  {
+            //    item.ForeColor = Color.LightGray;
+            //  }
+            //}
+            //else {
+            //  this.LstViewItm.SelectedItems[0].UseItemStyleForSubItems = true;
+            //  foreach (ListViewItem.ListViewSubItem item in this.LstViewItm.SelectedItems[0].SubItems)
+            //  {
+            //    if(this.LstViewItm.SelectedItems[0].ImageIndex==15)
+            //      item.ForeColor = Color.Red;
+            //    else
+            //      item.ForeColor = Color.Black;
+            //  }
+            //}
           }
         }
       }
     }
 
+    
+
     private void tsUpdate_Click(object sender, EventArgs e)
     {
       this.LstViewItm.Items.Clear();
-      __db.ViewRes(this.LstViewItm, __sel_node.Id, DateTime.Now,
-        (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,
-        __sel_node.Text);
+      __db.ViewRes(this.LstViewItm, __sel_node.Id, DateTime.Now,(EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
+      
       ulcMeterTreeView.UpdateForm();
-      //this.tsLblAll.Text = "Всего:" + __db.__num.ToString();
-      //this.tsLblNotTrue.Text = "Ошибки:" + __db.__notTrue.ToString();
     }
 
     private void TsMenuItemDelete_Click(object sender, EventArgs e)
@@ -2790,7 +2824,7 @@ namespace UlcWin
 
     }
 
-    private void toolStripButton3_Click_1(object sender, EventArgs e)
+    private void InitDbAndApplication(object sender, EventArgs e)
     {
       this.tsStatusLbl.Visible = false;
       this.tsBtnConnect.Image = UlcWin.Properties.Resources.server_connection;
@@ -2814,6 +2848,19 @@ namespace UlcWin
       bool con_db = InitDB();
       if (con_db)
       {
+        if (__db.__ulcUser.AccsessLavel == EnumAccsesLevel.Read)
+        {
+          this.treeView1.DragDrop -= LstViewItm_DragDrop;
+          this.treeView1.DragOver -= TreeView1_DragOver;
+          this.treeView1.AllowDrop = false;
+          this.LstViewItm.ItemDrag -= LstViewItm_ItemDrag;
+        }
+        else {
+          this.treeView1.DragDrop += LstViewItm_DragDrop;
+          this.treeView1.DragOver += TreeView1_DragOver;
+          this.treeView1.AllowDrop = true;
+          this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
+        }
         this.tsBtnConnect.Image = UlcWin.Properties.Resources.server_ok;
         this.tsBtnConnect.Text = "Подключено";
         tsBtnUsersEdit.Enabled = true;
@@ -3172,19 +3219,22 @@ namespace UlcWin
       return false;
     }
 
-    private bool RebootLeter(NetworkStream stream, ItemIp itip)
+    private bool RebootLeter(NetworkStream stream, ItemIp itip,string command)
     {
       bool op = false;
-      string at = "###AT#ENHRST=1,0\r";
-      byte[] bAt = System.Text.ASCIIEncoding.ASCII.GetBytes(at);
+      //string at = string.Empty;
+        if(itip.UType==1)
+        command="###AT#ENHRST=1,0\r";
+      byte[] bAt = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
+      byte[] bRead = new byte[128];
       try
       {
         stream.Write(bAt, 0, bAt.Length);
-        int len = stream.Read(bAt, 0, bAt.Length);
+        int len = stream.Read(bRead, 0, bRead.Length);
         if (len > 0)
         {
-          string answ = System.Text.ASCIIEncoding.ASCII.GetString(bAt, 0, len);
-          if (answ.Equals("\r\nOK\r\n\r\n"))
+          string answ = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, bRead.Length);
+          if (answ.Contains("OK"))
           {
             op = true;
           }
@@ -3221,7 +3271,8 @@ namespace UlcWin
             if (client == null)
               throw new Exception("Ошибка соединения...");
             NetworkStream stream = client.GetStream();
-            if (!RebootLeter(stream, itip))
+            stream.ReadTimeout = 10000;
+            if (!RebootLeter(stream, itip,command))
             {
               __frm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, false, itip.UType, 9);
             }
@@ -3759,7 +3810,7 @@ namespace UlcWin
           tsStatusLbl.Items[2].Visible = true;
           tsStatusLbl.Items[4].Visible = true;
           ReadStatusListView();
-          
+         
           if (ulcMeterTreeView.treeListView1.SelectedItem!=null)
           {
             Controls.UlcMeterComponet.TreeListNodeModel xx = (Controls.UlcMeterComponet.TreeListNodeModel)this.ulcMeterTreeView.treeListView1.SelectedItem.RowObject;
@@ -3809,7 +3860,7 @@ namespace UlcWin
       //}
     }
     ListViewItem[] __its_parent;
-    private void textBox1_TextChanged(object sender, EventArgs e)
+    private void txtBoxFilter_Cnanged(object sender, EventArgs e)
     {
       //if (__its_parent == null)
       //{
@@ -3819,8 +3870,8 @@ namespace UlcWin
       ListViewItem[] listViewItem = __its_parent.Where(i => string.IsNullOrEmpty(tsFilterText.Text) ||
        i.SubItems[0].Text.Contains(tsFilterText.Text) ||
        i.SubItems[1].Text.Contains(tsFilterText.Text) ||
-        i.SubItems[2].Text.Contains(tsFilterText.Text) ||
-        i.SubItems[3].Text.Contains(tsFilterText.Text)).Select(c => c).ToArray();
+       i.SubItems[2].Text.Contains(tsFilterText.Text) ||
+       i.SubItems[3].Text.Contains(tsFilterText.Text)).Select(c => c).ToArray();
       LstViewItm.BeginUpdate();
       LstViewItm.Items.Clear();
       LstViewItm.Items.AddRange(listViewItem);

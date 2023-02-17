@@ -137,7 +137,6 @@ namespace CtmAction
       }
     }
 
-
     public static int TryCreateDb(out Exception exception)
     {
       exception = null;

@@ -107,7 +107,6 @@ namespace UlcWin
       this.tsMenuItem_Patch = new System.Windows.Forms.ToolStripMenuItem();
       this.geniralSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsMenuItemReboot = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
       this.actRs485ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsSelectedItems = new System.Windows.Forms.ToolStripDropDownButton();
       this.tsSelectAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -366,7 +365,7 @@ namespace UlcWin
       this.tsBtnConnect.Size = new System.Drawing.Size(106, 27);
       this.tsBtnConnect.Text = "Подключится";
       this.tsBtnConnect.ToolTipText = "Подключение";
-      this.tsBtnConnect.Click += new System.EventHandler(this.toolStripButton3_Click_1);
+      this.tsBtnConnect.Click += new System.EventHandler(this.InitDbAndApplication);
       // 
       // toolStripSeparator7
       // 
@@ -552,6 +551,7 @@ namespace UlcWin
       this.imageList1.Images.SetKeyName(20, "import2.png");
       this.imageList1.Images.SetKeyName(21, "warning");
       this.imageList1.Images.SetKeyName(22, "text_marked.ico");
+      this.imageList1.Images.SetKeyName(23, "meter_stop");
       // 
       // tsTreePanel
       // 
@@ -911,7 +911,6 @@ namespace UlcWin
             this.tsMenuItem_Patch,
             this.geniralSettingsToolStripMenuItem,
             this.tsMenuItemReboot,
-            this.toolStripSeparator8,
             this.actRs485ToolStripMenuItem});
       this.tsDwnUpdate.Image = global::UlcWin.Properties.Resources.gear_replace;
       this.tsDwnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -952,11 +951,6 @@ namespace UlcWin
       this.tsMenuItemReboot.Size = new System.Drawing.Size(197, 22);
       this.tsMenuItemReboot.Text = "Перезапуск устройств";
       this.tsMenuItemReboot.Click += new System.EventHandler(this.tsMenuItemReboot_Click);
-      // 
-      // toolStripSeparator8
-      // 
-      this.toolStripSeparator8.Name = "toolStripSeparator8";
-      this.toolStripSeparator8.Size = new System.Drawing.Size(194, 6);
       // 
       // actRs485ToolStripMenuItem
       // 
@@ -1027,7 +1021,7 @@ namespace UlcWin
       this.tsFilterText.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.tsFilterText.Name = "tsFilterText";
       this.tsFilterText.Size = new System.Drawing.Size(200, 23);
-      this.tsFilterText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+      this.tsFilterText.TextChanged += new System.EventHandler(this.txtBoxFilter_Cnanged);
       // 
       // usrFesStatistics1
       // 
@@ -1209,7 +1203,7 @@ namespace UlcWin
             this.ctxNotTrueMeter});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 336);
+      this.LvMenu.Size = new System.Drawing.Size(224, 314);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1416,7 +1410,7 @@ namespace UlcWin
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-     // this.Name = "LoadForm";
+      //this.Name = "LoadForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -1572,7 +1566,6 @@ namespace UlcWin
     private System.Windows.Forms.ImageList imgTabs;
     private ListViewMenuHeaderControl LstViewItm;
     public System.Windows.Forms.ContextMenuStrip ctxMenuHeader;
-    private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     private System.Windows.Forms.ToolStripMenuItem actRs485ToolStripMenuItem;
     private System.Windows.Forms.ColumnHeader comm;
     private System.Windows.Forms.ColumnHeader ztp;

@@ -327,6 +327,7 @@ namespace GettingStartedTree
       this.imageList1.Images.SetKeyName(9, "excel_exports.png");
       this.imageList1.Images.SetKeyName(10, "error1");
       this.imageList1.Images.SetKeyName(11, "stop");
+      this.imageList1.Images.SetKeyName(12, "exc");
       // 
       // dataGridView1
       // 

@@ -24,6 +24,8 @@ using static InterUlc.Logs.EnumLogs;
 
 namespace InterUlc.Db
 {
+ 
+
   public enum EnumViewDevType {
     RVP = 0,
     ULC2 = 1,
@@ -87,7 +89,7 @@ namespace InterUlc.Db
     public long AllCRvpNet { get; set; }
     public long AllUusiNet { get; set; }
   }
-
+  public delegate void UpdateListObject();
   public class DbReader
   {
     public string __dBIpAddress { get; set; }
@@ -104,7 +106,7 @@ namespace InterUlc.Db
     //string __user_db_pwd = "pgp@ssdb";
     public bool __super_user = false;
     IPHostEntry __host = null;
-
+    public event UpdateListObject UpdateListViewItems;
     public List<OrmDbLogs> GetAllLogsByEvent(int intLogEvet) {
       List<OrmDbLogs> lstOrmDbLogs = null;
       try
@@ -1293,7 +1295,7 @@ namespace InterUlc.Db
           it.SubItems.Add("----");
           it.SubItems.Add("----");
           it.SubItems.Add("----");
-          it.SubItems.Add("0");
+          it.SubItems.Add(item.Value.Rs_Stat.ToString());
           it.SubItems.Add("----");
           it.SubItems.Add(item.Value.Active.ToString());
           it.SubItems.Add(item.Value.IsLight.ToString());
@@ -1374,7 +1376,7 @@ namespace InterUlc.Db
         itNotTrue.ForeColor = color;
       }
     }
-
+    
     public void ViewRes(ListView list, int res, DateTime dt, EnumViewDevType enmDevType, string nameRes)
     {
 
@@ -1392,6 +1394,8 @@ namespace InterUlc.Db
         //}));
       }));
       siform.ShowDialog();
+      if (this.UpdateListViewItems != null)
+        this.UpdateListViewItems();
     }
 
 
