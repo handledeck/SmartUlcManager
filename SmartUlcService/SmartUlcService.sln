@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartUlcService", "SmartUlcService.csproj", "{A10D3B77-0816-4866-92D7-D87C9AE14C62}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D8FBD318-318C-4576-88F3-3E0559554E6B} = {D8FBD318-318C-4576-88F3-3E0559554E6B}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CtmAction", "..\CtmAction\CtmAction.csproj", "{D8FBD318-318C-4576-88F3-3E0559554E6B}"
 EndProject
