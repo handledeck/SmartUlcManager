@@ -2541,7 +2541,7 @@ namespace InterUlc.Db
                   db.Update<MeterInfo>(item);
                   break;
                 case CrudRecord.Delete:
-                  db.Delete<MeterInfo>(item);
+                 int x=db.Delete<MeterInfo>(item);
                   break;
                 default:
                   break;

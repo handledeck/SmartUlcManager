@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-WorkerService1-1689e08c-0df9-4505-a9eb-103b5292458c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Drivers\--DataMsg.cs" />
+    <Compile Remove="Drivers\--EnMera102.cs" />
+    <Compile Remove="Drivers\--Granelectro.cs" />
+    <Compile Remove="ScheduleJob\---UlcScheduleJob.cs" />
+    <Compile Remove="Service\SmartUlcSrv.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ini-parser" Version="2.5.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="NLog" Version="5.0.5" />
+    <PackageReference Include="Quartz" Version="3.5.0" />
+    <PackageReference Include="ServiceStack.OrmLite.PostgreSQL" Version="6.4.0" />
+  </ItemGroup>
+</Project>

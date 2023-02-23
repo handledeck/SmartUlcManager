@@ -362,7 +362,7 @@ namespace UlcWin
       this.__modbusItemList.ClearTable();
       TcpClient client = null;
       byte[] pack = new byte[1024];
-      string command = ZtpProtocol.GetModbusConfig();
+      string command = ZtpProtocol.GetModbusConfig(); 
       byte[] buff = ZtpProtocol.ToBytes(command);
       try
       {

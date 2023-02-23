@@ -860,7 +860,7 @@
     <PostBuildEvent>del /S/Q *.xml *.pdb
 xcopy /S /I /Q /Y /F ..\UlcWin\utils\* .\
 xcopy /S /I /Q /Y /F *.* ..\..\..\Msi\client\soft
-mklink /D ..\..\..\Msi\client\link soft
+rem mklink /D ..\..\..\Msi\client\link soft
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

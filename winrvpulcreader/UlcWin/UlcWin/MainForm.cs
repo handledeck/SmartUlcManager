@@ -2088,9 +2088,19 @@ namespace UlcWin
             __db.EditResRecord(dbItemEditor,this.treeView1.SelectedNode.FullPath, msgMeter, ((UNode)this.treeView1.SelectedNode).Id);
             foreach (var item in ed.__meterInfos)
             {
-              item.ip = ed.txtBoxIpAddress.Text;               
-              item.ctrl_id = iip.Id;
-              item.parent_id = uNode.Id;
+              if (item.crud_record == CrudRecord.None)
+              {
+                item.crud_record = CrudRecord.Edit;
+              } 
+              item.ip = ed.txtBoxIpAddress.Text;
+              item.active = iip.Active;
+              if (item.crud_record == CrudRecord.Add) {
+                
+                item.ctrl_id = iip.Id;
+                item.parent_id = uNode.Id;
+              }
+
+
               //item.crud_record = CrudRecord.Edit;
             }
             __db.SetCrudMeterInfo(ed.__meterInfos);
@@ -2490,7 +2500,7 @@ namespace UlcWin
           try
           {
             sfrm.SetLabelText(string.Format("Открываю соединение с {0}", selItem.Name));
-            client = GetTcpConnection(selItem.Ip, index);// this.GetConnection(selItem.Ip, 10251);
+            client = GetTcpConnection(selItem.Ip, selItem.UType == 0 ? 0 : 1);// index);// this.GetConnection(selItem.Ip, 10251);
             if (client == null)
             {
               throw new Exception("Ошибка соединения");
