@@ -82,7 +82,7 @@ namespace UlcWin.Drivers
               data = data.Skip<byte>(1).ToArray<byte>();
               res = GetMultiVal(data, 1);
               break;
-            case 0x02: //energy start month
+            case 0x0d: //energy start month
               data = data.Skip<byte>(1).ToArray<byte>();
               res = GetMultiVal(data, 1);
               break;

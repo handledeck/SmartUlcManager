@@ -37,6 +37,10 @@ sudo systemctl daemon-reload
 Запустите свой сервис:
 sudo systemctl start ulc.service
 
+Остановка сервиса:
+sudo systemctl stop ulc.service
+
+
 Проверьте статус сервиса:
 sudo systemctl status ulc.service
 
