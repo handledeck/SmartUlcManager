@@ -2251,7 +2251,6 @@ namespace UlcWin
         ItemIp it = (ItemIp)itm.Tag;
         Exception outExp = null;
         List<Log> lstLog = null;
-
         sform.RunAction(new Action(() =>
         {
           try
