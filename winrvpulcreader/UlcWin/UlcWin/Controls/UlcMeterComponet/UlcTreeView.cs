@@ -107,7 +107,7 @@ namespace GettingStartedTree
           foreach (TreeListNodeModel it in item.Nodes)
           {
             all+=1;
-            if (!it.is_true && it.meter_active==1)
+            if (!it.is_true && it.meter_active==1 && it.controller_active==1)
             {
               nData+=1;
             }
@@ -1117,6 +1117,26 @@ namespace GettingStartedTree
             else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318"))
             {
               MeterAllValues meterAllValues= EnMera318BY.GetSumAllValue(item.meter_factory, client);
+              //float value = 0;
+              //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+              //throw new Exception("ошибка получения данных");
+              if (meterAllValues != null)
+              {
+                item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
+              }
+              else
+              {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+            else if (item.meter_type.Contains("СЕ301") || item.meter_type.Contains("CE301"))
+            {
+              MeterAllValues meterAllValues = EnMera301BY.GetSumAllValue(item.meter_factory, client);
               //float value = 0;
               //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
               //throw new Exception("ошибка получения данных");

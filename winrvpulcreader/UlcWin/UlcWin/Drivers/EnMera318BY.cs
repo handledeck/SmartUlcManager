@@ -114,7 +114,6 @@ namespace UlcWin.Drivers
     {
       byte[] num = BitConverter.GetBytes(MeterNum);
       byte[] body = new byte[num.Length + func.Length + 5];
-
       int i = 0;
       body[i++] = 0x06;
       Array.Copy(num, 0, body, i, num.Length);

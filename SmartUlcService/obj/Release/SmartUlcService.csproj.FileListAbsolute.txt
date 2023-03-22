@@ -40,7 +40,6 @@ D:\99\SmartUlcManager\SmartUlcService\bin\Release\System.Text.Encodings.Web.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Release\System.Text.Json.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Release\System.Threading.Tasks.Extensions.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Release\System.ValueTuple.xml
-D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.AssemblyReference.cache
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.CoreCompileInputs.cache
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.CopyComplete
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.exe

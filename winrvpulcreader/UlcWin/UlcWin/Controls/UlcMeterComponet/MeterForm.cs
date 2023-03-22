@@ -87,6 +87,14 @@ namespace UlcWin.ui
                   throw new Exception("ошибка получения данных");
                 item.SubItems[2].Text = value.ToString();
               }
+              else if (item.SubItems[0].Text.Contains("СЕ301") || item.SubItems[0].Text.Contains("CE301"))
+              {
+                string num = item.SubItems[1].Text;
+                float[] value;
+                if (!EnMera301BY.GetValue(EnMera301Fun.EnergyEndDay, num, client, 10000, out value, true))
+                  throw new Exception("ошибка получения данных");
+                item.SubItems[2].Text = value[0].ToString();
+              }
               else if (item.SubItems[0].Text.Contains("СС") || item.SubItems[0].Text.Contains("СС"))
               {
                 string num = item.SubItems[1].Text;

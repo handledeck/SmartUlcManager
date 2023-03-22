@@ -266,6 +266,7 @@
     <Compile Include="DB\OrmResObjects.cs" />
     <Compile Include="DB\UlcStatistic.cs" />
     <Compile Include="Drivers\EnMera102.cs" />
+    <Compile Include="Drivers\EnMera301BY.cs" />
     <Compile Include="Drivers\EnMera318BY.cs" />
     <Compile Include="Drivers\Granelectro.cs" />
     <Compile Include="Drivers\MeterAllValues.cs" />

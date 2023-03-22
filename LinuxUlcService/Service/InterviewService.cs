@@ -15,6 +15,7 @@ using System.Runtime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UlcWin.Drivers;
 using WorkerService1;
 using WorkerService1.Db;
 
@@ -368,6 +369,7 @@ namespace SmartUlcService.Service
                     item.value_month = meterAllValues.EnergySumMonth.Value;
                     item.is_true = true;
                     item.date_time = DateTime.Now;
+                    Worker.__cout_ulc_meters += 1;
                   }
                   else
                   {
@@ -383,6 +385,7 @@ namespace SmartUlcService.Service
                     item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
                     item.is_true = true;
                     item.date_time = DateTime.Now;
+                    Worker.__cout_ulc_meters += 1;
                   }
                   else
                   {
@@ -401,6 +404,26 @@ namespace SmartUlcService.Service
                     item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
                     item.is_true = true;
                     item.date_time = DateTime.Now;
+                    Worker.__cout_ulc_meters += 1;
+                  }
+                  else
+                  {
+                    throw new Exception("ошибка получения данных");
+                  }
+                }
+                else if (item.meter_type.Contains("СЕ301") || item.meter_type.Contains("CE301"))
+                {
+                  MeterAllValues meterAllValues = EnMera301BY.GetSumAllValue(item.meter_factory, client);
+                  //float value = 0;
+                  //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+                  //throw new Exception("ошибка получения данных");
+                  if (meterAllValues != null)
+                  {
+                    item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                    item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                    item.is_true = true;
+                    item.date_time = DateTime.Now;
+                    Worker.__cout_ulc_meters += 1;
                   }
                   else
                   {

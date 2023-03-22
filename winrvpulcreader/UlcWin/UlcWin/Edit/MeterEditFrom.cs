@@ -16,7 +16,7 @@ namespace UlcWin.Edit
   {
 
     public Controls.UlcMeterComponet.MeterInfo __meter = null;
-    string[] __meters = new string[] { "CC-301(Гранэлектро)", "CC-101(Гранэлектро)", "CE102BY(Энергомера)", "CE318BY(Энергомера)" };
+    string[] __meters = new string[] { "CC-301(Гранэлектро)", "CC-101(Гранэлектро)", "CE102BY(Энергомера)", "CE318BY(Энергомера)","CE301BY(Энергомера)" };
     public MeterEditFrom(Controls.UlcMeterComponet.MeterInfo meter)
     {
       __meter = meter;
@@ -35,13 +35,17 @@ namespace UlcWin.Edit
         {
           this.comboBox1.SelectedIndex = 1;
         }
-        else if (__meter.meter_type.StartsWith("СЕ102BY"))
+        else if (__meter.meter_type.StartsWith("CE102BY") || __meter.meter_type.StartsWith("СЕ102BY"))
         {
           this.comboBox1.SelectedIndex = 2;
         }
         else if (__meter.meter_type.StartsWith("CE318BY"))
         {
           this.comboBox1.SelectedIndex = 3;
+        }
+        else if (__meter.meter_type.StartsWith("CE301BY"))
+        {
+          this.comboBox1.SelectedIndex = 4;
         }
         this.txtBoxPlant.Text = __meter.meter_factory;
         this.cbActMeter.Checked = meter.active == 1 ? true : false;
@@ -63,7 +67,7 @@ namespace UlcWin.Edit
         this.btnOk.Enabled = false;
       }
     }
-
+    //https://smartadmin-core.azurewebsites.net/page/register
     public string GetDeviceByIndex() {
       string result = string.Empty;
       switch (this.comboBox1.SelectedIndex)
