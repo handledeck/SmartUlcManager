@@ -51,6 +51,12 @@
     <ApplicationIcon>PCI-card_view.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GMap.NET.Core">
+      <HintPath>lib\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>lib\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="ListViewPrinter, Version=2.7.1.31255, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ObjectListView.2.7.1.5\lib\ListViewPrinter.dll</HintPath>
     </Reference>
@@ -264,6 +270,7 @@
     <Compile Include="DB\OrmMainLogs.cs" />
     <Compile Include="DB\OrmResBody.cs" />
     <Compile Include="DB\OrmResObjects.cs" />
+    <Compile Include="DB\Repair.cs" />
     <Compile Include="DB\UlcStatistic.cs" />
     <Compile Include="Drivers\EnMera102.cs" />
     <Compile Include="Drivers\EnMera301BY.cs" />
@@ -323,6 +330,12 @@
     </Compile>
     <Compile Include="ui\AutoCompleteCombobox.Designer.cs">
       <DependentUpon>AutoCompleteCombobox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\ChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\ChartForm.Designer.cs">
+      <DependentUpon>ChartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\DashContrl.cs">
       <SubType>UserControl</SubType>
@@ -855,6 +868,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

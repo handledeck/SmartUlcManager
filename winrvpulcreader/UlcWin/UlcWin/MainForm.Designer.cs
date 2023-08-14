@@ -129,6 +129,16 @@ namespace UlcWin
       this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
       this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
       this.lblNotExist = new System.Windows.Forms.Label();
+      this.tabRepair = new System.Windows.Forms.TabPage();
+      this.LstViewRepair = new System.Windows.Forms.ListView();
+      this.DateIn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.DateOut = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.RabMesto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Sotrudnik = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Osnovanie = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Zakluchen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Kontragent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Defect = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.LvMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.ctxMenuUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuUpdateSelected = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,6 +157,7 @@ namespace UlcWin
       this.ctxMenuAtCommand = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxNotTrueMeter = new System.Windows.Forms.ToolStripMenuItem();
+      this.mapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsStatusLbl = new System.Windows.Forms.StatusStrip();
       this.tsStsLabelAll = new System.Windows.Forms.ToolStripStatusLabel();
       this.tsStsLblNotTrue = new System.Windows.Forms.ToolStripStatusLabel();
@@ -177,6 +188,7 @@ namespace UlcWin
       this.tabEventController.SuspendLayout();
       this.tabEventCtrl.SuspendLayout();
       this.tsEvent.SuspendLayout();
+      this.tabRepair.SuspendLayout();
       this.LvMenu.SuspendLayout();
       this.tsStatusLbl.SuspendLayout();
       this.SuspendLayout();
@@ -552,6 +564,7 @@ namespace UlcWin
       this.imageList1.Images.SetKeyName(21, "warning");
       this.imageList1.Images.SetKeyName(22, "text_marked.ico");
       this.imageList1.Images.SetKeyName(23, "meter_stop");
+      this.imageList1.Images.SetKeyName(24, "document_gear.png");
       // 
       // tsTreePanel
       // 
@@ -727,6 +740,7 @@ namespace UlcWin
       this.LstViewItm.View = System.Windows.Forms.View.Details;
       this.LstViewItm.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LstViewItm_ColumnClick);
       this.LstViewItm.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LstViewItm_ColumnWidthChanged);
+      this.LstViewItm.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.LstViewItm_DrawSubItem);
       this.LstViewItm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LstViewItm_ItemCheck);
       this.LstViewItm.SelectedIndexChanged += new System.EventHandler(this.LstViewItm_SelectedIndexChanged);
       this.LstViewItm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseClick);
@@ -1075,10 +1089,12 @@ namespace UlcWin
       this.imgTabs.Images.SetKeyName(8, "PCI-card.ico");
       this.imgTabs.Images.SetKeyName(9, "flash.png");
       this.imgTabs.Images.SetKeyName(10, "bookmark.png");
+      this.imgTabs.Images.SetKeyName(11, "document_gear.png");
       // 
       // tabEventController
       // 
       this.tabEventController.Controls.Add(this.tabEventCtrl);
+      this.tabEventController.Controls.Add(this.tabRepair);
       this.tabEventController.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tabEventController.ImageList = this.imgTabs;
       this.tabEventController.Location = new System.Drawing.Point(0, 0);
@@ -1179,6 +1195,79 @@ namespace UlcWin
       this.lblNotExist.Text = "Нет информации";
       this.lblNotExist.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
+      // tabRepair
+      // 
+      this.tabRepair.Controls.Add(this.LstViewRepair);
+      this.tabRepair.ImageIndex = 11;
+      this.tabRepair.Location = new System.Drawing.Point(4, 23);
+      this.tabRepair.Name = "tabRepair";
+      this.tabRepair.Size = new System.Drawing.Size(1144, 205);
+      this.tabRepair.TabIndex = 1;
+      this.tabRepair.Text = "Ремонт";
+      this.tabRepair.UseVisualStyleBackColor = true;
+      // 
+      // LstViewRepair
+      // 
+      this.LstViewRepair.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.DateIn,
+            this.DateOut,
+            this.RabMesto,
+            this.Sotrudnik,
+            this.Osnovanie,
+            this.Zakluchen,
+            this.Kontragent,
+            this.Defect});
+      this.LstViewRepair.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.LstViewRepair.FullRowSelect = true;
+      this.LstViewRepair.HideSelection = false;
+      this.LstViewRepair.Location = new System.Drawing.Point(0, 0);
+      this.LstViewRepair.MultiSelect = false;
+      this.LstViewRepair.Name = "LstViewRepair";
+      this.LstViewRepair.Size = new System.Drawing.Size(1144, 205);
+      this.LstViewRepair.TabIndex = 0;
+      this.LstViewRepair.UseCompatibleStateImageBehavior = false;
+      this.LstViewRepair.View = System.Windows.Forms.View.Details;
+      // 
+      // DateIn
+      // 
+      this.DateIn.Text = "Дата поступления";
+      this.DateIn.Width = 120;
+      // 
+      // DateOut
+      // 
+      this.DateOut.Text = "Дата ремонта";
+      this.DateOut.Width = 111;
+      // 
+      // RabMesto
+      // 
+      this.RabMesto.Text = "Рабочее место";
+      this.RabMesto.Width = 109;
+      // 
+      // Sotrudnik
+      // 
+      this.Sotrudnik.Text = "Сотрудник";
+      this.Sotrudnik.Width = 111;
+      // 
+      // Osnovanie
+      // 
+      this.Osnovanie.Text = "Основание";
+      this.Osnovanie.Width = 118;
+      // 
+      // Zakluchen
+      // 
+      this.Zakluchen.Text = "Заключение";
+      this.Zakluchen.Width = 95;
+      // 
+      // Kontragent
+      // 
+      this.Kontragent.Text = "От кого";
+      this.Kontragent.Width = 199;
+      // 
+      // Defect
+      // 
+      this.Defect.Text = "Дефект";
+      this.Defect.Width = 251;
+      // 
       // LvMenu
       // 
       this.LvMenu.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1200,7 +1289,8 @@ namespace UlcWin
             this.ctxSeparatePing,
             this.ctxMenuAtCommand,
             this.ctxMenuMeter,
-            this.ctxNotTrueMeter});
+            this.ctxNotTrueMeter,
+            this.mapsToolStripMenuItem});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
       this.LvMenu.Size = new System.Drawing.Size(224, 336);
@@ -1317,6 +1407,13 @@ namespace UlcWin
       this.ctxNotTrueMeter.Size = new System.Drawing.Size(223, 22);
       this.ctxNotTrueMeter.Text = "Счетчики недоставерные";
       this.ctxNotTrueMeter.Click += new System.EventHandler(this.ctxNotTrueMeter_Click);
+      // 
+      // mapsToolStripMenuItem
+      // 
+      this.mapsToolStripMenuItem.Name = "mapsToolStripMenuItem";
+      this.mapsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+      this.mapsToolStripMenuItem.Text = "Maps";
+      this.mapsToolStripMenuItem.Click += new System.EventHandler(this.mapsToolStripMenuItem_Click);
       // 
       // tsStatusLbl
       // 
@@ -1441,6 +1538,7 @@ namespace UlcWin
       this.tabEventCtrl.PerformLayout();
       this.tsEvent.ResumeLayout(false);
       this.tsEvent.PerformLayout();
+      this.tabRepair.ResumeLayout(false);
       this.LvMenu.ResumeLayout(false);
       this.tsStatusLbl.ResumeLayout(false);
       this.tsStatusLbl.PerformLayout();
@@ -1575,6 +1673,17 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripLabel EvtIntervalLbl;
     private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+    private System.Windows.Forms.TabPage tabRepair;
+    private System.Windows.Forms.ListView LstViewRepair;
+    private System.Windows.Forms.ColumnHeader DateIn;
+    private System.Windows.Forms.ColumnHeader DateOut;
+    private System.Windows.Forms.ColumnHeader RabMesto;
+    private System.Windows.Forms.ColumnHeader Sotrudnik;
+    private System.Windows.Forms.ColumnHeader Osnovanie;
+    private System.Windows.Forms.ColumnHeader Zakluchen;
+    private System.Windows.Forms.ColumnHeader Kontragent;
+    private System.Windows.Forms.ColumnHeader Defect;
+    private System.Windows.Forms.ToolStripMenuItem mapsToolStripMenuItem;
   }
 }
 

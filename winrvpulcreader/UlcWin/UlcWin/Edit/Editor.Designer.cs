@@ -381,9 +381,9 @@
       this.chBoxStat.CheckState = System.Windows.Forms.CheckState.Checked;
       this.chBoxStat.Location = new System.Drawing.Point(331, 135);
       this.chBoxStat.Name = "chBoxStat";
-      this.chBoxStat.Size = new System.Drawing.Size(141, 17);
+      this.chBoxStat.Size = new System.Drawing.Size(137, 17);
       this.chBoxStat.TabIndex = 24;
-      this.chBoxStat.Text = "Статистстка RS-485";
+      this.chBoxStat.Text = "Статистика RS-485";
       this.chBoxStat.UseVisualStyleBackColor = true;
       // 
       // Editor

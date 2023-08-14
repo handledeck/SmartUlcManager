@@ -63,6 +63,7 @@ namespace UlcWin
     public LoadForm()
     {
       InitializeComponent();
+      
       this.tsStsLabelAll.Visible = false;
       this.tsStsLblNotTrue.Visible = false;
       this.tsStsNetBad.Visible = false;
@@ -1089,6 +1090,12 @@ namespace UlcWin
         ulcMeterTreeView.RecalcStatusLebel();
       }
 
+      /*Скрывает панель ремонта*/
+      if(this.tabEventController.TabPages.Count>1)
+      this.tabEventController.TabPages[1].Parent = null;
+      
+      //this.LoadRapairDevices(null, null);
+      
       //this.splitContainer2.Panel2Collapsed = false;
       //splitContainer2.Panel2.Show();
     }
@@ -2224,7 +2231,24 @@ namespace UlcWin
             //this.LvMenu.Items["tsMenuReadCurrentLog"].Enabled = true;
             this.tsEvent.Enabled = true;
             this.ReadEvent();
-           
+            /*Вкладка ремонта */
+            //LstViewRepair.Items.Clear();
+            //List<Repair> rep = __lstRep.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
+            //if (rep.Count > 0) {
+            //  for (int i = 0; i < rep.Count; i++)
+            //  {
+            //    var rList = LstViewRepair.Items.Add(rep[i].DataRemIn);
+            //    rList.SubItems.Add(rep[i].DataRemOff);
+            //    rList.SubItems.Add(rep[i].RabMesto);
+            //    rList.SubItems.Add(rep[i].Sotrudnik);
+            //    rList.SubItems.Add(rep[i].OsnovanieOfRemont);
+            //    rList.SubItems.Add(rep[i].Zakluch);
+            //    rList.SubItems.Add(rep[i].Kontragent);
+            //    rList.SubItems.Add(rep[i].Defect);
+            //  }
+              
+
+           // }
             // this.tsLblMsg.Text = it.MsgConfig.Message;
           }
         }
@@ -3392,11 +3416,16 @@ namespace UlcWin
       this.checkBoxComboBox1.Text = "Выбор колонок";
     }
 
-    public static string HttpGet(string uri)
+    public static string HttpGet(string uri, NetworkCredential networkCredential=null)
     {
       string content = null;
 
       HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+      if (networkCredential != null) {
+        request.UseDefaultCredentials = true;
+        request.Credentials =networkCredential;// new NetworkCredential("someuser@mycompany.com", "somepassword");
+      }
+      
 
       using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
       using (Stream stream = response.GetResponseStream())
@@ -3886,6 +3915,82 @@ namespace UlcWin
       LstViewItm.Items.AddRange(listViewItem);
       LstViewItm.EndUpdate();
       //// LstViewItm.Items.AddRange(/*c => new ListViewItem(new string[] { c.SubItems[0].Text,c.SubItems[1].Text}));.ToArray());*/
+    }
+
+
+    List<Repair> __lstRep;
+    private void LoadRapairDevices(object sender, EventArgs e)
+    {
+      NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
+      //for (int i = 0; i < this.LstViewItm.Items.Count; i++)
+      //{
+      //ItemIp iip = (ItemIp)this.LstViewItm.Items[i].Tag;
+      if (__lstRep == null)
+      {
+
+        string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
+        Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
+        __lstRep = new List<Repair>(repairs);
+      }
+
+      //var im= ((ItemIp)LstViewItm.SelectedItems[0].Tag).UlcConfig.IMEI;
+      //var xp= lstRep.Where(x => x.imei == im);
+
+      for (int i = 0; i < this.LstViewItm.Items.Count; i++)
+      {
+        ItemIp iip = (ItemIp)this.LstViewItm.Items[i].Tag;
+        if (iip.UlcConfig != null)
+        {
+          if (__lstRep.Any(x => x.imei == iip.UlcConfig.IMEI))
+          {
+            this.LstViewItm.Items[i].UseItemStyleForSubItems = false;
+            this.LstViewItm.Items[i].SubItems[11].ForeColor = Color.Red;
+          }
+        }
+      }
+
+
+      //if (tsk.Length > 2)
+      //{
+      // int x = 0;
+      //}
+      //}
+    }
+
+    private void LstViewItm_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+    {
+      
+      //if ((e.Item.SubItems[11] == e.SubItem))
+      //{
+      //  ItemIp itemIp = (ItemIp)e.Item.Tag;
+      //  if (itemIp.UlcConfig != null)
+      //  {
+      //    if (__lstRep.Any(x => (x.imei.Trim() == itemIp.UlcConfig.IMEI.Trim())))
+      //    {
+      //      e.DrawDefault = false;
+      //      e.DrawBackground();
+      //      e.Graphics.DrawImage(this.imageList1.Images[24], e.SubItem.Bounds.Location);
+      //      e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, new SolidBrush(e.SubItem.ForeColor), (e.SubItem.Bounds.Location.X + this.imageList1.Images[0].Width), e.SubItem.Bounds.Location.Y);
+      //    }
+      //  }
+        
+      //}
+      //else
+      //{
+      //  //e.DrawDefault = true;
+      //}
+    }
+
+    private void mapsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      
+      test.MapForm form= new test.MapForm();
+      foreach (ListViewItem item in this.LstViewItm.Items)
+      {
+        ItemIp itemIp = (ItemIp)item.Tag;
+      }
+      form.SetMarkers(this.LstViewItm.Items);
+      form.ShowDialog();
     }
   }
 
