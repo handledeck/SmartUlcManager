@@ -54,23 +54,29 @@
       this.MeterType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.MeterPlant = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Отмена = new System.Windows.Forms.Button();
+      this.chBoxStat = new System.Windows.Forms.CheckBox();
       this.txtBoxComment = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxIpAddress = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxPhones = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxZtp = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxCity = new UlcWin.ui.TextBoxPlaceHolder();
       this.txtBoxState = new UlcWin.ui.TextBoxPlaceHolder();
-      this.chBoxStat = new System.Windows.Forms.CheckBox();
+      this.txtLong = new System.Windows.Forms.TextBox();
+      this.txtLetit = new System.Windows.Forms.TextBox();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.label10 = new System.Windows.Forms.Label();
+      this.label4 = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
       this.GrpMeter.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
+      this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(410, 471);
+      this.btnOk.Location = new System.Drawing.Point(410, 514);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(91, 27);
       this.btnOk.TabIndex = 4;
@@ -104,7 +110,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(240, 191);
+      this.label2.Location = new System.Drawing.Point(26, 234);
       this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(107, 13);
@@ -115,9 +121,9 @@
       // 
       this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbType.FormattingEnabled = true;
-      this.cbType.Location = new System.Drawing.Point(243, 207);
+      this.cbType.Location = new System.Drawing.Point(26, 250);
       this.cbType.Name = "cbType";
-      this.cbType.Size = new System.Drawing.Size(167, 21);
+      this.cbType.Size = new System.Drawing.Size(203, 21);
       this.cbType.TabIndex = 4;
       // 
       // chBoxActive
@@ -148,7 +154,7 @@
       this.cbFunction.FormattingEnabled = true;
       this.cbFunction.Location = new System.Drawing.Point(25, 207);
       this.cbFunction.Name = "cbFunction";
-      this.cbFunction.Size = new System.Drawing.Size(167, 21);
+      this.cbFunction.Size = new System.Drawing.Size(204, 21);
       this.cbFunction.TabIndex = 5;
       // 
       // label5
@@ -204,9 +210,9 @@
       // GrpMeter
       // 
       this.GrpMeter.Controls.Add(this.tableLayoutPanel1);
-      this.GrpMeter.Location = new System.Drawing.Point(23, 244);
+      this.GrpMeter.Location = new System.Drawing.Point(21, 286);
       this.GrpMeter.Name = "GrpMeter";
-      this.GrpMeter.Size = new System.Drawing.Size(580, 208);
+      this.GrpMeter.Size = new System.Drawing.Size(580, 222);
       this.GrpMeter.TabIndex = 22;
       this.GrpMeter.TabStop = false;
       this.GrpMeter.Text = "Устройства";
@@ -223,7 +229,7 @@
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(574, 188);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(574, 202);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // panel1
@@ -234,7 +240,7 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(463, 3);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(108, 182);
+      this.panel1.Size = new System.Drawing.Size(108, 196);
       this.panel1.TabIndex = 0;
       // 
       // BtnDelete
@@ -282,7 +288,7 @@
       this.lstMeter.MultiSelect = false;
       this.lstMeter.Name = "lstMeter";
       this.lstMeter.ShowGroups = false;
-      this.lstMeter.Size = new System.Drawing.Size(454, 182);
+      this.lstMeter.Size = new System.Drawing.Size(454, 196);
       this.lstMeter.TabIndex = 1;
       this.lstMeter.UseCompatibleStateImageBehavior = false;
       this.lstMeter.View = System.Windows.Forms.View.Details;
@@ -301,12 +307,24 @@
       // 
       this.Отмена.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.Отмена.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.Отмена.Location = new System.Drawing.Point(509, 471);
+      this.Отмена.Location = new System.Drawing.Point(507, 514);
       this.Отмена.Name = "Отмена";
       this.Отмена.Size = new System.Drawing.Size(91, 27);
       this.Отмена.TabIndex = 23;
       this.Отмена.Text = "Отмена";
       this.Отмена.UseVisualStyleBackColor = true;
+      // 
+      // chBoxStat
+      // 
+      this.chBoxStat.AutoSize = true;
+      this.chBoxStat.Checked = true;
+      this.chBoxStat.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chBoxStat.Location = new System.Drawing.Point(331, 135);
+      this.chBoxStat.Name = "chBoxStat";
+      this.chBoxStat.Size = new System.Drawing.Size(137, 17);
+      this.chBoxStat.TabIndex = 24;
+      this.chBoxStat.Text = "Статистика RS-485";
+      this.chBoxStat.UseVisualStyleBackColor = true;
       // 
       // txtBoxComment
       // 
@@ -374,24 +392,60 @@
       this.txtBoxState.Size = new System.Drawing.Size(246, 21);
       this.txtBoxState.TabIndex = 12;
       // 
-      // chBoxStat
+      // txtLong
       // 
-      this.chBoxStat.AutoSize = true;
-      this.chBoxStat.Checked = true;
-      this.chBoxStat.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chBoxStat.Location = new System.Drawing.Point(331, 135);
-      this.chBoxStat.Name = "chBoxStat";
-      this.chBoxStat.Size = new System.Drawing.Size(137, 17);
-      this.chBoxStat.TabIndex = 24;
-      this.chBoxStat.Text = "Статистика RS-485";
-      this.chBoxStat.UseVisualStyleBackColor = true;
+      this.txtLong.Location = new System.Drawing.Point(97, 16);
+      this.txtLong.Name = "txtLong";
+      this.txtLong.Size = new System.Drawing.Size(157, 21);
+      this.txtLong.TabIndex = 25;
+      // 
+      // txtLetit
+      // 
+      this.txtLetit.Location = new System.Drawing.Point(97, 43);
+      this.txtLetit.Name = "txtLetit";
+      this.txtLetit.Size = new System.Drawing.Size(156, 21);
+      this.txtLetit.TabIndex = 26;
+      // 
+      // groupBox1
+      // 
+      this.groupBox1.Controls.Add(this.label10);
+      this.groupBox1.Controls.Add(this.label4);
+      this.groupBox1.Controls.Add(this.txtLong);
+      this.groupBox1.Controls.Add(this.txtLetit);
+      this.groupBox1.Location = new System.Drawing.Point(270, 191);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(322, 80);
+      this.groupBox1.TabIndex = 27;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Координаты";
+      // 
+      // label10
+      // 
+      this.label10.AutoSize = true;
+      this.label10.Location = new System.Drawing.Point(28, 46);
+      this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(53, 13);
+      this.label10.TabIndex = 28;
+      this.label10.Text = "Долгота";
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(29, 19);
+      this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(51, 13);
+      this.label4.TabIndex = 27;
+      this.label4.Text = "Широта";
       // 
       // Editor
       // 
       this.AcceptButton = this.btnOk;
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(613, 510);
+      this.ClientSize = new System.Drawing.Size(613, 550);
+      this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.chBoxStat);
       this.Controls.Add(this.Отмена);
       this.Controls.Add(this.GrpMeter);
@@ -426,6 +480,8 @@
       this.GrpMeter.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -463,5 +519,10 @@
         private System.Windows.Forms.ColumnHeader MeterPlant;
     public System.Windows.Forms.ListView lstMeter;
     public System.Windows.Forms.CheckBox chBoxStat;
+    public System.Windows.Forms.TextBox txtLetit;
+    public System.Windows.Forms.TextBox txtLong;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.Label label4;
   }
 }

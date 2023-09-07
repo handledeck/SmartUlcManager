@@ -32,7 +32,7 @@ namespace UlcWin
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -844,8 +844,8 @@ namespace UlcWin
       // 
       // checkBoxComboBox1
       // 
-      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
+      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
@@ -1294,7 +1294,6 @@ namespace UlcWin
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
       this.LvMenu.Size = new System.Drawing.Size(224, 336);
-      this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
       // 
@@ -1412,7 +1411,7 @@ namespace UlcWin
       // 
       this.mapsToolStripMenuItem.Name = "mapsToolStripMenuItem";
       this.mapsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-      this.mapsToolStripMenuItem.Text = "Maps";
+      this.mapsToolStripMenuItem.Text = "Карта устройств";
       this.mapsToolStripMenuItem.Click += new System.EventHandler(this.mapsToolStripMenuItem_Click);
       // 
       // tsStatusLbl
@@ -1507,7 +1506,7 @@ namespace UlcWin
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      //this.Name = "LoadForm";
+     // this.Name = "LoadForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

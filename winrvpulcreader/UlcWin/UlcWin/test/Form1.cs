@@ -14,14 +14,66 @@ namespace UlcWin.test
   public partial class MapForm : Form
   {
 
-    ListView.ListViewItemCollection __collection;
+    GMap.NET.WindowsForms.GMapOverlay __markersOverlay;
     public MapForm()
     {
       InitializeComponent();
+      __markersOverlay =
+                new GMap.NET.WindowsForms.GMapOverlay(gMapControl1, "marker");
     }
 
-    public void SetMarkers(ListView.ListViewItemCollection __collection) { 
+    //markersOverlay.Markers __markers;
+
+    public void SetMarkers(ListView.ListViewItemCollection __collection) {
+      foreach (ListViewItem item in __collection)
+      {
+
+        ItemIp itemIp = (ItemIp)item.Tag;
+        if (itemIp.longit != -1)
+        {
+
+          if (item.ImageIndex == 21)
+          {
+            GMap.NET.WindowsForms.Markers.GMapMarkerGoogleRed marker =
+                new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleRed(
+                    new GMap.NET.PointLatLng(itemIp.longit, itemIp.letit));
+            
+            marker.ToolTip =
+                new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(marker);
+            marker.ToolTip.Font = new Font("Arial", 10);
+            marker.ToolTipText = " " + Environment.NewLine;
+            marker.ToolTipText = itemIp.Name + Environment.NewLine;
+            marker.ToolTipText += "Время опроса:" + itemIp.Date + Environment.NewLine;
+            marker.ToolTipText += "IP адрес:" + itemIp.UlcConfig.IPOWN + Environment.NewLine;
+            marker.Tag = itemIp;
+            __markersOverlay.Markers.Add(marker);
+          }
+          else
+          {
+            if (itemIp.UlcConfig != null)
+            {
+              GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen marker =
+                new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen(
+                    new GMap.NET.PointLatLng(itemIp.longit, itemIp.letit));
+              marker.ToolTip =
+                  new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(marker);
+              marker.ToolTip.Font = new Font("Arial", 10);
+              marker.ToolTipText = " " + Environment.NewLine;
+              marker.ToolTipText = itemIp.Name + Environment.NewLine;
+              marker.ToolTipText += "Время опроса:" + itemIp.Date + Environment.NewLine;
+
+              marker.ToolTipText += "IP адрес:" + itemIp.UlcConfig.IPOWN + Environment.NewLine;
+
+              marker.Tag = itemIp;
+              __markersOverlay.Markers.Add(marker);
+            }
+          }
+
+        }
+
+      }
       
+
     }
 
     private void gMapControl1_Load(object sender, EventArgs e)
@@ -73,7 +125,7 @@ namespace UlcWin.test
 
       //Указываем, что при загрузке карты будет использоваться 
       //18ти кратной приближение.
-      gMapControl1.Zoom = 18;
+      gMapControl1.Zoom = 11;
 
       //Указываем, что все края элемента управления
       //закрепляются у краев содержащего его элемента
@@ -101,41 +153,45 @@ namespace UlcWin.test
       GMapProvider.Language = GMap.NET.LanguageType.Russian;
       //Создаем новый список маркеров, с указанием компонента 
       //в котором они будут использоваться и названием списка.
-      GMap.NET.WindowsForms.GMapOverlay markersOverlay =
-                new GMap.NET.WindowsForms.GMapOverlay(gMapControl1, "marker");
+      //GMap.NET.WindowsForms.GMapOverlay markersOverlay =
+      //          new GMap.NET.WindowsForms.GMapOverlay(gMapControl1, "marker");
 
-      //Инициализация нового ЗЕЛЕНОГО маркера, с указанием его координат.
-      GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen markerG =
-          new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen(
-          //Указываем координаты Красной площади
-          new GMap.NET.PointLatLng(55.278652, 30.594867));
-      markerG.ToolTip =
-          new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(markerG);
-      //Текст отображаемый при наведении на маркер.
-      markerG.ToolTipText = "Ольгово №1";
-      markerG.Tag = 0;
-      //Инициализация нового КРАСНОГО маркера, с указанием его координат.
-      GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen markerR =
-          new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen(
-          //Указываем координаты Красной площади
-          new GMap.NET.PointLatLng(55.187008, 30.546187));
-      markerR.ToolTip =
-          new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(markerR);
-      //Текст отображаемый при наведении на маркер.
-      markerR.ToolTipText = "Ольгово №2";
-      markerR.Tag = 1;
-      //Добавляем маркеры в список маркеров.
-      // Зеленый маркер
-      markersOverlay.Markers.Add(markerG);
-      //Красный маркет
-      markersOverlay.Markers.Add(markerR);
+      ////Инициализация нового ЗЕЛЕНОГО маркера, с указанием его координат.
+      //GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen markerG =
+      //    new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen(
+      //    //Указываем координаты Красной площади
+      //    new GMap.NET.PointLatLng(55.278652, 30.594867));
+      //markerG.ToolTip =
+      //    new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(markerG);
+      ////Текст отображаемый при наведении на маркер.
+      //markerG.ToolTipText = "Ольгово №1";
+      //markerG.Tag = 0;
+      ////Инициализация нового КРАСНОГО маркера, с указанием его координат.
+      //GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen markerR =
+      //    new GMap.NET.WindowsForms.Markers.GMapMarkerGoogleGreen(
+      //    //Указываем координаты Красной площади
+      //    new GMap.NET.PointLatLng(55.187008, 30.546187));
+      //markerR.ToolTip =
+      //    new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(markerR);
+      ////Текст отображаемый при наведении на маркер.
+      //markerR.ToolTipText = "Ольгово №2";
+      //markerR.Tag = 1;
+      ////Добавляем маркеры в список маркеров.
+      //// Зеленый маркер
+      //markersOverlay.Markers.Add(markerG);
+      ////Красный маркет
+      //markersOverlay.Markers.Add(markerR);
       //Добавляем в компонент, список маркеров.
-      gMapControl1.Overlays.Add(markersOverlay);
+      gMapControl1.Overlays.Add(__markersOverlay);
     }
 
     private void gMapControl1_OnMarkerClick(GMap.NET.WindowsForms.GMapMarker item, MouseEventArgs e)
     {
-      item.ToolTipText = item.Tag.ToString();
+      ItemIp itemIp = (ItemIp)item.Tag;
+      //if (e.Button ==  MouseButtons.Right) {
+      //int x = 0;
+      //}
+      
     }
   }
 }

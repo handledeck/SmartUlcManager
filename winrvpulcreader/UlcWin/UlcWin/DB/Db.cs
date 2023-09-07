@@ -1049,6 +1049,8 @@ namespace InterUlc.Db
         string comment;
         string meters;
         int rs_stat;
+        float longit = -1;
+        float letit = -1;
         if (dr_ip["ip_address"].GetType() == typeof(DBNull))
           ip = "---";
         else
@@ -1088,6 +1090,10 @@ namespace InterUlc.Db
             meters = (string)dr_ip["meters"];
           }
         }
+        if (dr_ip["longit"].GetType() != typeof(DBNull))
+          longit = (float)dr_ip["longit"];
+        if (dr_ip["letit"].GetType() != typeof(DBNull))
+          letit = (float)dr_ip["letit"];
         //if (dr_ip["meter_type"].GetType() != typeof(DBNull))
         //{
         //  meter_factory = (string)dr_ip["meter_factory"];
@@ -1107,7 +1113,9 @@ namespace InterUlc.Db
           IsLight = isLight,
           Comments = comment,
           Meters = meters,
-          Rs_Stat = rs_stat
+          Rs_Stat = rs_stat,
+          longit=longit,
+          letit=letit
           //MeterFactory=meter_factory
 
         };
@@ -2047,7 +2055,7 @@ namespace InterUlc.Db
 
     public long AddNewResRecord(string name, string ipsddress, string phone,
       int node_kind__id, int parent_id, UTypeController type_controller, int active, int light, string comment, string full_path,
-      string meterMsg)
+      string meterMsg,float longit,float letit)
     {
       var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
       using (var db = dbFactory.Open())
@@ -2062,6 +2070,8 @@ namespace InterUlc.Db
             light = light,
             node_kind_id = node_kind__id,
             parent_id = parent_id,
+             longit=longit,
+             letit=letit
           }, selectIdentity: true);
           db.Insert<OrmDbInfo>(new OrmDbInfo()
           {
@@ -2321,7 +2331,9 @@ namespace InterUlc.Db
               light = dbItemEditor.IsLight,
               comments = dbItemEditor.Comment,
               parent_id=parent_id,
-               node_kind_id=3
+               node_kind_id=3,
+                letit=dbItemEditor.letit,
+                longit=dbItemEditor.longit
             });
             
             result = db.Update<OrmDbInfo>(new OrmDbInfo()

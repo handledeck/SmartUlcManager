@@ -26,5 +26,7 @@ namespace UlcWin.DB
     public int? active { get; set; }
     public int? light { get; set; }
     public string  comments { get; set; }
+    public float longit { get; set; }
+    public float letit { get; set; }
   }
 }

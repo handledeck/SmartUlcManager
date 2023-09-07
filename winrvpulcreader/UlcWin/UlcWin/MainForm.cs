@@ -2036,6 +2036,95 @@ namespace UlcWin
       }
     }
 
+    private void TsMenuItemDelete_Click(object sender, EventArgs e)
+    {
+      ItemIp itm = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
+      DialogResult result = MessageBox.Show("Удалить контроллер из базы данных?", "Удаление записи",
+        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      if (result == DialogResult.Yes)
+      {
+        //string msg=System.Text.Json.JsonSerializer.Serialize(itm, typeof(ItemIp), __db.GetJsonOption());
+        int res = __db.DeleteResRecord(itm.Id, itm.Name, EnLogEvt.DELETE_ITEM, this.treeView1.SelectedNode.FullPath);
+        if (res == 1)
+        {
+          this.tsUpdate_Click(null, null);
+          MessageBox.Show("Запись удалена успешно", "Удаление записи", MessageBoxButtons.OK,
+              MessageBoxIcon.Information);
+        }
+        else
+        {
+          MessageBox.Show("Ошибка удаления записи", "Удаление записи", MessageBoxButtons.OK,
+              MessageBoxIcon.Error);
+        }
+      }
+
+
+    }
+
+    private void TsMenuAdd_Click(object sender, EventArgs e)
+    {
+
+      try
+      {
+        if (this.__sel_node != null)
+        {
+          if (this.__sel_node.IsView)
+          {
+
+            var cc = this.__sel_node;
+            Editor ed = new Editor(this.__db, true, null);
+            ed.Text = "Новая запись";
+            //ed.cbType.SelectedIndex = this.tsComboBoxDev.SelectedIndex;
+            DialogResult result = ed.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+              string msgMeter = string.Empty;
+              string name = RemChar(ed.txtBoxState.Text) + " ," + RemChar(ed.txtBoxCity.Text) + " ," + RemChar(ed.txtBoxZtp.Text);
+              int index = CheckForPresentRecord(ed.txtBoxIpAddress.Text, name);
+              if (index == -1)
+              {
+                //List<Meters> lmt = new List<Meters>();
+                //foreach (ListViewItem eIt in ed.lstMeter.Items)
+                //{
+                //  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
+                //}
+                //msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
+                int ind = ed.cbType.SelectedIndex;
+                int active = ed.chBoxActive.Checked ? 1 : 0;
+                int light = ed.cbFunction.SelectedIndex;
+
+                long idRec = __db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
+                  3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
+                  this.treeView1.SelectedNode.FullPath, msgMeter,Convert.ToSingle(ed.txtLong.Text), Convert.ToSingle(ed.txtLetit.Text));
+                if (ed.__meterInfos != null)
+                {
+                  foreach (var item in ed.__meterInfos)
+                  {
+                    item.parent_id = this.__sel_node.Id;
+                    item.ctrl_id = (int)idRec;
+                  }
+                  __db.SetCrudMeterInfo(ed.__meterInfos);
+                }
+                this.tsUpdate_Click(null, null);
+              }
+              else
+              {
+                throw new Exception();
+              }
+            }
+            else
+            {
+              return;
+            }
+          }
+        }
+        MessageBox.Show("Запись добавлена", "Добавление записи", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
+      catch (Exception exp)
+      {
+        MessageBox.Show("Запись с таким именем и ip адресом уже есть", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
     private void tsMenuItChange_Click(object sender, EventArgs e)
     {
       if (this.LstViewItm.SelectedItems.Count != 0)
@@ -2062,6 +2151,8 @@ namespace UlcWin
             ed.txtBoxCity.Text = arrName[1].Trim();
           if (arrName.Length > 2)
             ed.txtBoxZtp.Text = arrName[2].Trim();
+          ed.txtLong.Text = iip.longit.ToString();
+          ed.txtLetit.Text = iip.letit.ToString();
           DialogResult result = ed.ShowDialog();
           if (result == DialogResult.OK)
           {
@@ -2083,7 +2174,9 @@ namespace UlcWin
               IsActive = ed.chBoxActive.Checked == true ? 1 : 0,
               IsLight = ed.cbFunction.SelectedIndex,
               UType = ed.cbType.SelectedIndex == 0 ? 0 : 1,
-              rs_stat = ed.chBoxStat.Checked == true ? 1 : 0
+              rs_stat = ed.chBoxStat.Checked == true ? 1 : 0,
+              longit=Convert.ToSingle(ed.txtLong.Text),
+              letit= Convert.ToSingle(ed.txtLetit.Text)
             };
             iip.Name = dbItemEditor.Name;
             iip.Ip = dbItemEditor.Ip;
@@ -2159,30 +2252,7 @@ namespace UlcWin
       ulcMeterTreeView.UpdateForm();
     }
 
-    private void TsMenuItemDelete_Click(object sender, EventArgs e)
-    {
-      ItemIp itm = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
-      DialogResult result = MessageBox.Show("Удалить контроллер из базы данных?", "Удаление записи",
-        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-      if (result == DialogResult.Yes)
-      {
-        //string msg=System.Text.Json.JsonSerializer.Serialize(itm, typeof(ItemIp), __db.GetJsonOption());
-        int res = __db.DeleteResRecord(itm.Id, itm.Name, EnLogEvt.DELETE_ITEM, this.treeView1.SelectedNode.FullPath);
-        if (res == 1)
-        {
-          this.tsUpdate_Click(null, null);
-          MessageBox.Show("Запись удалена успешно", "Удаление записи", MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-        }
-        else
-        {
-          MessageBox.Show("Ошибка удаления записи", "Удаление записи", MessageBoxButtons.OK,
-              MessageBoxIcon.Error);
-        }
-      }
-
-
-    }
+    
 
     private void tsUpdateItemCurrent_Click(object sender, EventArgs e)
     {
@@ -2410,70 +2480,7 @@ namespace UlcWin
       return str;
     }
 
-    private void TsMenuAdd_Click(object sender, EventArgs e)
-    {
-
-      try
-      {
-        if (this.__sel_node != null)
-        {
-          if (this.__sel_node.IsView)
-          {
-
-            var cc = this.__sel_node;
-            Editor ed = new Editor(this.__db, true, null);
-            ed.Text = "Новая запись";
-            //ed.cbType.SelectedIndex = this.tsComboBoxDev.SelectedIndex;
-            DialogResult result = ed.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-              string msgMeter = string.Empty;
-              string name = RemChar(ed.txtBoxState.Text) + " ," + RemChar(ed.txtBoxCity.Text) + " ," + RemChar(ed.txtBoxZtp.Text);
-              int index = CheckForPresentRecord(ed.txtBoxIpAddress.Text, name);
-              if (index == -1)
-              {
-                //List<Meters> lmt = new List<Meters>();
-                //foreach (ListViewItem eIt in ed.lstMeter.Items)
-                //{
-                //  lmt.Add(new Meters() { meter_type = eIt.Text, meter_factory = eIt.SubItems[1].Text });
-                //}
-                //msgMeter = System.Text.Json.JsonSerializer.Serialize(lmt.ToArray(), typeof(Meters[]), DbLogMsg.GetSerializeOption());
-                int ind = ed.cbType.SelectedIndex;
-                int active = ed.chBoxActive.Checked ? 1 : 0;
-                int light = ed.cbFunction.SelectedIndex;
-
-                long idRec=__db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
-                  3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
-                  this.treeView1.SelectedNode.FullPath, msgMeter);
-                if (ed.__meterInfos != null)
-                {
-                  foreach (var item in ed.__meterInfos)
-                  {
-                    item.parent_id = this.__sel_node.Id;
-                    item.ctrl_id = (int)idRec;
-                  }
-                  __db.SetCrudMeterInfo(ed.__meterInfos);
-                }
-                this.tsUpdate_Click(null, null);
-              }
-              else
-              {
-                throw new Exception();
-              }
-            }
-            else
-            {
-              return;
-            }
-          }
-        }
-        MessageBox.Show("Запись добавлена", "Добавление записи", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
-      catch (Exception exp)
-      {
-        MessageBox.Show("Запись с таким именем и ip адресом уже есть", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
-    }
+   
 
     TcpClient GetTcpConnection(string ip, int index)
     {
@@ -2781,10 +2788,6 @@ namespace UlcWin
       this.ReinitFind();
     }
 
-    private void LvMenu_Opening(object sender, CancelEventArgs e)
-    {
-
-    }
 
     private void getIdToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -3985,12 +3988,14 @@ namespace UlcWin
     {
       
       test.MapForm form= new test.MapForm();
-      foreach (ListViewItem item in this.LstViewItm.Items)
-      {
-        ItemIp itemIp = (ItemIp)item.Tag;
-      }
+     
       form.SetMarkers(this.LstViewItm.Items);
       form.ShowDialog();
+    }
+
+    private void mapsCoordinatesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+
     }
   }
 

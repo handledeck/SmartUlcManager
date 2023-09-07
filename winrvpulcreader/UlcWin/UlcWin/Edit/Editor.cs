@@ -261,5 +261,7 @@ namespace UlcWin.Edit
     public int IsLight { get; set; }
     public string Comment { get; set; }
     public int rs_stat { get; set; }
+    public float longit { get; set; }
+    public float letit { get; set; }
   }
 }
