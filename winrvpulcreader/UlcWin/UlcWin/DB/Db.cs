@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -104,6 +106,7 @@ namespace InterUlc.Db
     public int __notTrue = 0;
     //string __user_db = "postgres";
     //string __user_db_pwd = "pgp@ssdb";
+    public List<Repair> __listRapair;
     public bool __super_user = false;
     IPHostEntry __host = null;
     public event UpdateListObject UpdateListViewItems;
@@ -114,7 +117,7 @@ namespace InterUlc.Db
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(this.__connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          lstOrmDbLogs= db.Select<OrmDbLogs>(x=>x.log_event==intLogEvet);
+          lstOrmDbLogs = db.Select<OrmDbLogs>(x => x.log_event == intLogEvet);
           return lstOrmDbLogs;
         }
       }
@@ -125,7 +128,7 @@ namespace InterUlc.Db
 
     }
 
-   public void SetItemParent(List<ItemIp> itemIps, int new_parent) {
+    public void SetItemParent(List<ItemIp> itemIps, int new_parent) {
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(this.__connection, PostgreSqlDialect.Provider);
       using (var db = dbFactory.Open())
       {
@@ -141,13 +144,13 @@ namespace InterUlc.Db
           int result = db.Update<OrmDbNodes>(ormDbNodes);
           int res = db.Update<MeterInfo>(meterInfos.ToArray());
         }
-       
+
       }
       //int x = 0;
     }
 
-    void GetNodeInfo() { 
-    
+    void GetNodeInfo() {
+
     }
 
     public bool DbTestConnection()
@@ -200,19 +203,19 @@ namespace InterUlc.Db
         cmd.CommandText = sql;
         ulcStatistic.AllUlc = (long)cmd.ExecuteScalar();
         //Всего не на связи
-        sql = string.Format("select count(mi.id) from main_nodes mi "+
-                            "left join main_ctrlinfo mc on mc.id = mi.id "+
-                            "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' "+
+        sql = string.Format("select count(mi.id) from main_nodes mi " +
+                            "left join main_ctrlinfo mc on mc.id = mi.id " +
+                            "left join main_ctrldata mc2 on mc2.ctrl_id = mc.id and mc2.\"current_time\" > '{0}' " +
                             "where(mc.unit_type_id = 1 or mc.unit_type_id = 0)  and mc2.id isnull and mi.active = 1", DateTime.Now.ToString("yyyy-MM-dd"));
         //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id =mc.ctrl_id and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
         cmd.CommandText = sql;
         long nn = (long)cmd.ExecuteScalar();
         ulcStatistic.NetErrorAll = nn;// ulcStatistic.All - nn;
-        //Всего нет связи по RS
+                                      //Всего нет связи по RS
         /* Учитывая активность по RS*/
-         sql=string.Format("WITH temporaryTable(id) as "+
-          "(SELECT * from main_ctrlinfo mc where mc.unit_type_id=1 and mc.rs_stat=1) "+
-           "select count(md.id) FROM temporaryTable, main_ctrldata md where temporaryTable.id=md.ctrl_id and md.\"current_time\" > '{0}' and (md.cdin >>7)=0",  DateTime.Now.ToString("yyyy-MM-dd"));
+        sql = string.Format("WITH temporaryTable(id) as " +
+         "(SELECT * from main_ctrlinfo mc where mc.unit_type_id=1 and mc.rs_stat=1) " +
+          "select count(md.id) FROM temporaryTable, main_ctrldata md where temporaryTable.id=md.ctrl_id and md.\"current_time\" > '{0}' and (md.cdin >>7)=0", DateTime.Now.ToString("yyyy-MM-dd"));
 
 
         //sql = string.Format("select count(*) from main_ctrlinfo mn ,main_ctrldata mc where mn.id = mc.ctrl_id and mn.unit_type_id =1 and (mc.cdin >>7)=0 and mc.\"current_time\" >'{0}'", DateTime.Now.ToString("yyyy-MM-dd"));
@@ -474,8 +477,8 @@ namespace InterUlc.Db
       string sql = string.Format("SELECT *FROM pg_catalog.pg_user where usename='{0}'", this.__DbUserName);
       try
       {
-        cmd.CommandText=sql;
-        NpgsqlDataReader rd=(NpgsqlDataReader)cmd.ExecuteReader();
+        cmd.CommandText = sql;
+        NpgsqlDataReader rd = (NpgsqlDataReader)cmd.ExecuteReader();
         if (rd.HasRows)
         {
           if (rd.Read()) {
@@ -500,7 +503,7 @@ namespace InterUlc.Db
       NpgsqlConnection consql = null;
       try
       {
-        
+
         this.__connection = string.Format("Host={0};Port={3};Username={1};Password={2};Database=ctrl_mon_dev",
        this.__dBIpAddress, this.__DbUserName, this.__DbPassword, 5432);
         var sql = string.Format("select * from main_user where usr='{0}'", this.__DbUserName);
@@ -555,7 +558,7 @@ namespace InterUlc.Db
           }
         }
       }
-      catch (Exception exp) 
+      catch (Exception exp)
       {
         return false;
       }
@@ -594,8 +597,8 @@ namespace InterUlc.Db
       return ulcUserList;
     }
 
-    void GetNodeItemInfo() { 
-      
+    void GetNodeItemInfo() {
+
     }
 
     public bool CheckForUserRecord(string userName)//*int id, string user, string pwd, string comment, string items*/)
@@ -654,7 +657,7 @@ namespace InterUlc.Db
       return meterInfos;
     }
 
-    public int UpdateUserRecord(UlcUser ulcUser,string old_name_user)//*int id, string user, string pwd, string comment, string items*/)
+    public int UpdateUserRecord(UlcUser ulcUser, string old_name_user)//*int id, string user, string pwd, string comment, string items*/)
     {
       try
       {
@@ -663,11 +666,11 @@ namespace InterUlc.Db
         {
           IDbCommand cmd = db.CreateCommand();
           DeleteUserDb(cmd, old_name_user);
-          SetGrandUser(ulcUser,cmd);
+          SetGrandUser(ulcUser, cmd);
           string lvl = DBAuthUtils.Encrypt(((int)ulcUser.AccsessLavel).ToString(), ulcUser.User);
           var sql = string.Format("update public.main_user SET usr='{0}',pwd='{5}', items='{1}', \"comment\"='{2}', level={4} WHERE id = {3};"
-                  , ulcUser.User, ulcUser.NodesString, ulcUser.Comment, ulcUser.Id, (int)ulcUser.AccsessLavel,lvl);
-          
+                  , ulcUser.User, ulcUser.NodesString, ulcUser.Comment, ulcUser.Id, (int)ulcUser.AccsessLavel, lvl);
+
           cmd.CommandText = sql;
           int rowf = cmd.ExecuteNonQuery();
           return rowf;
@@ -690,7 +693,7 @@ namespace InterUlc.Db
         cmd.CommandText = sql;
         x = cmd.ExecuteNonQuery();
       }
-      catch(Exception exp) {
+      catch (Exception exp) {
         int x = 0;
       }
     }
@@ -746,7 +749,7 @@ namespace InterUlc.Db
         cmd.CommandText = string.Format("CREATE USER \"{0}\" WITH PASSWORD '{1}'" +
             " NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN NOREPLICATION NOBYPASSRLS CONNECTION LIMIT -1",
             ulcUser.User, ulcUser.Pwd);
-        int result=cmd.ExecuteNonQuery();
+        int result = cmd.ExecuteNonQuery();
         //if (ulcUser.AccsessLavel == EnumAccsesLevel.Read)
         //{
         //  cmd.CommandText = string.Format("GRANT ulc_read TO \"{0}\";", ulcUser.User);
@@ -754,14 +757,14 @@ namespace InterUlc.Db
         //}
         //else if (ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
         //{
-          cmd.CommandText = string.Format("GRANT ulc_read_write TO \"{0}\";", ulcUser.User);
-          result=cmd.ExecuteNonQuery();
-       // }
+        cmd.CommandText = string.Format("GRANT ulc_read_write TO \"{0}\";", ulcUser.User);
+        result = cmd.ExecuteNonQuery();
+        // }
         cmd.CommandText = string.Format("ALTER ROLE {0} with password '{1}'", ulcUser.User, ulcUser.Pwd);
-        result=cmd.ExecuteNonQuery();
+        result = cmd.ExecuteNonQuery();
 
       }
-      catch (Exception e){
+      catch (Exception e) {
         int x = 0;
       }
     }
@@ -777,12 +780,12 @@ namespace InterUlc.Db
         var cmd = new NpgsqlCommand(sql, consql);
         SetGrandUser(ulcUser, cmd);
         //string usr = System.Text.Json.JsonSerializer.Serialize(ulcUser, 
-          //typeof(UlcUser), DbLogMsg.GetSerializeOption());
+        //typeof(UlcUser), DbLogMsg.GetSerializeOption());
         //string lvl=AesOperation.CreateEncrypt(ulcUser.User, ulcUser.AccsessLavel.ToString());
         string lvl = DBAuthUtils.Encrypt(((int)ulcUser.AccsessLavel).ToString(), ulcUser.User);
         sql = "INSERT INTO main_user(usr,pwd, items,comment,level) " +
             "VALUES(@usr, @pwd, @items,@comment,@level) RETURNING id";
-       
+
         //cmd = new NpgsqlCommand(sql, consql);
         cmd.Parameters.AddWithValue("usr", ulcUser.User);
         cmd.Parameters.AddWithValue("pwd", lvl);
@@ -791,7 +794,7 @@ namespace InterUlc.Db
         cmd.Parameters.AddWithValue("level", (short)ulcUser.AccsessLavel);
         cmd.CommandText = sql;
         int rowf = (int)cmd.ExecuteScalar();
-        
+
         consql.Close();
         return rowf;
       }
@@ -808,20 +811,20 @@ namespace InterUlc.Db
       {
         var consql = new NpgsqlConnection(this.__connection);
         consql.Open();
-        
+
         sql = string.Format("UPDATE public.main_nodes SET \"name\"=\'{0}\' WHERE id={1}", name, idRecord);
         var cmd = new NpgsqlCommand(sql, consql);
         int rowf = cmd.ExecuteNonQuery();
         DbLogMsg dbLogMsg = GetDbObjectPath(idRecord, consql, sqlTreeNodes);
         consql.Close();
-        
+
         string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-        LogsInsertEvent(EnLogEvt.EDIT_NODE, msg,idRecord);
+        LogsInsertEvent(EnLogEvt.EDIT_NODE, msg, idRecord);
         return rowf;
       }
       catch (Exception e)
       {
-        MessageBox.Show(e.Message,"Ошибка редактирования",MessageBoxButtons.OK,MessageBoxIcon.Error);
+        MessageBox.Show(e.Message, "Ошибка редактирования", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return -1;
       }
     }
@@ -848,7 +851,7 @@ namespace InterUlc.Db
             idR = db.Insert<OrmDbNodes>(ormDbNodes, selectIdentity: true);
             DbLogMsg dbLogMsg = GetDbObjectPath((int)idR.Value, db, sqlTreeNodes);
             string msg = System.Text.Json.JsonSerializer.Serialize(dbLogMsg, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
-            LogsInsertEvent(EnLogEvt.ADD_NODE, msg,(int)idR);
+            LogsInsertEvent(EnLogEvt.ADD_NODE, msg, (int)idR);
             iTrz.Commit();
           }
 
@@ -861,7 +864,7 @@ namespace InterUlc.Db
           iTrz.Rollback();
         return null;
       }
-   
+
 
 
       //  var consql = new NpgsqlConnection(this.__connection);
@@ -1000,6 +1003,63 @@ namespace InterUlc.Db
       }
     }
 
+    public static string HttpGet(string uri, NetworkCredential networkCredential = null)
+    {
+      string content = null;
+
+      HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+      if (networkCredential != null)
+      {
+        request.UseDefaultCredentials = true;
+        request.Credentials = networkCredential;// new NetworkCredential("someuser@mycompany.com", "somepassword");
+      }
+      try
+      {
+        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        using (Stream stream = response.GetResponseStream())
+        using (StreamReader sr = new StreamReader(stream))
+        {
+          content = sr.ReadToEnd();
+        }
+      }
+      catch { }
+      return content;
+    }
+
+    public void LoadRapairDevices()
+    {
+      NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
+      //for (int i = 0; i < this.LstViewItm.Items.Count; i++)
+      //{
+      //ItemIp iip = (ItemIp)this.LstViewItm.Items[i].Tag;
+      if (__listRapair == null)
+      {
+        string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
+        if (!string.IsNullOrEmpty(tsk))
+        {
+          Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
+          __listRapair = new List<Repair>(repairs);
+        }
+        else
+        {
+          MessageBox.Show("Нет соединения с базой данных о ремонте", "Ошибка", MessageBoxButtons.OK);
+          return;
+        }
+      }
+    }
+
+    private bool FindRepairDevice(ItemIp itemIp)
+    {
+      if (itemIp.UlcConfig != null)
+      {
+        if (__listRapair.Any(x => (x.imei.Trim() == itemIp.UlcConfig.IMEI.Trim())))
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
     public int __net_isTrue = 0;
     public void _ViewRes(ListView list, int res, DateTime dt, EnumViewDevType enmDevType)
     {
@@ -1132,6 +1192,8 @@ namespace InterUlc.Db
       }
 
       List<ListViewItem> lstRes = new List<ListViewItem>();
+      LoadRapairDevices();
+      
       foreach (var item in dlst)
       {
         sql_ip = string.Format("SELECT* FROM main_ctrlcurrent mc where mc.ctrl_id ={0} and mc.body <> '' order by mc.\"current_time\" desc limit 1",
@@ -1145,9 +1207,11 @@ namespace InterUlc.Db
 
         ListViewItem it = new ListViewItem(DateTime.MinValue.ToString("dd.MM.yy HH:mm:ss"));
         //it.SubItems.Add(item.Value.Name);
+
         string[] aTp = item.Value.Name.Split(',');
         string tp = aTp.Length == 3 ? aTp[2].Trim() : "---";
         it.SubItems.Add(string.Format("{0}({1})", aTp[0], aTp[1].Trim()));
+        
         it.SubItems.Add(tp);
         it.SubItems.Add(item.Value.Ip);
         if (item.Value.Phone.StartsWith("---"))
@@ -1246,6 +1310,12 @@ namespace InterUlc.Db
           {
             long emai;
             bool bp = long.TryParse(uc.IMEI, out emai);
+            if (FindRepairDevice(item.Value)) {
+              it.UseItemStyleForSubItems = false;
+              //it.SubItems[1].BackColor = Color.Yellow;
+              //it.SubItems[1].ForeColor = Color.Brown;
+              it.SubItems[1].Font = new Font(it.SubItems[1].Font, FontStyle.Bold);
+            }
             //GetIMAIChanged(item.Key, emai);
             try
             {
@@ -1393,6 +1463,7 @@ namespace InterUlc.Db
       {
         //list.BeginInvoke(new Action(()=> {
         //  list.Visible = false;        }));
+        
         siform.SetLabelText(string.Format("Запрашиваю данные: {0}", nameRes));
         _ViewRes(list, res, dt, enmDevType);
         siform.DialogResult = DialogResult.OK;

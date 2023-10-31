@@ -44,3 +44,4 @@ D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.CoreCom
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.CopyComplete
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.exe
 D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.pdb
+D:\99\SmartUlcManager\SmartUlcService\obj\Release\SmartUlcService.csproj.AssemblyReference.cache

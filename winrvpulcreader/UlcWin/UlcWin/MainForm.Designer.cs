@@ -32,7 +32,7 @@ namespace UlcWin
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +79,7 @@ namespace UlcWin
       this.tabControllers = new System.Windows.Forms.TabPage();
       this.LstViewItm = new UlcWin.Controls.ListViewHeaderMenu.ListViewMenuHeaderControl(this.components);
       this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Names = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.ztp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -707,7 +707,7 @@ namespace UlcWin
       this.LstViewItm.CheckBoxes = true;
       this.LstViewItm.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Id,
-            this.Name,
+            this.Names,
             this.ztp,
             this.Ip,
             this.phone,
@@ -740,7 +740,6 @@ namespace UlcWin
       this.LstViewItm.View = System.Windows.Forms.View.Details;
       this.LstViewItm.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LstViewItm_ColumnClick);
       this.LstViewItm.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LstViewItm_ColumnWidthChanged);
-      this.LstViewItm.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.LstViewItm_DrawSubItem);
       this.LstViewItm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LstViewItm_ItemCheck);
       this.LstViewItm.SelectedIndexChanged += new System.EventHandler(this.LstViewItm_SelectedIndexChanged);
       this.LstViewItm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseClick);
@@ -751,10 +750,10 @@ namespace UlcWin
       this.Id.Text = "Дата";
       this.Id.Width = 155;
       // 
-      // Name
+      // Names
       // 
-      this.Name.Text = "Имя объекта";
-      this.Name.Width = 264;
+      this.Names.Text = "Имя объекта";
+      this.Names.Width = 264;
       // 
       // ztp
       // 
@@ -844,8 +843,8 @@ namespace UlcWin
       // 
       // checkBoxComboBox1
       // 
-      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
+      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
@@ -1150,7 +1149,7 @@ namespace UlcWin
       // comm
       // 
       this.comm.Text = "Сообщение";
-      this.comm.Width = 534;
+      this.comm.Width = 638;
       // 
       // tsEvent
       // 
@@ -1203,7 +1202,7 @@ namespace UlcWin
       this.tabRepair.Name = "tabRepair";
       this.tabRepair.Size = new System.Drawing.Size(1144, 205);
       this.tabRepair.TabIndex = 1;
-      this.tabRepair.Text = "Ремонт";
+      this.tabRepair.Text = "Данные о ремонте контроллера";
       this.tabRepair.UseVisualStyleBackColor = true;
       // 
       // LstViewRepair
@@ -1294,6 +1293,7 @@ namespace UlcWin
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
       this.LvMenu.Size = new System.Drawing.Size(224, 336);
+      this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
       // 
@@ -1506,7 +1506,7 @@ namespace UlcWin
       this.Controls.Add(this.tsStatusLbl);
       this.Controls.Add(this.toolStrip1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-     // this.Name = "LoadForm";
+      this.Name = "LoadForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -1552,7 +1552,7 @@ namespace UlcWin
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.TreeView treeView1;
     private System.Windows.Forms.ColumnHeader Id;
-    private System.Windows.Forms.ColumnHeader Name;
+    private System.Windows.Forms.ColumnHeader Names;
     private System.Windows.Forms.ColumnHeader Ip;
     private System.Windows.Forms.ColumnHeader phone;
     private System.Windows.Forms.ColumnHeader UType;

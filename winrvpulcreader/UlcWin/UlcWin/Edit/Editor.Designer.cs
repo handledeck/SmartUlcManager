@@ -398,6 +398,7 @@
       this.txtLong.Name = "txtLong";
       this.txtLong.Size = new System.Drawing.Size(157, 21);
       this.txtLong.TabIndex = 25;
+      this.txtLong.Text = "0";
       // 
       // txtLetit
       // 
@@ -405,6 +406,7 @@
       this.txtLetit.Name = "txtLetit";
       this.txtLetit.Size = new System.Drawing.Size(156, 21);
       this.txtLetit.TabIndex = 26;
+      this.txtLetit.Text = "0";
       // 
       // groupBox1
       // 

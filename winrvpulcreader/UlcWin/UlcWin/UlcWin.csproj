@@ -879,6 +879,8 @@ xcopy /S /I /Q /Y /F ..\UlcWin\utils\* .\
 xcopy /S /I /Q /Y /F *.* ..\..\..\Msi\client\soft
 rem mklink /D ..\..\..\Msi\client\link soft
 del /S/Q ..\..\..\Msi\client\soft\ZtpConfig.exe
+del /S/Q ..\..\..\Msi\client\soft\db_file.bin
+rem del /S/Q ..\..\..\Msi\client\soft\appdevice.bin
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

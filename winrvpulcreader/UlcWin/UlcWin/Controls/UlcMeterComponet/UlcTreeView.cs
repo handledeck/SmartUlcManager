@@ -1114,7 +1114,8 @@ namespace GettingStartedTree
                 throw new Exception("ошибка получения данных");
               }
             }
-            else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318"))
+            else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318") ||
+              item.meter_type.Contains("СЕ208") || item.meter_type.Contains("CE208"))
             {
               MeterAllValues meterAllValues= EnMera318BY.GetSumAllValue(item.meter_factory, client);
               //float value = 0;

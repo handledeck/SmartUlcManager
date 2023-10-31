@@ -978,7 +978,8 @@ namespace UlcWin
         DateTime dt = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
         this.LstViewItm.Visible = false;
         this.LstViewItm.Items.Clear();
-        __db.ViewRes(this.LstViewItm, __sel_node.Id, dt, (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
+        __db.ViewRes(this.LstViewItm, __sel_node.Id, dt,
+          (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
         this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
         //__its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
         this.tsFilterText.Text = "";
@@ -1091,10 +1092,10 @@ namespace UlcWin
       }
 
       /*Скрывает панель ремонта*/
-      if(this.tabEventController.TabPages.Count>1)
-      this.tabEventController.TabPages[1].Parent = null;
+      //if(this.tabEventController.TabPages.Count>1)
+      //this.tabEventController.TabPages[1].Parent = null;
       
-      //this.LoadRapairDevices(null, null);
+      //this.LoadRapairDevices();
       
       //this.splitContainer2.Panel2Collapsed = false;
       //splitContainer2.Panel2.Show();
@@ -2092,10 +2093,12 @@ namespace UlcWin
                 int ind = ed.cbType.SelectedIndex;
                 int active = ed.chBoxActive.Checked ? 1 : 0;
                 int light = ed.cbFunction.SelectedIndex;
-
+                
                 long idRec = __db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
                   3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
-                  this.treeView1.SelectedNode.FullPath, msgMeter,Convert.ToSingle(ed.txtLong.Text), Convert.ToSingle(ed.txtLetit.Text));
+                  this.treeView1.SelectedNode.FullPath,
+                  msgMeter,Convert.ToSingle(string.IsNullOrEmpty(ed.txtLong.Text) ? "0": ed.txtLong.Text),
+                  Convert.ToSingle(string.IsNullOrEmpty(ed.txtLetit.Text)? "0": ed.txtLetit.Text));
                 if (ed.__meterInfos != null)
                 {
                   foreach (var item in ed.__meterInfos)
@@ -2302,23 +2305,27 @@ namespace UlcWin
             this.tsEvent.Enabled = true;
             this.ReadEvent();
             /*Вкладка ремонта */
-            //LstViewRepair.Items.Clear();
-            //List<Repair> rep = __lstRep.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
-            //if (rep.Count > 0) {
-            //  for (int i = 0; i < rep.Count; i++)
-            //  {
-            //    var rList = LstViewRepair.Items.Add(rep[i].DataRemIn);
-            //    rList.SubItems.Add(rep[i].DataRemOff);
-            //    rList.SubItems.Add(rep[i].RabMesto);
-            //    rList.SubItems.Add(rep[i].Sotrudnik);
-            //    rList.SubItems.Add(rep[i].OsnovanieOfRemont);
-            //    rList.SubItems.Add(rep[i].Zakluch);
-            //    rList.SubItems.Add(rep[i].Kontragent);
-            //    rList.SubItems.Add(rep[i].Defect);
-            //  }
-              
+            LstViewRepair.Items.Clear();
+            if (it.UlcConfig == null)
+              return;
+            List<Repair> rep = __db.__listRapair.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
+            if (rep.Count > 0)
+            {
+              for (int i = 0; i < rep.Count; i++)
+              {
+                //var dt=DateTime.Parse(rep[i].DataRemIn);
+                var rList = LstViewRepair.Items.Add(DateTime.Parse(rep[i].DataRemIn).ToString("dd.MM.yy"));
+                rList.SubItems.Add(/*rep[i].DataRemOff*/DateTime.Parse(rep[i].DataRemOff).ToString("dd.MM.yy"));
+                rList.SubItems.Add(rep[i].RabMesto);
+                rList.SubItems.Add(rep[i].Sotrudnik);
+                rList.SubItems.Add(rep[i].OsnovanieOfRemont);
+                rList.SubItems.Add(rep[i].Zakluch);
+                rList.SubItems.Add(rep[i].Kontragent);
+                rList.SubItems.Add(rep[i].Defect);
+              }
 
-           // }
+
+            }
             // this.tsLblMsg.Text = it.MsgConfig.Message;
           }
         }
@@ -3428,15 +3435,16 @@ namespace UlcWin
         request.UseDefaultCredentials = true;
         request.Credentials =networkCredential;// new NetworkCredential("someuser@mycompany.com", "somepassword");
       }
-      
-
-      using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-      using (Stream stream = response.GetResponseStream())
-      using (StreamReader sr = new StreamReader(stream))
+      try
       {
-        content = sr.ReadToEnd();
+        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        using (Stream stream = response.GetResponseStream())
+        using (StreamReader sr = new StreamReader(stream))
+        {
+          content = sr.ReadToEnd();
+        }
       }
-
+      catch { }
       return content;
     }
 
@@ -3583,7 +3591,8 @@ namespace UlcWin
                 }
                 //else throw new Exception("ошибка получения данных");
               }
-              if (itM.meter_type.Contains("CE318") || itM.meter_type.Contains("СЕ318"))
+              if (itM.meter_type.Contains("CE318") || itM.meter_type.Contains("СЕ318") ||
+                itM.meter_type.Contains("CE208") || itM.meter_type.Contains("СЕ208"))
               {
                 string num = itM.meter_factory;
                 ushort addr = 0;
@@ -3921,8 +3930,8 @@ namespace UlcWin
     }
 
 
-    List<Repair> __lstRep;
-    private void LoadRapairDevices(object sender, EventArgs e)
+    public List<Repair> __lstRep;
+    public void LoadRapairDevices()
     {
       NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
       //for (int i = 0; i < this.LstViewItm.Items.Count; i++)
@@ -3932,8 +3941,17 @@ namespace UlcWin
       {
 
         string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
-        Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
-        __lstRep = new List<Repair>(repairs);
+        if (!string.IsNullOrEmpty(tsk))
+        {
+          Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
+          __lstRep = new List<Repair>(repairs);
+        }
+        else
+        {
+
+          MessageBox.Show("Нет соединения с базой данных о ремонте","Ошибка", MessageBoxButtons.OK);
+          return;
+        }
       }
 
       //var im= ((ItemIp)LstViewItm.SelectedItems[0].Tag).UlcConfig.IMEI;
@@ -3963,25 +3981,31 @@ namespace UlcWin
     private void LstViewItm_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
     {
       
-      //if ((e.Item.SubItems[11] == e.SubItem))
-      //{
-      //  ItemIp itemIp = (ItemIp)e.Item.Tag;
-      //  if (itemIp.UlcConfig != null)
-      //  {
-      //    if (__lstRep.Any(x => (x.imei.Trim() == itemIp.UlcConfig.IMEI.Trim())))
-      //    {
-      //      e.DrawDefault = false;
-      //      e.DrawBackground();
-      //      e.Graphics.DrawImage(this.imageList1.Images[24], e.SubItem.Bounds.Location);
-      //      e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, new SolidBrush(e.SubItem.ForeColor), (e.SubItem.Bounds.Location.X + this.imageList1.Images[0].Width), e.SubItem.Bounds.Location.Y);
-      //    }
-      //  }
+      if ((e.Item.SubItems[1] == e.SubItem))
+      {
+        ItemIp itemIp = (ItemIp)e.Item.Tag;
+        if (itemIp.UlcConfig != null)
+        {
+          if (__lstRep.Any(x => (x.imei.Trim() == itemIp.UlcConfig.IMEI.Trim())))
+          {
+            e.DrawDefault = false;
+            e.DrawBackground();
+            //e.Graphics.DrawImage(this.imageList1.Images[24], e.SubItem.Bounds.Location);
+           
+            Font font =new Font(e.SubItem.Font, FontStyle.Italic);
+           
+            e.Graphics.DrawString(e.SubItem.Text, font, new SolidBrush(Color.Brown), (e.SubItem.Bounds.Location.X), e.SubItem.Bounds.Location.Y);
+            Brush b = new SolidBrush(Color.Yellow);
+            e.Graphics.FillRectangle(b, e.Bounds);
+
+          }
+        }
         
-      //}
-      //else
-      //{
-      //  //e.DrawDefault = true;
-      //}
+      }
+      else
+      {
+        //e.DrawDefault = true;
+      }
     }
 
     private void mapsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3994,6 +4018,11 @@ namespace UlcWin
     }
 
     private void mapsCoordinatesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void LvMenu_Opening(object sender, CancelEventArgs e)
     {
 
     }

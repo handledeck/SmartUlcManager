@@ -80,7 +80,10 @@ namespace UlcWin.ui
                 }
                 else throw new Exception("ошибка получения данных");
               }
-              else if (item.SubItems[0].Text.Contains("СЕ318") || item.SubItems[0].Text.Contains("CE318")) {
+              else if (item.SubItems[0].Text.Contains("СЕ318") || item.SubItems[0].Text.Contains("CE318") ||
+                item.SubItems[0].Text.Contains("СЕ208") || item.SubItems[0].Text.Contains("CE208")
+              )
+              {
                 string num = item.SubItems[1].Text;
                 float value = 0;
                 if(!EnMera318BY.GetValue( EnMera318Fun.EnergyStartDay,num,client,10000,out value))
