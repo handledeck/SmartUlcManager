@@ -34,5 +34,6 @@ namespace UlcWin
     public int Rs_Stat { get; set; }
     public float longit { get; set; }
     public float letit { get; set; }
+    public bool HasRepeir { get; set; }
   }
 }

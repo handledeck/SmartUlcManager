@@ -11,14 +11,15 @@
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="Эта база данных установщика содержит логику и данные, необходимые для установки [|[ProductName]." ValueLocId="*"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
+    <ROW Property="ARPPRODUCTICON" Value="SmartUlcManager.exe" Type="8"/>
     <ROW Property="AiFeatIcoMainFeature" Value="PCIcard_view.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="UcVitebskEnergo"/>
-    <ROW Property="ProductCode" Value="1049:{EF1D3C3B-8077-454A-8C87-381527976922} " Type="16"/>
+    <ROW Property="ProductCode" Value="1049:{754EACF2-3704-4BEF-8BA4-00CB28C8F10B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="SmartUlcManager"/>
     <ROW Property="ProductVersion" Value="1.0.1"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{D9528D48-07E2-42C2-B27A-3F7DAA2B9689}"/>
+    <ROW Property="UpgradeCode" Value="{1479960A-6B67-4ADD-9028-F6850E91FAB2}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>

@@ -1052,6 +1052,7 @@ namespace InterUlc.Db
     {
       if (itemIp.UlcConfig != null)
       {
+        if (__listRapair == null) return false;
         if (__listRapair.Any(x => (x.imei.Trim() == itemIp.UlcConfig.IMEI.Trim())))
         {
           return true;
@@ -1192,7 +1193,10 @@ namespace InterUlc.Db
       }
 
       List<ListViewItem> lstRes = new List<ListViewItem>();
-      LoadRapairDevices();
+      if (this.__super_user)
+      {
+        LoadRapairDevices();
+      }
       
       foreach (var item in dlst)
       {
@@ -1250,7 +1254,7 @@ namespace InterUlc.Db
           }
           else
           {
-            int zz = 0;
+            
           }
           it.Tag = item.Value;
 
@@ -1312,6 +1316,8 @@ namespace InterUlc.Db
             bool bp = long.TryParse(uc.IMEI, out emai);
             if (FindRepairDevice(item.Value)) {
               it.UseItemStyleForSubItems = false;
+              item.Value.HasRepeir = true;
+             
               //it.SubItems[1].BackColor = Color.Yellow;
               //it.SubItems[1].ForeColor = Color.Brown;
               it.SubItems[1].Font = new Font(it.SubItems[1].Font, FontStyle.Bold);

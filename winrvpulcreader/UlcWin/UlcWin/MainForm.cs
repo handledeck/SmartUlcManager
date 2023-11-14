@@ -59,6 +59,7 @@ namespace UlcWin
     private DateTime __previousValueTo = DateTime.Now;
     UNode __node_to = null;
     UNode __node_from = null;
+    bool __first_load = true;
 
     public LoadForm()
     {
@@ -443,7 +444,11 @@ namespace UlcWin
 
         }
       }
+
       __aSettings_new = (ASettings)__aSettings_old.Clone();
+      __aSettings_new.Settings_changed = false;
+      
+
     }
    
 
@@ -812,7 +817,8 @@ namespace UlcWin
         if (this.__db.__ulcUser.AccsessLavel == EnumAccsesLevel.ReadWrite)
         {
           AdminUserAccses(false,false);
-          
+          if (this.tabEventController.TabPages.Count > 1)
+            this.tabEventController.TabPages[1].Parent = null;
         }
         if (this.__db.__ulcUser.AccsessLavel == EnumAccsesLevel.Full)
         {
@@ -822,6 +828,8 @@ namespace UlcWin
         {
           //ReadOnlyUserAccses();
           AdminUserAccses(false,true);
+          if (this.tabEventController.TabPages.Count > 1)
+            this.tabEventController.TabPages[1].Parent = null;
         }
       }
       if (this.tsComboBoxDev.SelectedIndex == 0)
@@ -953,152 +961,188 @@ namespace UlcWin
     public string GetFullPathNode() {
       return this.treeView1.SelectedNode.FullPath;
     }
+    
     private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
-     
-      this.LstViewEvent.Items.Clear();
-      TreeView tree = (TreeView)sender;
-      __sel_node = (UNode)tree.SelectedNode;
+      //if (__first_load)
+      //{
+      //  __first_load = false;
+      //  return;
+      //}
+      //else
+      //{
+        this.LstViewEvent.Items.Clear();
+        TreeView tree = (TreeView)sender;
+        __sel_node = (UNode)tree.SelectedNode;
 
-      if (__sel_node.IsView)
-      {
-        this.usrFesStatistics1.Visible = false;
-        this.LstViewItm.Visible = true;
-        tsResView.Visible = true;
-        ulcMeterTreeView.Visible = true;
-        this.tsComboBoxDev.Enabled = true;
-        //this.tsResView.Visible = false;
-        e.Node.SelectedImageIndex = 18;
-        if (__lvItemChecked == null)
-          __lvItemChecked = new List<ListViewItem>();
-        this.__lvItemChecked.Clear();
-        this.tsDwnUpdate.Enabled = false;
-        this.ctxMenuItemAdd.Enabled = true;
-        DateTime dtn = DateTime.Now;
-        DateTime dt = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
-        this.LstViewItm.Visible = false;
-        this.LstViewItm.Items.Clear();
-        __db.ViewRes(this.LstViewItm, __sel_node.Id, dt,
-          (EnumViewDevType)this.tsComboBoxDev.SelectedIndex,__sel_node.Text);
-        this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
-        //__its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
-        this.tsFilterText.Text = "";
-        this.tsMnuTreeAddItem.Enabled = false;
-        this.tsTreeBtnAdd.Enabled = false;
-        if (this.LstViewItm.Items.Count == 0)
+        if (__sel_node.IsView)
         {
+          this.usrFesStatistics1.Visible = false;
+          this.LstViewItm.Visible = true;
+          tsResView.Visible = true;
+          ulcMeterTreeView.Visible = true;
+          this.tsComboBoxDev.Enabled = true;
           //this.tsResView.Visible = false;
-          //this.tsLblFind.Visible = false;
-          ////this.__tsAutoCompleteCmb.Visible = false;
-          //this.tsStsLabelAll.Visible = false;
-          //this.tsStsLblNotTrue.Visible = false;
-          //this.tsStsNetBad.Visible = false;
-          //this.tsStsRssBad.Visible = false;
-          //this.tsStsIMEI.Visible = false;
-          //this.tsStatusLbl.Visible = false;
+          e.Node.SelectedImageIndex = 18;
+          if (__lvItemChecked == null)
+            __lvItemChecked = new List<ListViewItem>();
+          this.__lvItemChecked.Clear();
+          this.tsDwnUpdate.Enabled = false;
+          this.ctxMenuItemAdd.Enabled = true;
+          DateTime dtn = DateTime.Now;
+          DateTime dt = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
+          this.LstViewItm.Visible = false;
+          this.LstViewItm.Items.Clear();
+          __db.ViewRes(this.LstViewItm, __sel_node.Id, dt,
+            (EnumViewDevType)this.tsComboBoxDev.SelectedIndex, __sel_node.Text);
+          this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
+          //__its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
+          this.tsFilterText.Text = "";
+          this.tsMnuTreeAddItem.Enabled = false;
+          this.tsTreeBtnAdd.Enabled = false;
+          if (this.LstViewItm.Items.Count == 0)
+          {
+            //this.tsResView.Visible = false;
+            //this.tsLblFind.Visible = false;
+            ////this.__tsAutoCompleteCmb.Visible = false;
+            //this.tsStsLabelAll.Visible = false;
+            //this.tsStsLblNotTrue.Visible = false;
+            //this.tsStsNetBad.Visible = false;
+            //this.tsStsRssBad.Visible = false;
+            //this.tsStsIMEI.Visible = false;
+            //this.tsStatusLbl.Visible = false;
+
+          }
+          else
+          {
+            //this.tsResView.Visible = true;
+            //this.tsLblFind.Visible = true;
+            //this.__tsAutoCompleteCmb.Visible = true;
+            this.tsStsLabelAll.Visible = true;
+            this.tsStsLblNotTrue.Visible = true;
+            this.tsStsNetBad.Visible = true;
+            this.tsStsRssBad.Visible = true;
+            this.tsStsIMEI.Visible = true;
+            this.tsStatusLbl.Visible = true;
+            //this.__list_objects.Clear();
+            //this.tsResView.Visible = true;
+            //__autoCompleteCmb.Items.Clear();
+            //this.__autoCompleteCmb.Text = "";
+            ReinitFind();
+
+          }
+
+          this.treeMenu.Items[0].Enabled = false;
+          this.tsTreeBtnAddRoot.Enabled = false;
+          this.tsTreeBtnAdd.Enabled = false;
 
         }
         else
         {
-          //this.tsResView.Visible = true;
-          //this.tsLblFind.Visible = true;
-          //this.__tsAutoCompleteCmb.Visible = true;
-          this.tsStsLabelAll.Visible = true;
-          this.tsStsLblNotTrue.Visible = true;
-          this.tsStsNetBad.Visible = true;
-          this.tsStsRssBad.Visible = true;
-          this.tsStsIMEI.Visible = true;
-          this.tsStatusLbl.Visible = true;
-          //this.__list_objects.Clear();
-          //this.tsResView.Visible = true;
-          //__autoCompleteCmb.Items.Clear();
-          //this.__autoCompleteCmb.Text = "";
-          ReinitFind();
+          this.LstViewItm.Visible = false;
+          tsResView.Visible = false;
+          ulcMeterTreeView.Visible = false;
+          //this.tsLblFind.Visible = false;
 
-        }
+          //this.__tsAutoCompleteCmb.Visible = false;
+          this.treeMenu.Items[0].Enabled = true;
+          this.tsTreeBtnAddRoot.Enabled = true;
+          this.ctxMenuItemAdd.Enabled = false;
+          this.tsSelectShow.Enabled = false;
+          this.tsUpdate.Enabled = false;
+          this.tsMnuTreeAddItem.Enabled = true;
+          e.Node.SelectedImageIndex = 17;
+          //this.tsComboBoxDev.Enabled = false;
+          this.tsStsLabelAll.Visible = false;
+          this.tsStsLblNotTrue.Visible = false;
+          this.tsStsNetBad.Visible = false;
+          this.tsStsRssBad.Visible = false;
+          this.tsStsIMEI.Visible = false;
+          this.tsTreeBtnAdd.Enabled = true;
+          this.tsStatusLbl.Visible = false;
+          //this.tsResView.Visible = false;
+          List<StatisticRes> lst = null;
 
-        this.treeMenu.Items[0].Enabled = false;
-        this.tsTreeBtnAddRoot.Enabled = false;
-        this.tsTreeBtnAdd.Enabled = false;
-
-      }
-      else
-      {
-        this.LstViewItm.Visible = false;
-        tsResView.Visible = false;
-        ulcMeterTreeView.Visible = false;
-        //this.tsLblFind.Visible = false;
-       
-        //this.__tsAutoCompleteCmb.Visible = false;
-        this.treeMenu.Items[0].Enabled = true;
-        this.tsTreeBtnAddRoot.Enabled = true;
-        this.ctxMenuItemAdd.Enabled = false;
-        this.tsSelectShow.Enabled = false;
-        this.tsUpdate.Enabled = false;
-        this.tsMnuTreeAddItem.Enabled = true;
-        e.Node.SelectedImageIndex = 17;
-        //this.tsComboBoxDev.Enabled = false;
-        this.tsStsLabelAll.Visible = false;
-        this.tsStsLblNotTrue.Visible = false;
-        this.tsStsNetBad.Visible = false;
-        this.tsStsRssBad.Visible = false;
-        this.tsStsIMEI.Visible = false;
-        this.tsTreeBtnAdd.Enabled = true;
-        this.tsStatusLbl.Visible = false;
-        //this.tsResView.Visible = false;
-        List<StatisticRes> lst = null;
-        
-        using (SimpleWaitForm swf = new SimpleWaitForm())
-        {
-
-          swf.RunAction(new Action(() =>
+          using (SimpleWaitForm swf = new SimpleWaitForm())
           {
-            try
+            swf.RunAction(new Action(() =>
             {
-              swf.SetHeaderText("Запрос данных");
-              swf.SetLabelText(__sel_node.Text);
-              lst = this.__db.GetStatisticFes(__sel_node);
-              swf.DialogResult = DialogResult.OK;
-            }
-            catch
-            {
-              lst = null;
-              swf.DialogResult = DialogResult.Abort;
-            }
-          }));
+              try
+              {
+                swf.SetHeaderText("Запрос данных");
+                swf.SetLabelText(__sel_node.Text);
+                lst = this.__db.GetStatisticFes(__sel_node);
+                swf.DialogResult = DialogResult.OK;
+              }
+              catch
+              {
+                lst = null;
+                swf.DialogResult = DialogResult.Abort;
+              }
+            }));
 
-          swf.ShowDialog();
-          if (lst.Count > 0)
-          {
-            this.usrFesStatistics1.Value = lst;
+            swf.ShowDialog();
+            if (lst.Count > 0)
+            {
+              this.usrFesStatistics1.Value = lst;
 #if STAT
-            this.usrFesStatistics1.Visible = true;
+              this.usrFesStatistics1.Visible = true;
 #endif
-          }
-          else {
-            this.usrFesStatistics1.Visible = false;
+            }
+            else
+            {
+              this.usrFesStatistics1.Visible = false;
+            }
           }
         }
 
-      }
+        //this.tsStatusLbl.Visible = true;
+        if (this.tabItemsControl.SelectedIndex == 0)
+        {
+          ReadStatusListView();
+        }
+        else
+        {
+          ulcMeterTreeView.RecalcStatusLebel();
+        }
 
-      //this.tsStatusLbl.Visible = true;
-      if (this.tabItemsControl.SelectedIndex == 0)
-      {
-        ReadStatusListView();
-      }
-      else {
-        ulcMeterTreeView.RecalcStatusLebel();
-      }
+        /*Скрывает панель ремонта*/
+        //if(this.tabEventController.TabPages.Count>1)
+        //this.tabEventController.TabPages[1].Parent = null;
+        LstViewRepair.Groups.Clear();
+        LstViewRepair.Items.Clear();
+        foreach (ListViewItem item in this.LstViewItm.Items)
+        {
+          ItemIp it = (ItemIp)item.Tag;
+          if (it.UlcConfig != null && __db.__listRapair != null)
+          {
+            List<Repair> rep = __db.__listRapair.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
+            if (rep.Count > 0)
+            {
+              ListViewGroup gr = LstViewRepair.Groups.Add(it.Name, it.Name);
+              for (int i = 0; i < rep.Count; i++)
+              {
+                //var dt=DateTime.Parse(rep[i].DataRemIn);
 
-      /*Скрывает панель ремонта*/
-      //if(this.tabEventController.TabPages.Count>1)
-      //this.tabEventController.TabPages[1].Parent = null;
-      
-      //this.LoadRapairDevices();
-      
-      //this.splitContainer2.Panel2Collapsed = false;
-      //splitContainer2.Panel2.Show();
+                var rList = LstViewRepair.Items.Add(DateTime.Parse(rep[i].DataRemIn).ToString("dd.MM.yy"));
+                rList.SubItems.Add(/*rep[i].DataRemOff*/DateTime.Parse(rep[i].DataRemOff).ToString("dd.MM.yy"));
+                rList.SubItems.Add(rep[i].RabMesto);
+                rList.SubItems.Add(rep[i].Sotrudnik);
+                rList.SubItems.Add(rep[i].OsnovanieOfRemont);
+                rList.SubItems.Add(rep[i].Zakluch);
+                rList.SubItems.Add(rep[i].Kontragent);
+                rList.SubItems.Add(rep[i].Defect);
+                rList.Tag = it;
+                gr.Items.Add(rList);
+              }
+            }
+          }
+          //this.LoadRapairDevices();
+
+          //this.splitContainer2.Panel2Collapsed = false;
+          //splitContainer2.Panel2.Show();
+        }
+      //}
     }
 
     void ReinitFind()
@@ -1476,6 +1520,8 @@ namespace UlcWin
       DateTime dt_from = this.__dtp_from.Value;
       DateTime dt_to = this.__dtp_to.Value.AddDays(1);
       var si = this.LstViewItm.SelectedItems;
+      if (si.Count == 0)
+        return;
       ItemIp iip = (ItemIp)si[0].Tag;
       if (iip.UType == 1)
       {
@@ -2283,50 +2329,83 @@ namespace UlcWin
     bool __panel_event_log = false;
     private void LstViewItm_SelectedIndexChanged(object sender, EventArgs e)
     {
+     
       if (!this.splitContainer2.Panel2Collapsed)
       {
-        this.LstViewEvent.Items.Clear();
-        if (this.LstViewItm.SelectedItems.Count > 0)
+        if (this.tabEventController.SelectedTab.Name == "tabEventCtrl")
         {
-          var itm = this.LstViewItm.SelectedItems[0];
-          ItemIp it = (ItemIp)itm.Tag;
-          if (it.UType == (byte)UTypeController.RVP)
+          this.LstViewEvent.Items.Clear();
+          if (this.LstViewItm.SelectedItems.Count > 0)
           {
-            //this.LvMenu.Items["ctxMenuEvent"].Enabled = false;
-            this.LvMenu.Items["ctxMenuReadCurrentLog"].Enabled = false;
-            this.LstViewEvent.Visible = false;
-            this.lblNotExist.Text = "Журнал сообщений не поддерживается на этом устройстве";
-            it.IsUpdateInable = false;
-          }
-          else
-          {
-            //this.LvMenu.Items["tsMenuEvent"].Enabled = true;
-            //this.LvMenu.Items["tsMenuReadCurrentLog"].Enabled = true;
-            this.tsEvent.Enabled = true;
-            this.ReadEvent();
-            /*Вкладка ремонта */
-            LstViewRepair.Items.Clear();
-            if (it.UlcConfig == null)
-              return;
-            List<Repair> rep = __db.__listRapair.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
-            if (rep.Count > 0)
+            var itm = this.LstViewItm.SelectedItems[0];
+            ItemIp it = (ItemIp)itm.Tag;
+            if (it.UType == (byte)UTypeController.RVP)
             {
-              for (int i = 0; i < rep.Count; i++)
-              {
-                //var dt=DateTime.Parse(rep[i].DataRemIn);
-                var rList = LstViewRepair.Items.Add(DateTime.Parse(rep[i].DataRemIn).ToString("dd.MM.yy"));
-                rList.SubItems.Add(/*rep[i].DataRemOff*/DateTime.Parse(rep[i].DataRemOff).ToString("dd.MM.yy"));
-                rList.SubItems.Add(rep[i].RabMesto);
-                rList.SubItems.Add(rep[i].Sotrudnik);
-                rList.SubItems.Add(rep[i].OsnovanieOfRemont);
-                rList.SubItems.Add(rep[i].Zakluch);
-                rList.SubItems.Add(rep[i].Kontragent);
-                rList.SubItems.Add(rep[i].Defect);
-              }
-
-
+              //this.LvMenu.Items["ctxMenuEvent"].Enabled = false;
+              this.LvMenu.Items["ctxMenuReadCurrentLog"].Enabled = false;
+              this.LstViewEvent.Visible = false;
+              this.lblNotExist.Text = "Журнал сообщений не поддерживается на этом устройстве";
+              it.IsUpdateInable = false;
+              //this.LvMenu.Items["tsMenuEvent"].Enabled = true;
+              //this.LvMenu.Items["tsMenuReadCurrentLog"].Enabled = true;
+              
             }
+            else {
+              this.tsEvent.Enabled = true;
+              this.ReadEvent();
+            }
+
+            /*Вкладка ремонта */
+            //LstViewRepair.Items.Clear();
+            //if (it.UlcConfig == null)
+            //  return;
+            //List<Repair> rep = __db.__listRapair.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
+            //if (rep.Count > 0)
+            //{
+            //  for (int i = 0; i < rep.Count; i++)
+            //  {
+            //    //var dt=DateTime.Parse(rep[i].DataRemIn);
+            //    var rList = LstViewRepair.Items.Add(DateTime.Parse(rep[i].DataRemIn).ToString("dd.MM.yy"));
+            //    rList.SubItems.Add(/*rep[i].DataRemOff*/DateTime.Parse(rep[i].DataRemOff).ToString("dd.MM.yy"));
+            //    rList.SubItems.Add(rep[i].RabMesto);
+            //    rList.SubItems.Add(rep[i].Sotrudnik);
+            //    rList.SubItems.Add(rep[i].OsnovanieOfRemont);
+            //    rList.SubItems.Add(rep[i].Zakluch);
+            //    rList.SubItems.Add(rep[i].Kontragent);
+            //    rList.SubItems.Add(rep[i].Defect);
+            //  }
+
+
+            //}
             // this.tsLblMsg.Text = it.MsgConfig.Message;
+          }
+        }
+        else
+        {
+          if (this.LstViewItm.SelectedItems.Count > 0)
+          {
+            var itm = this.LstViewItm.SelectedItems[0];
+            ItemIp it = (ItemIp)itm.Tag;
+            foreach (ListViewItem item in LstViewRepair.Items)
+            {
+              //Color color= LstViewRepair.BackColor;
+              //item.BackColor = color;
+              ItemIp selItem = (ItemIp)item.Tag;
+              if (it.UlcConfig.IMEI == selItem.UlcConfig.IMEI)
+              {
+                item.Selected = true;
+                //item.Focused = true;
+                
+                //LstViewRepair.Focus();
+                item.EnsureVisible();
+                
+                
+                
+
+                //return;
+              }
+            }
+            int x = 0;
           }
         }
       }
@@ -4023,6 +4102,11 @@ namespace UlcWin
     }
 
     private void LvMenu_Opening(object sender, CancelEventArgs e)
+    {
+
+    }
+
+    private void LstViewItm_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
     {
 
     }
