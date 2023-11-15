@@ -1114,6 +1114,49 @@ namespace GettingStartedTree
                 throw new Exception("ошибка получения данных");
               }
             }
+
+            else if (item.meter_type.Contains("МЭС-3"))
+            {
+              MeterAllValues meterAllValues = Mes3.GetSumAllValue(item.meter_factory, client);
+              //float value = 0;
+              //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+              //throw new Exception("ошибка получения данных");
+              if (meterAllValues != null)
+              {
+                item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
+              }
+              else
+              {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+
+            else if (item.meter_type.Contains("Аист-3-W32"))
+            {
+              MeterAllValues meterAllValues = Aist2W3.GetSumAllValue(item.meter_factory, client);
+              //float value = 0;
+              //if (!EnMera318BY.GetValue(EnMera318Fun.EnergyStartDay, item.meter_factory, client, 10000, out value))
+              //throw new Exception("ошибка получения данных");
+              if (meterAllValues != null)
+              {
+                item.value = Math.Round(meterAllValues.EnergySumDay.Value, 2);
+                item.value_month = Math.Round(meterAllValues.EnergySumMonth.Value, 2);
+                item.is_true = true;
+                item.updated = true;
+                item.date_time = DateTime.Now;
+                wf.SetLabelText(meterAllValues.EnergySumDay.Value.ToString());
+              }
+              else
+              {
+                throw new Exception("ошибка получения данных");
+              }
+            }
+
             else if (item.meter_type.Contains("СЕ318") || item.meter_type.Contains("CE318") ||
               item.meter_type.Contains("СЕ208") || item.meter_type.Contains("CE208"))
             {
