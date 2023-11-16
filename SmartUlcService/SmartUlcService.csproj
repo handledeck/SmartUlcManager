@@ -130,10 +130,12 @@
     <Compile Include="Db\RsNotTrue.cs" />
     <Compile Include="Db\RsNotTrueData.cs" />
     <Compile Include="Db\UlcStatistic.cs" />
+    <Compile Include="Drivers\Aist3W32.cs" />
     <Compile Include="Drivers\EnMera102.cs" />
     <Compile Include="Drivers\EnMera301BY.cs" />
     <Compile Include="Drivers\EnMera318BY.cs" />
     <Compile Include="Drivers\Granelectro.cs" />
+    <Compile Include="Drivers\Mes3.cs" />
     <Compile Include="Drivers\MeterAllValues.cs" />
     <Compile Include="Ini\ConfigIni.cs" />
     <Compile Include="Logs\EnumLogs.cs" />

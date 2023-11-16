@@ -1209,7 +1209,6 @@ namespace UlcWin
                 break;
               }
             }
-
           }
           catch
           {
