@@ -29,15 +29,15 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      Ztp.Configuration.ZtpConfig ztpConfig2 = new Ztp.Configuration.ZtpConfig();
-      Ztp.Port.ComPort.ComPortSettings comPortSettings3 = new Ztp.Port.ComPort.ComPortSettings();
-      Ztp.Configuration.ZtpLight ztpLight4 = new Ztp.Configuration.ZtpLight();
-      Ztp.Configuration.ZtpScheduler ztpScheduler4 = new Ztp.Configuration.ZtpScheduler();
-      Ztp.Configuration.ZtpLight ztpLight3 = new Ztp.Configuration.ZtpLight();
-      Ztp.Configuration.ZtpScheduler ztpScheduler3 = new Ztp.Configuration.ZtpScheduler();
-      Ztp.Ui.LocationEditorControl.ZtpLocation ztpLocation2 = new Ztp.Ui.LocationEditorControl.ZtpLocation();
+      Ztp.Configuration.ZtpConfig ztpConfig1 = new Ztp.Configuration.ZtpConfig();
+      Ztp.Port.ComPort.ComPortSettings comPortSettings1 = new Ztp.Port.ComPort.ComPortSettings();
+      Ztp.Configuration.ZtpLight ztpLight1 = new Ztp.Configuration.ZtpLight();
+      Ztp.Configuration.ZtpScheduler ztpScheduler1 = new Ztp.Configuration.ZtpScheduler();
+      Ztp.Configuration.ZtpLight ztpLight2 = new Ztp.Configuration.ZtpLight();
+      Ztp.Configuration.ZtpScheduler ztpScheduler2 = new Ztp.Configuration.ZtpScheduler();
+      Ztp.Ui.LocationEditorControl.ZtpLocation ztpLocation1 = new Ztp.Ui.LocationEditorControl.ZtpLocation();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RequestForm));
-      Ztp.Port.ComPort.ComPortSettings comPortSettings4 = new Ztp.Port.ComPort.ComPortSettings();
+      Ztp.Port.ComPort.ComPortSettings comPortSettings2 = new Ztp.Port.ComPort.ComPortSettings();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -46,9 +46,17 @@
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.@__planEditor = new Ztp.Ui.LightPlanEditorControl();
+      this.PicLightSwitcher = new System.Windows.Forms.PictureBox();
+      this.btnLightSwitcher = new System.Windows.Forms.Button();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
+      this.btnScheduleAdd = new System.Windows.Forms.Button();
       this.imlTc = new System.Windows.Forms.ImageList(this.components);
+      this.btnScheduleDelete = new System.Windows.Forms.Button();
+      this.btnScheduleEdit = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.btnAddSeason = new System.Windows.Forms.Button();
+      this.btnReamoveSeason = new System.Windows.Forms.Button();
+      this.btnChangeSeason = new System.Windows.Forms.Button();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.@__modbusItemList = new Ztp.Ui.ModbusItemListControl();
       this.@__comPortEditor = new Ztp.Ui.ComPortSettingsEditorControl();
@@ -61,14 +69,6 @@
       this.btnFile = new System.Windows.Forms.Button();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-      this.btnScheduleAdd = new System.Windows.Forms.Button();
-      this.btnScheduleDelete = new System.Windows.Forms.Button();
-      this.btnScheduleEdit = new System.Windows.Forms.Button();
-      this.btnAddSeason = new System.Windows.Forms.Button();
-      this.btnReamoveSeason = new System.Windows.Forms.Button();
-      this.btnChangeSeason = new System.Windows.Forms.Button();
-      this.btnLightSwitcher = new System.Windows.Forms.Button();
-      this.PicLightSwitcher = new System.Windows.Forms.PictureBox();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
@@ -77,12 +77,12 @@
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).BeginInit();
       this.groupBox2.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabPage3.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).BeginInit();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -185,20 +185,20 @@
       this.@__config.ShowApnProperty = false;
       this.@__config.Size = new System.Drawing.Size(806, 589);
       this.@__config.TabIndex = 1;
-      ztpConfig2.Ain = new bool[] {
+      ztpConfig1.Ain = new bool[] {
         false,
         false,
         false,
         false};
-      ztpConfig2.Apn = "";
-      ztpConfig2.ApnPassword = "";
-      ztpConfig2.ApnUser = "";
-      ztpConfig2.Cain = new ushort[] {
+      ztpConfig1.Apn = "";
+      ztpConfig1.ApnPassword = "";
+      ztpConfig1.ApnUser = "";
+      ztpConfig1.Cain = new ushort[] {
         ((ushort)(0)),
         ((ushort)(0)),
         ((ushort)(0)),
         ((ushort)(0))};
-      ztpConfig2.Cdin = new bool[] {
+      ztpConfig1.Cdin = new bool[] {
         false,
         false,
         false,
@@ -215,7 +215,7 @@
         false,
         false,
         false};
-      ztpConfig2.Cdout = new bool[] {
+      ztpConfig1.Cdout = new bool[] {
         false,
         false,
         false,
@@ -224,41 +224,24 @@
         false,
         false,
         false};
-      comPortSettings3.BaudRate = 9600;
-      comPortSettings3.DataBits = ((byte)(8));
-      comPortSettings3.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings3.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings3.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings3.PortName = "COM1";
-      comPortSettings3.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings3.Timeout = 1000;
-      ztpConfig2.ComPortSetting = comPortSettings3;
-      ztpConfig2.CoreVersion = "";
-      ztpConfig2.CurTrafic = ((uint)(0u));
-      ztpConfig2.dateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
-      ztpConfig2.DateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
-      ztpConfig2.DateTimeFirmware = new System.DateTime(((long)(0)));
-      ztpConfig2.DbzPercent = ((byte)(1));
-      ztpConfig2.Debounce = ((uint)(500u));
-      ztpConfig2.Debug = false;
-      ztpConfig2.Din = new bool[] {
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false};
-      ztpConfig2.Door = new bool[] {
+      comPortSettings1.BaudRate = 9600;
+      comPortSettings1.DataBits = ((byte)(8));
+      comPortSettings1.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings1.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings1.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings1.PortName = "COM1";
+      comPortSettings1.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings1.Timeout = 1000;
+      ztpConfig1.ComPortSetting = comPortSettings1;
+      ztpConfig1.CoreVersion = "";
+      ztpConfig1.CurTrafic = ((uint)(0u));
+      ztpConfig1.dateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
+      ztpConfig1.DateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
+      ztpConfig1.DateTimeFirmware = new System.DateTime(((long)(0)));
+      ztpConfig1.DbzPercent = ((byte)(1));
+      ztpConfig1.Debounce = ((uint)(500u));
+      ztpConfig1.Debug = false;
+      ztpConfig1.Din = new bool[] {
         false,
         false,
         false,
@@ -275,7 +258,15 @@
         false,
         false,
         false};
-      ztpConfig2.Dout = new bool[] {
+      ztpConfig1.Door = new bool[] {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
         false,
         false,
         false,
@@ -284,11 +275,20 @@
         false,
         false,
         false};
-      ztpConfig2.EstActive = false;
-      ztpConfig2.EstAddress = "";
-      ztpConfig2.EstPort = ((ushort)(1024));
-      ztpConfig2.EstTsend = ((uint)(30u));
-      ztpConfig2.Flags = ((Ztp.Configuration.ZtpConfig.ConfigFlag)((((((((((((((((((Ztp.Configuration.ZtpConfig.ConfigFlag.Din | Ztp.Configuration.ZtpConfig.ConfigFlag.Dout) 
+      ztpConfig1.Dout = new bool[] {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false};
+      ztpConfig1.EstActive = false;
+      ztpConfig1.EstAddress = "";
+      ztpConfig1.EstPort = ((ushort)(1024));
+      ztpConfig1.EstTsend = ((uint)(30u));
+      ztpConfig1.Flags = ((Ztp.Configuration.ZtpConfig.ConfigFlag)((((((((((((((((((Ztp.Configuration.ZtpConfig.ConfigFlag.Din | Ztp.Configuration.ZtpConfig.ConfigFlag.Dout) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Ain) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.UseScheduler) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.EstActive) 
@@ -305,31 +305,31 @@
             | Ztp.Configuration.ZtpConfig.ConfigFlag.ComType) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Ping) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Logs)));
-      ztpConfig2.Gprs = ((uint)(0u));
-      ztpConfig2.Gsm = ((uint)(0u));
-      ztpConfig2.Imei = "";
-      ztpConfig2.IpOwn = "";
-      ztpConfig2.IpPing = "";
-      ztpConfig2.IsHalfBright = false;
-      ztpConfig2.IsReadedFromDevice = false;
-      ztpConfig2.Latitude = 55.1911F;
-      ztpLight4.Scheduler = ztpScheduler4;
-      ztpLight4.UseScheduler = false;
-      ztpConfig2.Light = ztpLight4;
-      ztpConfig2.logLevel = ((byte)(5));
-      ztpConfig2.Longitude = 30.12533F;
-      ztpConfig2.NetTechnology = "";
-      ztpConfig2.Number = 1;
-      ztpConfig2.PingPeriod = ((byte)(1));
-      ztpConfig2.rebootTime = "";
-      ztpConfig2.Signal = 0;
-      ztpConfig2.Sim = ((uint)(0u));
-      ztpConfig2.SoftVersion = "";
-      ztpConfig2.Sunrise = new System.DateTime(((long)(0)));
-      ztpConfig2.Sunset = new System.DateTime(((long)(0)));
-      ztpConfig2.TimeZone = ((sbyte)(-12));
-      ztpConfig2.Version = "I1O1A1-LDC-3";
-      this.@__config.Value = ztpConfig2;
+      ztpConfig1.Gprs = ((uint)(0u));
+      ztpConfig1.Gsm = ((uint)(0u));
+      ztpConfig1.Imei = "";
+      ztpConfig1.IpOwn = "";
+      ztpConfig1.IpPing = "";
+      ztpConfig1.IsHalfBright = false;
+      ztpConfig1.IsReadedFromDevice = false;
+      ztpConfig1.Latitude = 55.1911F;
+      ztpLight1.Scheduler = ztpScheduler1;
+      ztpLight1.UseScheduler = false;
+      ztpConfig1.Light = ztpLight1;
+      ztpConfig1.logLevel = ((byte)(5));
+      ztpConfig1.Longitude = 30.12533F;
+      ztpConfig1.NetTechnology = "";
+      ztpConfig1.Number = 1;
+      ztpConfig1.PingPeriod = ((byte)(1));
+      ztpConfig1.rebootTime = "";
+      ztpConfig1.Signal = 0;
+      ztpConfig1.Sim = ((uint)(0u));
+      ztpConfig1.SoftVersion = "";
+      ztpConfig1.Sunrise = new System.DateTime(((long)(0)));
+      ztpConfig1.Sunset = new System.DateTime(((long)(0)));
+      ztpConfig1.TimeZone = ((sbyte)(-12));
+      ztpConfig1.Version = "I1O1A1-LDC-3";
+      this.@__config.Value = ztpConfig1;
       // 
       // tabPage2
       // 
@@ -373,13 +373,35 @@
       this.@__planEditor.TabIndex = 0;
       this.@__planEditor.UseSchedulerEnable = true;
       this.@__planEditor.UseSchedulerVisible = false;
-      ztpLight3.Scheduler = ztpScheduler3;
-      ztpLight3.UseScheduler = true;
-      this.@__planEditor.Value = ztpLight3;
-      ztpLocation2.Latitude = 0F;
-      ztpLocation2.Longitude = 0F;
-      ztpLocation2.TimeZone = ((sbyte)(0));
-      this.@__planEditor.ZtpLocation = ztpLocation2;
+      ztpLight2.Scheduler = ztpScheduler2;
+      ztpLight2.UseScheduler = true;
+      this.@__planEditor.Value = ztpLight2;
+      ztpLocation1.Latitude = 0F;
+      ztpLocation1.Longitude = 0F;
+      ztpLocation1.TimeZone = ((sbyte)(0));
+      this.@__planEditor.ZtpLocation = ztpLocation1;
+      // 
+      // PicLightSwitcher
+      // 
+      this.PicLightSwitcher.Image = global::UlcWin.Properties.Resources.lightbulb_off;
+      this.PicLightSwitcher.Location = new System.Drawing.Point(100, 393);
+      this.PicLightSwitcher.Name = "PicLightSwitcher";
+      this.PicLightSwitcher.Size = new System.Drawing.Size(34, 37);
+      this.PicLightSwitcher.TabIndex = 11;
+      this.PicLightSwitcher.TabStop = false;
+      // 
+      // btnLightSwitcher
+      // 
+      this.btnLightSwitcher.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnLightSwitcher.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnLightSwitcher.ImageIndex = 15;
+      this.btnLightSwitcher.Location = new System.Drawing.Point(43, 436);
+      this.btnLightSwitcher.Name = "btnLightSwitcher";
+      this.btnLightSwitcher.Size = new System.Drawing.Size(170, 31);
+      this.btnLightSwitcher.TabIndex = 10;
+      this.btnLightSwitcher.Text = "Включить освещение";
+      this.btnLightSwitcher.UseVisualStyleBackColor = true;
+      this.btnLightSwitcher.Click += new System.EventHandler(this.pictureBox1_Click);
       // 
       // groupBox2
       // 
@@ -394,6 +416,21 @@
       this.groupBox2.TabIndex = 9;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Расписание";
+      // 
+      // btnScheduleAdd
+      // 
+      this.btnScheduleAdd.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnScheduleAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnScheduleAdd.ImageIndex = 7;
+      this.btnScheduleAdd.ImageList = this.imlTc;
+      this.btnScheduleAdd.Location = new System.Drawing.Point(26, 22);
+      this.btnScheduleAdd.Name = "btnScheduleAdd";
+      this.btnScheduleAdd.Size = new System.Drawing.Size(170, 31);
+      this.btnScheduleAdd.TabIndex = 0;
+      this.btnScheduleAdd.Text = "Добавить расписание";
+      this.btnScheduleAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.btnScheduleAdd.UseVisualStyleBackColor = true;
+      this.btnScheduleAdd.Click += new System.EventHandler(this.btnScheduleAdd_Click);
       // 
       // imlTc
       // 
@@ -416,6 +453,36 @@
       this.imlTc.Images.SetKeyName(14, "lightbulb.ico");
       this.imlTc.Images.SetKeyName(15, "lightbulb_off.ico");
       // 
+      // btnScheduleDelete
+      // 
+      this.btnScheduleDelete.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnScheduleDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnScheduleDelete.ImageIndex = 13;
+      this.btnScheduleDelete.ImageList = this.imlTc;
+      this.btnScheduleDelete.Location = new System.Drawing.Point(26, 92);
+      this.btnScheduleDelete.Name = "btnScheduleDelete";
+      this.btnScheduleDelete.Size = new System.Drawing.Size(170, 27);
+      this.btnScheduleDelete.TabIndex = 1;
+      this.btnScheduleDelete.Text = "Удалить расписание";
+      this.btnScheduleDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.btnScheduleDelete.UseVisualStyleBackColor = true;
+      this.btnScheduleDelete.Click += new System.EventHandler(this.btnScheduleDelete_Click);
+      // 
+      // btnScheduleEdit
+      // 
+      this.btnScheduleEdit.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnScheduleEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnScheduleEdit.ImageIndex = 9;
+      this.btnScheduleEdit.ImageList = this.imlTc;
+      this.btnScheduleEdit.Location = new System.Drawing.Point(26, 59);
+      this.btnScheduleEdit.Name = "btnScheduleEdit";
+      this.btnScheduleEdit.Size = new System.Drawing.Size(170, 27);
+      this.btnScheduleEdit.TabIndex = 2;
+      this.btnScheduleEdit.Text = "Изменить расписание";
+      this.btnScheduleEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.btnScheduleEdit.UseVisualStyleBackColor = true;
+      this.btnScheduleEdit.Click += new System.EventHandler(this.btnScheduleEdit_Click);
+      // 
       // groupBox1
       // 
       this.groupBox1.Controls.Add(this.btnAddSeason);
@@ -429,6 +496,48 @@
       this.groupBox1.TabIndex = 8;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Сезоны";
+      // 
+      // btnAddSeason
+      // 
+      this.btnAddSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnAddSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnAddSeason.ImageIndex = 4;
+      this.btnAddSeason.ImageList = this.imlTc;
+      this.btnAddSeason.Location = new System.Drawing.Point(26, 22);
+      this.btnAddSeason.Name = "btnAddSeason";
+      this.btnAddSeason.Size = new System.Drawing.Size(158, 31);
+      this.btnAddSeason.TabIndex = 0;
+      this.btnAddSeason.Text = "Добавить сезон";
+      this.btnAddSeason.UseVisualStyleBackColor = true;
+      this.btnAddSeason.Click += new System.EventHandler(this.btnAddSeason_Click);
+      // 
+      // btnReamoveSeason
+      // 
+      this.btnReamoveSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnReamoveSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnReamoveSeason.ImageIndex = 5;
+      this.btnReamoveSeason.ImageList = this.imlTc;
+      this.btnReamoveSeason.Location = new System.Drawing.Point(26, 92);
+      this.btnReamoveSeason.Name = "btnReamoveSeason";
+      this.btnReamoveSeason.Size = new System.Drawing.Size(158, 27);
+      this.btnReamoveSeason.TabIndex = 1;
+      this.btnReamoveSeason.Text = "Удалить сезон";
+      this.btnReamoveSeason.UseVisualStyleBackColor = true;
+      this.btnReamoveSeason.Click += new System.EventHandler(this.btnReamoveSeason_Click);
+      // 
+      // btnChangeSeason
+      // 
+      this.btnChangeSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.btnChangeSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnChangeSeason.ImageIndex = 6;
+      this.btnChangeSeason.ImageList = this.imlTc;
+      this.btnChangeSeason.Location = new System.Drawing.Point(26, 59);
+      this.btnChangeSeason.Name = "btnChangeSeason";
+      this.btnChangeSeason.Size = new System.Drawing.Size(158, 27);
+      this.btnChangeSeason.TabIndex = 2;
+      this.btnChangeSeason.Text = "Изменить сезон";
+      this.btnChangeSeason.UseVisualStyleBackColor = true;
+      this.btnChangeSeason.Click += new System.EventHandler(this.btnChangeSeason_Click);
       // 
       // tabPage3
       // 
@@ -468,19 +577,19 @@
       this.@__comPortEditor.ShowTimeout = false;
       this.@__comPortEditor.Size = new System.Drawing.Size(523, 140);
       this.@__comPortEditor.TabIndex = 1;
-      comPortSettings4.BaudRate = 9600;
-      comPortSettings4.DataBits = ((byte)(8));
-      comPortSettings4.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings4.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings4.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings4.PortName = "COM1";
-      comPortSettings4.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings4.Timeout = 5000;
-      this.@__comPortEditor.Value = comPortSettings4;
+      comPortSettings2.BaudRate = 9600;
+      comPortSettings2.DataBits = ((byte)(8));
+      comPortSettings2.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings2.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings2.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings2.PortName = "COM1";
+      comPortSettings2.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings2.Timeout = 5000;
+      this.@__comPortEditor.Value = comPortSettings2;
       // 
       // __modBusSettings
       // 
-      this.@__modBusSettings.Location = new System.Drawing.Point(581, 26);
+      this.@__modBusSettings.Location = new System.Drawing.Point(581, 14);
       this.@__modBusSettings.Name = "__modBusSettings";
       this.@__modBusSettings.Size = new System.Drawing.Size(504, 115);
       this.@__modBusSettings.TabIndex = 0;
@@ -561,115 +670,6 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
-      // btnScheduleAdd
-      // 
-      this.btnScheduleAdd.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnScheduleAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnScheduleAdd.ImageIndex = 7;
-      this.btnScheduleAdd.ImageList = this.imlTc;
-      this.btnScheduleAdd.Location = new System.Drawing.Point(26, 22);
-      this.btnScheduleAdd.Name = "btnScheduleAdd";
-      this.btnScheduleAdd.Size = new System.Drawing.Size(170, 31);
-      this.btnScheduleAdd.TabIndex = 0;
-      this.btnScheduleAdd.Text = "Добавить расписание";
-      this.btnScheduleAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.btnScheduleAdd.UseVisualStyleBackColor = true;
-      this.btnScheduleAdd.Click += new System.EventHandler(this.btnScheduleAdd_Click);
-      // 
-      // btnScheduleDelete
-      // 
-      this.btnScheduleDelete.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnScheduleDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnScheduleDelete.ImageIndex = 13;
-      this.btnScheduleDelete.ImageList = this.imlTc;
-      this.btnScheduleDelete.Location = new System.Drawing.Point(26, 92);
-      this.btnScheduleDelete.Name = "btnScheduleDelete";
-      this.btnScheduleDelete.Size = new System.Drawing.Size(170, 27);
-      this.btnScheduleDelete.TabIndex = 1;
-      this.btnScheduleDelete.Text = "Удалить расписание";
-      this.btnScheduleDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.btnScheduleDelete.UseVisualStyleBackColor = true;
-      this.btnScheduleDelete.Click += new System.EventHandler(this.btnScheduleDelete_Click);
-      // 
-      // btnScheduleEdit
-      // 
-      this.btnScheduleEdit.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnScheduleEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnScheduleEdit.ImageIndex = 9;
-      this.btnScheduleEdit.ImageList = this.imlTc;
-      this.btnScheduleEdit.Location = new System.Drawing.Point(26, 59);
-      this.btnScheduleEdit.Name = "btnScheduleEdit";
-      this.btnScheduleEdit.Size = new System.Drawing.Size(170, 27);
-      this.btnScheduleEdit.TabIndex = 2;
-      this.btnScheduleEdit.Text = "Изменить расписание";
-      this.btnScheduleEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.btnScheduleEdit.UseVisualStyleBackColor = true;
-      this.btnScheduleEdit.Click += new System.EventHandler(this.btnScheduleEdit_Click);
-      // 
-      // btnAddSeason
-      // 
-      this.btnAddSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnAddSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnAddSeason.ImageIndex = 4;
-      this.btnAddSeason.ImageList = this.imlTc;
-      this.btnAddSeason.Location = new System.Drawing.Point(26, 22);
-      this.btnAddSeason.Name = "btnAddSeason";
-      this.btnAddSeason.Size = new System.Drawing.Size(158, 31);
-      this.btnAddSeason.TabIndex = 0;
-      this.btnAddSeason.Text = "Добавить сезон";
-      this.btnAddSeason.UseVisualStyleBackColor = true;
-      this.btnAddSeason.Click += new System.EventHandler(this.btnAddSeason_Click);
-      // 
-      // btnReamoveSeason
-      // 
-      this.btnReamoveSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnReamoveSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnReamoveSeason.ImageIndex = 5;
-      this.btnReamoveSeason.ImageList = this.imlTc;
-      this.btnReamoveSeason.Location = new System.Drawing.Point(26, 92);
-      this.btnReamoveSeason.Name = "btnReamoveSeason";
-      this.btnReamoveSeason.Size = new System.Drawing.Size(158, 27);
-      this.btnReamoveSeason.TabIndex = 1;
-      this.btnReamoveSeason.Text = "Удалить сезон";
-      this.btnReamoveSeason.UseVisualStyleBackColor = true;
-      this.btnReamoveSeason.Click += new System.EventHandler(this.btnReamoveSeason_Click);
-      // 
-      // btnChangeSeason
-      // 
-      this.btnChangeSeason.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnChangeSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnChangeSeason.ImageIndex = 6;
-      this.btnChangeSeason.ImageList = this.imlTc;
-      this.btnChangeSeason.Location = new System.Drawing.Point(26, 59);
-      this.btnChangeSeason.Name = "btnChangeSeason";
-      this.btnChangeSeason.Size = new System.Drawing.Size(158, 27);
-      this.btnChangeSeason.TabIndex = 2;
-      this.btnChangeSeason.Text = "Изменить сезон";
-      this.btnChangeSeason.UseVisualStyleBackColor = true;
-      this.btnChangeSeason.Click += new System.EventHandler(this.btnChangeSeason_Click);
-      // 
-      // btnLightSwitcher
-      // 
-      this.btnLightSwitcher.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.btnLightSwitcher.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.btnLightSwitcher.ImageIndex = 15;
-      this.btnLightSwitcher.Location = new System.Drawing.Point(43, 436);
-      this.btnLightSwitcher.Name = "btnLightSwitcher";
-      this.btnLightSwitcher.Size = new System.Drawing.Size(170, 31);
-      this.btnLightSwitcher.TabIndex = 10;
-      this.btnLightSwitcher.Text = "Включить освещение";
-      this.btnLightSwitcher.UseVisualStyleBackColor = true;
-      this.btnLightSwitcher.Click += new System.EventHandler(this.pictureBox1_Click);
-      // 
-      // PicLightSwitcher
-      // 
-      this.PicLightSwitcher.Image = global::UlcWin.Properties.Resources.lightbulb_off;
-      this.PicLightSwitcher.Location = new System.Drawing.Point(100, 393);
-      this.PicLightSwitcher.Name = "PicLightSwitcher";
-      this.PicLightSwitcher.Size = new System.Drawing.Size(34, 37);
-      this.PicLightSwitcher.TabIndex = 11;
-      this.PicLightSwitcher.TabStop = false;
-      // 
       // RequestForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -690,13 +690,13 @@
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).EndInit();
       this.groupBox2.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
       this.tableLayoutPanel1.ResumeLayout(false);
       this.flowLayoutPanel1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).EndInit();
       this.ResumeLayout(false);
 
     }

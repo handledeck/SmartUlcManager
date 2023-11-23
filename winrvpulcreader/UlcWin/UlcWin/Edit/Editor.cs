@@ -208,8 +208,6 @@ namespace UlcWin.Edit
       }
     }
 
-    
-
     private void BtnEdit_Click(object sender, EventArgs e)
     {
       using (MeterEditFrom mMrom = new MeterEditFrom((Controls.UlcMeterComponet.MeterInfo)this.lstMeter.SelectedItems[0].Tag))

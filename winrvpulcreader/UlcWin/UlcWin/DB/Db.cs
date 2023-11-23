@@ -2630,7 +2630,8 @@ namespace InterUlc.Db
                   db.Update<MeterInfo>(item);
                   break;
                 case CrudRecord.Delete:
-                 int x=db.Delete<MeterInfo>(item);
+                 //int x=db.Delete<MeterInfo>(item);
+                  int result=db.DeleteById<MeterInfo>(item.id);
                   break;
                 default:
                   break;
