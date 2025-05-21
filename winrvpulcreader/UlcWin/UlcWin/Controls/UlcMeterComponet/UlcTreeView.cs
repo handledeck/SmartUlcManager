@@ -244,7 +244,6 @@ namespace GettingStartedTree
                   dic[id_home].is_part_true = true;
                 }
               }
-
             }
           }
           reader.Close();

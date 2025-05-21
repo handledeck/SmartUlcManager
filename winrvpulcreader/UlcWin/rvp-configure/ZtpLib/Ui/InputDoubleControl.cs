@@ -29,7 +29,11 @@ namespace Ztp.Ui
     public decimal Value
     {
       get { return numericUpDown.Value; }
-      set { numericUpDown.Value = value; }
+      set
+      {
+        
+        numericUpDown.Value = value; 
+      }
     }
 
     public decimal Maximum

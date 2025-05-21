@@ -85,6 +85,8 @@ namespace UlcWin.Fota
       lsItem.SubItems[subItem].Text = text;
     }
 
+   
+
     private void FotaForm_Shown(object sender, EventArgs e)
     {
 

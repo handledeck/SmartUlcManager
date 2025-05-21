@@ -44,14 +44,16 @@ namespace CtmAction
     static int result = 0;
     public static PSql __pSql = new PSql();
 
-    public static object MessageBox { get; private set; }
+    //public static object MessageBox { get; private set; }
 
     [CustomAction]
     public static ActionResult ActionInstallDB(Session session)
     {
+
       try
       {
-        //System.Windows.Forms.MessageBox.Show();
+        //System.Diagnostics.Debugger.Launch();
+
         session.Log("Begin CustomAction1");
         __pSql = new PSql();
         int port = 0;
@@ -64,9 +66,10 @@ namespace CtmAction
         __pSql.db_port = port;
         __pSql.db_pwd = session["DB_PWD"];
         //System.Windows.Forms.MessageBox.Show(session["DB_TEST"]);
-        
+
         Exception exp = null;
-        if (!string.IsNullOrEmpty(session["DB_TEST"])) {
+        if (!string.IsNullOrEmpty(session["DB_TEST"]))
+        {
           if (session["DB_TEST"] == "1")
           {
             if (CheckDb(out exp) == 1)
@@ -116,6 +119,7 @@ namespace CtmAction
 
     static int TryConnectDb(out Exception exception)
     {
+
       exception = null;
       string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
        __pSql.db_address, __pSql.db_port, __pSql.db_user, __pSql.db_pwd);
@@ -132,7 +136,7 @@ namespace CtmAction
       catch (Exception exp)
       {
         exception = exp;
-       // Console.WriteLine("Connection ERROR");
+        // Console.WriteLine("Connection ERROR");
         return 1;
       }
     }
@@ -143,7 +147,7 @@ namespace CtmAction
       string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
       __pSql.db_address, __pSql.db_port, __pSql.db_user, __pSql.db_pwd);
       //string connection = string.Format("Host={0};Port={1};Username={2};Password={3};Database=''",
-     //"localhost", 5432, "postgres", "root");
+      //"localhost", 5432, "postgres", "root");
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
     connection, PostgreSqlDialect.Provider);
       try
@@ -185,7 +189,7 @@ namespace CtmAction
           };
           string spu = DBAuthUtils.Encrypt(mainUser.level.ToString(), mainUser.usr);
           mainUser.pwd = spu;
-          List<MainUser> lst = db.Select<MainUser>(x => x.usr==__pSql.db_user);// this.txtDbSprUser.Text); ; ;//);
+          List<MainUser> lst = db.Select<MainUser>(x => x.usr == __pSql.db_user);// this.txtDbSprUser.Text); ; ;//);
           if (lst.Count == 0)
             db.Insert<MainUser>(mainUser);
           if (!CheckForRole("ulc_read", EnumRole.READ, db))
@@ -237,5 +241,18 @@ namespace CtmAction
       }
       return result;
     }
+
+
+    static void Main()
+    {
+      __pSql = new PSql();
+      __pSql.db_address = "localhost";
+      __pSql.db_user = "postgres";
+      __pSql.db_port = 5432;
+      __pSql.db_pwd = "root";
+      Exception exp = null;
+      CreateDb(out exp);
+    }
   }
 }
+  

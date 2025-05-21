@@ -18,7 +18,8 @@ namespace UlcWin.Edit
 
   public enum UTypeController:byte{ 
     RVP=0,
-    ULC2=1
+    ULC2=1,
+    ULC3=2
   }
   public enum UTypeFunction : byte
   {

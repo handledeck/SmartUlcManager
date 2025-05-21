@@ -1058,5 +1058,10 @@ namespace Ztp
     {
       Action(DeviceActionMode.BrightToggle);
     }
+
+    private void modBusEditor_Load(object sender, EventArgs e)
+    {
+
+    }
   }
 }

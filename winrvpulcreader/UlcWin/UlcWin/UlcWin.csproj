@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>UlcWin</RootNamespace>
     <AssemblyName>SmartUlcManager</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -174,16 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AplSetings\ASettings.cs" />
-    <Compile Include="Controls\AdditionalUart\DataTable\AistMestem.cs" />
-    <Compile Include="Controls\AdditionalUart\DataTable\DisplayNameAttribute.cs" />
-    <Compile Include="Controls\AdditionalUart\DataTable\GranItem.cs" />
-    <Compile Include="Controls\AdditionalUart\DataTable\ModbusItem.cs" />
-    <Compile Include="Controls\AdditionalUart\UsrUartModule.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\AdditionalUart\UsrUartModule.Designer.cs">
-      <DependentUpon>UsrUartModule.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ChBoxCombo\CheckBoxComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -203,6 +193,12 @@
     </Compile>
     <Compile Include="Controls\ChBoxCombo\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DisCombo\DisableComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DisCombo\DisableComboBox.Designer.cs">
+      <DependentUpon>DisableComboBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EventLogCheckBoxPanel.cs">
       <SubType>UserControl</SubType>
@@ -249,6 +245,38 @@
     </Compile>
     <Compile Include="Controls\PopupControl\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Uart\Attributes\BaseTypeDescriptionProvider.cs" />
+    <Compile Include="Controls\Uart\Attributes\EnumTypeConverter.cs" />
+    <Compile Include="Controls\Uart\Attributes\EnumTypeDescriptionProvider.cs" />
+    <Compile Include="Controls\Uart\Attributes\FieldDisplayNameAttribute.cs" />
+    <Compile Include="Controls\Uart\Attributes\PropertySorter.cs" />
+    <Compile Include="Controls\Uart\Delegates\EventDelegats.cs" />
+    <Compile Include="Controls\Uart\Enums\EnumUlc.cs" />
+    <Compile Include="Controls\Uart\Function\Aisttem.cs" />
+    <Compile Include="Controls\Uart\Function\GranItem.cs" />
+    <Compile Include="Controls\Uart\Function\MesItem.cs" />
+    <Compile Include="Controls\Uart\Function\ModbusItem.cs" />
+    <Compile Include="Controls\Uart\Function\ThrItem.cs" />
+    <Compile Include="Controls\Uart\Interfaces\Interface.cs" />
+    <Compile Include="Controls\Uart\Ui\UlcSerialPort.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Uart\Ui\UlcSerialPort.Designer.cs">
+      <DependentUpon>UlcSerialPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Uart\Ui\ExtDialogMessage.cs" />
+    <Compile Include="Controls\Uart\Ui\UartEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Uart\Ui\UartEditor.Designer.cs">
+      <DependentUpon>UartEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Uart\Ui\UsrUartModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Uart\Ui\UsrUartModule.Designer.cs">
+      <DependentUpon>UsrUartModule.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\UlcMeterComponet\DbMeterView.cs" />
     <Compile Include="Controls\UlcMeterComponet\EventDateTimePicker.cs">
@@ -541,17 +569,26 @@
     <Compile Include="ui\WaitForm.Designer.cs">
       <DependentUpon>WaitForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\AdditionalUart\UsrUartModule.resx">
-      <DependentUpon>UsrUartModule.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ChBoxCombo\PopupComboBox.resx">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DisCombo\DisableComboBox.resx">
+      <DependentUpon>DisableComboBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EventLogCheckBoxPanel.resx">
       <DependentUpon>EventLogCheckBoxPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MeterProgress\MeterProgress.resx">
       <DependentUpon>MeterProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Uart\Ui\UlcSerialPort.resx">
+      <DependentUpon>UlcSerialPort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Uart\Ui\UartEditor.resx">
+      <DependentUpon>UartEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Uart\Ui\UsrUartModule.resx">
+      <DependentUpon>UsrUartModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UlcMeterComponet\UlcTreeView.resx">
       <DependentUpon>UlcTreeView.cs</DependentUpon>

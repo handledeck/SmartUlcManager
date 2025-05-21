@@ -29,6 +29,7 @@ namespace Ztp.Protocol
     public const string Ok = "OK";
     public const string Error = "ERROR";
     public const string MBConfig = "MBCFG";
+    
     public const string MBStartPack = "MBP";
     public const string MBLbl = "MBLBL";
     public const string MBstartLbl = "MBL";

@@ -31,7 +31,8 @@ namespace InterUlc.Db
   public enum EnumViewDevType {
     RVP = 0,
     ULC2 = 1,
-    ALL = 2
+    ALL = 2,
+    ULC2_3 = 3,
   }
 
   public class UNode : TreeNode
@@ -109,6 +110,7 @@ namespace InterUlc.Db
     public List<Repair> __listRapair;
     public bool __super_user = false;
     IPHostEntry __host = null;
+    public int __net_isTrue = 0;
     public event UpdateListObject UpdateListViewItems;
     public List<OrmDbLogs> GetAllLogsByEvent(int intLogEvet) {
       List<OrmDbLogs> lstOrmDbLogs = null;
@@ -969,7 +971,10 @@ namespace InterUlc.Db
       */
       Dictionary<int, string> utype = new Dictionary<int, string>();
       utype.Add(0, "РВП-18");
-      utype.Add(1, "ULC 2");
+      utype.Add(1, "ULC-2");
+      utype.Add(2, "ULC-3-lite");
+      utype.Add(3, "ULC-3");
+
       return utype;
     }
 
@@ -1026,12 +1031,11 @@ namespace InterUlc.Db
       return content;
     }
 
+    //Загрузка данных из 1с бухгалтерии о контроллерах которые были отремонтированы   
     public void LoadRapairDevices()
     {
+      //
       NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
-      //for (int i = 0; i < this.LstViewItm.Items.Count; i++)
-      //{
-      //ItemIp iip = (ItemIp)this.LstViewItm.Items[i].Tag;
       if (__listRapair == null)
       {
         string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
@@ -1048,6 +1052,7 @@ namespace InterUlc.Db
       }
     }
 
+    //Поиск в списке отремонтрованных контроллеров 
     private bool FindRepairDevice(ItemIp itemIp)
     {
       if (itemIp.UlcConfig != null)
@@ -1061,7 +1066,7 @@ namespace InterUlc.Db
       return false;
     }
 
-    public int __net_isTrue = 0;
+    
     public void _ViewRes(ListView list, int res, DateTime dt, EnumViewDevType enmDevType)
     {
       //GetResObjects(res, (int)enmDevType);
@@ -1074,6 +1079,9 @@ namespace InterUlc.Db
       switch (enmDevType)
       {
         case EnumViewDevType.RVP:
+          sql_ip = string.Format("SELECT * FROM main_nodes mn full join main_ctrlinfo ci on ci.id = mn.id " +
+              "where mn.parent_id = {0} and ci.unit_type_id=0 order by mn.name", res);
+          break;
         case EnumViewDevType.ULC2:
 
           /*
@@ -1082,7 +1090,7 @@ namespace InterUlc.Db
            where mn.parent_id =13 and mc.id =mn.id 
            */
           sql_ip = string.Format("SELECT * FROM main_nodes mn full join main_ctrlinfo ci on ci.id = mn.id " +
-              "where mn.parent_id = {0} and ci.unit_type_id={1} order by mn.name", res, (int)enmDevType);
+              "where mn.parent_id = {0} and ci.unit_type_id>0 order by mn.name", res);
           break;
         case EnumViewDevType.ALL:
           sql_ip = string.Format("SELECT* FROM main_nodes mn full join main_ctrlinfo ci on ci.id = mn.id " +
@@ -1221,7 +1229,16 @@ namespace InterUlc.Db
         if (item.Value.Phone.StartsWith("---"))
           item.Value.Phone = "нет информ...";
         it.SubItems.Add(item.Value.Phone);
-        it.SubItems.Add(item.Value.UType == 0 ? "РВП-18" : "ULC 02");
+        string utype=string.Empty;
+        if (item.Value.UType == 0)
+          utype = "РВП-18";
+        else if (item.Value.UType == 1)
+          utype = "ULC-2";
+        else if (item.Value.UType == 2)
+          utype = "ULC-3-Lite";
+        else if (item.Value.UType == 3)
+          utype = "ULC-3";
+        it.SubItems.Add(utype);
         
         if (dr_ip.Read())
         {
@@ -1286,7 +1303,7 @@ namespace InterUlc.Db
           it.SubItems.Add(ss != null ? ((DateTime)ss).ToString("dd-MM-yyyy HH:mm:ss") : "----");
 
           string lvl = Log.ParceLevel(uc.LOGSLVL);
-          if (item.Value.UType == 1)
+          if (item.Value.UType == 1 || item.Value.UType==2)
           {
             it.SubItems.Add(lvl);
           }
@@ -1325,7 +1342,12 @@ namespace InterUlc.Db
             //GetIMAIChanged(item.Key, emai);
             try
             {
-              it.SubItems.Add(uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
+              string imei = uc.IMEI.TrimEnd(new char[] { '\r', '\n' });
+              if (uc.VER.StartsWith("I3O2A1-LEM-4-FOTA")) {
+                it.SubItems.Add(imei);
+              }
+              else
+              it.SubItems.Add(imei.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
             }
             catch {
               it.SubItems.Add("---");

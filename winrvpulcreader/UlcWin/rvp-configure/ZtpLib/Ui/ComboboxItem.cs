@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Ztp.Ui
 {
-  internal class ComboboxItem<T> where T: struct  
+  public class ComboboxItem<T> where T: struct  
   {
     readonly Type _type = typeof(T);
     public T Value;

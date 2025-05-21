@@ -31,13 +31,15 @@ namespace UlcWin
     ZtpConfig __ztpConfig = null;
     DbReader __db = null;
     GetConnectionDelegate __getConnection = null;
-    int __tagCount = 0;
+    string __name_object = string.Empty;
     List<ListViewItem> __items_checked;
     string __command = string.Empty;
-    byte[] __pkg = null;
     bool __multiWrite = false;
     Ztp.Enums.Device __device = Ztp.Enums.Device.Unknown;
-    ItemIp __selItem;
+    public ItemIp __selItem;
+    public byte[] __uart_array;
+    public List<string> __mbLbl = null;
+    LoadForm __loadForm = null;
     public RequestForm(string message, List<ListViewItem> items_checked,
       GetConnectionDelegate getConnection, bool multiWrite, Ztp.Enums.Device device, ItemIp selItem, DbReader db)
       : this(message, getConnection, multiWrite, device, selItem, db)
@@ -46,7 +48,17 @@ namespace UlcWin
       this.__items_checked = items_checked;
       __multiWrite = multiWrite;
       this.__selItem = selItem;
+      
+    }
 
+   
+
+    public void SetUartArray(byte[] vs,List<string> vs1) {
+      this.__uart_array = vs;
+      this.__mbLbl = vs1;
+      this.usrUartModule1.Value = this.__uart_array;
+      this.usrUartModule1.ListMBLabel = vs1;  
+      
     }
 
     void SetConfigSettings(Ztp.Enums.Device device)
@@ -90,8 +102,8 @@ namespace UlcWin
       __config.LogsControlShow(false);
       __config.RechangeField(Ztp.Enums.Device.RVP);
 
-      this.__modbusItemList.Enabled = false;
-      this.__modBusSettings.Enabled = false;
+      //this.__modbusItemList.Enabled = false;
+      //this.__modBusSettings.Enabled = false;
       __planEditor.Value = __ztpConfig.Light;
       __planEditor.UseSchedulerVisible = true;
       __comPortEditor.Value = __ztpConfig.ComPortSetting;
@@ -106,20 +118,20 @@ namespace UlcWin
       __config.PlanRebootShow(true);
       __config.LogsControlShow(true);
       __config.RechangeField(Ztp.Enums.Device.ULC2);
-      this.__modbusItemList.Enabled = true;
-      this.__modBusSettings.Enabled = true;
+      //this.__modbusItemList.Enabled = true;
+      //this.__modBusSettings.Enabled = true;
       __planEditor.Value = __ztpConfig.Light;
       __planEditor.UseSchedulerVisible = true;
       __comPortEditor.Value = __ztpConfig.ComPortSetting;
-      this.__modBusSettings.TagTableVisible += ModBusSettingsEditorControl1_TagTableVisible;
-      this.__modBusSettings.Download += __modBusSettings_Download;
-      this.__modBusSettings.Upload += __modBusSettings_Upload;
-      this.__modBusSettings.getCollectionFromTable += __modBusSettings_getCollectionFromTable;
-      this.__modBusSettings.getStringsTable += __modBusSettings_getStringsTable;
-      this.__modBusSettings.getGzipLabel += __modBusSettings_getGzipLabel;
+      //this.__modBusSettings.TagTableVisible += ModBusSettingsEditorControl1_TagTableVisible;
+      //this.__modBusSettings.Download += __modBusSettings_Download;
+      //this.__modBusSettings.Upload += __modBusSettings_Upload;
+     // this.__modBusSettings.getCollectionFromTable += __modBusSettings_getCollectionFromTable;
+     // this.__modBusSettings.getStringsTable += __modBusSettings_getStringsTable;
+     // this.__modBusSettings.getGzipLabel += __modBusSettings_getGzipLabel;
       //this.__modBusSettings.LoadMBLabels += __modBusSettings_LoadMBLabels;
-      this.__modbusItemList.Enabled = false;
-      this.__modBusSettings.TagTableVisible += __modBusSettings_TagTableVisible;
+    //  this.__modbusItemList.Enabled = false;
+    //  this.__modBusSettings.TagTableVisible += __modBusSettings_TagTableVisible;
     }
 
     void InitConfig()
@@ -163,10 +175,21 @@ namespace UlcWin
       this.tableLayoutPanel2.Controls.Add(__config);
       this.tableLayoutPanel2.Controls.Add(__currentStateViewControl);
       this.tabPage3.Controls.Add(__comPortEditor);
+      __loadForm = (LoadForm)this.Tag;
+      if (this.__selItem.UType == 0)
+        this.usrUartModule1.Enabled = false;
+      else {
+        this.usrUartModule1.Enabled = true;
+        this.usrUartModule1.Value = __uart_array;
+      }
+      
+      this.usrUartModule1.btnBinRead_Click();
+      this.usrUartModule1.ParentsForm = this;
+      //this.usrUartModule1.InitCB();
       base.OnShown(e);
     }
 
-    string __name_object = string.Empty;
+    
 
     public RequestForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
       Ztp.Enums.Device device, ItemIp selItem, DbReader db)
@@ -177,217 +200,15 @@ namespace UlcWin
       this.__selItem = selItem;
       this.__name_object = __selItem.Name;
       this.__db = db;
-      //if (multiWrite)
-      //{
-      //  this.__currentStateViewControl.Enabled = false;
-      //  this.__modbusItemList.Enabled = false;
-      //  this.__modBusSettings.Enabled = false;
-      //  this.__multiWrite = multiWrite;
-      //}
-      //else
-      //{
-      //  this.btnSave.Visible = false;
-      //  this.btnFile.Visible = false;
-      //}
+     
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       this.__device = device;
       this.__config._devType = device;
-      //__config._devType = Ztp.Enums.Device.ULC2_2;
-
-      //__config.Value = __ztpConfig;
-      //__config._devType = device;
-      //__planEditor.Value = __ztpConfig.Light;
-      //__comPortEditor.Value = __ztpConfig.ComPortSetting;
-      //__currentStateViewControl.Value = __ztpConfig;
-
-      //SetConfigSettings(device);
-
+     
       Application.Idle += Application_Idle;
       this.__getConnection = getConnection;
-
-    }
-
-    private void __modBusSettings_TagTableVisible(bool value)
-    {
-      //this.__modbusItemList.ClearTable();
-    }
-
-    private void __modBusSettings_LoadMBLabels(string input)
-    {
-
-    }
-
-    private string __modBusSettings_getGzipLabel()
-    {
-      return this.__modbusItemList.GetGzip();
-    }
-
-    private string[] __modBusSettings_getStringsTable()
-    {
-      return this.__modbusItemList.GetTableAsStrings();
-    }
-
-    private void __modBusSettings_Upload()
-    {
-
-      if (CheckSessionPassword())
-      {
-
-
-        SimpleWaitForm siForm = null;
-        getMbMassive();
-        using (siForm = new SimpleWaitForm(new Action(() =>
-        {
-
-          byte[] pack = ZtpProtocol.ModbusSetConfig(__pwd, __pkg, (ushort)__pkg.Length);
-          try
-          {
-            siForm.SetLabelText(string.Format("Соединяюсь с {0}-{1}", this.__name_object, this.__ztpConfig.IpOwn));
-            TcpClient client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
-            if (client == null)
-              throw new Exception("Ошибка соединения...");
-            NetworkStream stream = client.GetStream();
-            //byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes(__command);
-            stream.Write(pack, 0, pack.Length);
-            siForm.SetLabelText(string.Format("Запись конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
-            int len = stream.Read(pack, 0, pack.Length);
-            if (len > 0)
-            {
-              string answ = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
-              if (answ.Equals("PWD:OK\r\n"))
-              {
-
-                siForm.DialogResult = DialogResult.OK;
-              }
-              else
-              {
-                throw new Exception("Ошибка записи в устройство");
-              }
-            }
-            else
-            {
-              throw new Exception("Ошибка чтения...");
-            }
-          }
-          catch
-          {
-
-            siForm.DialogResult = DialogResult.Cancel;
-          }
-
-        })))
-        {
-          DialogResult res = siForm.ShowDialog();
-          if (res == DialogResult.OK)
-          {
-            MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          }
-          else
-          {
-            MessageBox.Show("О", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-          }
-          //this.Close();
-
-        }
-      }
-    }
-
-
-
-    private byte[] getMbMassive()
-    {
-      __pkg = new byte[1024];
-      ushort dat_size = 0;
-
-      //запись статуса работы с протоколом модбас
-      __pkg[dat_size] = (byte)this.__modBusSettings.cbWorkMode.SelectedIndex;
-      dat_size++;
-
-      //запись значения периода опроса
-      __pkg[dat_size] = (byte)this.__modBusSettings.idPollPeriod.Value;
-      dat_size++;
-
-      //формирование групп тегов в массив, в конец добавляется массив 
-      // 2хбайтных значений индексов мэк
-      byte[] info = __modBusSettings_getCollectionFromTable();// getCollectionFromTable?.Invoke();
-      info.CopyTo(__pkg, dat_size);
-      dat_size += (ushort)info.Length;
-      //Обрезка до нужных размеров массива
-      Array.Resize<byte>(ref __pkg, dat_size);
-      return __pkg;
-    }
-
-    private byte[] __modBusSettings_getCollectionFromTable()
-    {
-      return this.__modbusItemList.GetTagMassive();
-    }
-
-    int InsertListViewTag(byte[] buf)
-    {
-      int s = 1;
-      //buf[s++];
-      byte pollPeriod = buf[s++];
-      //idPollPeriod.Value = (pollPeriod == 0) ? 1 : pollPeriod;
-      Int16 count = BitConverter.ToInt16(buf, s);
-      s += 2;
-      this.__tagCount = 0;
-      int pointToIecIndexStart = 4 + count * 4;
-      int pointToDbzIndexStart = pointToIecIndexStart + count * 2;
-
-      for (int i = 0; i < count; i++)
-      {
-        UInt16 val = BitConverter.ToUInt16(buf, s + 2);
-        UInt16 iecIndex = (pointToIecIndexStart + (i * 2) < buf.Length) ?
-          BitConverter.ToUInt16(buf, pointToIecIndexStart + i * 2) : (UInt16)0;
-        byte dbzVal = ((pointToDbzIndexStart + i) < buf.Length) ?
-          buf[pointToDbzIndexStart + i] : (byte)0;
-        this.__modbusItemList.addTag(buf[s], buf[s + 1], val, (ushort)iecIndex, dbzVal);
-        s += 4;
-        this.__tagCount++;
-      }
-
-      if (count > 0)
-        s += count * 3 + 1;
-      else
-        s = -1;
-
-      return s;
-    }
-
-    private void __modBusSettings_Download()
-    {
-      this.__modbusItemList.ClearTable();
-      TcpClient client = null;
-      byte[] pack = new byte[1024];
-      string command = ZtpProtocol.GetModbusConfig(); 
-      byte[] buff = ZtpProtocol.ToBytes(command);
-      try
-      {
-        client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
-        if (client == null)
-          throw new Exception("Ошибка соединения");
-        NetworkStream stream = client.GetStream();
-        stream.ReadTimeout = 15000;
-        stream.Write(buff, 0, buff.Length);
-        int len = stream.Read(pack, 0, pack.Length);
-        string msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
-        msg = msg.Trim('\r', '\n');
-        string[] keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-        byte[] buf = Convert.FromBase64String(keyValue[1]);
-        this.__modBusSettings.Value = buf;
-        if (this.__modBusSettings.cbWorkMode.SelectedIndex != 0)
-          this.InsertListViewTag(buf);
-      }
-      catch (Exception exp)
-      {
-        MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
-      finally
-      {
-        if (client != null)
-          client.Close();
-      }
+     
     }
 
     private void Application_Idle(object sender, EventArgs e)
@@ -418,20 +239,6 @@ namespace UlcWin
         this.btnScheduleDelete.Enabled = false;
 
     }
-
-    private void ModBusSettingsEditorControl1_TagTableVisible(bool value)
-    {
-      if (value)
-      {
-        this.__modbusItemList.Enabled = true;
-
-      }
-      else
-      {
-        this.__modbusItemList.Enabled = false;
-      }
-    }
-
 
 
     private void btnAddSeason_Click(object sender, EventArgs e)
@@ -573,8 +380,10 @@ namespace UlcWin
           return;
         }
         __command = ZtpProtocol.SetConfigCommand(__pwd, __ztpConfig);
+
         SimpleWaitForm siForm = null;
         TcpClient client = null;
+        int cbIndex = this.usrUartModule1.cbFunction.SelectedIndex;
         using (siForm = new SimpleWaitForm(new Action(() =>
         {
 
@@ -606,16 +415,22 @@ namespace UlcWin
               }
               else
               {
-                throw new Exception("Ошибка записи в устройство");
+                throw new Exception("Ошибка записи конфигурации в устройство");
               }
             }
             else
             {
-              throw new Exception("Ошибка чтения...");
+              throw new Exception("Ошибка записи конфигурации в устройство");
             }
+            ///Запись UART настроек
+            ///
+            Exception e= usrUartModule1.WriteExpandUart(client, __pwd, cbIndex);
+            if (e != null)
+              throw e;
           }
-          catch
+          catch(Exception exc)
           {
+            MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             siForm.DialogResult = DialogResult.Cancel;
           }
           finally
@@ -629,10 +444,6 @@ namespace UlcWin
           if (res == DialogResult.OK)
           {
             MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          }
-          else
-          {
-            MessageBox.Show("Ошибка записи конфигурации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
           }
         }
       }
@@ -726,6 +537,7 @@ namespace UlcWin
     {
       if (!this.__multiWrite)
       {
+        
         this.SingleSettingWrite();
       }
       else
@@ -754,7 +566,6 @@ namespace UlcWin
             if (client != null)
               client.Close();
             Thread.Sleep(1000);
-
           }
         }
         catch (Exception)
@@ -801,13 +612,22 @@ namespace UlcWin
                 {
                   __messgage = message;
                   __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(message);
+                  byte[] pack = new byte[1024];
+                  string command = ZtpProtocol.GetModbusConfig();
+                  byte[] buff = ZtpProtocol.ToBytes(command);
+                  stream.Write(buff, 0, buff.Length);
+                  len = stream.Read(pack, 0, pack.Length);
+                  string msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
+                  msg = msg.Trim('\r', '\n');
+                  string[] keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                  buffer = Convert.FromBase64String(keyValue[1]);
+                  this.usrUartModule1.SetUartArray(buffer);
                   read = true;
                   //siForm.DialogResult = DialogResult.OK;
                   break;
                 }
               }
             }
-
             else
             {
               throw new Exception("Ошибка чтения...");
@@ -851,7 +671,14 @@ namespace UlcWin
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      getConfig();
+      byte[] buffer;
+      List<string> lstLbl;
+      DialogResult result= __loadForm.GetConfig(__selItem, out buffer, out lstLbl);
+      
+      this.usrUartModule1.Value = buffer;
+      this.usrUartModule1.ListMBLabel = lstLbl;
+      this.usrUartModule1.SetUartArray(buffer, lstLbl);
+      //getConfig();
     }
 
     private void btnFile_Click(object sender, EventArgs e)
@@ -973,6 +800,75 @@ namespace UlcWin
         {
           MessageBox.Show("Ошибка чтения конфигурации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+      }
+    }
+
+    private void __modBusSettings_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    
+    private bool usrUartModule1_EventReadUartData(out byte[] buffer)
+    {
+      buffer = null;
+      TcpClient client = null;
+      byte[] pack = new byte[1024];
+      string command = ZtpProtocol.GetModbusConfig();
+      byte[] buff = ZtpProtocol.ToBytes(command);
+      try
+      {
+        client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
+        if (client == null)
+          throw new Exception("Ошибка соединения");
+        NetworkStream stream = client.GetStream();
+        stream.ReadTimeout = 15000;
+        stream.Write(buff, 0, buff.Length);
+        int len = stream.Read(pack, 0, pack.Length);
+        string msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
+        msg = msg.Trim('\r', '\n');
+        string[] keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+        buffer = Convert.FromBase64String(keyValue[1]);
+        return true;
+      }
+      catch
+      {
+        return false;
+        //MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+      finally
+      {
+        if (client != null)
+          client.Close();
+      }
+      
+    }
+
+    private void usrUartModule1_EventWriteUartData()
+    {
+
+    }
+
+    private void usrUartModule1_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    private void usrUartModule1_EventHandlerUartData(Uart.UartEvents uartEvents, int index, int rowsCount)
+    {
+      if (index != 0)
+      {
+        if (rowsCount == 0)
+        {
+          this.btnOk.Enabled = false;
+        }
+        else
+        {
+          this.btnOk.Enabled = true;
+        }
+      }
+      else {
+        this.btnOk.Enabled = true;
       }
     }
   }

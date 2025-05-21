@@ -380,6 +380,7 @@ namespace InterUlc.Logs
     private static object GetCustomAtribute(Type srcField, string nameField, Type findAttr)
     {
       object result = null;
+      
       foreach (FieldInfo fi in srcField.GetFields())
       {
         if (fi.Name.Equals(nameField))
@@ -395,8 +396,19 @@ namespace InterUlc.Logs
     }
     public static string GetDescription(Enum e)
     {
-      string desc = ((DescriptionAttribute)(GetCustomAtribute(e.GetType(), e.ToString(),typeof(DescriptionAttribute)))).Description;
-      return desc;
+      try
+      {
+        var obj = GetCustomAtribute(e.GetType(), e.ToString(), typeof(DescriptionAttribute));
+        if (obj != null)
+          return ((DescriptionAttribute)(obj)).Description;
+        else return "Нет описания события";
+      }
+      catch
+      {
+
+        return "Нет описания события";
+      }
+      
     }
   }
 }

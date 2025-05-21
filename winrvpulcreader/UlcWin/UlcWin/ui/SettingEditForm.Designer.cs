@@ -58,12 +58,11 @@
       this.btnReamoveSeason = new System.Windows.Forms.Button();
       this.btnChangeSeason = new System.Windows.Forms.Button();
       this.tabPage3 = new System.Windows.Forms.TabPage();
-      this.@__modbusItemList = new Ztp.Ui.ModbusItemListControl();
+      this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.usrUartModule1 = new Uart.UsrUartModule();
       this.@__comPortEditor = new Ztp.Ui.ComPortSettingsEditorControl();
-      this.@__modBusSettings = new Ztp.Ui.ModBusSettingsEditorControl();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-      this.btnChancel = new System.Windows.Forms.Button();
       this.btnOk = new System.Windows.Forms.Button();
       this.btnSave = new System.Windows.Forms.Button();
       this.btnFile = new System.Windows.Forms.Button();
@@ -81,6 +80,7 @@
       this.groupBox2.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabPage3.SuspendLayout();
+      this.groupBox3.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -97,7 +97,7 @@
       this.tabControl1.Location = new System.Drawing.Point(4, 4);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1109, 639);
+      this.tabControl1.Size = new System.Drawing.Size(992, 639);
       this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
       this.tabControl1.TabIndex = 0;
       // 
@@ -110,7 +110,7 @@
       this.tabPage1.Location = new System.Drawing.Point(4, 34);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(1101, 601);
+      this.tabPage1.Size = new System.Drawing.Size(984, 601);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Общие";
       this.tabPage1.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
       this.tableLayoutPanel2.RowCount = 1;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(1095, 595);
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(978, 595);
       this.tableLayoutPanel2.TabIndex = 0;
       // 
       // __currentStateViewControl
@@ -170,9 +170,9 @@
         false,
         false,
         false};
-      this.@__currentStateViewControl.Location = new System.Drawing.Point(815, 3);
+      this.@__currentStateViewControl.Location = new System.Drawing.Point(728, 3);
       this.@__currentStateViewControl.Name = "__currentStateViewControl";
-      this.@__currentStateViewControl.Size = new System.Drawing.Size(277, 589);
+      this.@__currentStateViewControl.Size = new System.Drawing.Size(247, 589);
       this.@__currentStateViewControl.TabIndex = 0;
       this.@__currentStateViewControl.Value = null;
       // 
@@ -183,7 +183,7 @@
       this.@__config.Location = new System.Drawing.Point(3, 3);
       this.@__config.Name = "__config";
       this.@__config.ShowApnProperty = false;
-      this.@__config.Size = new System.Drawing.Size(806, 589);
+      this.@__config.Size = new System.Drawing.Size(719, 589);
       this.@__config.TabIndex = 1;
       ztpConfig1.Ain = new bool[] {
         false,
@@ -339,7 +339,7 @@
       this.tabPage2.Location = new System.Drawing.Point(4, 34);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(1101, 601);
+      this.tabPage2.Size = new System.Drawing.Size(984, 601);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "План освещения";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -360,8 +360,9 @@
       this.splitContainer1.Panel2.Controls.Add(this.btnLightSwitcher);
       this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
       this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-      this.splitContainer1.Size = new System.Drawing.Size(1095, 595);
-      this.splitContainer1.SplitterDistance = 851;
+      this.splitContainer1.Size = new System.Drawing.Size(978, 595);
+      this.splitContainer1.SplitterDistance = 651;
+      this.splitContainer1.SplitterWidth = 5;
       this.splitContainer1.TabIndex = 0;
       // 
       // __planEditor
@@ -369,7 +370,7 @@
       this.@__planEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.@__planEditor.Location = new System.Drawing.Point(0, 0);
       this.@__planEditor.Name = "__planEditor";
-      this.@__planEditor.Size = new System.Drawing.Size(851, 595);
+      this.@__planEditor.Size = new System.Drawing.Size(651, 595);
       this.@__planEditor.TabIndex = 0;
       this.@__planEditor.UseSchedulerEnable = true;
       this.@__planEditor.UseSchedulerVisible = false;
@@ -384,9 +385,9 @@
       // PicLightSwitcher
       // 
       this.PicLightSwitcher.Image = global::UlcWin.Properties.Resources.lightbulb_off;
-      this.PicLightSwitcher.Location = new System.Drawing.Point(100, 393);
+      this.PicLightSwitcher.Location = new System.Drawing.Point(117, 393);
       this.PicLightSwitcher.Name = "PicLightSwitcher";
-      this.PicLightSwitcher.Size = new System.Drawing.Size(34, 37);
+      this.PicLightSwitcher.Size = new System.Drawing.Size(40, 37);
       this.PicLightSwitcher.TabIndex = 11;
       this.PicLightSwitcher.TabStop = false;
       // 
@@ -395,9 +396,9 @@
       this.btnLightSwitcher.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.btnLightSwitcher.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnLightSwitcher.ImageIndex = 15;
-      this.btnLightSwitcher.Location = new System.Drawing.Point(43, 436);
+      this.btnLightSwitcher.Location = new System.Drawing.Point(50, 436);
       this.btnLightSwitcher.Name = "btnLightSwitcher";
-      this.btnLightSwitcher.Size = new System.Drawing.Size(170, 31);
+      this.btnLightSwitcher.Size = new System.Drawing.Size(198, 31);
       this.btnLightSwitcher.TabIndex = 10;
       this.btnLightSwitcher.Text = "Включить освещение";
       this.btnLightSwitcher.UseVisualStyleBackColor = true;
@@ -410,9 +411,9 @@
       this.groupBox2.Controls.Add(this.btnScheduleEdit);
       this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.groupBox2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.groupBox2.Location = new System.Drawing.Point(17, 188);
+      this.groupBox2.Location = new System.Drawing.Point(20, 188);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(210, 136);
+      this.groupBox2.Size = new System.Drawing.Size(245, 136);
       this.groupBox2.TabIndex = 9;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Расписание";
@@ -423,9 +424,9 @@
       this.btnScheduleAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnScheduleAdd.ImageIndex = 7;
       this.btnScheduleAdd.ImageList = this.imlTc;
-      this.btnScheduleAdd.Location = new System.Drawing.Point(26, 22);
+      this.btnScheduleAdd.Location = new System.Drawing.Point(54, 22);
       this.btnScheduleAdd.Name = "btnScheduleAdd";
-      this.btnScheduleAdd.Size = new System.Drawing.Size(170, 31);
+      this.btnScheduleAdd.Size = new System.Drawing.Size(166, 31);
       this.btnScheduleAdd.TabIndex = 0;
       this.btnScheduleAdd.Text = "Добавить расписание";
       this.btnScheduleAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -459,9 +460,9 @@
       this.btnScheduleDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnScheduleDelete.ImageIndex = 13;
       this.btnScheduleDelete.ImageList = this.imlTc;
-      this.btnScheduleDelete.Location = new System.Drawing.Point(26, 92);
+      this.btnScheduleDelete.Location = new System.Drawing.Point(54, 92);
       this.btnScheduleDelete.Name = "btnScheduleDelete";
-      this.btnScheduleDelete.Size = new System.Drawing.Size(170, 27);
+      this.btnScheduleDelete.Size = new System.Drawing.Size(166, 27);
       this.btnScheduleDelete.TabIndex = 1;
       this.btnScheduleDelete.Text = "Удалить расписание";
       this.btnScheduleDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -474,9 +475,9 @@
       this.btnScheduleEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnScheduleEdit.ImageIndex = 9;
       this.btnScheduleEdit.ImageList = this.imlTc;
-      this.btnScheduleEdit.Location = new System.Drawing.Point(26, 59);
+      this.btnScheduleEdit.Location = new System.Drawing.Point(54, 59);
       this.btnScheduleEdit.Name = "btnScheduleEdit";
-      this.btnScheduleEdit.Size = new System.Drawing.Size(170, 27);
+      this.btnScheduleEdit.Size = new System.Drawing.Size(166, 27);
       this.btnScheduleEdit.TabIndex = 2;
       this.btnScheduleEdit.Text = "Изменить расписание";
       this.btnScheduleEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -490,9 +491,9 @@
       this.groupBox1.Controls.Add(this.btnChangeSeason);
       this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.groupBox1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.groupBox1.Location = new System.Drawing.Point(17, 27);
+      this.groupBox1.Location = new System.Drawing.Point(20, 27);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(210, 131);
+      this.groupBox1.Size = new System.Drawing.Size(245, 131);
       this.groupBox1.TabIndex = 8;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Сезоны";
@@ -503,9 +504,9 @@
       this.btnAddSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnAddSeason.ImageIndex = 4;
       this.btnAddSeason.ImageList = this.imlTc;
-      this.btnAddSeason.Location = new System.Drawing.Point(26, 22);
+      this.btnAddSeason.Location = new System.Drawing.Point(54, 22);
       this.btnAddSeason.Name = "btnAddSeason";
-      this.btnAddSeason.Size = new System.Drawing.Size(158, 31);
+      this.btnAddSeason.Size = new System.Drawing.Size(153, 31);
       this.btnAddSeason.TabIndex = 0;
       this.btnAddSeason.Text = "Добавить сезон";
       this.btnAddSeason.UseVisualStyleBackColor = true;
@@ -517,9 +518,9 @@
       this.btnReamoveSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnReamoveSeason.ImageIndex = 5;
       this.btnReamoveSeason.ImageList = this.imlTc;
-      this.btnReamoveSeason.Location = new System.Drawing.Point(26, 92);
+      this.btnReamoveSeason.Location = new System.Drawing.Point(54, 92);
       this.btnReamoveSeason.Name = "btnReamoveSeason";
-      this.btnReamoveSeason.Size = new System.Drawing.Size(158, 27);
+      this.btnReamoveSeason.Size = new System.Drawing.Size(153, 27);
       this.btnReamoveSeason.TabIndex = 1;
       this.btnReamoveSeason.Text = "Удалить сезон";
       this.btnReamoveSeason.UseVisualStyleBackColor = true;
@@ -531,9 +532,9 @@
       this.btnChangeSeason.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnChangeSeason.ImageIndex = 6;
       this.btnChangeSeason.ImageList = this.imlTc;
-      this.btnChangeSeason.Location = new System.Drawing.Point(26, 59);
+      this.btnChangeSeason.Location = new System.Drawing.Point(54, 59);
       this.btnChangeSeason.Name = "btnChangeSeason";
-      this.btnChangeSeason.Size = new System.Drawing.Size(158, 27);
+      this.btnChangeSeason.Size = new System.Drawing.Size(153, 27);
       this.btnChangeSeason.TabIndex = 2;
       this.btnChangeSeason.Text = "Изменить сезон";
       this.btnChangeSeason.UseVisualStyleBackColor = true;
@@ -542,25 +543,40 @@
       // tabPage3
       // 
       this.tabPage3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.tabPage3.Controls.Add(this.@__modbusItemList);
+      this.tabPage3.Controls.Add(this.groupBox3);
       this.tabPage3.Controls.Add(this.@__comPortEditor);
-      this.tabPage3.Controls.Add(this.@__modBusSettings);
       this.tabPage3.ImageIndex = 1;
       this.tabPage3.Location = new System.Drawing.Point(4, 34);
       this.tabPage3.Name = "tabPage3";
-      this.tabPage3.Size = new System.Drawing.Size(1101, 601);
+      this.tabPage3.Size = new System.Drawing.Size(984, 601);
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "RS-485";
       this.tabPage3.UseVisualStyleBackColor = true;
       // 
-      // __modbusItemList
+      // groupBox3
       // 
-      this.@__modbusItemList.AutoSize = true;
-      this.@__modbusItemList.Location = new System.Drawing.Point(20, 160);
-      this.@__modbusItemList.max_mb_Tags = ((short)(100));
-      this.@__modbusItemList.Name = "__modbusItemList";
-      this.@__modbusItemList.Size = new System.Drawing.Size(1065, 429);
-      this.@__modbusItemList.TabIndex = 2;
+      this.groupBox3.Controls.Add(this.usrUartModule1);
+      this.groupBox3.Location = new System.Drawing.Point(23, 160);
+      this.groupBox3.Name = "groupBox3";
+      this.groupBox3.Size = new System.Drawing.Size(946, 438);
+      this.groupBox3.TabIndex = 4;
+      this.groupBox3.TabStop = false;
+      this.groupBox3.Text = "Дополнительные настройки канала";
+      // 
+      // usrUartModule1
+      // 
+      this.usrUartModule1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrUartModule1.ListMBLabel = null;
+      this.usrUartModule1.Location = new System.Drawing.Point(3, 17);
+      this.usrUartModule1.Name = "usrUartModule1";
+      this.usrUartModule1.ParentsForm = null;
+      this.usrUartModule1.Size = new System.Drawing.Size(940, 418);
+      this.usrUartModule1.TabIndex = 3;
+      this.usrUartModule1.Value = null;
+      this.usrUartModule1.EventReadUartData += new Uart.ReadUartData(this.usrUartModule1_EventReadUartData);
+      this.usrUartModule1.EventWriteUartData += new Uart.WriteUartData(this.usrUartModule1_EventWriteUartData);
+      this.usrUartModule1.EventHandlerUartData += new Uart.HendlerUartData(this.usrUartModule1_EventHandlerUartData);
+      this.usrUartModule1.Load += new System.EventHandler(this.usrUartModule1_Load);
       // 
       // __comPortEditor
       // 
@@ -570,12 +586,12 @@
       this.@__comPortEditor.EnabledParity = true;
       this.@__comPortEditor.EnabledPortName = true;
       this.@__comPortEditor.EnabledStopBits = true;
-      this.@__comPortEditor.Location = new System.Drawing.Point(20, 14);
+      this.@__comPortEditor.Location = new System.Drawing.Point(23, 14);
       this.@__comPortEditor.Name = "__comPortEditor";
       this.@__comPortEditor.ShowHandshake = true;
       this.@__comPortEditor.ShowPortName = false;
       this.@__comPortEditor.ShowTimeout = false;
-      this.@__comPortEditor.Size = new System.Drawing.Size(523, 140);
+      this.@__comPortEditor.Size = new System.Drawing.Size(637, 140);
       this.@__comPortEditor.TabIndex = 1;
       comPortSettings2.BaudRate = 9600;
       comPortSettings2.DataBits = ((byte)(8));
@@ -586,13 +602,6 @@
       comPortSettings2.StopBits = Ztp.Port.ComPort.StopBits.One;
       comPortSettings2.Timeout = 5000;
       this.@__comPortEditor.Value = comPortSettings2;
-      // 
-      // __modBusSettings
-      // 
-      this.@__modBusSettings.Location = new System.Drawing.Point(581, 14);
-      this.@__modBusSettings.Name = "__modBusSettings";
-      this.@__modBusSettings.Size = new System.Drawing.Size(504, 115);
-      this.@__modBusSettings.TabIndex = 0;
       // 
       // tableLayoutPanel1
       // 
@@ -608,38 +617,27 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.22767F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.772334F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(1117, 695);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 695);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
       // flowLayoutPanel1
       // 
       this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.flowLayoutPanel1.Controls.Add(this.btnChancel);
       this.flowLayoutPanel1.Controls.Add(this.btnOk);
       this.flowLayoutPanel1.Controls.Add(this.btnSave);
       this.flowLayoutPanel1.Controls.Add(this.btnFile);
       this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-      this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 659);
+      this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 650);
       this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-      this.flowLayoutPanel1.Size = new System.Drawing.Size(1109, 32);
+      this.flowLayoutPanel1.Size = new System.Drawing.Size(992, 41);
       this.flowLayoutPanel1.TabIndex = 1;
-      // 
-      // btnChancel
-      // 
-      this.btnChancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnChancel.Location = new System.Drawing.Point(1013, 3);
-      this.btnChancel.Name = "btnChancel";
-      this.btnChancel.Size = new System.Drawing.Size(93, 27);
-      this.btnChancel.TabIndex = 0;
-      this.btnChancel.Text = "Выход";
-      this.btnChancel.UseVisualStyleBackColor = true;
-      this.btnChancel.Click += new System.EventHandler(this.btnChancel_Click);
       // 
       // btnOk
       // 
-      this.btnOk.Location = new System.Drawing.Point(918, 3);
+      this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.btnOk.Location = new System.Drawing.Point(885, 3);
       this.btnOk.Name = "btnOk";
-      this.btnOk.Size = new System.Drawing.Size(89, 27);
+      this.btnOk.Size = new System.Drawing.Size(104, 30);
       this.btnOk.TabIndex = 1;
       this.btnOk.Text = "Записать";
       this.btnOk.UseVisualStyleBackColor = true;
@@ -647,9 +645,10 @@
       // 
       // btnSave
       // 
-      this.btnSave.Location = new System.Drawing.Point(821, 3);
+      this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.btnSave.Location = new System.Drawing.Point(773, 3);
       this.btnSave.Name = "btnSave";
-      this.btnSave.Size = new System.Drawing.Size(91, 27);
+      this.btnSave.Size = new System.Drawing.Size(106, 29);
       this.btnSave.TabIndex = 0;
       this.btnSave.Text = "Обновить";
       this.btnSave.UseVisualStyleBackColor = true;
@@ -657,10 +656,10 @@
       // 
       // btnFile
       // 
-      this.btnFile.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.btnFile.Location = new System.Drawing.Point(710, 3);
+      this.btnFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.btnFile.Location = new System.Drawing.Point(645, 4);
       this.btnFile.Name = "btnFile";
-      this.btnFile.Size = new System.Drawing.Size(105, 27);
+      this.btnFile.Size = new System.Drawing.Size(122, 27);
       this.btnFile.TabIndex = 1;
       this.btnFile.Text = "Из файла";
       this.btnFile.UseVisualStyleBackColor = true;
@@ -672,14 +671,15 @@
       // 
       // RequestForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.CancelButton = this.btnChancel;
-      this.ClientSize = new System.Drawing.Size(1117, 695);
-      this.ControlBox = false;
+      this.ClientSize = new System.Drawing.Size(1000, 695);
       this.Controls.Add(this.tableLayoutPanel1);
-      this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
       this.Name = "RequestForm";
+      this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Редактирование настроек контроллера";
       this.tabControl1.ResumeLayout(false);
@@ -694,7 +694,7 @@
       this.groupBox2.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
-      this.tabPage3.PerformLayout();
+      this.groupBox3.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.flowLayoutPanel1.ResumeLayout(false);
       this.ResumeLayout(false);
@@ -714,8 +714,6 @@
         private System.Windows.Forms.Button btnChangeSeason;
         private System.Windows.Forms.Button btnReamoveSeason;
         private Ztp.Ui.ComPortSettingsEditorControl __comPortEditor;
-        private Ztp.Ui.ModBusSettingsEditorControl __modBusSettings;
-        private Ztp.Ui.ModbusItemListControl __modbusItemList;
         private Ztp.Ui.LightPlanEditorControl __planEditor;
         private Ztp.Ui.CurrentStateViewControl __currentStateViewControl;
         private Ztp.Ui.ConfigEditorControl __config;
@@ -725,7 +723,6 @@
     private System.Windows.Forms.Button btnScheduleDelete;
     private System.Windows.Forms.Button btnScheduleEdit;
     private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-    private System.Windows.Forms.Button btnChancel;
     private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnFile;
         private System.Windows.Forms.Button btnSave;
@@ -734,5 +731,7 @@
     public System.Windows.Forms.ImageList imlTc;
     private System.Windows.Forms.PictureBox PicLightSwitcher;
     private System.Windows.Forms.Button btnLightSwitcher;
+    private Uart.UsrUartModule usrUartModule1;
+    private System.Windows.Forms.GroupBox groupBox3;
   }
 }

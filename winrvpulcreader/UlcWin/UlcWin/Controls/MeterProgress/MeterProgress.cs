@@ -19,7 +19,6 @@ namespace UlcWin.Controls.UlcMeterComponet
     public MeterProgress()
     {
       InitializeComponent();
-      
     }
 
     public void SetLabelText(string text)

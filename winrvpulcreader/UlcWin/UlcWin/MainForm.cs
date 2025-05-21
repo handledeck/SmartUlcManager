@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -40,7 +41,7 @@ namespace UlcWin
 
   public partial class LoadForm : Form
   {
-
+    public delegate void UpdateItemDelegate(ListViewItem selItem, string message);
     public DbReader __db;
     UlcWin.win.WaitForm __frm = null;
     List<ItemCallBack> __lip = null;
@@ -1114,7 +1115,7 @@ namespace UlcWin
         foreach (ListViewItem item in this.LstViewItm.Items)
         {
           ItemIp it = (ItemIp)item.Tag;
-          if (it.UlcConfig != null && __db.__listRapair != null)
+          if (it.UlcConfig != null && __db.__listRapair != null && !string.IsNullOrEmpty( it.UlcConfig.IMEI))
           {
             List<Repair> rep = __db.__listRapair.Where(x => x.imei.Trim() == it.UlcConfig.IMEI.Trim()).ToList();
             if (rep.Count > 0)
@@ -1206,6 +1207,7 @@ namespace UlcWin
               if (message.StartsWith("CONFIG") && message[message.Length - 1] == '\n')
               {
                 isMsg = true;
+               
                 break;
               }
             }
@@ -1222,6 +1224,167 @@ namespace UlcWin
         return false;
       }
     }
+
+    public bool GetConfigIP(TcpClient client, out string message,
+      out byte[] buffer,out List<string> mbLblBuff)
+    {
+      bool isMsg = false;
+      message = string.Empty;
+      buffer = new byte[1024];
+      mbLblBuff = null;
+      string ulc_2 = "I4O1A1-LDC-3-FOTA";
+      try
+      {
+        buffer = new byte[1024];
+        NetworkStream stream = client.GetStream();
+        stream.ReadTimeout = 10000;
+        byte[] bRng = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
+
+        for (int i = 0; i < 2; i++)
+        {
+          try
+          {
+            stream.Write(bRng, 0, bRng.Length);
+            Thread.Sleep(10);
+
+            int size = stream.Read(buffer, 0, buffer.Length);
+
+            message = System.Text.ASCIIEncoding.ASCII.GetString(buffer, 0, size);
+            if (!string.IsNullOrEmpty(message))
+            {
+              if (message.StartsWith("CONFIG") && message[message.Length - 1] == '\n')
+              {
+                Regex reg = new Regex(@"\sVER:(?<ver>.*?\s)");
+                Match match = reg.Match(message);
+                bool newCo = false;
+                string command = string.Empty;
+                if (match.Success && match.Groups.Count > 0)
+                {
+                  string ver = match.Groups["ver"].Value.Trim();
+                  if (ver.StartsWith(ulc_2))
+                  {
+                    command = ZtpProtocol.GetModbusConfig();
+                  }
+                  else {
+                    command = "=ADDFCFG_1?\r";
+                    newCo = true;
+                  }
+                }
+                byte[] pack = new byte[1024];
+                
+                byte[] buff = ZtpProtocol.ToBytes(command);
+                stream.Write(buff, 0, buff.Length);
+                int len = stream.Read(pack, 0, pack.Length);
+                string msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
+                msg = msg.Trim('\r', '\n');
+                string[] keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                buffer = Convert.FromBase64String(keyValue[1]);
+                if (newCo)
+                {
+                  command = "MBLBL_1?\r";
+                }
+                else {
+                  command = ZtpProtocol.ModbusGetLBL();
+                }
+                
+                buff = ZtpProtocol.ToBytes(command);
+                stream.Write(buff, 0, buff.Length);
+                len = stream.Read(pack, 0, pack.Length);
+                msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
+                msg = msg.Trim('\r', '\n');
+                keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                byte[] ngLblMb= Convert.FromBase64String(keyValue[1]);
+                //string text = System.Text.ASCIIEncoding.ASCII.GetString(mBuffer, 0, len);
+                
+                mbLblBuff = Decompress(ngLblMb);
+                isMsg = true;
+
+                break;
+              }
+            }
+          }
+          catch
+          {
+            return false;
+          }
+        }
+        return isMsg;
+      }
+      catch
+      {
+        return false;
+      }
+    }
+
+    private List<string> Decompress(byte[] compressed)
+    {
+      List<string> lstSt = null;
+      try
+      {
+        MemoryStream stream = new MemoryStream(compressed);
+        BinaryReader binaryReader = new BinaryReader(stream);
+        int len = binaryReader.ReadInt32();
+        GZipStream st = new GZipStream(stream,CompressionMode.Decompress);
+
+        byte[] bres = new byte[len];
+        
+        st.Read(bres, 0, len);
+        string xx = System.Text.ASCIIEncoding.UTF8.GetString(bres);
+        string lbl=Encoding.UTF8.GetString(bres);
+        string[] res = lbl.Split(new char[] { ';' }, StringSplitOptions.None);
+        for (int i = 0; i < res.Length; i++)
+        {
+          if (lstSt == null)
+            lstSt = new List<string>();
+          lstSt.Add(res[i]);
+        }
+        //byte[] decompressed = Decompress(compressed);
+        return lstSt;
+      }
+      catch (FormatException)
+      {
+        return null;
+      }
+      catch (Exception ex)
+      {
+        return null;
+      }
+    }
+
+    //private bool usrUartModule1_EventReadUartData(out byte[] buffer)
+    //{
+    //  buffer = null;
+    //  TcpClient client = null;
+    //  byte[] pack = new byte[1024];
+    //  string command = ZtpProtocol.GetModbusConfig();
+    //  byte[] buff = ZtpProtocol.ToBytes(command);
+    //  try
+    //  {
+    //    client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
+    //    if (client == null)
+    //      throw new Exception("Ошибка соединения");
+    //    NetworkStream stream = client.GetStream();
+    //    stream.ReadTimeout = 15000;
+    //    stream.Write(buff, 0, buff.Length);
+    //    int len = stream.Read(pack, 0, pack.Length);
+    //    string msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
+    //    msg = msg.Trim('\r', '\n');
+    //    string[] keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+    //    buffer = Convert.FromBase64String(keyValue[1]);
+    //    return true;
+    //  }
+    //  catch
+    //  {
+    //    return false;
+    //    //MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    //  }
+    //  finally
+    //  {
+    //    if (client != null)
+    //      client.Close();
+    //  }
+
+    //}
 
     public static bool PingHost(string nameOrAddress)
     {
@@ -1834,7 +1997,12 @@ namespace UlcWin
       }
       selItem.SubItems[10].Text = it_core;
       if (!string.IsNullOrEmpty(uc.IMEI))
-        selItem.SubItems[11].Text = uc.IMEI.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8);
+      {
+
+        string emi= uc.IMEI.Replace("\r\n", "");
+          selItem.SubItems[11].Text = emi.Substring(emi.Length - 7, emi.Length - 8);
+      }
+        
       else
         selItem.SubItems[11].Text = "----";
 
@@ -1861,7 +2029,7 @@ namespace UlcWin
       result.AsyncWaitHandle.WaitOne();
       return item;
     }
-    public delegate void UpdateItemDelegate(ListViewItem selItem, string message);
+    
     private void CurrentMenuClick(object sender, EventArgs e)
     {
       string node_full_path = this.treeView1.SelectedNode.FullPath;
@@ -2221,10 +2389,10 @@ namespace UlcWin
               Phone = ed.txtBoxPhones.Text,
               IsActive = ed.chBoxActive.Checked == true ? 1 : 0,
               IsLight = ed.cbFunction.SelectedIndex,
-              UType = ed.cbType.SelectedIndex == 0 ? 0 : 1,
+              UType = ed.cbType.SelectedIndex,/* == 0 ? 0 : 1,*/
               rs_stat = ed.chBoxStat.Checked == true ? 1 : 0,
-              longit=Convert.ToSingle(ed.txtLong.Text),
-              letit= Convert.ToSingle(ed.txtLetit.Text)
+              longit = Convert.ToSingle(ed.txtLong.Text),
+              letit = Convert.ToSingle(ed.txtLetit.Text)
             };
             iip.Name = dbItemEditor.Name;
             iip.Ip = dbItemEditor.Ip;
@@ -2438,7 +2606,7 @@ namespace UlcWin
             TcpClient client = GetConnection(it.Ip, 10251);
             if (client == null)
               throw new Exception(string.Format("Ошибка соединения:{0}-{1}", it.Name, it.Ip));
-            lstLog = ParceLog.GetLogIP(client.GetStream(), out outExp);
+            lstLog = ParceLog.GetLogIpNew(client.GetStream(), out outExp);
             if (outExp != null)
             {
               if (client != null)
@@ -2599,16 +2767,15 @@ namespace UlcWin
       return client;
     }
 
-    private void LstViewItm_MouseDoubleClick(object sender, MouseEventArgs e)
+    public DialogResult GetConfig(ItemIp selItem, out byte[] cfgBuf, out List<string> lstLbl)
     {
-      this.LstViewItm.SelectedItems[0].Checked = false;
-      ItemIp selItem = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
-      selItem.NodeFullPath = this.treeView1.SelectedNode.FullPath;
       string message = string.Empty;
-      int index = this.tsComboBoxDev.SelectedIndex;
+      byte[] buffer = null;
+      List<string> mbLblBuf = null;
+      cfgBuf = null;
+      lstLbl = null;
       using (SimpleWaitForm sfrm = new SimpleWaitForm())
       {
-
         sfrm.RunAction(new Action(() =>
         {
           TcpClient client = null;
@@ -2624,12 +2791,78 @@ namespace UlcWin
             {
               sfrm.SetLabelText(string.Format("Соединение успешно:{0}", selItem.Name));
             }
-            if (!this.GetConfigIP(client, out message))
-              throw new Exception("Ошибка получения данных");
+            if (selItem.UType == 1)
+            {
 
+              if (!this.GetConfigIP(client, out message, out buffer, out mbLblBuf))
+                throw new Exception("Ошибка получения данных");
+            }
+            else
+            {
+              if (!this.GetConfigIP(client, out message))
+                throw new Exception("Ошибка получения данных");
+            }
             sfrm.DialogResult = DialogResult.OK;
           }
-          catch (Exception exp)
+          catch
+          {
+            sfrm.DialogResult = DialogResult.Cancel;
+            
+          }
+          finally
+          {
+            if (client != null)
+              client.Close();
+          }
+        }));
+        DialogResult result = sfrm.ShowDialog();
+        if (result == DialogResult.OK) {
+          cfgBuf = buffer;
+          lstLbl = mbLblBuf;
+        }
+        return result;
+      }
+    }
+
+    private void LstViewItm_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+      this.LstViewItm.SelectedItems[0].Checked = false;
+      ItemIp selItem = (ItemIp)this.LstViewItm.SelectedItems[0].Tag;
+      selItem.NodeFullPath = this.treeView1.SelectedNode.FullPath;
+      string message = string.Empty;
+      int index = this.tsComboBoxDev.SelectedIndex;
+      byte[] buffer=null;
+      List<string> mbLblBuf = null;
+      using (SimpleWaitForm sfrm = new SimpleWaitForm())
+      {
+        sfrm.RunAction(new Action(() =>
+        {
+          TcpClient client = null;
+          try
+          {
+            sfrm.SetLabelText(string.Format("Открываю соединение с {0}", selItem.Name));
+            client = GetTcpConnection(selItem.Ip, selItem.UType == 0 ? 0 : 1);// index);// this.GetConnection(selItem.Ip, 10251);
+            if (client == null)
+            {
+              throw new Exception("Ошибка соединения");
+            }
+            else
+            {
+              sfrm.SetLabelText(string.Format("Соединение успешно:{0}", selItem.Name));
+            }
+            if (selItem.UType >0)
+            {
+              
+              if (!this.GetConfigIP(client, out message, out buffer,out mbLblBuf))
+                throw new Exception("Ошибка получения данных");
+            }
+            else {
+              if (!this.GetConfigIP(client, out message))
+                throw new Exception("Ошибка получения данных");
+            }
+            sfrm.DialogResult = DialogResult.OK;
+          }
+          catch 
           {
             sfrm.DialogResult = DialogResult.Cancel;
 
@@ -2648,13 +2881,16 @@ namespace UlcWin
             tsComboBoxDev.SelectedIndex == 1 ? Ztp.Enums.Device.ULC2 : Ztp.Enums.Device.RVP,
              /*selItem.Name*/selItem, this.__db))
           {
+            rqf.SetUartArray(buffer, mbLblBuf);
+            //rqf.__uart_array = buffer;
             rqf.Text = "Настройки " + selItem.Name;
+            rqf.Tag = this;
             rqf.ShowDialog();
           }
         }
         else
         {
-          MessageBox.Show("Ошибка подключения данных", "Ошибка", MessageBoxButtons.OK,
+          MessageBox.Show("Ошибка получения данных", "Ошибка", MessageBoxButtons.OK,
             MessageBoxIcon.Error);
         }
       }

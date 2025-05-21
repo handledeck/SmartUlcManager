@@ -218,7 +218,7 @@ namespace Ztp.Ui
 
     void FillPortNames()
     {
-      string[] names = ComPortUtils.GetPortNames();
+      string[] names =System.IO.Ports.SerialPort.GetPortNames();
       // ReSharper disable once CoVariantArrayConversion
       cbPortName.Items.AddRange(names);
     }
