@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Uart.Attributes;
 using Uart.Enums;
 using UlcWin.Controls.Uart.Interfaces;
+using UlcWin.Devices;
 using Ztp.Protocol;
 
 namespace Uart.Function
@@ -64,7 +65,7 @@ namespace Uart.Function
     [DisplayNamed("Описание тега")]
     [DisplayName("Описание тега")]
     [RefreshProperties(RefreshProperties.All)]
-    public string Coment { get; set; } = "";
+    public string Comment { get; set; } = "";
 
     public void CellFormatting(DataGridViewCellFormattingEventArgs e)
     {
@@ -78,7 +79,7 @@ namespace Uart.Function
       TagAddr = (ushort)xr.Cells["TagAddr"].Value;
       IecIndex = (ushort)xr.Cells["IecIndex"].Value;
       DbzVal = (byte)xr.Cells["DbzVal"].Value;
-      Coment = (string)xr.Cells["Coment"].Value;
+      Comment = (string)xr.Cells["Comment"].Value;
     }
 
     public void SetDataGridView(DataGridViewRow xr)
@@ -88,7 +89,7 @@ namespace Uart.Function
       xr.Cells["TagAddr"].Value = TagAddr;
       xr.Cells["IecIndex"].Value = IecIndex;
       xr.Cells["DbzVal"].Value = DbzVal;
-      xr.Cells["Coment"].Value = Coment;
+      xr.Cells["Comment"].Value = Comment;
     }
 
     public static List<ModbusItem> ParseFromArray(byte[] buf, out byte pollPeriod)
@@ -134,21 +135,28 @@ namespace Uart.Function
       return modbus;
     }
 
-    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, DataTable dw=null)
+    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, EnumTypeController enumTypeController, DataTable dw=null)
     {
+      
       try
       {
         NetworkStream stream = client.GetStream();
         byte[] rngRead = new byte[512];
-        byte[] data = ModbusItem.GetArrayFromDataGrid(password, pollPeriod, dw);
+        byte[] data = ModbusItem.GetArrayFromDataGrid(password, pollPeriod, enumTypeController, dw);
         stream.Write(data, 0, data.Length);
         int len=stream.Read(rngRead, 0, rngRead.Length);
+        string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
+        if (!sOk.Contains("PWD:OK"))
+          throw new Exception(sOk);
         string msg = GetLebelGzip(dw);
-        string pMsg = ZtpProtocol.ModbusSetLBL(password, msg);
+        string pMsg = DevicePackage.ModbusSetLBL(1, password, msg);// ZtpProtocol.ModbusSetLBL(password, msg);
         byte[] rngData = Encoding.UTF8.GetBytes(pMsg);
         stream.Write(rngData, 0, rngData.Length);
         len = stream.Read(rngRead, 0, rngRead.Length);
-
+        sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
+        if (!sOk.Contains("PWD:OK"))
+          throw new Exception(sOk);
+        
       }
       catch (Exception exp)
       {
@@ -207,7 +215,7 @@ namespace Uart.Function
       return Convert.ToBase64String(compressed);
     }
 
-    static byte[] GetArrayFromDataGrid(string password, byte pollPeriod, DataTable dw)
+    static byte[] GetArrayFromDataGrid(string password, byte pollPeriod, EnumTypeController enumTypeController, DataTable dw)
     {
       MemoryStream stream = new MemoryStream();
       BinaryWriter bstream = new BinaryWriter(stream);
@@ -231,7 +239,13 @@ namespace Uart.Function
       bstream.Write((byte)13);
       bstream.Flush();
       byte[] pkg = stream.ToArray();
-      byte[] pack = ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
+      byte[] pack;
+      if (enumTypeController == EnumTypeController.RVP || enumTypeController == EnumTypeController.ULC2)
+        pack = ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
+      else {
+        pack=DevicePackage.ModbusWriteConfigByPort(password,1,pkg, (ushort)pkg.Length);
+        
+      }
       return pack;
     }
   }

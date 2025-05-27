@@ -181,12 +181,14 @@ namespace UlcWin
       else {
         this.usrUartModule1.Enabled = true;
         this.usrUartModule1.Value = __uart_array;
+        
       }
-      
+
       this.usrUartModule1.btnBinRead_Click();
       this.usrUartModule1.ParentsForm = this;
-      //this.usrUartModule1.InitCB();
+      
       base.OnShown(e);
+      this.usrUartModule1.InitCB();
     }
 
     

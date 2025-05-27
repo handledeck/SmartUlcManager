@@ -254,6 +254,7 @@
     <Compile Include="Controls\Uart\Delegates\EventDelegats.cs" />
     <Compile Include="Controls\Uart\Enums\EnumUlc.cs" />
     <Compile Include="Controls\Uart\Function\Aisttem.cs" />
+    <Compile Include="Controls\Uart\Function\EnM318Item.cs" />
     <Compile Include="Controls\Uart\Function\GranItem.cs" />
     <Compile Include="Controls\Uart\Function\MesItem.cs" />
     <Compile Include="Controls\Uart\Function\ModbusItem.cs" />
@@ -310,6 +311,8 @@
     <Compile Include="DB\OrmResObjects.cs" />
     <Compile Include="DB\Repair.cs" />
     <Compile Include="DB\UlcStatistic.cs" />
+    <Compile Include="Devices\Device.cs" />
+    <Compile Include="Devices\DevicePackage.cs" />
     <Compile Include="Drivers\Aist3W32.cs" />
     <Compile Include="Drivers\EnMera102.cs" />
     <Compile Include="Drivers\EnMera301BY.cs" />

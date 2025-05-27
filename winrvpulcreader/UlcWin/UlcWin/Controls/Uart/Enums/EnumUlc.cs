@@ -36,41 +36,56 @@ namespace Uart.Enums
   [TypeConverter(typeof(EnumTypeConverter))]
   public enum Mes3Func : byte
   {
+    [FieldDisplayName("Чтение фазных напряжений")]
     [Description("Управление реле счётчика")]
     ReadPhaseVoltage = 1
   }
+  [TypeConverter(typeof(EnumTypeConverter))]
   public enum Mes3Choise : byte
   {
-    [FieldDisplayName("Не активна")]
-    [Description("Не активна")]
-    Inactive = 0,
+    [FieldDisplayName("Не активнo")]
+    [Description("Не активнo")]
+    Inactive = 1,
     [FieldDisplayName("Активно")]
     [Description("Активно")]
-    Active = 1
+    Active = 2
   }
 
   [TypeConverter(typeof(EnumTypeConverter))]
   public enum AistFunc : byte
   {
-    //[Description("Управление реле счётчика")]
+    
     [FieldDisplayName("Управление реле счётчика")]
     [Description("Управление реле счётчика")]
-    ReadPhaseVoltage = 0
+    ReadPhaseVoltage = 1
+  }
+
+  [TypeConverter(typeof(EnumTypeConverter))]
+  public enum EnM318Func : byte
+  {
+    
+    [FieldDisplayName("Чтение фазных напряжений")]
+    [Description("Чтение фазных напряжений")]
+    ReadPhaseVoltage = 1,
+    [FieldDisplayName("Чтение мгновенной мощности")]
+    [Description("Чтение мгновенной мощности")]
+    ReadWingValue = 2
+
   }
 
 
   [TypeConverter(typeof(EnumTypeConverter))]
   public enum AistChoise : byte
   {
-    [FieldDisplayName("1")]
+    [FieldDisplayName("Первый")]
     [Description("Первый")]
-    First = 0,
-    [FieldDisplayName("2")]
+    First = 1,
+    [FieldDisplayName("Второй")]
     [Description("Второй")]
-    Second = 1,
-    [FieldDisplayName("3")]
+    Second = 2,
+    [FieldDisplayName("Третий")]
     [Description("Третий")]
-    Third = 1
+    Third = 3
   }
 
 }

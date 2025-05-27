@@ -15,12 +15,15 @@ using Uart.Function;
 using UlcWin.Controls.DisCombo;
 using UlcWin.Controls.Uart.Function;
 using UlcWin.Controls.UlcMeterComponet;
+using UlcWin.Devices;
 using UlcWin.ui;
 using Ztp.Protocol;
+using Ztp.Ui;
 
 namespace Uart
 {
-  public enum UartEvents{ 
+  public enum UartEvents
+  {
     Add,
     Edit,
     Delete
@@ -29,8 +32,9 @@ namespace Uart
   public delegate void DataRowSelectionChange(object obj);
   public delegate bool ReadUartData(out byte[] buffer);
   public delegate void WriteUartData();
-  public delegate void HendlerUartData(UartEvents uartEvents,int index,int rowsCount);
-  public interface DataGridViewConverter {
+  public delegate void HendlerUartData(UartEvents uartEvents, int index, int rowsCount);
+  public interface DataGridViewConverter
+  {
     void GetDataGridView(DataGridViewRow xr);
     void SetDataGridView(DataGridViewRow xr);
     void CellFormatting(DataGridViewCellFormattingEventArgs e);
@@ -39,6 +43,7 @@ namespace Uart
   {
     //Ztp.Ui.ModBusAddItemForm __modBusAddItemForm = null;
     //public event DataRowSelectionChange EventDataRowSelectionChange;
+    EnumTypeController __enumTypeController;
     [Category("Uart")]
     public event ReadUartData EventReadUartData;
     [Category("Uart")]
@@ -48,14 +53,14 @@ namespace Uart
 
 
     byte[] __value = null;
-    
+
     public byte[] Value
     {
       get { return __value; }
       set
       {
-        __value=value;
-        
+        __value = value;
+
       }
     }
 
@@ -72,8 +77,8 @@ namespace Uart
       this.dataGridView1.DataSource = this.dataSet1;
       DataTable dataTable = CreateDataTableFromObjects<int>("th");
       this.dataSet1.Tables.Add(dataTable);
-       dataTable = CreateDataTableFromObjects<ModbusItem>("Modbus");
-     
+      dataTable = CreateDataTableFromObjects<ModbusItem>("Modbus");
+
       this.dataSet1.Tables.Add(dataTable);
       dataTable = CreateDataTableFromObjects<AistItem>("Aist");
       this.dataSet1.Tables.Add(dataTable);
@@ -81,7 +86,8 @@ namespace Uart
       this.dataSet1.Tables.Add(dataTable);
       dataTable = CreateDataTableFromObjects<GranItem>("Granelectro");
       this.dataSet1.Tables.Add(dataTable);
-      
+      dataTable = CreateDataTableFromObjects<EnM318Item>("Energomera");
+      this.dataSet1.Tables.Add(dataTable);
       this.dataGridView1.DataMember = this.dataSet1.Tables[0].TableName;
       //this.comboBox1.Items.AddRange(new string[] {
       //  "Сквозной канал",
@@ -90,11 +96,12 @@ namespace Uart
       //  "МЭС(упр.реле)",
       //  "Гранэлектро"
       //});
-      this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Сквозной канал",false));
+      this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Сквозной канал", false));
       this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Modbus RTU", false));
       this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Aист(упр.реле)", false));
       this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("МЭС(упр.реле)", false));
       this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Гранэлектро", false));
+      this.cbFunction.AddItem(new UlcWin.Controls.DisCombo.DisItem("Энергомера CE318BY", false));
       this.dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
       this.cbFunction.SelectedIndex = 0;
       this.cbFunction.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -104,12 +111,32 @@ namespace Uart
         this.dataGridView1.Columns[i].HeaderText = this.dataSet1.Tables[this.cbFunction.SelectedIndex].Columns[i].Caption;
       }
 
-      
+
       this.dataGridView1.CellFormatting += DataGridView1_CellFormatting;
-      
+
       if (Value != null)
         this.btnBinRead_Click();
-     
+
+    }
+
+    void SetDevice(string type_device)
+    {
+      if (type_device == "I16O2A2-LDC-3-FOTA")
+      {
+        __enumTypeController = EnumTypeController.RVP;
+
+      }
+      else if (type_device == "I4O1A1-LDC-3-FOTA-DM" || type_device == "I4O1A1-LDC-3-FOTA")
+      {
+        __enumTypeController = EnumTypeController.ULC2;
+
+      }
+      else if (type_device == "I3O2A1-LEM-4-FOTA-prIM")
+      {
+        __enumTypeController = EnumTypeController.ULC2Lite;
+
+      }
+      else __enumTypeController = EnumTypeController.ULC3;
     }
 
     public void InitCB()
@@ -119,18 +146,24 @@ namespace Uart
       {
         ((DisItem)this.cbFunction.Items[2]).Disable = true;
         ((DisItem)this.cbFunction.Items[3]).Disable = true;
+        ((DisItem)this.cbFunction.Items[5]).Disable = true;
       }
+      SetDevice(this.ParentsForm.__selItem.UlcConfig.VER);
     }
 
     public static string GetEnumDescription(Enum value)
     {
       FieldInfo fi = value.GetType().GetField(value.ToString());
-      DescriptionAttribute[] attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
-      if (attributes != null && attributes.Any())
+      if (fi != null)
       {
-        return attributes.First().Description;
+        DescriptionAttribute[] attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+        if (attributes != null && attributes.Any())
+        {
+          return attributes.First().Description;
+        }
+        return value.ToString();
       }
-      return value.ToString();
+      else return null;
     }
 
     private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -144,7 +177,7 @@ namespace Uart
           e.Value = val;
         }
       }
-      else if (this.dataGridView1.DataMember == this.dataSet1.Tables[2].TableName || this.dataGridView1.DataMember == this.dataSet1.Tables[3].TableName)
+      else if (this.dataGridView1.DataMember == this.dataSet1.Tables[2].TableName)
       {
         if (e.ColumnIndex == 3)
         {
@@ -159,6 +192,21 @@ namespace Uart
           e.Value = val;
         }
       }
+      else if (this.dataGridView1.DataMember == this.dataSet1.Tables[3].TableName)
+      {
+        if (e.ColumnIndex == 3)
+        {
+          Mes3Choise aistChoise = (Mes3Choise)((byte)e.Value);
+          string val = GetEnumDescription(aistChoise);
+          e.Value = val;
+        }
+        else if (e.ColumnIndex == 0)
+        {
+          Mes3Func FunctionIndex = (Mes3Func)((byte)e.Value);
+          string val = GetEnumDescription(FunctionIndex);
+          e.Value = val;
+        }
+      }
       else if (this.dataGridView1.DataMember == this.dataSet1.Tables[4].TableName)
       {
         if (e.ColumnIndex == 0)
@@ -168,28 +216,75 @@ namespace Uart
           e.Value = val;
         }
       }
+      else if (this.dataGridView1.DataMember == this.dataSet1.Tables[5].TableName)
+      {
+        if (e.ColumnIndex == 0)
+        {
+          EnM318Func FunctionIndex = (EnM318Func)((byte)e.Value);
+          string val = GetEnumDescription(FunctionIndex);
+          e.Value = val;
+
+        }
+        if (e.ColumnIndex == 6 || e.ColumnIndex == 7)
+        {
+          if ((byte)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value == 2)
+            e.Value = "-------";
+        }
+        if (e.ColumnIndex == 2 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5)
+          if ((byte)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value == 1)
+            e.Value = "-------";
+      }
     }
 
-    private void modBusAddItemForm_ItemCheced(object tag, out bool isUsedIec,out bool isUsedTag)
+    private void modBusAddItemForm_ItemChange(object tag, out bool isUsedIec, out bool isUsedTag, out string errorMsg)
     {
       isUsedIec = false;
       isUsedTag = false;
-      ModbusItem modbusTag = (ModbusItem)tag;
-      if (dataGridView1.Rows.Count > 0)
+      errorMsg = string.Empty;
+      if (tag.GetType() == typeof(ModbusItem))
       {
-        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+        ModbusItem modbusTag = (ModbusItem)tag;
+        if (dataGridView1.Rows.Count > 0)
         {
-          DataGridViewRow rw = (DataGridViewRow)dataGridView1.Rows[i];
-          if (rw.Tag!=null)
-            continue;
-          if ((ushort)(rw.Cells["IecIndex"].Value) == modbusTag.IecIndex)
+          for (int i = 0; i < dataGridView1.Rows.Count; i++)
           {
-            isUsedIec = true;
-            return;
+            DataGridViewRow rw = (DataGridViewRow)dataGridView1.Rows[i];
+            if (rw.Tag != null)
+              continue;
+            if ((ushort)(rw.Cells["IecIndex"].Value) == modbusTag.IecIndex)
+            {
+              isUsedIec = true;
+              return;
+            }
+          }
+        }
+      }
+      else if (tag.GetType() == typeof(EnM318Item))
+      {
+        EnM318Item enM318Tag = (EnM318Item)tag;
+        if (dataGridView1.Rows.Count > 0)
+        {
+          for (int i = 0; i < dataGridView1.Rows.Count; i++)
+          {
+            DataGridViewRow rw = (DataGridViewRow)dataGridView1.Rows[i];
+            if (rw.Tag != null)
+              continue;
+            if ((ushort)(rw.Cells["IecIndex"].Value) == enM318Tag.IecIndex)
+            {
+              isUsedIec = true;
+              return;
+            }
+            else if ((EnM318Func)rw.Cells["FunctionIndex"].Value == enM318Tag.FunctionIndex)
+            {
+              isUsedTag = true;
+              errorMsg = "Такая функция уже имеется";
+              return;
+            }
           }
         }
       }
     }
+    
 
     private void Application_Idle(object sender, EventArgs e)
     {
@@ -210,39 +305,98 @@ namespace Uart
           this.btnEdit.Enabled = false;
           this.btnAdd.Enabled = true;
         }
+        else if (this.dataSet1.Tables[1].Rows.Count >= 99)
+        {
+          this.btnDelete.Enabled = false;
+          this.btnEdit.Enabled = false;
+          this.btnAdd.Enabled = false;
+        }
         else
         {
           this.btnDelete.Enabled = true;
           this.btnEdit.Enabled = true;
           this.btnAdd.Enabled = true;
-          //this.btnBinDownLoad.Enabled = true;
         }
       }
-      else //if (this.dataGridView1.DataMember == this.dataSet1.Tables[1].TableName)// &&
-           //this.dataGridView1.DataMember == this.dataSet1.Tables[2].TableName &&
-           //this.dataGridView1.DataMember == this.dataSet1.Tables[3].TableName) {
-      if (this.dataSet1.Tables[this.cbFunction.SelectedIndex].Rows.Count == 0)// &&
-                                                                               //this.dataSet1.Tables[2].Rows.Count==0 &&
-                                                                               //this.dataSet1.Tables[3].Rows.Count==0)
+
+      if (this.dataGridView1.DataMember == this.dataSet1.Tables[2].TableName)
       {
-        this.btnDelete.Enabled = false;
-        this.btnEdit.Enabled = false;
-        this.btnAdd.Enabled = true;
+        if (this.dataSet1.Tables[2].Rows.Count == 0)
+        {
+          this.btnDelete.Enabled = false;
+          this.btnEdit.Enabled = false;
+          this.btnAdd.Enabled = true;
+        }
+        else if (this.dataSet1.Tables[2].Rows.Count >= 1)
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+          this.btnAdd.Enabled = false;
+        }
+
       }
-      else
+
+      if (this.dataGridView1.DataMember == this.dataSet1.Tables[3].TableName)
       {
-        this.btnDelete.Enabled = true;
-        this.btnEdit.Enabled = true;
-        this.btnAdd.Enabled = false;
+        if (this.dataSet1.Tables[3].Rows.Count == 0)
+        {
+          this.btnDelete.Enabled = false;
+          this.btnEdit.Enabled = false;
+          this.btnAdd.Enabled = true;
+        }
+        else if (this.dataSet1.Tables[3].Rows.Count >= 1)
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+          this.btnAdd.Enabled = false;
+        }
       }
+
+      if (this.dataGridView1.DataMember == this.dataSet1.Tables[4].TableName)
+      {
+        if (this.dataSet1.Tables[4].Rows.Count == 0)
+        {
+          this.btnDelete.Enabled = false;
+          this.btnEdit.Enabled = false;
+          this.btnAdd.Enabled = true;
+        }
+        else if (this.dataSet1.Tables[4].Rows.Count >= 1)
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+          this.btnAdd.Enabled = false;
+        }
+
+      }
+
+      if (this.dataGridView1.DataMember == this.dataSet1.Tables[5].TableName)
+      {
+        if (this.dataSet1.Tables[5].Rows.Count == 0)
+        {
+          this.btnDelete.Enabled = false;
+          this.btnEdit.Enabled = false;
+          this.btnAdd.Enabled = true;
+        }
+        else if (this.dataSet1.Tables[5].Rows.Count >= 2)
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+          this.btnAdd.Enabled = false;
+        }
+        else
+        {
+          this.btnDelete.Enabled = true;
+          this.btnEdit.Enabled = true;
+          this.btnAdd.Enabled = true;
+        }
+      }
+
       if (this.dataGridView1.Rows.Count > 0)
       {
-        //this.btnBinDownLoad.Enabled = true;
         this.numUpDwn.Enabled = true;
       }
       else
       {
-        //this.btnBinDownLoad.Enabled = false;
         this.numUpDwn.Enabled = false;
       }
     }
@@ -262,32 +416,45 @@ namespace Uart
         DisplayNamed displayNamed = info.GetCustomAttribute<DisplayNamed>();
         if (displayNamed == null)
           continue;
-          string named = displayNamed.StatName;
+        string named = displayNamed.StatName;
         DataColumn dataColumn = new DataColumn(info.Name, info.PropertyType);
         dataColumn.Caption = named;
         dt.Columns.Add(dataColumn);
       }
-      
+
       return dt;
     }
 
-    private void AddDataTableObject<T>(List<T> items, string table_name) {
-      var myType = typeof(T);
+    private void AddDataTableObject<T>(List<T> items, string table_name)
+    {
+      var myType = items[0].GetType();// typeof(T);
       DataTable dt = this.dataSet1.Tables[table_name];
       foreach (var item in items)
       {
-        //int index = 0;
+
         DataRow dr = dt.NewRow();
         foreach (PropertyInfo info in myType.GetProperties())
         {
           try
           {
-            if (info.GetCustomAttribute(typeof(DisplayNamed)) != null) {
+            //if (typeof(T) == typeof(EnM318))
+            //{
+            //  if (info.GetCustomAttribute(typeof(BrowsableAttribute)) != null)
+            //  {
+            //    BrowsableAttribute readOnly = (BrowsableAttribute)TypeDescriptor.GetProperties(items[0].GetType())[info.Name].Attributes[typeof(BrowsableAttribute)];
+            //    bool zz = (bool)readOnly.GetType().GetField(nameof(BrowsableAttribute.Browsable), BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase).GetValue(readOnly);//.SetValue(readOnly, !rd);
+            //    dataGridView1.Columns[info.Name].Visible = zz;
+
+            //  }
+            //}
+            if (info.GetCustomAttribute(typeof(DisplayNamed)) != null)
+            {
               dr[info.Name] = info.GetValue(item);
             }
           }
-          catch { 
-          
+          catch
+          {
+
           }
         }
         dt.Rows.Add(dr);
@@ -304,18 +471,21 @@ namespace Uart
           this.dataGridView1.Columns[i].HeaderText = this.dataSet1.Tables[this.cbFunction.SelectedIndex].Columns[i].Caption;
         }
       }
-      else {
+      else
+      {
         this.cbFunction.SelectedIndex = 0;
       }
     }
 
     private void btnAdd_Click(object sender, EventArgs e)
     {
+      UartEditor uartEditor = new UartEditor();
+      uartEditor.EventUartEditor += modBusAddItemForm_ItemChange;
       if (this.cbFunction.SelectedIndex == 1)
       {
-        UartEditor uartEditor = new UartEditor();
+
         ModbusItem modbusItem = new ModbusItem();
-        uartEditor.EventUartEditor += modBusAddItemForm_ItemCheced;
+
         if (uartEditor.DoAddShowDialog("Modbus RTU", modbusItem) == DialogResult.OK)
         {
           List<ModbusItem> lst = new List<ModbusItem>() { modbusItem };
@@ -324,7 +494,7 @@ namespace Uart
       }
       if (this.cbFunction.SelectedIndex == 2)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         AistItem aistItem = new AistItem();
         //uartEditor.EventUartEditor += modBusAddItemForm_ItemCheced;
         if (uartEditor.DoAddShowDialog("Аист", aistItem) == DialogResult.OK)
@@ -336,7 +506,7 @@ namespace Uart
 
       if (this.cbFunction.SelectedIndex == 3)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         MesItem mesItem = new MesItem();
         //uartEditor.EventUartEditor += modBusAddItemForm_ItemCheced;
         if (uartEditor.DoAddShowDialog("МЭС-3", mesItem) == DialogResult.OK)
@@ -348,12 +518,23 @@ namespace Uart
 
       else if (this.cbFunction.SelectedIndex == 4)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         GranItem granItem = new GranItem();
         if (uartEditor.DoAddShowDialog("Гранэлектро", granItem) == DialogResult.OK)
         {
           List<GranItem> lst = new List<GranItem>() { granItem };
           AddDataTableObject<GranItem>(lst, this.dataSet1.Tables[this.cbFunction.SelectedIndex].TableName);
+        }
+      }
+      else if (this.cbFunction.SelectedIndex == 5)
+      {
+        //UartEditor uartEditor = new UartEditor();
+        EnM318Item enmItem = new EnM318Item();
+        if (uartEditor.DoAddShowDialog("Энергомера", enmItem) == DialogResult.OK)
+        {
+
+          List<EnM318Item> lst = new List<EnM318Item>() { enmItem };
+          AddDataTableObject<EnM318Item>(lst, this.dataSet1.Tables[this.cbFunction.SelectedIndex].TableName);
         }
       }
       if (EventHandlerUartData != null)
@@ -364,7 +545,7 @@ namespace Uart
     {
       dataGridView1.Rows.Remove(this.dataGridView1.CurrentRow);
       if (EventHandlerUartData != null)
-        EventHandlerUartData( UartEvents.Delete,this.cbFunction.SelectedIndex,this.dataGridView1.Rows.Count);
+        EventHandlerUartData(UartEvents.Delete, this.cbFunction.SelectedIndex, this.dataGridView1.Rows.Count);
     }
 
     private void btnEdit_Click(object sender, EventArgs e)
@@ -374,13 +555,14 @@ namespace Uart
 
       int index = this.dataGridView1.SelectedRows[0].Index;
       object[] iArray = x.Row.ItemArray;
+      UartEditor uartEditor = new UartEditor();
+      uartEditor.EventUartEditor += modBusAddItemForm_ItemChange;
       if (this.cbFunction.SelectedIndex == 1)
       {
         ModbusItem modbusItem = new ModbusItem();
         modbusItem.GetDataGridView(xr);
         xr.Tag = 1;
-        UartEditor uartEditor = new UartEditor();
-        uartEditor.EventUartEditor += modBusAddItemForm_ItemCheced;
+
 
         DialogResult result = uartEditor.DoEditShowDialog("Modbus RTU", modbusItem);
         if (result == DialogResult.OK)
@@ -391,7 +573,7 @@ namespace Uart
       }
       else if (this.cbFunction.SelectedIndex == 2)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         AistItem aistItem = new AistItem();
         aistItem.GetDataGridView(xr);
         DialogResult result = uartEditor.DoEditShowDialog("Аист", aistItem);
@@ -402,7 +584,7 @@ namespace Uart
       }
       else if (this.cbFunction.SelectedIndex == 3)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         MesItem mesItem = new MesItem();
         mesItem.GetDataGridView(xr);
         DialogResult result = uartEditor.DoEditShowDialog("МЭС-3", mesItem);
@@ -413,13 +595,25 @@ namespace Uart
       }
       else if (this.cbFunction.SelectedIndex == 4)
       {
-        UartEditor uartEditor = new UartEditor();
+        //UartEditor uartEditor = new UartEditor();
         GranItem granItem = new GranItem();
         granItem.GetDataGridView(xr);
         DialogResult result = uartEditor.DoEditShowDialog("Гранэлектро", granItem);
         if (result == DialogResult.OK)
         {
           granItem.SetDataGridView(xr);
+        }
+      }
+      else if (this.cbFunction.SelectedIndex == 5)
+      {
+        //UartEditor uartEditor = new UartEditor();
+        EnM318Item enItem = new EnM318Item();
+        enItem.GetDataGridView(xr);
+        xr.Tag = 1;
+        DialogResult result = uartEditor.DoEditShowDialog("Энергомера", enItem);
+        if (result == DialogResult.OK)
+        {
+          enItem.SetDataGridView(xr);
         }
       }
     }
@@ -431,7 +625,7 @@ namespace Uart
       }));
     }
 
-    public void SetUartArray(byte[] array,List<string> lstLbl=null)
+    public void SetUartArray(byte[] array, List<string> lstLbl = null)
     {
       if (array != null)
       {
@@ -468,7 +662,7 @@ namespace Uart
               List<ModbusItem> modbusItems = ModbusItem.ParseFromArray(Value, out pollPeriod);
               for (int i = 0; i < modbusItems.Count; i++)
               {
-                modbusItems[i].Coment = ListMBLabel[i];
+                modbusItems[i].Comment = ListMBLabel[i];
               }
               this.AddDataTableObject<ModbusItem>(modbusItems, "Modbus");
               this.numUpDwn.Value = pollPeriod;
@@ -477,12 +671,43 @@ namespace Uart
             }
           case 2:
             {
-              GranItem granItem= GranItem.ParseFromArray(Value, out pollPeriod);
+              GranItem granItem = GranItem.ParseFromArray(Value, out pollPeriod);
               List<GranItem> lst = new List<GranItem>();
               lst.Add(granItem);
               this.AddDataTableObject<GranItem>(lst, "Granelectro");
               this.numUpDwn.Value = pollPeriod;
               SetComboboxItem(4);
+              break;
+            }
+
+          case 3:
+            {
+              List<EnM318Item> lstEnMera = EnM318Item.ParseFromArray(Value, out pollPeriod);
+              //List<EnM318Item> lst = new List<EnM318Item>();
+              //lst.Add(granItem);
+              this.AddDataTableObject<EnM318Item>(lstEnMera, "Energomera");
+              this.numUpDwn.Value = pollPeriod;
+              SetComboboxItem(5);
+              break;
+            }
+          case 4:
+            {
+              AistItem aistItem = AistItem.ParseFromArray(Value, out pollPeriod);
+              List<AistItem> lst = new List<AistItem>();
+              lst.Add(aistItem);
+              this.AddDataTableObject<AistItem>(lst, "Aist");
+              this.numUpDwn.Value = pollPeriod;
+              SetComboboxItem(2);
+              break;
+            }
+          case 5:
+            {
+              MesItem mesItem = MesItem.ParseFromArray(Value, out pollPeriod);
+              List<MesItem> lst = new List<MesItem>();
+              lst.Add(mesItem);
+              this.AddDataTableObject<MesItem>(lst, "Mes-3");
+              this.numUpDwn.Value = pollPeriod;
+              SetComboboxItem(3);
               break;
             }
           default:
@@ -491,27 +716,35 @@ namespace Uart
       }
     }
 
-   
 
-    public Exception WriteExpandUart(TcpClient client, string password,int index) {
+
+    public Exception WriteExpandUart(TcpClient client, string password, int index)
+    {
 
       Exception e = null;
       switch (index)
       {
         case 0:
-          e = ThrItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value);
+          e = ThrItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController);
           break;
         case 1:
-          e=ModbusItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, this.dataSet1.Tables[1]);
+          e = ModbusItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController, this.dataSet1.Tables[1]);
+          break;
+        case 2:
+          e = AistItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController, this.dataSet1.Tables[2]);
+          break;
+        case 3:
+          e = MesItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController, this.dataSet1.Tables[3]);
           break;
         case 4:
-          e=GranItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, this.dataSet1.Tables[4]);
+          e = GranItem.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController, this.dataSet1.Tables[4]);
+          break;
+        case 5:
+          e = EnM318Item.WriteUartSettings(client, password, (byte)this.numUpDwn.Value, __enumTypeController, this.dataSet1.Tables[5]);
           break;
       }
       return e;
     }
-
-   
 
     private void btnBinDownLoad_Click(object sender, EventArgs e)
     {

@@ -27,8 +27,14 @@ namespace Uart
       this.labHeader.Text = caption;
       this.SetUartProperty = obj;
       this.propertyGrid1.SelectedObject = SetUartProperty;
+      this.propertyGrid1.PropertyValueChanged += PropertyGrid1_PropertyValueChanged;
       this.StartPosition = FormStartPosition.CenterParent;
       return base.ShowDialog();
+    }
+
+    private void PropertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+    {
+      propertyGrid1.Refresh();
     }
 
     public DialogResult DoEditShowDialog(string caption, object obj)
@@ -46,7 +52,8 @@ namespace Uart
       {
         bool isUsedIec = false;
         bool isUsedTag = false;
-        EventUartEditor(this.SetUartProperty, out isUsedIec, out isUsedTag);
+        string errorMsg=string.Empty;
+        EventUartEditor(this.propertyGrid1.SelectedObject, out isUsedIec, out isUsedTag, out errorMsg);
         if (!isUsedIec && !isUsedTag)
           this.DialogResult = DialogResult.OK;
         else
@@ -57,13 +64,19 @@ namespace Uart
             {
               MessageBox.Show(this, "Требуется уникальный индекс для мэк104", "Внимание!");
             }
-            
+
           }
-          else if (isUsedTag)
-          {
+          //else if (isUsedTag)
+          //{
+          //  using (ExtDialogMessage centeringService = new ExtDialogMessage(this)) // center message box
+          //  {
+          //    MessageBox.Show(this, "Такой тег уже есть в списке", "Внимание!");
+          //  }
+          //}
+          else if (errorMsg != string.Empty) {
             using (ExtDialogMessage centeringService = new ExtDialogMessage(this)) // center message box
             {
-              MessageBox.Show(this, "Такой тег уже есть в списке", "Внимание!");
+              MessageBox.Show(this,errorMsg, "Внимание!");
             }
           }
 

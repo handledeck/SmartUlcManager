@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Uart.Delegates
 {
-  public delegate void EventCheckItem(object tag, out bool isUsedIec, out bool isUsedTag);
+  public delegate void EventCheckItem(object tag, out bool isUsedIec, out bool isUsedTag,out string errorMsg);
 }

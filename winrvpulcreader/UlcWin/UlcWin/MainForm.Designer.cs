@@ -32,7 +32,7 @@ namespace UlcWin
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -843,8 +843,8 @@ namespace UlcWin
       // 
       // checkBoxComboBox1
       // 
-      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
+      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
@@ -947,6 +947,7 @@ namespace UlcWin
       this.tsMenuItem_Patch.Name = "tsMenuItem_Patch";
       this.tsMenuItem_Patch.Size = new System.Drawing.Size(197, 22);
       this.tsMenuItem_Patch.Text = "Обновить патч";
+      this.tsMenuItem_Patch.Visible = false;
       this.tsMenuItem_Patch.Click += new System.EventHandler(this.tsMenuItem_Patch_Click);
       // 
       // geniralSettingsToolStripMenuItem
@@ -1294,7 +1295,7 @@ namespace UlcWin
             this.mapsToolStripMenuItem});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 358);
+      this.LvMenu.Size = new System.Drawing.Size(224, 336);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent

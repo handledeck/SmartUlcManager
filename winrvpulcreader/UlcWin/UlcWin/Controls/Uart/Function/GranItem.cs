@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using Uart.Attributes;
 using Uart.Enums;
+using UlcWin.Devices;
 using Ztp.Protocol;
 
 namespace Uart.Function
@@ -86,7 +87,7 @@ namespace Uart.Function
 
     
 
-    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, DataTable dw = null) {
+    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, EnumTypeController enumTypeController, DataTable dw = null) {
       Exception e = null;
       try
       {
@@ -109,14 +110,21 @@ namespace Uart.Function
         else {
           pkg = System.Text.ASCIIEncoding.ASCII.GetBytes("AAAAAA==");
         }
-        byte[] pack = ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
-        byte[] rngRead = new byte[128];
-        NetworkStream nstream= client.GetStream();
-        nstream.Write(pack, 0, pack.Length);
-        int len = nstream.Read(rngRead, 0, pack.Length);
-        string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
-        if (sOk.Contains("PWD:ERROR"))
-          throw new Exception("Неверный пароль");
+        NetworkStream nstream = client.GetStream();
+        DevicePackage.WriteDevicePackage(nstream,password, pkg, enumTypeController);
+
+        //byte[] pack = null;
+        //if(enumTypeController== EnumTypeController.ULC2)
+        //  pack= ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
+        //else if(enumTypeController == EnumTypeController.ULC2Lite)
+        //  pack=DevicePackage.ModbusWriteConfigByPort(password,1, pkg, (ushort)pkg.Length);
+        //byte[] rngRead = new byte[128];
+        
+        //nstream.Write(pack, 0, pack.Length);
+        //int len = nstream.Read(rngRead, 0, pack.Length);
+        //string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
+        //if (sOk.Contains("PWD:ERROR"))
+        //  throw new Exception("Неверный пароль");
       }
       catch (Exception exp)
       {

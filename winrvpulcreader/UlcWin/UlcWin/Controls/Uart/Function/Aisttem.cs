@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Uart.Attributes;
 using Uart.Enums;
+using UlcWin.Devices;
 using Ztp.Protocol;
 
 namespace Uart.Function
@@ -49,7 +50,7 @@ namespace Uart.Function
     [Description("Адрес опроса устройства")]
     [DisplayNamed("Функция")]
     [DisplayName("Функция")]
-    public AistFunc FunctionIndex { get; set; }
+    public AistFunc FunctionIndex { get; set; } = AistFunc.ReadPhaseVoltage;
     [Category("Настройки"), PropertyOrder(1)]
     [Description("Адрес опроса устройства")]
     [DisplayNamed("Номер счетчика")]
@@ -63,9 +64,9 @@ namespace Uart.Function
     public UInt32 Password { get; set; }
 
     [Category("Настройки"), PropertyOrder(3)]
-    [Description("Активность")]
-    [DisplayNamed("Активность")]
-    [DisplayName("Активность")]
+    [Description("Индекс реле")]
+    [DisplayNamed("Индекс реле")]
+    [DisplayName("Индекс реле")]
     public AistChoise Activity { get; set; } = AistChoise.First;
     
     
@@ -106,15 +107,15 @@ namespace Uart.Function
       BinaryReader binaryReader = new BinaryReader(stream);
       binaryReader.BaseStream.Position = 1;
       pollPeriod = binaryReader.ReadByte();
-      aistItem.FunctionIndex = (AistFunc)binaryReader.ReadInt16();
+      aistItem.FunctionIndex = (AistFunc)binaryReader.ReadByte();
       aistItem.MeterNum= binaryReader.ReadUInt16();
-      aistItem.Password = binaryReader.ReadUInt16();
+      aistItem.Password = binaryReader.ReadUInt32();
       aistItem.Activity = (AistChoise)binaryReader.ReadByte();
       aistItem.IecIndex = binaryReader.ReadUInt16();
       return aistItem;
     }
 
-    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, DataTable dw = null)
+    public static Exception WriteUartSettings(TcpClient client, string password, byte pollPeriod, EnumTypeController enumTypeController, DataTable dw = null)
     {
       Exception e = null;
       try
@@ -124,12 +125,19 @@ namespace Uart.Function
         {
           MemoryStream stream = new MemoryStream();
           BinaryWriter binaryWriter = new BinaryWriter(stream);
-          binaryWriter.Write((byte)2);
+          //function
+          binaryWriter.Write((byte)4);
+          //time request
           binaryWriter.Write((byte)pollPeriod);
-          binaryWriter.Write((ushort)((byte)dw.Rows[0].ItemArray[0]));
-          binaryWriter.Write((byte)dw.Rows[0].ItemArray[1]);
-          binaryWriter.Write((ushort)dw.Rows[0].ItemArray[2]);
-          binaryWriter.Write((ushort)dw.Rows[0].ItemArray[3]);
+          //AistFunc
+          binaryWriter.Write((byte)1);// ((byte)dw.Rows[0].ItemArray[0]));
+          //meter number
+          binaryWriter.Write((ushort)dw.Rows[0].ItemArray[1]);
+          //password
+          binaryWriter.Write((UInt32)dw.Rows[0].ItemArray[2]);
+          //AistChoise
+          binaryWriter.Write((byte)dw.Rows[0].ItemArray[3]);
+          //iec 104 address
           binaryWriter.Write((ushort)dw.Rows[0].ItemArray[4]);
           binaryWriter.Write((byte)13);
           binaryWriter.Flush();
@@ -139,14 +147,16 @@ namespace Uart.Function
         {
           pkg = System.Text.ASCIIEncoding.ASCII.GetBytes("AAAAAA==");
         }
-        byte[] pack = ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
-        byte[] rngRead = new byte[128];
         NetworkStream nstream = client.GetStream();
-        nstream.Write(pack, 0, pack.Length);
-        int len = nstream.Read(rngRead, 0, pack.Length);
-        string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
-        if (sOk.Contains("PWD:ERROR"))
-          throw new Exception("Неверный пароль");
+        DevicePackage.WriteDevicePackage(nstream, password, pkg, enumTypeController);
+        //byte[] pack = ZtpProtocol.ModbusSetConfig(password, pkg, (ushort)pkg.Length);
+        //byte[] rngRead = new byte[128];
+        //NetworkStream nstream = client.GetStream();
+        //nstream.Write(pack, 0, pack.Length);
+        //int len = nstream.Read(rngRead, 0, pack.Length);
+        //string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
+        //if (!sOk.Contains("PWD:OK"))
+        //  throw new Exception(sOk);
       }
       catch (Exception exp)
       {

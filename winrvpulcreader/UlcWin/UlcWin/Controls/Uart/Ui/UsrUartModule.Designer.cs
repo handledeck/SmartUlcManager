@@ -67,7 +67,7 @@ namespace Uart
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(849, 342);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(968, 377);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // dataGridView1
@@ -108,7 +108,7 @@ namespace Uart
       this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.dataGridView1.RowHeadersVisible = false;
       this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGridView1.Size = new System.Drawing.Size(839, 294);
+      this.dataGridView1.Size = new System.Drawing.Size(958, 329);
       this.dataGridView1.TabIndex = 0;
       this.dataGridView1.DataMemberChanged += new System.EventHandler(this.dataGridView1_DataMemberChanged);
       // 
@@ -123,14 +123,14 @@ namespace Uart
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(5, 5);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(839, 30);
+      this.panel1.Size = new System.Drawing.Size(958, 30);
       this.panel1.TabIndex = 1;
       // 
       // label1
       // 
       this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(494, 9);
+      this.label1.Location = new System.Drawing.Point(613, 9);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(99, 13);
       this.label1.TabIndex = 5;
@@ -140,7 +140,7 @@ namespace Uart
       // 
       this.numUpDwn.Anchor = System.Windows.Forms.AnchorStyles.Right;
       this.numUpDwn.Enabled = false;
-      this.numUpDwn.Location = new System.Drawing.Point(599, 6);
+      this.numUpDwn.Location = new System.Drawing.Point(718, 6);
       this.numUpDwn.Name = "numUpDwn";
       this.numUpDwn.Size = new System.Drawing.Size(65, 20);
       this.numUpDwn.TabIndex = 4;
@@ -204,7 +204,7 @@ namespace Uart
       this.cbFunction.Anchor = System.Windows.Forms.AnchorStyles.Right;
       this.cbFunction.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
       this.cbFunction.FormattingEnabled = true;
-      this.cbFunction.Location = new System.Drawing.Point(670, 6);
+      this.cbFunction.Location = new System.Drawing.Point(789, 6);
       this.cbFunction.Name = "cbFunction";
       this.cbFunction.Size = new System.Drawing.Size(166, 21);
       this.cbFunction.TabIndex = 3;
@@ -215,7 +215,7 @@ namespace Uart
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.tableLayoutPanel1);
       this.Name = "UsrUartModule";
-      this.Size = new System.Drawing.Size(849, 342);
+      this.Size = new System.Drawing.Size(968, 377);
       this.tableLayoutPanel1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.panel1.ResumeLayout(false);

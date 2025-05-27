@@ -2791,7 +2791,7 @@ namespace UlcWin
             {
               sfrm.SetLabelText(string.Format("Соединение успешно:{0}", selItem.Name));
             }
-            if (selItem.UType == 1)
+            if (selItem.UType == 1 || selItem.UType == 2)
             {
 
               if (!this.GetConfigIP(client, out message, out buffer, out mbLblBuf))

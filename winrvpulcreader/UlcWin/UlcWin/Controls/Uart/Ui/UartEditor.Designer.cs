@@ -55,7 +55,7 @@ namespace Uart
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(354, 327);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(482, 379);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // propertyGrid1
@@ -64,7 +64,7 @@ namespace Uart
       this.propertyGrid1.Location = new System.Drawing.Point(6, 48);
       this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(342, 234);
+      this.propertyGrid1.Size = new System.Drawing.Size(470, 286);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.ToolbarVisible = false;
       // 
@@ -77,7 +77,7 @@ namespace Uart
       this.labHeader.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.labHeader.Name = "labHeader";
       this.labHeader.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
-      this.labHeader.Size = new System.Drawing.Size(342, 41);
+      this.labHeader.Size = new System.Drawing.Size(470, 41);
       this.labHeader.TabIndex = 1;
       this.labHeader.Text = "Caption";
       this.labHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -87,14 +87,14 @@ namespace Uart
       this.panel1.Controls.Add(this.btOk);
       this.panel1.Controls.Add(this.button1);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(5, 290);
+      this.panel1.Location = new System.Drawing.Point(5, 342);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(344, 32);
+      this.panel1.Size = new System.Drawing.Size(472, 32);
       this.panel1.TabIndex = 2;
       // 
       // btOk
       // 
-      this.btOk.Location = new System.Drawing.Point(199, 3);
+      this.btOk.Location = new System.Drawing.Point(327, 3);
       this.btOk.Name = "btOk";
       this.btOk.Size = new System.Drawing.Size(66, 26);
       this.btOk.TabIndex = 1;
@@ -105,7 +105,7 @@ namespace Uart
       // button1
       // 
       this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.button1.Location = new System.Drawing.Point(271, 3);
+      this.button1.Location = new System.Drawing.Point(399, 3);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(66, 26);
       this.button1.TabIndex = 0;
@@ -116,7 +116,7 @@ namespace Uart
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(354, 327);
+      this.ClientSize = new System.Drawing.Size(482, 379);
       this.ControlBox = false;
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

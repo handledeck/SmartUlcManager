@@ -85,7 +85,7 @@
       this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label1.Location = new System.Drawing.Point(3, 156);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(185, 121);
+      this.label1.Size = new System.Drawing.Size(186, 121);
       this.label1.TabIndex = 34;
       this.label1.Text = "Таймаут (мсек)";
       this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -95,7 +95,7 @@
       this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label2.Location = new System.Drawing.Point(3, 26);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(185, 26);
+      this.label2.Size = new System.Drawing.Size(186, 26);
       this.label2.TabIndex = 19;
       this.label2.Text = "Скорость";
       this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -105,7 +105,7 @@
       this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label3.Location = new System.Drawing.Point(3, 52);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(185, 26);
+      this.label3.Size = new System.Drawing.Size(186, 26);
       this.label3.TabIndex = 21;
       this.label3.Text = "Битность";
       this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -115,7 +115,7 @@
       this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label7.Location = new System.Drawing.Point(3, 0);
       this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(185, 26);
+      this.label7.Size = new System.Drawing.Size(186, 26);
       this.label7.TabIndex = 17;
       this.label7.Text = "Порт";
       this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -125,7 +125,7 @@
       this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label4.Location = new System.Drawing.Point(3, 78);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(185, 26);
+      this.label4.Size = new System.Drawing.Size(186, 26);
       this.label4.TabIndex = 23;
       this.label4.Text = "Четность";
       this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -135,7 +135,7 @@
       this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label5.Location = new System.Drawing.Point(3, 104);
       this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(185, 26);
+      this.label5.Size = new System.Drawing.Size(186, 26);
       this.label5.TabIndex = 25;
       this.label5.Text = "Управление потоком";
       this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -145,7 +145,7 @@
       this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label6.Location = new System.Drawing.Point(3, 130);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(185, 26);
+      this.label6.Size = new System.Drawing.Size(186, 26);
       this.label6.TabIndex = 27;
       this.label6.Text = "Стоповых бит";
       this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -154,9 +154,9 @@
       // 
       this.cbPortName.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbPortName.FormattingEnabled = true;
-      this.cbPortName.Location = new System.Drawing.Point(194, 3);
+      this.cbPortName.Location = new System.Drawing.Point(195, 3);
       this.cbPortName.Name = "cbPortName";
-      this.cbPortName.Size = new System.Drawing.Size(236, 21);
+      this.cbPortName.Size = new System.Drawing.Size(235, 21);
       this.cbPortName.TabIndex = 28;
       // 
       // cbBaudrates
@@ -164,9 +164,9 @@
       this.cbBaudrates.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbBaudrates.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbBaudrates.FormattingEnabled = true;
-      this.cbBaudrates.Location = new System.Drawing.Point(194, 29);
+      this.cbBaudrates.Location = new System.Drawing.Point(195, 29);
       this.cbBaudrates.Name = "cbBaudrates";
-      this.cbBaudrates.Size = new System.Drawing.Size(236, 21);
+      this.cbBaudrates.Size = new System.Drawing.Size(235, 21);
       this.cbBaudrates.TabIndex = 29;
       // 
       // cbDataBits
@@ -174,9 +174,9 @@
       this.cbDataBits.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDataBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbDataBits.FormattingEnabled = true;
-      this.cbDataBits.Location = new System.Drawing.Point(194, 55);
+      this.cbDataBits.Location = new System.Drawing.Point(195, 55);
       this.cbDataBits.Name = "cbDataBits";
-      this.cbDataBits.Size = new System.Drawing.Size(236, 21);
+      this.cbDataBits.Size = new System.Drawing.Size(235, 21);
       this.cbDataBits.TabIndex = 30;
       // 
       // cbParity
@@ -184,9 +184,9 @@
       this.cbParity.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbParity.FormattingEnabled = true;
-      this.cbParity.Location = new System.Drawing.Point(194, 81);
+      this.cbParity.Location = new System.Drawing.Point(195, 81);
       this.cbParity.Name = "cbParity";
-      this.cbParity.Size = new System.Drawing.Size(236, 21);
+      this.cbParity.Size = new System.Drawing.Size(235, 21);
       this.cbParity.TabIndex = 31;
       // 
       // cbHandshake
@@ -194,9 +194,9 @@
       this.cbHandshake.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbHandshake.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbHandshake.FormattingEnabled = true;
-      this.cbHandshake.Location = new System.Drawing.Point(194, 107);
+      this.cbHandshake.Location = new System.Drawing.Point(195, 107);
       this.cbHandshake.Name = "cbHandshake";
-      this.cbHandshake.Size = new System.Drawing.Size(236, 21);
+      this.cbHandshake.Size = new System.Drawing.Size(235, 21);
       this.cbHandshake.TabIndex = 32;
       // 
       // cbStopBits
@@ -204,15 +204,15 @@
       this.cbStopBits.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbStopBits.FormattingEnabled = true;
-      this.cbStopBits.Location = new System.Drawing.Point(194, 133);
+      this.cbStopBits.Location = new System.Drawing.Point(195, 133);
       this.cbStopBits.Name = "cbStopBits";
-      this.cbStopBits.Size = new System.Drawing.Size(236, 21);
+      this.cbStopBits.Size = new System.Drawing.Size(235, 21);
       this.cbStopBits.TabIndex = 33;
       // 
       // nudTimeout
       // 
       this.nudTimeout.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.nudTimeout.Location = new System.Drawing.Point(194, 159);
+      this.nudTimeout.Location = new System.Drawing.Point(195, 159);
       this.nudTimeout.Maximum = new decimal(new int[] {
             60000,
             0,
@@ -224,7 +224,7 @@
             0,
             0});
       this.nudTimeout.Name = "nudTimeout";
-      this.nudTimeout.Size = new System.Drawing.Size(236, 20);
+      this.nudTimeout.Size = new System.Drawing.Size(235, 20);
       this.nudTimeout.TabIndex = 35;
       this.nudTimeout.Value = new decimal(new int[] {
             5000,
