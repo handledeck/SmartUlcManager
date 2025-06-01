@@ -1,4 +1,5 @@
 ﻿using InterUlc.Db;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Uart.Function;
+using UlcWin.Controls.Modules;
 using UlcWin.DB;
 using UlcWin.Devices;
 using UlcWin.Fota;
@@ -20,6 +23,7 @@ using UlcWin.win;
 using Ztp.Configuration;
 using Ztp.Protocol;
 using Ztp.Ui;
+
 using static UlcWin.LoadForm;
 
 namespace UlcWin.ui
@@ -437,6 +441,11 @@ namespace UlcWin.ui
             ///Запись UART настроек
             ///
             Exception e= usrUartModule1.WriteExpandUart(client, __pwd, cbIndex);
+            if (ControllerType.GetControllerType(this.__ztpConfig.Version) == EnumTypeController.ULC2Lite) {
+              e = EthernetItem.WriteEternetSettings(client, __pwd, this.txtIp.Text,
+                    this.txtGateway.Text, ethernetModule1.DataSet.Tables[0]);
+            }
+            
             if (e != null)
               throw e;
           }
@@ -914,6 +923,54 @@ namespace UlcWin.ui
       }
       else {
         this.btnOk.Enabled = true;
+      }
+    }
+
+
+    bool IsTextAValidIPAddress(string text) {
+      bool result = true;
+      string[] values = text.Split(new[] { "." }, StringSplitOptions.None); //keep empty strings when splitting
+      result &= values.Length == 4; // aka string has to be like "xx.xx.xx.xx"
+      //byte temp;
+      if (result)
+        for (int i = 0; i < 4; i++)
+          result &= byte.TryParse(values[i], out _); //each "xx" must be a byte (0-255)
+      return result;
+    }
+
+    private void txtIp_Validated(object sender, EventArgs e)
+    {
+      TextBox textBox = (TextBox)sender;
+      bool ipV = IsTextAValidIPAddress(txtIp.Text);
+      //IPAddress tmp;
+      if (string.IsNullOrEmpty(textBox.Text) || IsTextAValidIPAddress(textBox.Text)/*IPAddress.TryParse(itcIP.Value, out tmp)*/)
+      {
+        this.errorProvider1.Clear();
+        btnOk.Enabled = true;
+      }
+      else
+      {
+        textBox.Focus();
+        this.errorProvider1.SetError(textBox, "Введите корректный IP адрес или оставте пустую строку если параметр не нужен");
+        btnOk.Enabled = false;
+      }
+    }
+
+    private void txtIp_Validating(object sender, CancelEventArgs e)
+    {
+      TextBox textBox = (TextBox)sender;
+      bool ipV = IsTextAValidIPAddress(txtIp.Text);
+      //IPAddress tmp;
+      if (string.IsNullOrEmpty(textBox.Text) || IsTextAValidIPAddress(textBox.Text)/*IPAddress.TryParse(itcIP.Value, out tmp)*/)
+      {
+        this.errorProvider1.Clear();
+        btnOk.Enabled = true;
+      }
+      else
+      {
+        textBox.Focus();
+        this.errorProvider1.SetError(textBox, "Введите корректный IP адрес или оставте пустую строку если параметр не нужен");
+        btnOk.Enabled = false;
       }
     }
   }

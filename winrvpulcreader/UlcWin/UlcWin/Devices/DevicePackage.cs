@@ -18,6 +18,7 @@ namespace UlcWin.Devices
     public const string MBStartPack = "MBP";
     public const string MBLbl = "MBLBL";
     public const string MBstartLbl = "MBL";
+    public const string EthernetRul = "ETHPORTS";
     private const char Return = '\r';
     public static byte[] ToBytes(string str)
     {
@@ -36,7 +37,33 @@ namespace UlcWin.Devices
       return val;
     }
 
-    public static Exception WriteDevicePackage(NetworkStream stream, string sessionPwd, byte[] dat, EnumTypeController enumTypeController) {
+    public static Exception EthernetSetRules(NetworkStream stream, string sessionPwd, byte[] dat)
+    {
+      Exception exception = null;
+      try
+      {
+        StringBuilder sb = new StringBuilder($"{EthernetRul}:");
+        sb.Append($"PWD{Sep}{Ztp.Utils.StringUtils.ToBase64String(sessionPwd)}{WhiteSpace}");
+        sb.Append($"LIST{Sep}{Convert.ToBase64String(dat)}");
+        sb.Append($"{Return}");
+        byte[] pack = ToBytes(sb.ToString());
+        byte[] rngRead = new byte[128];
+        stream.Write(pack, 0, pack.Length);
+        int len = stream.Read(rngRead, 0, rngRead.Length);
+        string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
+        if (!sOk.Contains("PWD:OK"))
+          throw new Exception("Неверный пароль");
+      }
+      catch (Exception exp)
+      {
+        exception = exp;
+      }
+      return exception;
+    }
+
+
+    public static Exception WriteDevicePackage(NetworkStream stream, string sessionPwd, byte[] dat, EnumTypeController enumTypeController)
+    {
       Exception exception = null;
       try
       {
@@ -47,7 +74,7 @@ namespace UlcWin.Devices
           pack = DevicePackage.ModbusWriteConfigByPort(sessionPwd, 1, dat, (ushort)dat.Length);
         byte[] rngRead = new byte[128];
         stream.Write(pack, 0, pack.Length);
-        int len = stream.Read(rngRead, 0, pack.Length);
+        int len = stream.Read(rngRead, 0, rngRead.Length);
         string sOk = System.Text.ASCIIEncoding.ASCII.GetString(rngRead, 0, len);
         if (!sOk.Contains("PWD:OK"))
           throw new Exception("Неверный пароль");

@@ -46,7 +46,7 @@ namespace UlcWin.Controls.Modules
       this.toolTip1.SetToolTip(btnEdit, "Редактировать");
       this.toolTip1.SetToolTip(btnDelete, "Удалить");
 
-      this.dataGridView1.DataSource = this.dataSet1;
+      //this.dataGridView1.DataSource = this.dataSet1;
       DataTable dataTable = CreateDataTableFromObjects<EthernetItem>("Ethernet");
       this.dataSet1.Tables.Add(dataTable);
       this.dataGridView1.DataSource = this.dataSet1.Tables[0];
@@ -61,6 +61,8 @@ namespace UlcWin.Controls.Modules
         this.ReadConfigForward();
       Application.Idle += Application_Idle; 
     }
+
+    public DataSet DataSet { get { return this.dataSet1; } }
 
 
     public void InitCB()
