@@ -1,6 +1,6 @@
-﻿namespace UlcWin
+﻿namespace UlcWin.ui
 {
-  partial class RequestForm
+  partial class SettingEditForm
   {
     /// <summary>
     /// Required designer variable.
@@ -29,21 +29,21 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      Ztp.Configuration.ZtpConfig ztpConfig1 = new Ztp.Configuration.ZtpConfig();
-      Ztp.Port.ComPort.ComPortSettings comPortSettings1 = new Ztp.Port.ComPort.ComPortSettings();
-      Ztp.Configuration.ZtpLight ztpLight1 = new Ztp.Configuration.ZtpLight();
-      Ztp.Configuration.ZtpScheduler ztpScheduler1 = new Ztp.Configuration.ZtpScheduler();
-      Ztp.Configuration.ZtpLight ztpLight2 = new Ztp.Configuration.ZtpLight();
-      Ztp.Configuration.ZtpScheduler ztpScheduler2 = new Ztp.Configuration.ZtpScheduler();
-      Ztp.Ui.LocationEditorControl.ZtpLocation ztpLocation1 = new Ztp.Ui.LocationEditorControl.ZtpLocation();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RequestForm));
-      Ztp.Port.ComPort.ComPortSettings comPortSettings2 = new Ztp.Port.ComPort.ComPortSettings();
-      this.tabControl1 = new System.Windows.Forms.TabControl();
-      this.tabPage1 = new System.Windows.Forms.TabPage();
+      Ztp.Configuration.ZtpConfig ztpConfig4 = new Ztp.Configuration.ZtpConfig();
+      Ztp.Port.ComPort.ComPortSettings comPortSettings7 = new Ztp.Port.ComPort.ComPortSettings();
+      Ztp.Configuration.ZtpLight ztpLight7 = new Ztp.Configuration.ZtpLight();
+      Ztp.Configuration.ZtpScheduler ztpScheduler7 = new Ztp.Configuration.ZtpScheduler();
+      Ztp.Configuration.ZtpLight ztpLight8 = new Ztp.Configuration.ZtpLight();
+      Ztp.Configuration.ZtpScheduler ztpScheduler8 = new Ztp.Configuration.ZtpScheduler();
+      Ztp.Ui.LocationEditorControl.ZtpLocation ztpLocation4 = new Ztp.Ui.LocationEditorControl.ZtpLocation();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingEditForm));
+      Ztp.Port.ComPort.ComPortSettings comPortSettings8 = new Ztp.Port.ComPort.ComPortSettings();
+      this.TabsController = new System.Windows.Forms.TabControl();
+      this.TabMainPage = new System.Windows.Forms.TabPage();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.@__currentStateViewControl = new Ztp.Ui.CurrentStateViewControl();
       this.@__config = new Ztp.Ui.ConfigEditorControl();
-      this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.TabScheduleLight = new System.Windows.Forms.TabPage();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.@__planEditor = new Ztp.Ui.LightPlanEditorControl();
       this.PicLightSwitcher = new System.Windows.Forms.PictureBox();
@@ -57,10 +57,12 @@
       this.btnAddSeason = new System.Windows.Forms.Button();
       this.btnReamoveSeason = new System.Windows.Forms.Button();
       this.btnChangeSeason = new System.Windows.Forms.Button();
-      this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.TabSerialPort = new System.Windows.Forms.TabPage();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.usrUartModule1 = new Uart.UsrUartModule();
       this.@__comPortEditor = new Ztp.Ui.ComPortSettingsEditorControl();
+      this.TabForwardPage = new System.Windows.Forms.TabPage();
+      this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+      this.panel1 = new System.Windows.Forms.Panel();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
       this.btnOk = new System.Windows.Forms.Button();
@@ -68,10 +70,19 @@
       this.btnFile = new System.Windows.Forms.Button();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-      this.tabControl1.SuspendLayout();
-      this.tabPage1.SuspendLayout();
+      this.label1 = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.txtIp = new System.Windows.Forms.TextBox();
+      this.txtGateway = new System.Windows.Forms.TextBox();
+      this.usrUartModule1 = new Uart.UsrUartModule();
+      this.groupBox4 = new System.Windows.Forms.GroupBox();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.ethernetModule1 = new UlcWin.Controls.Modules.EthernetModule();
+      this.groupBox5 = new System.Windows.Forms.GroupBox();
+      this.TabsController.SuspendLayout();
+      this.TabMainPage.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
-      this.tabPage2.SuspendLayout();
+      this.TabScheduleLight.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -79,41 +90,48 @@
       ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).BeginInit();
       this.groupBox2.SuspendLayout();
       this.groupBox1.SuspendLayout();
-      this.tabPage3.SuspendLayout();
+      this.TabSerialPort.SuspendLayout();
       this.groupBox3.SuspendLayout();
+      this.TabForwardPage.SuspendLayout();
+      this.tableLayoutPanel3.SuspendLayout();
+      this.panel1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.flowLayoutPanel1.SuspendLayout();
+      this.groupBox4.SuspendLayout();
+      this.panel2.SuspendLayout();
+      this.groupBox5.SuspendLayout();
       this.SuspendLayout();
       // 
-      // tabControl1
+      // TabsController
       // 
-      this.tabControl1.Controls.Add(this.tabPage1);
-      this.tabControl1.Controls.Add(this.tabPage2);
-      this.tabControl1.Controls.Add(this.tabPage3);
-      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.tabControl1.ImageList = this.imlTc;
-      this.tabControl1.ItemSize = new System.Drawing.Size(130, 30);
-      this.tabControl1.Location = new System.Drawing.Point(4, 4);
-      this.tabControl1.Name = "tabControl1";
-      this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(992, 639);
-      this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-      this.tabControl1.TabIndex = 0;
+      this.TabsController.Controls.Add(this.TabMainPage);
+      this.TabsController.Controls.Add(this.TabScheduleLight);
+      this.TabsController.Controls.Add(this.TabSerialPort);
+      this.TabsController.Controls.Add(this.TabForwardPage);
+      this.TabsController.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.TabsController.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.TabsController.ImageList = this.imlTc;
+      this.TabsController.ItemSize = new System.Drawing.Size(130, 30);
+      this.TabsController.Location = new System.Drawing.Point(4, 4);
+      this.TabsController.Name = "TabsController";
+      this.TabsController.SelectedIndex = 0;
+      this.TabsController.Size = new System.Drawing.Size(992, 639);
+      this.TabsController.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+      this.TabsController.TabIndex = 0;
       // 
-      // tabPage1
+      // TabMainPage
       // 
-      this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.tabPage1.Controls.Add(this.tableLayoutPanel2);
-      this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.tabPage1.ImageIndex = 2;
-      this.tabPage1.Location = new System.Drawing.Point(4, 34);
-      this.tabPage1.Name = "tabPage1";
-      this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(984, 601);
-      this.tabPage1.TabIndex = 0;
-      this.tabPage1.Text = "Общие";
-      this.tabPage1.UseVisualStyleBackColor = true;
+      this.TabMainPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.TabMainPage.Controls.Add(this.tableLayoutPanel2);
+      this.TabMainPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.TabMainPage.ImageIndex = 2;
+      this.TabMainPage.Location = new System.Drawing.Point(4, 34);
+      this.TabMainPage.Name = "TabMainPage";
+      this.TabMainPage.Padding = new System.Windows.Forms.Padding(3);
+      this.TabMainPage.Size = new System.Drawing.Size(984, 601);
+      this.TabMainPage.TabIndex = 0;
+      this.TabMainPage.Text = "Общие";
+      this.TabMainPage.UseVisualStyleBackColor = true;
       // 
       // tableLayoutPanel2
       // 
@@ -185,20 +203,20 @@
       this.@__config.ShowApnProperty = false;
       this.@__config.Size = new System.Drawing.Size(719, 589);
       this.@__config.TabIndex = 1;
-      ztpConfig1.Ain = new bool[] {
+      ztpConfig4.Ain = new bool[] {
         false,
         false,
         false,
         false};
-      ztpConfig1.Apn = "";
-      ztpConfig1.ApnPassword = "";
-      ztpConfig1.ApnUser = "";
-      ztpConfig1.Cain = new ushort[] {
+      ztpConfig4.Apn = "";
+      ztpConfig4.ApnPassword = "";
+      ztpConfig4.ApnUser = "";
+      ztpConfig4.Cain = new ushort[] {
         ((ushort)(0)),
         ((ushort)(0)),
         ((ushort)(0)),
         ((ushort)(0))};
-      ztpConfig1.Cdin = new bool[] {
+      ztpConfig4.Cdin = new bool[] {
         false,
         false,
         false,
@@ -215,7 +233,7 @@
         false,
         false,
         false};
-      ztpConfig1.Cdout = new bool[] {
+      ztpConfig4.Cdout = new bool[] {
         false,
         false,
         false,
@@ -224,41 +242,24 @@
         false,
         false,
         false};
-      comPortSettings1.BaudRate = 9600;
-      comPortSettings1.DataBits = ((byte)(8));
-      comPortSettings1.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings1.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings1.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings1.PortName = "COM1";
-      comPortSettings1.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings1.Timeout = 1000;
-      ztpConfig1.ComPortSetting = comPortSettings1;
-      ztpConfig1.CoreVersion = "";
-      ztpConfig1.CurTrafic = ((uint)(0u));
-      ztpConfig1.dateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
-      ztpConfig1.DateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
-      ztpConfig1.DateTimeFirmware = new System.DateTime(((long)(0)));
-      ztpConfig1.DbzPercent = ((byte)(1));
-      ztpConfig1.Debounce = ((uint)(500u));
-      ztpConfig1.Debug = false;
-      ztpConfig1.Din = new bool[] {
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false};
-      ztpConfig1.Door = new bool[] {
+      comPortSettings7.BaudRate = 9600;
+      comPortSettings7.DataBits = ((byte)(8));
+      comPortSettings7.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings7.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings7.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings7.PortName = "COM1";
+      comPortSettings7.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings7.Timeout = 1000;
+      ztpConfig4.ComPortSetting = comPortSettings7;
+      ztpConfig4.CoreVersion = "";
+      ztpConfig4.CurTrafic = ((uint)(0u));
+      ztpConfig4.dateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
+      ztpConfig4.DateTime = new System.DateTime(2022, 1, 25, 11, 52, 32, 840);
+      ztpConfig4.DateTimeFirmware = new System.DateTime(((long)(0)));
+      ztpConfig4.DbzPercent = ((byte)(1));
+      ztpConfig4.Debounce = ((uint)(500u));
+      ztpConfig4.Debug = false;
+      ztpConfig4.Din = new bool[] {
         false,
         false,
         false,
@@ -275,7 +276,15 @@
         false,
         false,
         false};
-      ztpConfig1.Dout = new bool[] {
+      ztpConfig4.Door = new bool[] {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
         false,
         false,
         false,
@@ -284,11 +293,20 @@
         false,
         false,
         false};
-      ztpConfig1.EstActive = false;
-      ztpConfig1.EstAddress = "";
-      ztpConfig1.EstPort = ((ushort)(1024));
-      ztpConfig1.EstTsend = ((uint)(30u));
-      ztpConfig1.Flags = ((Ztp.Configuration.ZtpConfig.ConfigFlag)((((((((((((((((((Ztp.Configuration.ZtpConfig.ConfigFlag.Din | Ztp.Configuration.ZtpConfig.ConfigFlag.Dout) 
+      ztpConfig4.Dout = new bool[] {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false};
+      ztpConfig4.EstActive = false;
+      ztpConfig4.EstAddress = "";
+      ztpConfig4.EstPort = ((ushort)(1024));
+      ztpConfig4.EstTsend = ((uint)(30u));
+      ztpConfig4.Flags = ((Ztp.Configuration.ZtpConfig.ConfigFlag)((((((((((((((((((Ztp.Configuration.ZtpConfig.ConfigFlag.Din | Ztp.Configuration.ZtpConfig.ConfigFlag.Dout) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Ain) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.UseScheduler) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.EstActive) 
@@ -305,44 +323,44 @@
             | Ztp.Configuration.ZtpConfig.ConfigFlag.ComType) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Ping) 
             | Ztp.Configuration.ZtpConfig.ConfigFlag.Logs)));
-      ztpConfig1.Gprs = ((uint)(0u));
-      ztpConfig1.Gsm = ((uint)(0u));
-      ztpConfig1.Imei = "";
-      ztpConfig1.IpOwn = "";
-      ztpConfig1.IpPing = "";
-      ztpConfig1.IsHalfBright = false;
-      ztpConfig1.IsReadedFromDevice = false;
-      ztpConfig1.Latitude = 55.1911F;
-      ztpLight1.Scheduler = ztpScheduler1;
-      ztpLight1.UseScheduler = false;
-      ztpConfig1.Light = ztpLight1;
-      ztpConfig1.logLevel = ((byte)(5));
-      ztpConfig1.Longitude = 30.12533F;
-      ztpConfig1.NetTechnology = "";
-      ztpConfig1.Number = 1;
-      ztpConfig1.PingPeriod = ((byte)(1));
-      ztpConfig1.rebootTime = "";
-      ztpConfig1.Signal = 0;
-      ztpConfig1.Sim = ((uint)(0u));
-      ztpConfig1.SoftVersion = "";
-      ztpConfig1.Sunrise = new System.DateTime(((long)(0)));
-      ztpConfig1.Sunset = new System.DateTime(((long)(0)));
-      ztpConfig1.TimeZone = ((sbyte)(-12));
-      ztpConfig1.Version = "I1O1A1-LDC-3";
-      this.@__config.Value = ztpConfig1;
+      ztpConfig4.Gprs = ((uint)(0u));
+      ztpConfig4.Gsm = ((uint)(0u));
+      ztpConfig4.Imei = "";
+      ztpConfig4.IpOwn = "";
+      ztpConfig4.IpPing = "";
+      ztpConfig4.IsHalfBright = false;
+      ztpConfig4.IsReadedFromDevice = false;
+      ztpConfig4.Latitude = 55.1911F;
+      ztpLight7.Scheduler = ztpScheduler7;
+      ztpLight7.UseScheduler = false;
+      ztpConfig4.Light = ztpLight7;
+      ztpConfig4.logLevel = ((byte)(5));
+      ztpConfig4.Longitude = 30.12533F;
+      ztpConfig4.NetTechnology = "";
+      ztpConfig4.Number = 1;
+      ztpConfig4.PingPeriod = ((byte)(1));
+      ztpConfig4.rebootTime = "";
+      ztpConfig4.Signal = 0;
+      ztpConfig4.Sim = ((uint)(0u));
+      ztpConfig4.SoftVersion = "";
+      ztpConfig4.Sunrise = new System.DateTime(((long)(0)));
+      ztpConfig4.Sunset = new System.DateTime(((long)(0)));
+      ztpConfig4.TimeZone = ((sbyte)(-12));
+      ztpConfig4.Version = "I1O1A1-LDC-3";
+      this.@__config.Value = ztpConfig4;
       // 
-      // tabPage2
+      // TabScheduleLight
       // 
-      this.tabPage2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.tabPage2.Controls.Add(this.splitContainer1);
-      this.tabPage2.ImageIndex = 0;
-      this.tabPage2.Location = new System.Drawing.Point(4, 34);
-      this.tabPage2.Name = "tabPage2";
-      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(984, 601);
-      this.tabPage2.TabIndex = 1;
-      this.tabPage2.Text = "План освещения";
-      this.tabPage2.UseVisualStyleBackColor = true;
+      this.TabScheduleLight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.TabScheduleLight.Controls.Add(this.splitContainer1);
+      this.TabScheduleLight.ImageIndex = 0;
+      this.TabScheduleLight.Location = new System.Drawing.Point(4, 34);
+      this.TabScheduleLight.Name = "TabScheduleLight";
+      this.TabScheduleLight.Padding = new System.Windows.Forms.Padding(3);
+      this.TabScheduleLight.Size = new System.Drawing.Size(984, 601);
+      this.TabScheduleLight.TabIndex = 1;
+      this.TabScheduleLight.Text = "План освещения";
+      this.TabScheduleLight.UseVisualStyleBackColor = true;
       // 
       // splitContainer1
       // 
@@ -374,13 +392,13 @@
       this.@__planEditor.TabIndex = 0;
       this.@__planEditor.UseSchedulerEnable = true;
       this.@__planEditor.UseSchedulerVisible = false;
-      ztpLight2.Scheduler = ztpScheduler2;
-      ztpLight2.UseScheduler = true;
-      this.@__planEditor.Value = ztpLight2;
-      ztpLocation1.Latitude = 0F;
-      ztpLocation1.Longitude = 0F;
-      ztpLocation1.TimeZone = ((sbyte)(0));
-      this.@__planEditor.ZtpLocation = ztpLocation1;
+      ztpLight8.Scheduler = ztpScheduler8;
+      ztpLight8.UseScheduler = true;
+      this.@__planEditor.Value = ztpLight8;
+      ztpLocation4.Latitude = 0F;
+      ztpLocation4.Longitude = 0F;
+      ztpLocation4.TimeZone = ((sbyte)(0));
+      this.@__planEditor.ZtpLocation = ztpLocation4;
       // 
       // PicLightSwitcher
       // 
@@ -453,6 +471,7 @@
       this.imlTc.Images.SetKeyName(13, "clock_stop.ico");
       this.imlTc.Images.SetKeyName(14, "lightbulb.ico");
       this.imlTc.Images.SetKeyName(15, "lightbulb_off.ico");
+      this.imlTc.Images.SetKeyName(16, "network_ip.png");
       // 
       // btnScheduleDelete
       // 
@@ -540,43 +559,28 @@
       this.btnChangeSeason.UseVisualStyleBackColor = true;
       this.btnChangeSeason.Click += new System.EventHandler(this.btnChangeSeason_Click);
       // 
-      // tabPage3
+      // TabSerialPort
       // 
-      this.tabPage3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.tabPage3.Controls.Add(this.groupBox3);
-      this.tabPage3.Controls.Add(this.@__comPortEditor);
-      this.tabPage3.ImageIndex = 1;
-      this.tabPage3.Location = new System.Drawing.Point(4, 34);
-      this.tabPage3.Name = "tabPage3";
-      this.tabPage3.Size = new System.Drawing.Size(984, 601);
-      this.tabPage3.TabIndex = 2;
-      this.tabPage3.Text = "RS-485";
-      this.tabPage3.UseVisualStyleBackColor = true;
+      this.TabSerialPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.TabSerialPort.Controls.Add(this.groupBox3);
+      this.TabSerialPort.Controls.Add(this.@__comPortEditor);
+      this.TabSerialPort.ImageIndex = 1;
+      this.TabSerialPort.Location = new System.Drawing.Point(4, 34);
+      this.TabSerialPort.Name = "TabSerialPort";
+      this.TabSerialPort.Size = new System.Drawing.Size(984, 601);
+      this.TabSerialPort.TabIndex = 2;
+      this.TabSerialPort.Text = "RS-485";
+      this.TabSerialPort.UseVisualStyleBackColor = true;
       // 
       // groupBox3
       // 
       this.groupBox3.Controls.Add(this.usrUartModule1);
-      this.groupBox3.Location = new System.Drawing.Point(23, 160);
+      this.groupBox3.Location = new System.Drawing.Point(4, 160);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(946, 438);
+      this.groupBox3.Size = new System.Drawing.Size(976, 438);
       this.groupBox3.TabIndex = 4;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Дополнительные настройки канала";
-      // 
-      // usrUartModule1
-      // 
-      this.usrUartModule1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrUartModule1.ListMBLabel = null;
-      this.usrUartModule1.Location = new System.Drawing.Point(3, 17);
-      this.usrUartModule1.Name = "usrUartModule1";
-      this.usrUartModule1.ParentsForm = null;
-      this.usrUartModule1.Size = new System.Drawing.Size(940, 418);
-      this.usrUartModule1.TabIndex = 3;
-      this.usrUartModule1.Value = null;
-      this.usrUartModule1.EventReadUartData += new Uart.ReadUartData(this.usrUartModule1_EventReadUartData);
-      this.usrUartModule1.EventWriteUartData += new Uart.WriteUartData(this.usrUartModule1_EventWriteUartData);
-      this.usrUartModule1.EventHandlerUartData += new Uart.HendlerUartData(this.usrUartModule1_EventHandlerUartData);
-      this.usrUartModule1.Load += new System.EventHandler(this.usrUartModule1_Load);
       // 
       // __comPortEditor
       // 
@@ -593,22 +597,58 @@
       this.@__comPortEditor.ShowTimeout = false;
       this.@__comPortEditor.Size = new System.Drawing.Size(637, 140);
       this.@__comPortEditor.TabIndex = 1;
-      comPortSettings2.BaudRate = 9600;
-      comPortSettings2.DataBits = ((byte)(8));
-      comPortSettings2.Handshake = Ztp.Port.ComPort.Handshake.None;
-      comPortSettings2.Kind = Ztp.Port.PortKind.Com;
-      comPortSettings2.Parity = Ztp.Port.ComPort.Parity.None;
-      comPortSettings2.PortName = "COM1";
-      comPortSettings2.StopBits = Ztp.Port.ComPort.StopBits.One;
-      comPortSettings2.Timeout = 5000;
-      this.@__comPortEditor.Value = comPortSettings2;
+      comPortSettings8.BaudRate = 9600;
+      comPortSettings8.DataBits = ((byte)(8));
+      comPortSettings8.Handshake = Ztp.Port.ComPort.Handshake.None;
+      comPortSettings8.Kind = Ztp.Port.PortKind.Com;
+      comPortSettings8.Parity = Ztp.Port.ComPort.Parity.None;
+      comPortSettings8.PortName = "COM1";
+      comPortSettings8.StopBits = Ztp.Port.ComPort.StopBits.One;
+      comPortSettings8.Timeout = 5000;
+      this.@__comPortEditor.Value = comPortSettings8;
+      // 
+      // TabForwardPage
+      // 
+      this.TabForwardPage.Controls.Add(this.tableLayoutPanel3);
+      this.TabForwardPage.ImageIndex = 16;
+      this.TabForwardPage.Location = new System.Drawing.Point(4, 34);
+      this.TabForwardPage.Name = "TabForwardPage";
+      this.TabForwardPage.Size = new System.Drawing.Size(984, 601);
+      this.TabForwardPage.TabIndex = 3;
+      this.TabForwardPage.Text = "Проброс портов";
+      this.TabForwardPage.UseVisualStyleBackColor = true;
+      // 
+      // tableLayoutPanel3
+      // 
+      this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+      this.tableLayoutPanel3.ColumnCount = 1;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 0);
+      this.tableLayoutPanel3.Controls.Add(this.panel2, 0, 1);
+      this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+      this.tableLayoutPanel3.RowCount = 2;
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(984, 601);
+      this.tableLayoutPanel3.TabIndex = 0;
+      // 
+      // panel1
+      // 
+      this.panel1.Controls.Add(this.groupBox4);
+      this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel1.Location = new System.Drawing.Point(5, 5);
+      this.panel1.Name = "panel1";
+      this.panel1.Size = new System.Drawing.Size(974, 94);
+      this.panel1.TabIndex = 1;
       // 
       // tableLayoutPanel1
       // 
       this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
       this.tableLayoutPanel1.ColumnCount = 1;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
+      this.tableLayoutPanel1.Controls.Add(this.TabsController, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -669,7 +709,101 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
-      // RequestForm
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(44, 29);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(128, 13);
+      this.label1.TabIndex = 2;
+      this.label1.Text = "Локальный IP адрес";
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(44, 61);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(41, 13);
+      this.label2.TabIndex = 3;
+      this.label2.Text = "Шлюз";
+      // 
+      // txtIp
+      // 
+      this.txtIp.Location = new System.Drawing.Point(211, 26);
+      this.txtIp.Name = "txtIp";
+      this.txtIp.Size = new System.Drawing.Size(161, 21);
+      this.txtIp.TabIndex = 4;
+      this.txtIp.Text = "192.168.1.1";
+      // 
+      // txtGateway
+      // 
+      this.txtGateway.Location = new System.Drawing.Point(211, 58);
+      this.txtGateway.Name = "txtGateway";
+      this.txtGateway.Size = new System.Drawing.Size(161, 21);
+      this.txtGateway.TabIndex = 5;
+      this.txtGateway.Text = "192.168.0.1";
+      // 
+      // usrUartModule1
+      // 
+      this.usrUartModule1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrUartModule1.ListMBLabel = null;
+      this.usrUartModule1.Location = new System.Drawing.Point(3, 17);
+      this.usrUartModule1.Name = "usrUartModule1";
+      this.usrUartModule1.ParentsForm = null;
+      this.usrUartModule1.Size = new System.Drawing.Size(970, 418);
+      this.usrUartModule1.TabIndex = 3;
+      this.usrUartModule1.Value = null;
+      this.usrUartModule1.EventReadUartData += new Uart.ReadUartData(this.usrUartModule1_EventReadUartData);
+      this.usrUartModule1.EventWriteUartData += new Uart.WriteUartData(this.usrUartModule1_EventWriteUartData);
+      this.usrUartModule1.EventHandlerUartData += new Uart.HendlerUartData(this.usrUartModule1_EventHandlerUartData);
+      this.usrUartModule1.Load += new System.EventHandler(this.usrUartModule1_Load);
+      // 
+      // groupBox4
+      // 
+      this.groupBox4.Controls.Add(this.label1);
+      this.groupBox4.Controls.Add(this.txtGateway);
+      this.groupBox4.Controls.Add(this.txtIp);
+      this.groupBox4.Controls.Add(this.label2);
+      this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.groupBox4.Location = new System.Drawing.Point(0, 0);
+      this.groupBox4.Name = "groupBox4";
+      this.groupBox4.Size = new System.Drawing.Size(974, 94);
+      this.groupBox4.TabIndex = 6;
+      this.groupBox4.TabStop = false;
+      this.groupBox4.Text = "Сетевые настройки";
+      // 
+      // panel2
+      // 
+      this.panel2.Controls.Add(this.groupBox5);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel2.Location = new System.Drawing.Point(5, 107);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(974, 489);
+      this.panel2.TabIndex = 2;
+      // 
+      // ethernetModule1
+      // 
+      this.ethernetModule1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ethernetModule1.Location = new System.Drawing.Point(3, 17);
+      this.ethernetModule1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+      this.ethernetModule1.Name = "ethernetModule1";
+      this.ethernetModule1.ParentsForm = null;
+      this.ethernetModule1.Size = new System.Drawing.Size(968, 469);
+      this.ethernetModule1.TabIndex = 1;
+      this.ethernetModule1.Value = null;
+      // 
+      // groupBox5
+      // 
+      this.groupBox5.Controls.Add(this.ethernetModule1);
+      this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.groupBox5.Location = new System.Drawing.Point(0, 0);
+      this.groupBox5.Name = "groupBox5";
+      this.groupBox5.Size = new System.Drawing.Size(974, 489);
+      this.groupBox5.TabIndex = 2;
+      this.groupBox5.TabStop = false;
+      this.groupBox5.Text = "Проброс портов";
+      // 
+      // SettingEditForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -678,14 +812,14 @@
       this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      this.Name = "RequestForm";
+      this.Name = "SettingEditForm";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Редактирование настроек контроллера";
-      this.tabControl1.ResumeLayout(false);
-      this.tabPage1.ResumeLayout(false);
+      this.TabsController.ResumeLayout(false);
+      this.TabMainPage.ResumeLayout(false);
       this.tableLayoutPanel2.ResumeLayout(false);
-      this.tabPage2.ResumeLayout(false);
+      this.TabScheduleLight.ResumeLayout(false);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -693,30 +827,37 @@
       ((System.ComponentModel.ISupportInitialize)(this.PicLightSwitcher)).EndInit();
       this.groupBox2.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
-      this.tabPage3.ResumeLayout(false);
+      this.TabSerialPort.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
+      this.TabForwardPage.ResumeLayout(false);
+      this.tableLayoutPanel3.ResumeLayout(false);
+      this.panel1.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.flowLayoutPanel1.ResumeLayout(false);
+      this.groupBox4.ResumeLayout(false);
+      this.groupBox4.PerformLayout();
+      this.panel2.ResumeLayout(false);
+      this.groupBox5.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
 
-        #endregion
+    #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+    private System.Windows.Forms.TabControl TabsController;
+    private System.Windows.Forms.TabPage TabMainPage;
+    private System.Windows.Forms.TabPage TabScheduleLight;
+    private System.Windows.Forms.TabPage TabSerialPort;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.Button btnAddSeason;
-        private System.Windows.Forms.Button btnChangeSeason;
-        private System.Windows.Forms.Button btnReamoveSeason;
-        private Ztp.Ui.ComPortSettingsEditorControl __comPortEditor;
-        private Ztp.Ui.LightPlanEditorControl __planEditor;
-        private Ztp.Ui.CurrentStateViewControl __currentStateViewControl;
-        private Ztp.Ui.ConfigEditorControl __config;
+    private System.Windows.Forms.Button btnChangeSeason;
+    private System.Windows.Forms.Button btnReamoveSeason;
+    private Ztp.Ui.ComPortSettingsEditorControl __comPortEditor;
+    private Ztp.Ui.LightPlanEditorControl __planEditor;
+    private Ztp.Ui.CurrentStateViewControl __currentStateViewControl;
+    private Ztp.Ui.ConfigEditorControl __config;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.Button btnScheduleAdd;
@@ -724,14 +865,25 @@
     private System.Windows.Forms.Button btnScheduleEdit;
     private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnFile;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.Button btnFile;
+    private System.Windows.Forms.Button btnSave;
+    private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
     public System.Windows.Forms.ImageList imlTc;
     private System.Windows.Forms.PictureBox PicLightSwitcher;
     private System.Windows.Forms.Button btnLightSwitcher;
     private Uart.UsrUartModule usrUartModule1;
     private System.Windows.Forms.GroupBox groupBox3;
+    private System.Windows.Forms.TabPage TabForwardPage;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label1;
+    public System.Windows.Forms.TextBox txtGateway;
+    public System.Windows.Forms.TextBox txtIp;
+    private System.Windows.Forms.GroupBox groupBox4;
+    private System.Windows.Forms.Panel panel2;
+    private Controls.Modules.EthernetModule ethernetModule1;
+    private System.Windows.Forms.GroupBox groupBox5;
   }
 }

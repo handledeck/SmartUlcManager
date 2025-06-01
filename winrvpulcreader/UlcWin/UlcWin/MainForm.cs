@@ -25,6 +25,7 @@ using UlcWin.AplSetings;
 using UlcWin.Controls.ListViewHeaderMenu;
 using UlcWin.Controls.UlcMeterComponet;
 using UlcWin.DB;
+using UlcWin.Devices;
 using UlcWin.Drivers;
 using UlcWin.Edit;
 using UlcWin.Fota;
@@ -1226,17 +1227,19 @@ namespace UlcWin
     }
 
     public bool GetConfigIP(TcpClient client, out string message,
-      out byte[] buffer,out List<string> mbLblBuff)
+      out byte[] buffer,out List<string> mbLblBuff,out byte[] forwards)
     {
       bool isMsg = false;
       message = string.Empty;
       buffer = new byte[1024];
       mbLblBuff = null;
+      forwards = null;
+      NetworkStream stream=null;
       string ulc_2 = "I4O1A1-LDC-3-FOTA";
       try
       {
         buffer = new byte[1024];
-        NetworkStream stream = client.GetStream();
+        stream = client.GetStream();
         stream.ReadTimeout = 10000;
         byte[] bRng = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
 
@@ -1265,13 +1268,14 @@ namespace UlcWin
                   {
                     command = ZtpProtocol.GetModbusConfig();
                   }
-                  else {
+                  else
+                  {
                     command = "=ADDFCFG_1?\r";
                     newCo = true;
                   }
                 }
                 byte[] pack = new byte[1024];
-                
+
                 byte[] buff = ZtpProtocol.ToBytes(command);
                 stream.Write(buff, 0, buff.Length);
                 int len = stream.Read(pack, 0, pack.Length);
@@ -1283,20 +1287,34 @@ namespace UlcWin
                 {
                   command = "MBLBL_1?\r";
                 }
-                else {
+                else
+                {
                   command = ZtpProtocol.ModbusGetLBL();
                 }
-                
+
                 buff = ZtpProtocol.ToBytes(command);
                 stream.Write(buff, 0, buff.Length);
                 len = stream.Read(pack, 0, pack.Length);
                 msg = System.Text.ASCIIEncoding.ASCII.GetString(pack, 0, len);
                 msg = msg.Trim('\r', '\n');
                 keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                byte[] ngLblMb= Convert.FromBase64String(keyValue[1]);
+                byte[] ngLblMb = Convert.FromBase64String(keyValue[1]);
                 //string text = System.Text.ASCIIEncoding.ASCII.GetString(mBuffer, 0, len);
-                
+
                 mbLblBuff = Decompress(ngLblMb);
+                ZtpConfig ztpConfig= ZtpProtocol.DeserializeZtpConfig(message);
+                if (ControllerType.GetControllerType(ztpConfig.Version) == EnumTypeController.ULC2Lite) {
+                  byte[] eth = System.Text.ASCIIEncoding.UTF8.GetBytes("ETHPORTS?\r");
+                  byte[] thbytes = new byte[1024];
+                  stream.Write(eth, 0, eth.Length);
+                  len = stream.Read(thbytes, 0, thbytes.Length);
+                  msg = System.Text.ASCIIEncoding.ASCII.GetString(thbytes, 0, len);
+                  msg = msg.Trim('\r', '\n');
+                  keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                  forwards= Convert.FromBase64String(keyValue[1]);
+                }
+                
+
                 isMsg = true;
 
                 break;
@@ -1314,6 +1332,7 @@ namespace UlcWin
       {
         return false;
       }
+      
     }
 
     private List<string> Decompress(byte[] compressed)
@@ -2767,62 +2786,63 @@ namespace UlcWin
       return client;
     }
 
-    public DialogResult GetConfig(ItemIp selItem, out byte[] cfgBuf, out List<string> lstLbl)
-    {
-      string message = string.Empty;
-      byte[] buffer = null;
-      List<string> mbLblBuf = null;
-      cfgBuf = null;
-      lstLbl = null;
-      using (SimpleWaitForm sfrm = new SimpleWaitForm())
-      {
-        sfrm.RunAction(new Action(() =>
-        {
-          TcpClient client = null;
-          try
-          {
-            sfrm.SetLabelText(string.Format("Открываю соединение с {0}", selItem.Name));
-            client = GetTcpConnection(selItem.Ip, selItem.UType == 0 ? 0 : 1);// index);// this.GetConnection(selItem.Ip, 10251);
-            if (client == null)
-            {
-              throw new Exception("Ошибка соединения");
-            }
-            else
-            {
-              sfrm.SetLabelText(string.Format("Соединение успешно:{0}", selItem.Name));
-            }
-            if (selItem.UType == 1 || selItem.UType == 2)
-            {
+    //public DialogResult GetConfig(ItemIp selItem, out byte[] cfgBuf, out List<string> lstLbl)
+    //{
+    //  string message = string.Empty;
+    //  byte[] buffer = null;
+    //  List<string> mbLblBuf = null;
+    //  cfgBuf = null;
+    //  lstLbl = null;
+    //  byte[] frowards;
+    //  using (SimpleWaitForm sfrm = new SimpleWaitForm())
+    //  {
+    //    sfrm.RunAction(new Action(() =>
+    //    {
+    //      TcpClient client = null;
+    //      try
+    //      {
+    //        sfrm.SetLabelText(string.Format("Открываю соединение с {0}", selItem.Name));
+    //        client = GetTcpConnection(selItem.Ip, selItem.UType == 0 ? 0 : 1);// index);// this.GetConnection(selItem.Ip, 10251);
+    //        if (client == null)
+    //        {
+    //          throw new Exception("Ошибка соединения");
+    //        }
+    //        else
+    //        {
+    //          sfrm.SetLabelText(string.Format("Соединение успешно:{0}", selItem.Name));
+    //        }
+    //        if (selItem.UType == 1 || selItem.UType == 2)
+    //        {
 
-              if (!this.GetConfigIP(client, out message, out buffer, out mbLblBuf))
-                throw new Exception("Ошибка получения данных");
-            }
-            else
-            {
-              if (!this.GetConfigIP(client, out message))
-                throw new Exception("Ошибка получения данных");
-            }
-            sfrm.DialogResult = DialogResult.OK;
-          }
-          catch
-          {
-            sfrm.DialogResult = DialogResult.Cancel;
+    //          if (!this.GetConfigIP(client, out message, out buffer, out mbLblBuf, out frowards))
+    //            throw new Exception("Ошибка получения данных");
+    //        }
+    //        else
+    //        {
+    //          if (!this.GetConfigIP(client, out message))
+    //            throw new Exception("Ошибка получения данных");
+    //        }
+    //        sfrm.DialogResult = DialogResult.OK;
+    //      }
+    //      catch
+    //      {
+    //        sfrm.DialogResult = DialogResult.Cancel;
             
-          }
-          finally
-          {
-            if (client != null)
-              client.Close();
-          }
-        }));
-        DialogResult result = sfrm.ShowDialog();
-        if (result == DialogResult.OK) {
-          cfgBuf = buffer;
-          lstLbl = mbLblBuf;
-        }
-        return result;
-      }
-    }
+    //      }
+    //      finally
+    //      {
+    //        if (client != null)
+    //          client.Close();
+    //      }
+    //    }));
+    //    DialogResult result = sfrm.ShowDialog();
+    //    if (result == DialogResult.OK) {
+    //      cfgBuf = buffer;
+    //      lstLbl = mbLblBuf;
+    //    }
+    //    return result;
+    //  }
+    //}
 
     private void LstViewItm_MouseDoubleClick(object sender, MouseEventArgs e)
     {
@@ -2833,6 +2853,7 @@ namespace UlcWin
       int index = this.tsComboBoxDev.SelectedIndex;
       byte[] buffer=null;
       List<string> mbLblBuf = null;
+      byte[] forwards = null;
       using (SimpleWaitForm sfrm = new SimpleWaitForm())
       {
         sfrm.RunAction(new Action(() =>
@@ -2853,7 +2874,7 @@ namespace UlcWin
             if (selItem.UType >0)
             {
               
-              if (!this.GetConfigIP(client, out message, out buffer,out mbLblBuf))
+              if (!this.GetConfigIP(client, out message, out buffer,out mbLblBuf,out forwards))
                 throw new Exception("Ошибка получения данных");
             }
             else {
@@ -2877,9 +2898,9 @@ namespace UlcWin
         //sfrm.Close();
         if (result == DialogResult.OK)
         {
-          using (RequestForm rqf = new RequestForm(message, this.GetConnection, false,
+          using (SettingEditForm rqf = new SettingEditForm(message, this.GetConnection, false,
             tsComboBoxDev.SelectedIndex == 1 ? Ztp.Enums.Device.ULC2 : Ztp.Enums.Device.RVP,
-             /*selItem.Name*/selItem, this.__db))
+             /*selItem.Name*/selItem, this.__db,forwards))
           {
             rqf.SetUartArray(buffer, mbLblBuf);
             //rqf.__uart_array = buffer;
@@ -3034,20 +3055,39 @@ namespace UlcWin
 
     private void tsMenuItem_Pgrm_Click(object sender, EventArgs e)
     {
-      using (var fota = new Fota.FotaForm(this.__lvItemChecked, this.GetConnection,
-        this.GetConfigIP, false))
+      List<CD> cDs = new List<CD>();
+      foreach (var item in __lvItemChecked)
       {
-        fota.lv.SmallImageList = this.imageList1;
-        fota.ShowDialog();
-        if (this.__lvItemChecked.Count > 0)
-        {
-          foreach (ListViewItem item in this.LstViewItm.Items)
-          {
-            item.Checked = false;
-          }
-          this.__lvItemChecked.Clear();
-        }
+        ItemIp it =(ItemIp)item.Tag;
+        cDs.Add(new CD() { ip_address=it.Ip, name=it.Name });
       }
+      using (var frm=new UlcUpdateForm() { UpdateObject=cDs })
+      {
+        frm.ShowDialog();
+      }
+      if (this.__lvItemChecked.Count > 0)
+      {
+        foreach (ListViewItem item in this.LstViewItm.Items)
+        {
+          item.Checked = false;
+        }
+        this.__lvItemChecked.Clear();
+      }
+      ////CD cD=new CD() {  }
+      //using (var fota = new Fota.FotaForm(this.__lvItemChecked, this.GetConnection,
+      //  this.GetConfigIP, false))
+      //{
+      //  fota.lv.SmallImageList = this.imageList1;
+      //  fota.ShowDialog();
+      //  if (this.__lvItemChecked.Count > 0)
+      //  {
+      //    foreach (ListViewItem item in this.LstViewItm.Items)
+      //    {
+      //      item.Checked = false;
+      //    }
+      //    this.__lvItemChecked.Clear();
+      //  }
+      //}
     }
 
     private void tsMenuItem_Patch_Click(object sender, EventArgs e)
@@ -3135,8 +3175,6 @@ namespace UlcWin
 
         }
       }
-
-
     }
 
     private void tsSelectAll_Click(object sender, EventArgs e)

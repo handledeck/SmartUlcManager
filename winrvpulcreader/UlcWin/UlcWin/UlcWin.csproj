@@ -225,6 +225,12 @@
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MeterProgress\ProgressMeter.cs" />
+    <Compile Include="Controls\Modules\EthernetModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Modules\EthernetModule.Designer.cs">
+      <DependentUpon>EthernetModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PopupControl\ComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -246,6 +252,10 @@
     <Compile Include="Controls\PopupControl\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProgresBar\ProgresBarColumn.cs" />
+    <Compile Include="Controls\ProgresBar\ProgresBarText.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Uart\Attributes\BaseTypeDescriptionProvider.cs" />
     <Compile Include="Controls\Uart\Attributes\EnumTypeConverter.cs" />
     <Compile Include="Controls\Uart\Attributes\EnumTypeDescriptionProvider.cs" />
@@ -255,6 +265,7 @@
     <Compile Include="Controls\Uart\Enums\EnumUlc.cs" />
     <Compile Include="Controls\Uart\Function\Aisttem.cs" />
     <Compile Include="Controls\Uart\Function\EnM318Item.cs" />
+    <Compile Include="Controls\Uart\Function\EthernetItem.cs" />
     <Compile Include="Controls\Uart\Function\GranItem.cs" />
     <Compile Include="Controls\Uart\Function\MesItem.cs" />
     <Compile Include="Controls\Uart\Function\ModbusItem.cs" />
@@ -310,6 +321,7 @@
     <Compile Include="DB\OrmResBody.cs" />
     <Compile Include="DB\OrmResObjects.cs" />
     <Compile Include="DB\Repair.cs" />
+    <Compile Include="DB\UlcDb.cs" />
     <Compile Include="DB\UlcStatistic.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Devices\DevicePackage.cs" />
@@ -361,6 +373,12 @@
     </Compile>
     <Compile Include="test\UserControl1.Designer.cs">
       <DependentUpon>UserControl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\AddEthRuleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\AddEthRuleForm.Designer.cs">
+      <DependentUpon>AddEthRuleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\AllStatMonthView.cs">
       <SubType>Form</SubType>
@@ -481,6 +499,12 @@
     <Compile Include="ui\TextBoxPlaceHolder.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ui\UlcUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\UlcUpdateForm.Designer.cs">
+      <DependentUpon>UlcUpdateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\UsersAccsessForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -584,6 +608,9 @@
     <EmbeddedResource Include="Controls\MeterProgress\MeterProgress.resx">
       <DependentUpon>MeterProgress.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Modules\EthernetModule.resx">
+      <DependentUpon>EthernetModule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Uart\Ui\UlcSerialPort.resx">
       <DependentUpon>UlcSerialPort.cs</DependentUpon>
     </EmbeddedResource>
@@ -613,6 +640,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="test\UserControl1.resx">
       <DependentUpon>UserControl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\AddEthRuleForm.resx">
+      <DependentUpon>AddEthRuleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\AllStatMonthView.resx">
       <DependentUpon>AllStatMonthView.cs</DependentUpon>
@@ -672,6 +702,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ui\StatRs485.resx">
       <DependentUpon>StatRs485.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\UlcUpdateForm.resx">
+      <DependentUpon>UlcUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\UsersAccsessForm.resx">
       <DependentUpon>UsersAccsessForm.cs</DependentUpon>

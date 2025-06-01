@@ -14,17 +14,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.DB;
+using UlcWin.Devices;
 using UlcWin.Fota;
-using UlcWin.ui;
 using UlcWin.win;
 using Ztp.Configuration;
 using Ztp.Protocol;
 using Ztp.Ui;
 using static UlcWin.LoadForm;
 
-namespace UlcWin
+namespace UlcWin.ui
 {
-  public partial class RequestForm : Form
+  public partial class SettingEditForm : Form
   {
     //string __default = "APN:vpn2.mts.by USER:vpn PASS:gsd9drekj5 DT:1486391398 DEBOUNCE:110 DEBUG:0 EST:1 IP:15;10;20;1 TCP:3080 TSEND:1 DBZ:1 AIN:1 DIN:15 DOUT:1 DOOR:15 LATIT:55.191 LONGIT:30.125 TZ:3 NUM:1 SERIAL:9600,8,0,1 TMSET:00:30 IPP:255.255.255.255 PERP:1 LOGSLVL:0 RAS:1 SCHED:EQEBDB8BAwAeABQ==";
     string __messgage;
@@ -40,15 +40,16 @@ namespace UlcWin
     public byte[] __uart_array;
     public List<string> __mbLbl = null;
     LoadForm __loadForm = null;
-    public RequestForm(string message, List<ListViewItem> items_checked,
+    byte[] __forwards = null;
+    public SettingEditForm(string message, List<ListViewItem> items_checked,
       GetConnectionDelegate getConnection, bool multiWrite, Ztp.Enums.Device device, ItemIp selItem, DbReader db)
-      : this(message, getConnection, multiWrite, device, selItem, db)
+      : this(message, getConnection, multiWrite, device, selItem, db,null)
     {
       this.__db = db;
       this.__items_checked = items_checked;
       __multiWrite = multiWrite;
       this.__selItem = selItem;
-      
+      this.ethernetModule1.ParentsForm = this;
     }
 
    
@@ -139,6 +140,14 @@ namespace UlcWin
       __config.Value = __ztpConfig;
       __currentStateViewControl.Value = __ztpConfig;
       ZtpConfig config = __config.Value;
+      if (ControllerType.GetControllerType(config.Version) != EnumTypeController.ULC2Lite)
+      {
+        this.TabsController.TabPages.Remove(this.TabsController.TabPages[3]);
+      }
+      else {
+        ethernetModule1.Value = __forwards;
+        ethernetModule1.ParentsForm=this;
+      }
       if (config.IsSwitchOn)
       {
         PicLightSwitcher.Image = UlcWin.Properties.Resources.lightbulb;
@@ -174,7 +183,7 @@ namespace UlcWin
 
       this.tableLayoutPanel2.Controls.Add(__config);
       this.tableLayoutPanel2.Controls.Add(__currentStateViewControl);
-      this.tabPage3.Controls.Add(__comPortEditor);
+      this.TabSerialPort.Controls.Add(__comPortEditor);
       __loadForm = (LoadForm)this.Tag;
       if (this.__selItem.UType == 0)
         this.usrUartModule1.Enabled = false;
@@ -189,12 +198,13 @@ namespace UlcWin
       
       base.OnShown(e);
       this.usrUartModule1.InitCB();
+      this.ethernetModule1.InitCB();
     }
 
     
 
-    public RequestForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
-      Ztp.Enums.Device device, ItemIp selItem, DbReader db)
+    public SettingEditForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
+      Ztp.Enums.Device device, ItemIp selItem, DbReader db, byte[] forwards)
     {
       InitializeComponent();
       this.btnSave.Visible = true;
@@ -202,7 +212,7 @@ namespace UlcWin
       this.__selItem = selItem;
       this.__name_object = __selItem.Name;
       this.__db = db;
-     
+     this.__forwards = forwards;
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       this.__device = device;
@@ -673,14 +683,47 @@ namespace UlcWin
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      byte[] buffer;
-      List<string> lstLbl;
-      DialogResult result= __loadForm.GetConfig(__selItem, out buffer, out lstLbl);
-      
-      this.usrUartModule1.Value = buffer;
-      this.usrUartModule1.ListMBLabel = lstLbl;
-      this.usrUartModule1.SetUartArray(buffer, lstLbl);
-      //getConfig();
+      byte[] buffer = null;
+      List<string> lstLbl = null;
+      string message=null;
+      byte[] forward=null;
+      using (SimpleWaitForm sfrm = new SimpleWaitForm())
+      {
+        sfrm.RunAction(new Action(() =>
+        {
+          TcpClient client = null;
+          try
+          {
+            sfrm.SetLabelText("Обновление данных...");
+            client = __loadForm.GetConnection(__selItem.Ip, 10251);
+            if (client != null)
+            {
+              if (!__loadForm.GetConfigIP(client, out message, out buffer, out lstLbl, out forward)) {
+                throw new Exception("Ошибка обновления данных");
+              }
+            }
+            this.usrUartModule1.Value = buffer;
+            this.usrUartModule1.ListMBLabel = lstLbl;
+            this.usrUartModule1.SetUartArray(buffer, lstLbl);
+            this.ethernetModule1.Value = forward;
+            this.BeginInvoke(new Action(() => { this.ethernetModule1.InitCB(); }));
+            
+            //getConfig();
+            sfrm.DialogResult = DialogResult.OK;
+          }
+          catch
+          {
+            sfrm.DialogResult = DialogResult.Cancel;
+
+          }
+          finally
+          {
+            if (client != null)
+              client.Close();
+          }
+        }));
+        DialogResult result = sfrm.ShowDialog();
+      }
     }
 
     private void btnFile_Click(object sender, EventArgs e)

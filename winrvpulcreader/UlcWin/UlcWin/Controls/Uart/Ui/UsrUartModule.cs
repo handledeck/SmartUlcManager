@@ -65,7 +65,7 @@ namespace Uart
     }
 
     public List<string> ListMBLabel { get; set; } = null;
-    public UlcWin.RequestForm ParentsForm { get; set; }
+    public SettingEditForm ParentsForm { get; set; }
 
     public UsrUartModule()
     {

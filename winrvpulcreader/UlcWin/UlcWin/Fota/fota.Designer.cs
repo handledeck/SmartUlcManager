@@ -113,7 +113,7 @@
       this.tableLayoutPanel2.ColumnCount = 3;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.555555F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.44444F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
       this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 0, 0);
       this.tableLayoutPanel2.Controls.Add(this.lblVersion, 1, 0);
       this.tableLayoutPanel2.Controls.Add(this.panel1, 2, 0);
@@ -134,7 +134,7 @@
       this.lblVersion.Location = new System.Drawing.Point(61, 17);
       this.lblVersion.Margin = new System.Windows.Forms.Padding(13, 0, 13, 0);
       this.lblVersion.Name = "lblVersion";
-      this.lblVersion.Size = new System.Drawing.Size(46, 16);
+      this.lblVersion.Size = new System.Drawing.Size(45, 16);
       this.lblVersion.TabIndex = 3;
       this.lblVersion.Text = "label1";
       // 
@@ -143,9 +143,9 @@
       this.panel1.Controls.Add(this.btnStart);
       this.panel1.Controls.Add(this.btnChancel);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(883, 3);
+      this.panel1.Location = new System.Drawing.Point(881, 3);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(173, 44);
+      this.panel1.Size = new System.Drawing.Size(175, 44);
       this.panel1.TabIndex = 5;
       // 
       // btnStart
@@ -196,7 +196,7 @@
       this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      //this.Name = "FotaForm";
+      //this.Name = "FotaForms";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

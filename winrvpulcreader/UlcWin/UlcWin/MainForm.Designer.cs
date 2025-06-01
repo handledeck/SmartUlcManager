@@ -32,7 +32,7 @@ namespace UlcWin
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoadForm));
-      PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
+      PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsSelectShow = new System.Windows.Forms.ToolStripSplitButton();
       this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -843,8 +843,8 @@ namespace UlcWin
       // 
       // checkBoxComboBox1
       // 
-      checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties2;
+      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
       this.checkBoxComboBox1.DisplayMemberSingleItem = "";
       this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.checkBoxComboBox1.FormattingEnabled = true;
@@ -1394,6 +1394,7 @@ namespace UlcWin
       this.ctxMenuAtCommand.Name = "ctxMenuAtCommand";
       this.ctxMenuAtCommand.Size = new System.Drawing.Size(223, 22);
       this.ctxMenuAtCommand.Text = "AT команды";
+      this.ctxMenuAtCommand.Visible = false;
       this.ctxMenuAtCommand.Click += new System.EventHandler(this.tsATCommandMenuItem_Click);
       // 
       // ctxMenuMeter
@@ -1415,6 +1416,7 @@ namespace UlcWin
       this.mapsToolStripMenuItem.Name = "mapsToolStripMenuItem";
       this.mapsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
       this.mapsToolStripMenuItem.Text = "Карта устройств";
+      this.mapsToolStripMenuItem.Visible = false;
       this.mapsToolStripMenuItem.Click += new System.EventHandler(this.mapsToolStripMenuItem_Click);
       // 
       // tsStatusLbl
