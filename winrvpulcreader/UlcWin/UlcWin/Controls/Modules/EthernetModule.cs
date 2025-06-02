@@ -141,38 +141,41 @@ namespace UlcWin.Controls.Modules
 
     private void AddDataTableObject<T>(List<T> items, string table_name)
     {
-      var myType = items[0].GetType();// typeof(T);
-      DataTable dt = this.dataSet1.Tables[table_name];
-      foreach (var item in items)
+      if (items.Count > 0)
       {
-
-        DataRow dr = dt.NewRow();
-        foreach (PropertyInfo info in myType.GetProperties())
+        var myType = items[0].GetType();// typeof(T);
+        DataTable dt = this.dataSet1.Tables[table_name];
+        foreach (var item in items)
         {
-          try
-          {
-            //if (typeof(T) == typeof(EnM318))
-            //{
-            //  if (info.GetCustomAttribute(typeof(BrowsableAttribute)) != null)
-            //  {
-            //    BrowsableAttribute readOnly = (BrowsableAttribute)TypeDescriptor.GetProperties(items[0].GetType())[info.Name].Attributes[typeof(BrowsableAttribute)];
-            //    bool zz = (bool)readOnly.GetType().GetField(nameof(BrowsableAttribute.Browsable), BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase).GetValue(readOnly);//.SetValue(readOnly, !rd);
-            //    dataGridView1.Columns[info.Name].Visible = zz;
 
-            //  }
-            //}
-            if (info.GetCustomAttribute(typeof(DisplayNamed)) != null)
+          DataRow dr = dt.NewRow();
+          foreach (PropertyInfo info in myType.GetProperties())
+          {
+            try
             {
-              dr[info.Name] = info.GetValue(item);
+              //if (typeof(T) == typeof(EnM318))
+              //{
+              //  if (info.GetCustomAttribute(typeof(BrowsableAttribute)) != null)
+              //  {
+              //    BrowsableAttribute readOnly = (BrowsableAttribute)TypeDescriptor.GetProperties(items[0].GetType())[info.Name].Attributes[typeof(BrowsableAttribute)];
+              //    bool zz = (bool)readOnly.GetType().GetField(nameof(BrowsableAttribute.Browsable), BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase).GetValue(readOnly);//.SetValue(readOnly, !rd);
+              //    dataGridView1.Columns[info.Name].Visible = zz;
+
+              //  }
+              //}
+              if (info.GetCustomAttribute(typeof(DisplayNamed)) != null)
+              {
+                dr[info.Name] = info.GetValue(item);
+              }
+            }
+            catch
+            {
+
             }
           }
-          catch
-          {
-
-          }
+          dt.Rows.Add(dr);
+          //this.dataGridView1.Refresh();
         }
-        dt.Rows.Add(dr);
-        //this.dataGridView1.Refresh();
       }
     }
 

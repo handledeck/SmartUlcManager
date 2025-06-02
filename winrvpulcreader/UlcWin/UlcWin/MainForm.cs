@@ -442,6 +442,8 @@ namespace UlcWin
         }
         for (int i = 0; i < this.LstViewItm.Columns.Count; i++)
         {
+          if(__aSettings_old.DisplayIndexes==null)
+            break;
           this.LstViewItm.Columns[i].DisplayIndex = __aSettings_old.DisplayIndexes[i];
 
         }
