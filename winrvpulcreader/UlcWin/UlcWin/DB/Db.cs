@@ -123,7 +123,7 @@ namespace InterUlc.Db
           return lstOrmDbLogs;
         }
       }
-      catch (Exception e)
+      catch
       {
         return null;
       }
@@ -263,188 +263,188 @@ namespace InterUlc.Db
         ulcStatistic.RvpErrorGsm = (long)cmd.ExecuteScalar();
 
         #region FirstOrTwo
-        sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and mn.active=1 and " +
-             "((V.imei - 353465070000000) < 1290000))foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFirstOrTwo = (long)cmd.ExecuteScalar();
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-              "inner join main_nodes mn on mi.id = mn.id " +
-              "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-              "SELECT MAX(id) FROM main_ctrldata " +
-              "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-              "where mi.unit_type_id = 1  and mn.active=1 and V.current_time >'{0}' and  " +
-              "((V.imei - 353465070000000) < 1290000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        long firstNet = (long)cmd.ExecuteScalar();
-        ulcStatistic.AllUlcFirstOrTwoOnNet = ulcStatistic.AllUlcFirstOrTwo - firstNet;
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-              "inner join main_nodes mn on mi.id = mn.id " +
-              "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-              "SELECT MAX(id) FROM main_ctrldata " +
-              "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-              "where mi.unit_type_id = 1 and mn.active=1 and V.current_time>'{0}' and  " +
-              "((V.imei - 353465070000000) < 1290000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFirstOrTwoRsNotTrue = (long)cmd.ExecuteScalar();
-        sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and mn.active=1 and " +
-             "((V.imei - 353465070000000) < 1290000) and ((-113 + (V.signal) * 2))<-100)foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFirstOrTwoGsm = (long)cmd.ExecuteScalar();
-        sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and mn.active=1 and " +
-             "((V.imei - 353465070000000) < 1290000) and  V.svers='1.7.9')foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFirstOrTwoVersion = (long)cmd.ExecuteScalar();
+        //sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //     "((V.imei - 353465070000000) < 1290000))foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFirstOrTwo = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //      "inner join main_nodes mn on mi.id = mn.id " +
+        //      "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //      "SELECT MAX(id) FROM main_ctrldata " +
+        //      "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //      "where mi.unit_type_id = 1  and mn.active=1 and V.current_time >'{0}' and  " +
+        //      "((V.imei - 353465070000000) < 1290000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //long firstNet = (long)cmd.ExecuteScalar();
+        //ulcStatistic.AllUlcFirstOrTwoOnNet = ulcStatistic.AllUlcFirstOrTwo - firstNet;
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //      "inner join main_nodes mn on mi.id = mn.id " +
+        //      "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //      "SELECT MAX(id) FROM main_ctrldata " +
+        //      "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //      "where mi.unit_type_id = 1 and mn.active=1 and V.current_time>'{0}' and  " +
+        //      "((V.imei - 353465070000000) < 1290000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFirstOrTwoRsNotTrue = (long)cmd.ExecuteScalar();
+        //sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //     "((V.imei - 353465070000000) < 1290000) and ((-113 + (V.signal) * 2))<-100)foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFirstOrTwoGsm = (long)cmd.ExecuteScalar();
+        //sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //     "((V.imei - 353465070000000) < 1290000) and  V.svers='1.7.9')foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFirstOrTwoVersion = (long)cmd.ExecuteScalar();
         #endregion
 
         #region ThreeOrFour 
 
-        sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and mn.active=1 and " +
-             "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000))foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcThreeOrFour = (long)cmd.ExecuteScalar();
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
-             "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        long threeNet = ulcStatistic.AllUlcThreeOrFour - (long)cmd.ExecuteScalar();
-        ulcStatistic.AllUlcThreeOrFourOnNet = threeNet;
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
-             "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcThreeOrFourRsNotTrue = (long)cmd.ExecuteScalar();
-        sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-            "inner join main_nodes mn on mi.id = mn.id " +
-            "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-            "SELECT MAX(id) FROM main_ctrldata " +
-            "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-            "where mi.unit_type_id = 1 and mn.active=1 and " +
-            "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and ((-113 + (V.signal) * 2))<-100)foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcThreeOrFourGsm = (long)cmd.ExecuteScalar();
-        sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-            "inner join main_nodes mn on mi.id = mn.id " +
-            "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-            "SELECT MAX(id) FROM main_ctrldata " +
-            "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-            "where mi.unit_type_id = 1 and mn.active=1 and " +
-            "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and V.svers='1.7.9')foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcThreeOrFourVersion = (long)cmd.ExecuteScalar();
+        //sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //     "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000))foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcThreeOrFour = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
+        //     "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //long threeNet = ulcStatistic.AllUlcThreeOrFour - (long)cmd.ExecuteScalar();
+        //ulcStatistic.AllUlcThreeOrFourOnNet = threeNet;
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
+        //     "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcThreeOrFourRsNotTrue = (long)cmd.ExecuteScalar();
+        //sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //    "inner join main_nodes mn on mi.id = mn.id " +
+        //    "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //    "SELECT MAX(id) FROM main_ctrldata " +
+        //    "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //    "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //    "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and ((-113 + (V.signal) * 2))<-100)foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcThreeOrFourGsm = (long)cmd.ExecuteScalar();
+        //sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //    "inner join main_nodes mn on mi.id = mn.id " +
+        //    "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //    "SELECT MAX(id) FROM main_ctrldata " +
+        //    "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //    "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //    "((V.imei-353465070000000) > 1290000 and  (V.imei-353465070000000) < 2000000) and V.svers='1.7.9')foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcThreeOrFourVersion = (long)cmd.ExecuteScalar();
 
         #endregion
         #region FiveVersion
-        sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-            "inner join main_nodes mn on mi.id = mn.id " +
-            "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-            "SELECT MAX(id) FROM main_ctrldata " +
-            "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-            "where mi.unit_type_id = 1 and mn.active=1 and " +
-            "((V.imei-353465070000000) > 2000000))foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFive = (long)cmd.ExecuteScalar();
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
-             "((V.imei-353465070000000) > 2000000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        long fiveNet = ulcStatistic.AllUlcFive - (long)cmd.ExecuteScalar();
-        ulcStatistic.AllUlcFiveOnNet = fiveNet;
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-             "inner join main_nodes mn on mi.id = mn.id " +
-             "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-             "SELECT MAX(id) FROM main_ctrldata " +
-             "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-             "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
-             "((V.imei-353465070000000) > 2000000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFiveRsNotTrue = (long)cmd.ExecuteScalar();
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-            "inner join main_nodes mn on mi.id = mn.id " +
-            "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-            "SELECT MAX(id) FROM main_ctrldata " +
-            "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-            "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
-            "((V.imei-353465070000000) > 2000000) and  ((-113 + (V.signal) * 2))<-100)foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFiveGsm = (long)cmd.ExecuteScalar();
+        //sql = sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //    "inner join main_nodes mn on mi.id = mn.id " +
+        //    "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //    "SELECT MAX(id) FROM main_ctrldata " +
+        //    "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //    "where mi.unit_type_id = 1 and mn.active=1 and " +
+        //    "((V.imei-353465070000000) > 2000000))foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFive = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and " +
+        //     "((V.imei-353465070000000) > 2000000))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //long fiveNet = ulcStatistic.AllUlcFive - (long)cmd.ExecuteScalar();
+        //ulcStatistic.AllUlcFiveOnNet = fiveNet;
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //     "inner join main_nodes mn on mi.id = mn.id " +
+        //     "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //     "SELECT MAX(id) FROM main_ctrldata " +
+        //     "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //     "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
+        //     "((V.imei-353465070000000) > 2000000) and  (V.cdin>>7=0))foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFiveRsNotTrue = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //    "inner join main_nodes mn on mi.id = mn.id " +
+        //    "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //    "SELECT MAX(id) FROM main_ctrldata " +
+        //    "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //    "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
+        //    "((V.imei-353465070000000) > 2000000) and  ((-113 + (V.signal) * 2))<-100)foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFiveGsm = (long)cmd.ExecuteScalar();
 
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
-            "inner join main_nodes mn on mi.id = mn.id " +
-            "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
-            "SELECT MAX(id) FROM main_ctrldata " +
-            "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-            "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
-            "((V.imei-353465070000000) > 2000000) and   V.svers='1.7.9')foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUlcFiveVersion = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* FROM main_ctrlinfo mi " +
+        //    "inner join main_nodes mn on mi.id = mn.id " +
+        //    "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (" +
+        //    "SELECT MAX(id) FROM main_ctrldata " +
+        //    "GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //    "where mi.unit_type_id = 1 and V.current_time>'{0}' and  mn.active=1 and" +
+        //    "((V.imei-353465070000000) > 2000000) and   V.svers='1.7.9')foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUlcFiveVersion = (long)cmd.ExecuteScalar();
         #endregion
 
         #region RVP
-        sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
-              "FROM main_ctrlinfo mi " +
-              "inner join main_nodes mn on mi.id = mn.id " +
-              "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-              "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is not null)foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllCRvp = (long)cmd.ExecuteScalar();
-        sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
-              "FROM main_ctrlinfo mi " +
-              "inner join main_nodes mn on mi.id = mn.id " +
-              "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-              "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is null)foo";
-        cmd.CommandText = sql;
-        ulcStatistic.AllUusi = (long)cmd.ExecuteScalar();
+        //sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
+        //      "FROM main_ctrlinfo mi " +
+        //      "inner join main_nodes mn on mi.id = mn.id " +
+        //      "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //      "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is not null)foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllCRvp = (long)cmd.ExecuteScalar();
+        //sql = "select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
+        //      "FROM main_ctrlinfo mi " +
+        //      "inner join main_nodes mn on mi.id = mn.id " +
+        //      "INNER JOIN(SELECT* FROM main_ctrldata WHERE id IN (SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //      "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is null)foo";
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUusi = (long)cmd.ExecuteScalar();
 
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
-                          "FROM main_ctrlinfo mi " +
-                          "inner join main_nodes mn on mi.id = mn.id " +
-                          "INNER JOIN(SELECT * FROM main_ctrldata WHERE id IN(SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-                          "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is not null and V.current_time > '{0}')foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllCRvpNet = (long)cmd.ExecuteScalar();
-        sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
-                          "FROM main_ctrlinfo mi " +
-                          "inner join main_nodes mn on mi.id = mn.id " +
-                          "INNER JOIN(SELECT * FROM main_ctrldata WHERE id IN(SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
-                          "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is null and V.current_time > '{0}')foo", DateTime.Now.ToString("yyyy-MM-dd"));
-        cmd.CommandText = sql;
-        ulcStatistic.AllUusiNet = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
+        //                  "FROM main_ctrlinfo mi " +
+        //                  "inner join main_nodes mn on mi.id = mn.id " +
+        //                  "INNER JOIN(SELECT * FROM main_ctrldata WHERE id IN(SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //                  "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is not null and V.current_time > '{0}')foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllCRvpNet = (long)cmd.ExecuteScalar();
+        //sql = string.Format("select count(*) from(select mn.id,mn.\"name\",mi.ip_address, mi.phone_num ,mi.unit_type_id ,mi.meters , V.* " +
+        //                  "FROM main_ctrlinfo mi " +
+        //                  "inner join main_nodes mn on mi.id = mn.id " +
+        //                  "INNER JOIN(SELECT * FROM main_ctrldata WHERE id IN(SELECT MAX(id) FROM main_ctrldata GROUP BY ctrl_id)) AS V ON mi.id = V.ctrl_id " +
+        //                  "where mi.unit_type_id = 0 and mn.active = 1 and V.svers is null and V.current_time > '{0}')foo", DateTime.Now.ToString("yyyy-MM-dd"));
+        //cmd.CommandText = sql;
+        //ulcStatistic.AllUusiNet = (long)cmd.ExecuteScalar();
         #endregion
         consql.Close();
       }
-      catch (Exception exp)
+      catch
       {
         return null;
       }
@@ -560,7 +560,7 @@ namespace InterUlc.Db
           }
         }
       }
-      catch (Exception exp)
+      catch
       {
         return false;
       }
@@ -678,7 +678,7 @@ namespace InterUlc.Db
           return rowf;
         }
       }
-      catch (Exception e)
+      catch
       {
         return -1;
       }
@@ -695,8 +695,7 @@ namespace InterUlc.Db
         cmd.CommandText = sql;
         x = cmd.ExecuteNonQuery();
       }
-      catch (Exception exp) {
-        int x = 0;
+      catch  {
       }
     }
 
@@ -766,8 +765,8 @@ namespace InterUlc.Db
         result = cmd.ExecuteNonQuery();
 
       }
-      catch (Exception e) {
-        int x = 0;
+      catch  {
+       
       }
     }
 
@@ -800,7 +799,7 @@ namespace InterUlc.Db
         consql.Close();
         return rowf;
       }
-      catch (Exception exp)
+      catch
       {
         return 0;
       }
@@ -1331,14 +1330,15 @@ namespace InterUlc.Db
           {
             long emai;
             bool bp = long.TryParse(uc.IMEI, out emai);
-            if (FindRepairDevice(item.Value)) {
+            /*Поиск отремонтированных контроллеров
+             * if (FindRepairDevice(item.Value)) {
               it.UseItemStyleForSubItems = false;
               item.Value.HasRepeir = true;
              
               //it.SubItems[1].BackColor = Color.Yellow;
               //it.SubItems[1].ForeColor = Color.Brown;
               it.SubItems[1].Font = new Font(it.SubItems[1].Font, FontStyle.Bold);
-            }
+            }*/
             //GetIMAIChanged(item.Key, emai);
             try
             {
@@ -1538,7 +1538,7 @@ namespace InterUlc.Db
           }
         }
       }
-      catch (Exception exp)
+      catch
       {
         return false;
       }
@@ -1581,7 +1581,7 @@ namespace InterUlc.Db
           return true;
         }
       }
-      catch (Exception ex)
+      catch
       {
         return false;
       }
@@ -1966,8 +1966,7 @@ namespace InterUlc.Db
         }
         dr_ip.Close();
       }
-      catch(Exception exp) {
-        int x = 0;
+      catch {
       }
       finally {
         if (con_ip.State == System.Data.ConnectionState.Open)
@@ -2059,9 +2058,9 @@ namespace InterUlc.Db
         dr_fes.Close();
         con_fes.Close();
       }
-      catch (Exception exp)
+      catch 
       {
-        int x = 0;
+        
       }
       finally
       {
@@ -2192,7 +2191,7 @@ namespace InterUlc.Db
           LogsInsertEvent(EnLogEvt.ADD_ITEM, msg,(int)iId);
           return iId;
         }
-        catch (Exception exp)
+        catch
         {
           return -1;
         }
@@ -2367,7 +2366,7 @@ namespace InterUlc.Db
         }
         return false;
       }
-      catch (Exception exp)
+      catch 
       {
         return false;
       }
@@ -2404,7 +2403,7 @@ namespace InterUlc.Db
           }
         }
       }
-      catch(Exception e)
+      catch
       {
         
       }
@@ -2458,7 +2457,7 @@ namespace InterUlc.Db
           //bdb.Commit();
           return true;
           }
-          catch (Exception exp)
+          catch 
           {
             //bdb.Rollback();
             return false;
@@ -2578,7 +2577,7 @@ namespace InterUlc.Db
           }
         }
       }
-      catch (Exception ex)
+      catch 
       {
         return null;
       }

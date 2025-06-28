@@ -29,7 +29,7 @@ namespace UlcWin.Drivers
     }
     public static MeterAllValues GetSumAllValue(string meter_factory, TcpClient client)
     {
-      Exception exc = null;
+      //Exception exc = null;
       MeterAllValues meterAllValues = new MeterAllValues();
       float day = 0;
       float month = 0;
@@ -100,7 +100,7 @@ namespace UlcWin.Drivers
         }
         return result;
       }
-      catch (Exception exp)
+      catch 
       {
         return false;
       }

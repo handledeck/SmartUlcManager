@@ -98,9 +98,7 @@ namespace UlcWin
       this.comments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
       this.tsResView = new System.Windows.Forms.ToolStrip();
-      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
       this.tsComboBoxDev = new System.Windows.Forms.ToolStripComboBox();
-      this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
       this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
       this.tsDwnUpdate = new System.Windows.Forms.ToolStripDropDownButton();
       this.tsMenuItem_Pgrm = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,6 +111,13 @@ namespace UlcWin
       this.tsDeselectAll = new System.Windows.Forms.ToolStripMenuItem();
       this.tsBtnEventShowHide = new System.Windows.Forms.ToolStripButton();
       this.tsUpdate = new System.Windows.Forms.ToolStripButton();
+      this.btnAddController = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+      this.btnEditController = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+      this.btnDeleteController = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+      this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
       this.tsFilterText = new System.Windows.Forms.ToolStripTextBox();
       this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
       this.tabMeter = new System.Windows.Forms.TabPage();
@@ -145,16 +150,14 @@ namespace UlcWin
       this.ctxMenuUpdateNotTrue = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuUpdateAll = new System.Windows.Forms.ToolStripMenuItem();
       this.tsMenuSeparate = new System.Windows.Forms.ToolStripSeparator();
+      this.ctxMenuChange = new System.Windows.Forms.ToolStripMenuItem();
+      this.ctxMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
       this.ctxMenuReadCurrentLog = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.ctxMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-      this.ctxMenuItemChange = new System.Windows.Forms.ToolStripMenuItem();
-      this.ctxMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
-      this.ctxSeparateEdit = new System.Windows.Forms.ToolStripSeparator();
       this.ctxMenuPingCurrentItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuAllPingItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxSeparatePing = new System.Windows.Forms.ToolStripSeparator();
-      this.ctxMenuAtCommand = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxMenuMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxNotTrueMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.mapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -860,14 +863,19 @@ namespace UlcWin
       this.tsResView.BackColor = System.Drawing.SystemColors.ControlLight;
       this.tsResView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.tsResView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsLblFind,
             this.tsComboBoxDev,
-            this.toolStripSeparator9,
             this.tsBtnExport,
             this.tsDwnUpdate,
             this.tsSelectedItems,
             this.tsBtnEventShowHide,
             this.tsUpdate,
+            this.btnAddController,
+            this.toolStripSeparator8,
+            this.btnEditController,
+            this.toolStripSeparator9,
+            this.btnDeleteController,
+            this.toolStripSeparator10,
+            this.tsLblFind,
             this.tsFilterText});
       this.tsResView.Location = new System.Drawing.Point(3, 3);
       this.tsResView.Name = "tsResView";
@@ -875,12 +883,6 @@ namespace UlcWin
       this.tsResView.Size = new System.Drawing.Size(1136, 33);
       this.tsResView.TabIndex = 1;
       this.tsResView.Text = "toolStrip2";
-      // 
-      // tsLblFind
-      // 
-      this.tsLblFind.Name = "tsLblFind";
-      this.tsLblFind.Size = new System.Drawing.Size(48, 20);
-      this.tsLblFind.Text = "Фильтр";
       // 
       // tsComboBoxDev
       // 
@@ -895,13 +897,8 @@ namespace UlcWin
       this.tsComboBoxDev.Name = "tsComboBoxDev";
       this.tsComboBoxDev.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
       this.tsComboBoxDev.Size = new System.Drawing.Size(75, 23);
+      this.tsComboBoxDev.Visible = false;
       this.tsComboBoxDev.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
-      // 
-      // toolStripSeparator9
-      // 
-      this.toolStripSeparator9.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-      this.toolStripSeparator9.Name = "toolStripSeparator9";
-      this.toolStripSeparator9.Size = new System.Drawing.Size(6, 23);
       // 
       // tsBtnExport
       // 
@@ -1014,6 +1011,7 @@ namespace UlcWin
       this.tsBtnEventShowHide.Size = new System.Drawing.Size(23, 20);
       this.tsBtnEventShowHide.Text = "tsBtnEventShowHide";
       this.tsBtnEventShowHide.ToolTipText = "Панель журнала сообщений";
+      this.tsBtnEventShowHide.Visible = false;
       this.tsBtnEventShowHide.Click += new System.EventHandler(this.toolStripButton3_Click_3);
       // 
       // tsUpdate
@@ -1028,6 +1026,59 @@ namespace UlcWin
       this.tsUpdate.Text = "Обновить";
       this.tsUpdate.Visible = false;
       this.tsUpdate.Click += new System.EventHandler(this.tsUpdate_Click);
+      // 
+      // btnAddController
+      // 
+      this.btnAddController.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.btnAddController.Image = global::UlcWin.Properties.Resources.add2;
+      this.btnAddController.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnAddController.Name = "btnAddController";
+      this.btnAddController.Size = new System.Drawing.Size(23, 20);
+      this.btnAddController.Text = "btnAddController";
+      this.btnAddController.ToolTipText = "Добавить";
+      this.btnAddController.Click += new System.EventHandler(this.TsMenuAdd_Click);
+      // 
+      // toolStripSeparator8
+      // 
+      this.toolStripSeparator8.Name = "toolStripSeparator8";
+      this.toolStripSeparator8.Size = new System.Drawing.Size(6, 23);
+      // 
+      // btnEditController
+      // 
+      this.btnEditController.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.btnEditController.Image = global::UlcWin.Properties.Resources.edit1;
+      this.btnEditController.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnEditController.Name = "btnEditController";
+      this.btnEditController.Size = new System.Drawing.Size(23, 20);
+      this.btnEditController.Text = "Редактировать";
+      this.btnEditController.ToolTipText = "Править";
+      this.btnEditController.Click += new System.EventHandler(this.tsMenuItChange_Click);
+      // 
+      // toolStripSeparator9
+      // 
+      this.toolStripSeparator9.Name = "toolStripSeparator9";
+      this.toolStripSeparator9.Size = new System.Drawing.Size(6, 23);
+      // 
+      // btnDeleteController
+      // 
+      this.btnDeleteController.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.btnDeleteController.Image = global::UlcWin.Properties.Resources.delete21;
+      this.btnDeleteController.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnDeleteController.Name = "btnDeleteController";
+      this.btnDeleteController.Size = new System.Drawing.Size(23, 20);
+      this.btnDeleteController.Text = "Удалить";
+      this.btnDeleteController.Click += new System.EventHandler(this.TsMenuItemDelete_Click);
+      // 
+      // toolStripSeparator10
+      // 
+      this.toolStripSeparator10.Name = "toolStripSeparator10";
+      this.toolStripSeparator10.Size = new System.Drawing.Size(6, 23);
+      // 
+      // tsLblFind
+      // 
+      this.tsLblFind.Name = "tsLblFind";
+      this.tsLblFind.Size = new System.Drawing.Size(48, 20);
+      this.tsLblFind.Text = "Фильтр";
       // 
       // tsFilterText
       // 
@@ -1090,6 +1141,7 @@ namespace UlcWin
       this.imgTabs.Images.SetKeyName(9, "flash.png");
       this.imgTabs.Images.SetKeyName(10, "bookmark.png");
       this.imgTabs.Images.SetKeyName(11, "document_gear.png");
+      this.imgTabs.Images.SetKeyName(12, "netvibes.png");
       // 
       // tabEventController
       // 
@@ -1280,22 +1332,20 @@ namespace UlcWin
             this.ctxMenuUpdateNotTrue,
             this.ctxMenuUpdateAll,
             this.tsMenuSeparate,
+            this.ctxMenuChange,
+            this.ctxMenuDelete,
+            this.toolStripSeparator11,
             this.ctxMenuReadCurrentLog,
             this.toolStripSeparator1,
-            this.ctxMenuItemAdd,
-            this.ctxMenuItemChange,
-            this.ctxMenuItemDelete,
-            this.ctxSeparateEdit,
             this.ctxMenuPingCurrentItem,
             this.ctxMenuAllPingItem,
             this.ctxSeparatePing,
-            this.ctxMenuAtCommand,
             this.ctxMenuMeter,
             this.ctxNotTrueMeter,
             this.mapsToolStripMenuItem});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 336);
+      this.LvMenu.Size = new System.Drawing.Size(224, 314);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1331,6 +1381,25 @@ namespace UlcWin
       this.tsMenuSeparate.Name = "tsMenuSeparate";
       this.tsMenuSeparate.Size = new System.Drawing.Size(220, 6);
       // 
+      // ctxMenuChange
+      // 
+      this.ctxMenuChange.Name = "ctxMenuChange";
+      this.ctxMenuChange.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuChange.Text = "Изменить";
+      this.ctxMenuChange.Click += new System.EventHandler(this.tsMenuItChange_Click);
+      // 
+      // ctxMenuDelete
+      // 
+      this.ctxMenuDelete.Name = "ctxMenuDelete";
+      this.ctxMenuDelete.Size = new System.Drawing.Size(223, 22);
+      this.ctxMenuDelete.Text = "Удалить";
+      this.ctxMenuDelete.Click += new System.EventHandler(this.TsMenuItemDelete_Click);
+      // 
+      // toolStripSeparator11
+      // 
+      this.toolStripSeparator11.Name = "toolStripSeparator11";
+      this.toolStripSeparator11.Size = new System.Drawing.Size(220, 6);
+      // 
       // ctxMenuReadCurrentLog
       // 
       this.ctxMenuReadCurrentLog.Name = "ctxMenuReadCurrentLog";
@@ -1342,32 +1411,7 @@ namespace UlcWin
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
       this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
-      // 
-      // ctxMenuItemAdd
-      // 
-      this.ctxMenuItemAdd.Name = "ctxMenuItemAdd";
-      this.ctxMenuItemAdd.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemAdd.Text = "Добавить";
-      this.ctxMenuItemAdd.Click += new System.EventHandler(this.TsMenuAdd_Click);
-      // 
-      // ctxMenuItemChange
-      // 
-      this.ctxMenuItemChange.Name = "ctxMenuItemChange";
-      this.ctxMenuItemChange.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemChange.Text = "Изменить";
-      this.ctxMenuItemChange.Click += new System.EventHandler(this.tsMenuItChange_Click);
-      // 
-      // ctxMenuItemDelete
-      // 
-      this.ctxMenuItemDelete.Name = "ctxMenuItemDelete";
-      this.ctxMenuItemDelete.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuItemDelete.Text = "Удалить";
-      this.ctxMenuItemDelete.Click += new System.EventHandler(this.TsMenuItemDelete_Click);
-      // 
-      // ctxSeparateEdit
-      // 
-      this.ctxSeparateEdit.Name = "ctxSeparateEdit";
-      this.ctxSeparateEdit.Size = new System.Drawing.Size(220, 6);
+      this.toolStripSeparator1.Visible = false;
       // 
       // ctxMenuPingCurrentItem
       // 
@@ -1389,19 +1433,12 @@ namespace UlcWin
       this.ctxSeparatePing.Name = "ctxSeparatePing";
       this.ctxSeparatePing.Size = new System.Drawing.Size(220, 6);
       // 
-      // ctxMenuAtCommand
-      // 
-      this.ctxMenuAtCommand.Name = "ctxMenuAtCommand";
-      this.ctxMenuAtCommand.Size = new System.Drawing.Size(223, 22);
-      this.ctxMenuAtCommand.Text = "AT команды";
-      this.ctxMenuAtCommand.Visible = false;
-      this.ctxMenuAtCommand.Click += new System.EventHandler(this.tsATCommandMenuItem_Click);
-      // 
       // ctxMenuMeter
       // 
       this.ctxMenuMeter.Name = "ctxMenuMeter";
       this.ctxMenuMeter.Size = new System.Drawing.Size(223, 22);
       this.ctxMenuMeter.Text = "Счетчики ";
+      this.ctxMenuMeter.Visible = false;
       this.ctxMenuMeter.Click += new System.EventHandler(this.testmeterToolStripMenuItem_Click);
       // 
       // ctxNotTrueMeter
@@ -1409,6 +1446,7 @@ namespace UlcWin
       this.ctxNotTrueMeter.Name = "ctxNotTrueMeter";
       this.ctxNotTrueMeter.Size = new System.Drawing.Size(223, 22);
       this.ctxNotTrueMeter.Text = "Счетчики недоставерные";
+      this.ctxNotTrueMeter.Visible = false;
       this.ctxNotTrueMeter.Click += new System.EventHandler(this.ctxNotTrueMeter_Click);
       // 
       // mapsToolStripMenuItem
@@ -1469,6 +1507,7 @@ namespace UlcWin
       this.tsStsIMEI.Name = "tsStsIMEI";
       this.tsStsIMEI.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
       this.tsStsIMEI.Size = new System.Drawing.Size(26, 17);
+      this.tsStsIMEI.Visible = false;
       // 
       // imlTc
       // 
@@ -1570,11 +1609,8 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripMenuItem ctxMenuUpdateAll;
     private System.Windows.Forms.ToolStripButton tsUpdate_1;
     private System.Windows.Forms.ToolStripSeparator tsMenuSeparate;
-        private System.Windows.Forms.ToolStripMenuItem ctxMenuItemChange;
-    private System.Windows.Forms.ToolStripMenuItem ctxMenuItemDelete;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuReadCurrentLog;
-    private System.Windows.Forms.ToolStripMenuItem ctxMenuItemAdd;
     public System.Windows.Forms.ListView LstViewEvent;
     private System.Windows.Forms.ColumnHeader Date;
     private System.Windows.Forms.ColumnHeader Evt;
@@ -1584,9 +1620,7 @@ namespace UlcWin
     private System.Windows.Forms.ToolStrip tsEvent;
     private System.Windows.Forms.ColumnHeader logs;
     private System.Windows.Forms.ColumnHeader core;
-    private System.Windows.Forms.ToolStripSeparator ctxSeparateEdit;
     private System.Windows.Forms.ColumnHeader imai;
-    private System.Windows.Forms.ToolStripMenuItem ctxMenuAtCommand;
     private System.Windows.Forms.ToolStripMenuItem ctxMenuUpdateSelected;
     public System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.ColumnHeader schedule;
@@ -1620,7 +1654,6 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripDropDownButton tsSelectedItems;
     private System.Windows.Forms.ToolStripMenuItem tsSelectAll;
     private System.Windows.Forms.ToolStripMenuItem tsDeselectAll;
-    private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     private System.Windows.Forms.ToolStripDropDownButton tsDwnUpdate;
     private System.Windows.Forms.ToolStripMenuItem tsMenuItem_Pgrm;
     private System.Windows.Forms.ToolStripMenuItem tsMenuItem_Patch;
@@ -1688,6 +1721,15 @@ namespace UlcWin
     private System.Windows.Forms.ColumnHeader Kontragent;
     private System.Windows.Forms.ColumnHeader Defect;
     private System.Windows.Forms.ToolStripMenuItem mapsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripButton btnAddController;
+    private System.Windows.Forms.ToolStripButton btnEditController;
+    private System.Windows.Forms.ToolStripButton btnDeleteController;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuChange;
+    private System.Windows.Forms.ToolStripMenuItem ctxMenuDelete;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
   }
 }
 

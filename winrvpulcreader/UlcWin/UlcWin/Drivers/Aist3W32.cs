@@ -240,7 +240,7 @@ namespace UlcWin.Drivers
         Array.Copy(response, resp, size);
         value = aist.GetPowerCut(resp, size);
       }
-      catch (Exception e)
+      catch 
       {
         return false;
       }

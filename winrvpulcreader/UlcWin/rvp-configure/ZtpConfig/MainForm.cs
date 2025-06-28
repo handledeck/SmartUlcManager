@@ -31,7 +31,7 @@ namespace Ztp
       { "I16O2A2-LDC-3-FOTA-BT", Device.RVP},
       { "I4O1A1-LDC-3-FOTA", Device.ULC2 },
       { "I4O1A1-LDC-3-FOTA-DM", Device.ULC2},
-      { "I8O2A2-LEM-4-FOTA-prIM", Device.ULC2_2}
+      { "I8O2A2-LEM-4-FOTA-prIM", Device.ULC2Lite}
     };
 
     private static readonly NLog.Logger nLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -566,7 +566,7 @@ namespace Ztp
                 configEditor.PingIpShow(config.SoftVersion.CompareTo("1.7.0") >= 0);
                 configEditor.LogsControlShow(config.SoftVersion.CompareTo("1.7.8") >= 0);
                 break;
-              case Device.ULC2_2:
+              case Device.ULC2Lite:
                 configEditor.GsmTechShow(true);
                 configEditor.PlanRebootShow(true);
                 configEditor.PingIpShow(true);
@@ -885,7 +885,7 @@ namespace Ztp
           configEditor.Invoke(new Action(() => configEditor.LogsControlShow(false)));
         }
       }
-      catch (Exception e)
+      catch
       {
         //MessageBox.Show("хм");
       }

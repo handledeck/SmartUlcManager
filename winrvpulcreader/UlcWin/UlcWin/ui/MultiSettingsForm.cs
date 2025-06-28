@@ -212,7 +212,7 @@ namespace UlcWin.ui
               }
             }
           }
-          catch (Exception exp)
+          catch 
           {
             __wForm.ChangeLabelText(itemIp.Name, itemIp.Name, itemIp.Ip, false, itemIp.UType, 1);
           }

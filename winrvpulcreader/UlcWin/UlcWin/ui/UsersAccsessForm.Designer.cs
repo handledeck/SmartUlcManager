@@ -190,7 +190,6 @@
       this.triStateTreeView1.TriStateStyleProperty = UlcWin.ui.TriStateTreeView.TriStateStyles.Standard;
       this.triStateTreeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.triStateTreeView1_AfterCheck);
       this.triStateTreeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.triStateTreeView1_AfterExpand);
-      this.triStateTreeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.triStateTreeView1_AfterSelect);
       // 
       // UsersAccsessForm
       // 

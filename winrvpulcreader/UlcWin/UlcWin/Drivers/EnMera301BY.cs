@@ -24,7 +24,7 @@ namespace UlcWin.Drivers
   }
   public class EnMera301BY
   {
-    static bool is7E1_mode = false;
+    //static bool is7E1_mode = false;
     static readonly byte SOH = 0x01;
     static readonly byte C = (byte)'R'; //команда записи
     static readonly byte D = (byte)'1'; //чтение данных в коде ASCII
@@ -42,10 +42,10 @@ namespace UlcWin.Drivers
 
     public static MeterAllValues GetSumAllValue(string meter_factory, TcpClient client)
     {
-      Exception exc = null;
+      //Exception exc = null;
       MeterAllValues meterAllValues = new MeterAllValues();
-      float day = 0;
-      float month = 0;
+      //float day = 0;
+      //float month = 0;
       float[] res = new float[2];
       if (GetValue(EnMera301Fun.EnergyBothEnd, meter_factory, client, 10000, out res, true))
       {
@@ -157,7 +157,7 @@ namespace UlcWin.Drivers
         }
         return result;
       }
-      catch (Exception exp)
+      catch 
       {
         return false;
       }

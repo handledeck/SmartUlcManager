@@ -31,7 +31,6 @@ namespace Ztp.Ui
       get { return numericUpDown.Value; }
       set
       {
-        
         numericUpDown.Value = value; 
       }
     }

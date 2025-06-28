@@ -105,7 +105,7 @@ namespace UlcWin.Drivers
         int size = stream.Read(response, 0, response.Length);
         value = ParseCuts(response, size);
       }
-      catch (Exception e)
+      catch 
       {
         return false;
       }

@@ -48,7 +48,7 @@ namespace Ztp.Ui
       }
         
       ZtpVersion version = new ZtpVersion(zc.Version);
-
+      
 
       apnEditorControl.ApnAddress = zc.Apn;
       apnEditorControl.ApnUser = zc.ApnUser;
@@ -60,13 +60,15 @@ namespace Ztp.Ui
       ainEditor.Value = zc.Ain;
       ainEditor.VisibleItemCount = version.Ain;
       doorEditor.Value = zc.Door;
-      if(_devType == Device.ULC2 || _devType == Device.ULC2_2)
+     
+      if(_devType == Device.ULC2 || _devType == Device.ULC2Lite)
       {
         iec104EditorControl.TimeValue = zc.EstAddress;
         iec104EditorControl.qValue = zc.EstPort;
         gsmTechn.Techn = zc.EstTsend;
         logsStateControl.LogLevel = zc.logLevel;
       }
+     
       else if(_devType == Device.RVP)
       {
         cbEstActive.Checked = zc.EstActive;
@@ -127,7 +129,7 @@ namespace Ztp.Ui
       _ztpConfig.Dout = doutEditor.Value;
       _ztpConfig.Ain = ainEditor.Value;
       _ztpConfig.Door = doorEditor.Value;
-      if (_devType == Device.ULC2 || _devType == Device.ULC2_2)
+      if (_devType == Device.ULC2 || _devType == Device.ULC2Lite)
       {
         _ztpConfig.EstActive = true;
         _ztpConfig.EstAddress = iec104EditorControl.TimeValue;
@@ -227,7 +229,7 @@ namespace Ztp.Ui
           gbIec104.Invoke((Action)(() => { gbIec104.Hide(); }));
           break;
         case Device.ULC2:
-        case Device.ULC2_2:
+        case Device.ULC2Lite:
           gbEst.Invoke((Action)(() => { gbEst.Hide(); }));
           gbIec104.Invoke((Action)(() => { gbIec104.Show(); }));
           break;

@@ -133,7 +133,7 @@ namespace UlcWin
         wr.Close();
         //return iniConnection;
       }
-      catch(Exception exp)
+      catch
       {
         MessageBox.Show("Ошибка сохранения соединения с базой данных","Ошибка соединения с базой",
           MessageBoxButtons.OK, MessageBoxIcon.Error);

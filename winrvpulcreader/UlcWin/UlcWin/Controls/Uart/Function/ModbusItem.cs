@@ -69,7 +69,7 @@ namespace Uart.Function
 
     public void CellFormatting(DataGridViewCellFormattingEventArgs e)
     {
-      int x = 0;
+      
     }
 
     public void GetDataGridView(DataGridViewRow xr)

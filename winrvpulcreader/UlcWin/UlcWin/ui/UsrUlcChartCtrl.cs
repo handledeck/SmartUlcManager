@@ -131,9 +131,9 @@ namespace GraphStatic
           }
         }
       }
-      catch (Exception ex)
+      catch 
       {
-        int x = 0;
+        
       }
     }
 

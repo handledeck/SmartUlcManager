@@ -291,10 +291,7 @@ namespace UlcWin.ui
 
     }
 
-    private void triStateTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
-    {
-      int x = 0;
-    }
+    
 
     private void triStateTreeView1_AfterCheck(object sender, TreeViewEventArgs e)
     {

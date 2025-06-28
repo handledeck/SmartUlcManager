@@ -394,6 +394,7 @@
       // 
       // txtLong
       // 
+      this.txtLong.Enabled = false;
       this.txtLong.Location = new System.Drawing.Point(97, 16);
       this.txtLong.Name = "txtLong";
       this.txtLong.Size = new System.Drawing.Size(157, 21);
@@ -402,6 +403,7 @@
       // 
       // txtLetit
       // 
+      this.txtLetit.Enabled = false;
       this.txtLetit.Location = new System.Drawing.Point(97, 43);
       this.txtLetit.Name = "txtLetit";
       this.txtLetit.Size = new System.Drawing.Size(156, 21);

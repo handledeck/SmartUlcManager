@@ -46,8 +46,8 @@ namespace Uart
     EnumTypeController __enumTypeController;
     [Category("Uart")]
     public event ReadUartData EventReadUartData;
-    [Category("Uart")]
-    public event WriteUartData EventWriteUartData;
+    //[Category("Uart")]
+    //public event WriteUartData EventWriteUartData;
     [Category("Uart")]
     public event HendlerUartData EventHandlerUartData;
 

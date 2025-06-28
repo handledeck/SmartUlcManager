@@ -190,7 +190,7 @@ namespace UlcWin.ui
     #endregion
     private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
     private System.Windows.Forms.DataGridViewTextBoxColumn ztpDataGridViewTextBoxColumn;
-    private System.Windows.Forms.DataGridViewCheckBoxColumn isTrueDataGridViewCheckBoxColumn;
+    //private System.Windows.Forms.DataGridViewCheckBoxColumn isTrueDataGridViewCheckBoxColumn;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     private CustomProgressBar customProgressBar1;

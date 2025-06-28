@@ -275,7 +275,7 @@ namespace UlcWin.Fota
         else
           return false;
       }
-      catch (Exception exp)
+      catch 
       {
         
         return false;
@@ -511,7 +511,7 @@ namespace UlcWin.Fota
           client.Close();
         }
       }
-      catch (Exception ex)
+      catch 
       {
         return false;
       }

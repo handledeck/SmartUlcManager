@@ -35,7 +35,7 @@ namespace UlcWin.Export
     }
 
     public Exception PrintStatistics(SimpleWaitForm sfrm) {
-      Exception exp = null;
+     // Exception exp = null;
       Microsoft.Office.Interop.Excel.Application excelApp = null;
       Workbook excelWorkbook = null;
       Worksheet excelWorksheet = null;
@@ -65,14 +65,14 @@ namespace UlcWin.Export
 
           }
           header++;
-          Microsoft.Office.Interop.Excel.XlRgbColor bed = Microsoft.Office.Interop.Excel.XlRgbColor.rgbRed;
-          Microsoft.Office.Interop.Excel.XlRgbColor good = Microsoft.Office.Interop.Excel.XlRgbColor.rgbBlack;
+          //Microsoft.Office.Interop.Excel.XlRgbColor bed = Microsoft.Office.Interop.Excel.XlRgbColor.rgbRed;
+          //Microsoft.Office.Interop.Excel.XlRgbColor good = Microsoft.Office.Interop.Excel.XlRgbColor.rgbBlack;
           int coln = 1;
           for (int i = 0; i < this.__dataGridView1.RowCount; i++)
           {
 
             coln = 1;
-            Microsoft.Office.Interop.Excel.XlRgbColor color;
+            //Microsoft.Office.Interop.Excel.XlRgbColor color;
             //if (!itemIp.IsTrue)
             //{
             //color = bed;
@@ -235,7 +235,7 @@ namespace UlcWin.Export
         }
         return true;
       }
-      catch (Exception exp)
+      catch 
       {
         return false;
       }
@@ -294,10 +294,7 @@ namespace UlcWin.Export
             int xx = ((i * 100) / all_tags);
 
             TreeListNodeModel itm = (TreeListNodeModel)treeNodes[i];
-            if (itm.Nodes.Count > 1)
-            {
-              int z = 0;
-            }
+            
             int coln = 1;
             UlcObjectParce ulcObjectParce = UlcObjectParce.GetUlcObject(itm.name);
             excelWorksheet.Cells[header, coln] = string.Format("{0}   ({1})", ulcObjectParce.location, ulcObjectParce.country);

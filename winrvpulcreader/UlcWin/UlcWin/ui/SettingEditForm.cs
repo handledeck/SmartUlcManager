@@ -21,6 +21,7 @@ using UlcWin.Devices;
 using UlcWin.Fota;
 using UlcWin.win;
 using Ztp.Configuration;
+using Ztp.Enums;
 using Ztp.Protocol;
 using Ztp.Ui;
 
@@ -170,9 +171,8 @@ namespace UlcWin.ui
           SetRVPConfigDevice();
           break;
         case Ztp.Enums.Device.ULC2:
+        case Ztp.Enums.Device.ULC2Lite:
           SetUlcConfigDevice();
-          break;
-        case Ztp.Enums.Device.ULC2_2:
           break;
         default:
           break;
@@ -194,18 +194,13 @@ namespace UlcWin.ui
       else {
         this.usrUartModule1.Enabled = true;
         this.usrUartModule1.Value = __uart_array;
-        
       }
-
       this.usrUartModule1.btnBinRead_Click();
       this.usrUartModule1.ParentsForm = this;
-      
       base.OnShown(e);
       this.usrUartModule1.InitCB();
       this.ethernetModule1.InitCB();
     }
-
-    
 
     public SettingEditForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
       Ztp.Enums.Device device, ItemIp selItem, DbReader db, byte[] forwards)
@@ -219,12 +214,11 @@ namespace UlcWin.ui
      this.__forwards = forwards;
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
+      device= CtrlType.GetControllerType(__ztpConfig.Version);
       this.__device = device;
       this.__config._devType = device;
-     
       Application.Idle += Application_Idle;
       this.__getConnection = getConnection;
-     
     }
 
     private void Application_Idle(object sender, EventArgs e)
@@ -255,7 +249,6 @@ namespace UlcWin.ui
         this.btnScheduleDelete.Enabled = false;
 
     }
-
 
     private void btnAddSeason_Click(object sender, EventArgs e)
     {
@@ -352,7 +345,7 @@ namespace UlcWin.ui
               throw new Exception("Ошибка чтения...");
             }
           }
-          catch (Exception ex)
+          catch 
           {
             siForm.DialogResult = DialogResult.Cancel;
           }

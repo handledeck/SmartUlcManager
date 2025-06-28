@@ -15,7 +15,7 @@ namespace UlcWin.Controls.UlcMeterComponet
   public class MeterComparer : IComparer
   {
     ListView listView;
-    LoadForm loadForm;
+    LoadForm loadForm=null;
     public int Column { get; set; }
     public SortOrder Order { get; set; }
     public UlcSort UsbSorting { get; set; }

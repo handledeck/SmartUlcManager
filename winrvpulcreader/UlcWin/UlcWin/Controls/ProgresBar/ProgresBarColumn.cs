@@ -102,7 +102,7 @@ namespace Ulc.Controls
           }
         }
       }
-      catch (Exception e)
+      catch
       {
 
       }

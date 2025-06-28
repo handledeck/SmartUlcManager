@@ -61,8 +61,8 @@ namespace UlcWin
     private DateTime __previousValueTo = DateTime.Now;
     UNode __node_to = null;
     UNode __node_from = null;
-    bool __first_load = true;
-
+    //bool __first_load = true;
+    bool __panel_event_log = false;
     public LoadForm()
     {
       InitializeComponent();
@@ -112,7 +112,7 @@ namespace UlcWin
       this.tsTreePanel.Enabled = false;
       this.__lvItemChecked = new List<ListViewItem>();
       Application.Idle += Application_Idle;
-      this.tsComboBoxDev.SelectedIndex = 1;
+      this.tsComboBoxDev.SelectedIndex = 2;
       this.Shown += StartForm_Shown;
       this.Text = "Система диагностики контроллеров";
       panel1.Paint += Panel1_Paint;
@@ -563,12 +563,11 @@ namespace UlcWin
     {
       if (read_only)
       {
-        this.ctxMenuItemAdd.Visible = false;
-        this.ctxMenuItemChange.Visible = false;
-        this.ctxMenuItemDelete.Visible = false;
-        this.ctxSeparateEdit.Visible = false;
-        this.ctxMenuAtCommand.Visible = false;
-        
+        //this.ctxMenuItemAdd.Visible = false;
+        //this.ctxMenuItemChange.Visible = false;
+        //this.ctxMenuItemDelete.Visible = false;
+        //this.ctxSeparateEdit.Visible = false;
+        //this.ctxMenuAtCommand.Visible = false;
       }
       else
       {
@@ -577,11 +576,12 @@ namespace UlcWin
         ////this.treeView1.DragEnter += LstViewItm_DragEnter;
         //this.treeView1.AllowDrop = true;
         //this.LstViewItm.ItemDrag += LstViewItm_ItemDrag;
-        this.ctxMenuItemAdd.Visible = true;
-        this.ctxMenuItemChange.Visible = true;
-        this.ctxMenuItemDelete.Visible = true;
-        this.ctxSeparateEdit.Visible = true;
-        this.ctxMenuAtCommand.Visible = true;
+        //this.ctxMenuItemAdd.Visible = true;
+        //this.ctxMenuItemChange.Visible = true;
+        //this.ctxMenuItemDelete.Visible = true;
+        //this.ctxSeparateEdit.Visible = true;
+        //this.ctxMenuAtCommand.Visible = true;
+        this.btnAddController.Visible = true;
       }
       if (this.treeView1.Nodes.Count == 0 || this.treeView1.SelectedNode==null)
       {
@@ -594,13 +594,23 @@ namespace UlcWin
         this.tsTreeBtnEdit.Enabled = false;
         this.tsTreeBtnDelete.Enabled = false;
         this.splitContainer2.Panel2Collapsed = true;
-       
+        this.btnAddController.Enabled = true;
+        this.btnEditController.Enabled = false;
+        this.ctxMenuChange.Enabled = false;
+        this.btnDeleteController.Enabled = false;
+        this.ctxMenuDelete.Enabled = false;
       }
       else {
         this.tsTreeBtnEdit.Enabled = true;
         this.tsTreeBtnDelete.Enabled = true;
         this.tsMnuTreeDeleteItem.Enabled = true;
         this.tsMnuTreeEdit.Enabled = true;
+        this.btnAddController.Enabled = true;
+        this.btnEditController.Enabled = true;
+        this.btnDeleteController.Enabled = true;
+        this.btnAddController.Enabled = true;
+        this.ctxMenuDelete.Enabled = true;
+        this.ctxMenuChange.Enabled = true;
       }
       //this.ctxMenuItemAdd.Visible = true;
       //this.ctxMenuItemChange.Visible = true;
@@ -640,32 +650,34 @@ namespace UlcWin
         if (this.LstViewItm.Items.Count > 0)
         {
           this.tsSelectedItems.Enabled = true;
-          if (this.LstViewItm.SelectedItems.Count != 0)
-          {
-            ///////////////////this.tsBtnEventShowHide.Enabled = true;
-          }
-          else
-          {
-            /////////////////////////////this.tsBtnEventShowHide.Enabled = false;
-          }
           
-          //this.ctxMenuItemChange.Enabled = true;
-          //this.ctxMenuItemDelete.Enabled = true;
-          //this.ctxMenuPingCurrentItem.Enabled = true;
           this.ctxMenuUpdateCurrent.Enabled = true;
           this.ctxMenuUpdateSelected.Enabled = true;
           this.ctxMenuReadCurrentLog.Enabled = true;
           this.ctxMenuUpdateCurrent.Enabled = true;
           this.ctxMenuUpdateNotTrue.Enabled = true;
           this.ctxMenuUpdateAll.Enabled = true;
+          this.btnAddController.Enabled = true;
+          if (this.LstViewItm.SelectedItems.Count == 0 || this.LstViewItm.FocusedItem==null)
+          {
+            this.btnEditController.Enabled = false;
+            this.ctxMenuChange.Enabled = false;
+            this.btnDeleteController.Enabled = false;
+            this.ctxMenuDelete.Enabled = false;
+          }
+          else {
+            this.btnEditController.Enabled = true;
+            this.ctxMenuChange.Enabled = true;
+            this.btnDeleteController.Enabled = true;
+            ctxMenuDelete.Enabled = true;
+          }
         }
         else
         {
           this.tsSelectedItems.Enabled = false;
-          ///////////////////////////////////this.tsBtnEventShowHide.Enabled = false;
           this.LstViewEvent.Visible = false;
-          this.ctxMenuItemChange.Enabled = false;
-          this.ctxMenuItemDelete.Enabled = false;
+          //this.ctxMenuItemChange.Enabled = false;
+          //this.ctxMenuItemDelete.Enabled = false;
           this.ctxMenuPingCurrentItem.Enabled = false;
           this.ctxMenuUpdateCurrent.Enabled = false;
           this.ctxMenuUpdateSelected.Enabled = false;
@@ -673,8 +685,13 @@ namespace UlcWin
           this.ctxMenuUpdateCurrent.Enabled = false;
           this.ctxMenuUpdateNotTrue.Enabled = false;
           this.ctxMenuUpdateAll.Enabled = false;
-          this.ctxMenuAtCommand.Enabled = false;
+          //this.ctxMenuAtCommand.Enabled = false;
           this.tsUpdate.Enabled = false;
+          this.btnAddController.Enabled = true;
+          this.btnEditController.Enabled = false;
+          this.ctxMenuChange.Enabled = false;
+          this.btnDeleteController.Enabled = false;
+          this.ctxMenuDelete.Enabled = false;
         }
       }
       else
@@ -689,7 +706,7 @@ namespace UlcWin
         toolStripSeparator2.Visible = false;
         toolStripSeparator7.Visible = false;
         treeMenu.Enabled = false;
-        this.ctxMenuAtCommand.Enabled = false;
+        //this.ctxMenuAtCommand.Enabled = false;
         this.tsTreePanel.Visible = false;
         this.treeMenu.Enabled = false;
       }
@@ -703,7 +720,7 @@ namespace UlcWin
         toolStripSeparator2.Visible = true;
         toolStripSeparator7.Visible = true;
         treeMenu.Enabled = true;
-        this.ctxMenuAtCommand.Visible = true;
+        //this.ctxMenuAtCommand.Visible = true;
         this.treeMenu.Enabled = true;
       }
       if (!read_only)
@@ -729,82 +746,6 @@ namespace UlcWin
       //}
     }
 
-    //void ReadOnlyUserAccses()
-    //{
-    //  this.ctxMenuItemAdd.Visible = false;
-    //  this.ctxMenuItemChange.Visible = false;
-    //  this.ctxMenuItemDelete.Visible = false;
-    //  this.ctxSeparateEdit.Visible = false;
-    //  this.tsDwnUpdate.Visible = false;
-    //  this.ctxSeparatePing.Visible = false;
-    //  this.ctxMenuAtCommand.Visible = false;
-    //  this.treeMenu.Visible = false;
-    //  //tsTreeBtnAddRoot.Enabled = false;
-    //  //tsTreeAddItem.Enabled = false;
-    //  tsTreePanel.Visible = false;
-    //  UNode uNode = (UNode)treeView1.SelectedNode;
-    //  if (uNode != null)
-    //  {
-
-    //    if (!uNode.IsView)
-    //    {
-    //      this.LvMenu.Visible = false;
-    //      this.LstViewItm.Items.Clear();
-
-    //    }
-    //    else
-    //    {
-    //      this.LvMenu.Enabled = true;
-
-    //    }
-
-    //    if (this.LstViewItm.Items.Count > 0)
-    //    {
-    //      this.ctxMenuItemAdd.Enabled = false;
-    //      this.tsDwnUpdate.Enabled = true;
-    //      this.tsSelectedItems.Enabled = true;
-    //      this.ctxMenuItemChange.Enabled = false;
-    //      this.ctxMenuItemDelete.Enabled = false;
-    //      this.ctxMenuPingCurrentItem.Enabled = true;
-    //      this.ctxMenuUpdateCurrent.Enabled = true;
-    //      this.ctxMenuUpdateSelected.Enabled = true;
-    //      this.ctxMenuReadCurrentLog.Enabled = true;
-    //      this.ctxMenuUpdateCurrent.Enabled = true;
-    //      this.ctxMenuUpdateNotTrue.Enabled = true;
-    //      this.ctxMenuUpdateAll.Enabled = true;
-    //      this.ctxMenuAtCommand.Enabled = true;
-    //      this.tsUpdate.Enabled = true;
-    //    }
-    //    else
-    //    {
-    //      this.ctxMenuItemAdd.Enabled = false;
-    //      this.tsSelectedItems.Enabled = false;
-    //      this.tsDwnUpdate.Enabled = false;
-    //      //this.LvMenu.Enabled = false;
-    //      this.ctxMenuItemChange.Enabled = false;
-    //      this.ctxMenuItemDelete.Enabled = false;
-    //      this.ctxMenuPingCurrentItem.Enabled = false;
-    //      this.ctxMenuUpdateCurrent.Enabled = false;
-    //      this.ctxMenuUpdateSelected.Enabled = false;
-    //      this.ctxMenuReadCurrentLog.Enabled = false;
-    //      this.ctxMenuUpdateCurrent.Enabled = false;
-    //      this.ctxMenuUpdateNotTrue.Enabled = false;
-    //      this.ctxMenuUpdateAll.Enabled = false;
-    //      this.ctxMenuAtCommand.Enabled = false;
-    //      this.tsUpdate.Enabled = false;
-    //    }
-    //  }
-    //  else
-    //  {
-    //    this.LvMenu.Visible = false;
-    //  }
-    //  this.tsBtnEventLog.Visible = false;
-    //  this.tsBtnUsersEdit.Visible = false;
-    //  this.tsBtnStatistics.Visible = false;
-    //  toolStripSeparator2.Visible = false;
-    //  toolStripSeparator7.Visible = false;
-
-    //}
 
 
     private void Application_Idle(object sender, EventArgs e)
@@ -850,7 +791,7 @@ namespace UlcWin
         tsMenuItem_Patch.Enabled = true;
         //LvMenu.Enabled = true;
         LvMenu.Items["ctxMenuReadCurrentLog"].Enabled = true;
-        LvMenu.Items["ctxMenuAtCommand"].Enabled = true;
+        //LvMenu.Items["ctxMenuAtCommand"].Enabled = true;
       }
       if (this.LstViewItm.Items.Count > 0)
       {
@@ -863,9 +804,9 @@ namespace UlcWin
       }
       if (this.LstViewItm.SelectedItems.Count == 0)
       {
-        ctxMenuAtCommand.Enabled = false;
-        ctxMenuItemChange.Enabled = false;
-        ctxMenuItemDelete.Enabled = false;
+        //ctxMenuAtCommand.Enabled = false;
+        //ctxMenuItemChange.Enabled = false;
+        //ctxMenuItemDelete.Enabled = false;
         ctxMenuPingCurrentItem.Enabled = false;
         ctxMenuReadCurrentLog.Enabled = false;
         ctxMenuUpdateCurrent.Enabled = false;
@@ -876,9 +817,9 @@ namespace UlcWin
       }
       else
       {
-        ctxMenuAtCommand.Enabled = true;
-        ctxMenuItemChange.Enabled = true;
-        ctxMenuItemDelete.Enabled = true;
+        //ctxMenuAtCommand.Enabled = true;
+        //ctxMenuItemChange.Enabled = true;
+        //ctxMenuItemDelete.Enabled = true;
         ctxMenuPingCurrentItem.Enabled = true;
         ctxMenuReadCurrentLog.Enabled = true;
         ctxMenuUpdateCurrent.Enabled = true;
@@ -992,13 +933,13 @@ namespace UlcWin
             __lvItemChecked = new List<ListViewItem>();
           this.__lvItemChecked.Clear();
           this.tsDwnUpdate.Enabled = false;
-          this.ctxMenuItemAdd.Enabled = true;
+          //this.ctxMenuItemAdd.Enabled = true;
           DateTime dtn = DateTime.Now;
           DateTime dt = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
           this.LstViewItm.Visible = false;
           this.LstViewItm.Items.Clear();
           __db.ViewRes(this.LstViewItm, __sel_node.Id, dt,
-            (EnumViewDevType)this.tsComboBoxDev.SelectedIndex, __sel_node.Text);
+            /*(EnumViewDevType)this.tsComboBoxDev.SelectedIndex*/(EnumViewDevType)2, __sel_node.Text);
           this.ulcMeterTreeView.SetValue(__db.__connection, __sel_node.Id);
           //__its_parent = (from ListViewItem item in this.LstViewItm.Items select (ListViewItem)item.Clone()).ToArray();
           this.tsFilterText.Text = "";
@@ -1026,7 +967,7 @@ namespace UlcWin
             this.tsStsLblNotTrue.Visible = true;
             this.tsStsNetBad.Visible = true;
             this.tsStsRssBad.Visible = true;
-            this.tsStsIMEI.Visible = true;
+            //this.tsStsIMEI.Visible = true;
             this.tsStatusLbl.Visible = true;
             //this.__list_objects.Clear();
             //this.tsResView.Visible = true;
@@ -1051,7 +992,7 @@ namespace UlcWin
           //this.__tsAutoCompleteCmb.Visible = false;
           this.treeMenu.Items[0].Enabled = true;
           this.tsTreeBtnAddRoot.Enabled = true;
-          this.ctxMenuItemAdd.Enabled = false;
+          //this.ctxMenuItemAdd.Enabled = false;
           this.tsSelectShow.Enabled = false;
           this.tsUpdate.Enabled = false;
           this.tsMnuTreeAddItem.Enabled = true;
@@ -1313,6 +1254,7 @@ namespace UlcWin
                   msg = System.Text.ASCIIEncoding.ASCII.GetString(thbytes, 0, len);
                   msg = msg.Trim('\r', '\n');
                   keyValue = msg.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                  if(keyValue.Length>1)
                   forwards= Convert.FromBase64String(keyValue[1]);
                 }
                 
@@ -1366,7 +1308,7 @@ namespace UlcWin
       {
         return null;
       }
-      catch (Exception ex)
+      catch
       {
         return null;
       }
@@ -2092,7 +2034,7 @@ namespace UlcWin
             }
             sfrm.SetLabelText("Данные обновлены успешно");
           }
-          catch (Exception exp)
+          catch 
           {
             sfrm.SetLabelText("Ошибка обновления данных");
             Thread.Sleep(3000);
@@ -2148,7 +2090,7 @@ namespace UlcWin
         if (it.UType == 1)
         {
           this.tsStsRssBad.Visible = true;
-          this.tsStsIMEI.Visible = true;
+          //this.tsStsIMEI.Visible = true;
           int num;
           bool rs = int.TryParse(item.SubItems[13].Text, out num);
           if (rs)
@@ -2191,7 +2133,7 @@ namespace UlcWin
       this.tsStsLblNotTrue.Text = "Ошибка соединения:" + notTrue.ToString();
       this.tsStsNetBad.Text = "Неусточивая связь:" + netBad.ToString();
       this.tsStsRssBad.Text = "Нет связи по RS-485:" + rsBad;
-      this.tsStsIMEI.Text = string.Format("Партия: 1-2({0}), 3-4({1}),5-({2}) ", part_OneOrTwo.ToString(), part_TreeOrFour.ToString(), part_Five.ToString());
+      //this.tsStsIMEI.Text = string.Format("Партия: 1-2({0}), 3-4({1}),5-({2}) ", part_OneOrTwo.ToString(), part_TreeOrFour.ToString(), part_Five.ToString());
 
     }
 
@@ -2327,9 +2269,13 @@ namespace UlcWin
                 int ind = ed.cbType.SelectedIndex;
                 int active = ed.chBoxActive.Checked ? 1 : 0;
                 int light = ed.cbFunction.SelectedIndex;
-                
+                UTypeController typeController = UTypeController.RVP;
+                if (ind == 1)
+                  typeController = UTypeController.ULC2;
+                else if (ind == 2)
+                  typeController = UTypeController.ULC3;
                 long idRec = __db.AddNewResRecord(name, ed.txtBoxIpAddress.Text, ed.txtBoxPhones.Text,
-                  3, this.__sel_node.Id, ind == 1 ? UTypeController.ULC2 : UTypeController.RVP, active, light, ed.txtBoxComment.Text,
+                  3, this.__sel_node.Id, typeController, active, light, ed.txtBoxComment.Text,
                   this.treeView1.SelectedNode.FullPath,
                   msgMeter,Convert.ToSingle(string.IsNullOrEmpty(ed.txtLong.Text) ? "0": ed.txtLong.Text),
                   Convert.ToSingle(string.IsNullOrEmpty(ed.txtLetit.Text)? "0": ed.txtLetit.Text));
@@ -2357,7 +2303,7 @@ namespace UlcWin
         }
         MessageBox.Show("Запись добавлена", "Добавление записи", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
-      catch (Exception exp)
+      catch
       {
         MessageBox.Show("Запись с таким именем и ip адресом уже есть", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
@@ -2514,7 +2460,7 @@ namespace UlcWin
       ReadStatusListView();
     }
 
-    bool __panel_event_log = false;
+    
     private void LstViewItm_SelectedIndexChanged(object sender, EventArgs e)
     {
      
@@ -2593,7 +2539,6 @@ namespace UlcWin
                 //return;
               }
             }
-            int x = 0;
           }
         }
       }
@@ -2900,6 +2845,7 @@ namespace UlcWin
         //sfrm.Close();
         if (result == DialogResult.OK)
         {
+          
           using (SettingEditForm rqf = new SettingEditForm(message, this.GetConnection, false,
             tsComboBoxDev.SelectedIndex == 1 ? Ztp.Enums.Device.ULC2 : Ztp.Enums.Device.RVP,
              /*selItem.Name*/selItem, this.__db,forwards))
@@ -2908,7 +2854,11 @@ namespace UlcWin
             //rqf.__uart_array = buffer;
             rqf.Text = "Настройки " + selItem.Name;
             rqf.Tag = this;
+            UlcCfg x = new UlcCfg();
+            x.GetExtarctRvpConfig(message);
+            selItem.UlcConfig = x;
             rqf.ShowDialog();
+           
           }
         }
         else
@@ -3223,6 +3173,7 @@ namespace UlcWin
 
     private void InitDbAndApplication(object sender, EventArgs e)
     {
+      tsResView.Visible = false;
       this.tsStatusLbl.Visible = false;
       this.tsBtnConnect.Image = UlcWin.Properties.Resources.server_connection;
       this.tsBtnConnect.Text = "Подключение";
@@ -3641,7 +3592,7 @@ namespace UlcWin
           throw new Exception("Ошибка чтения...");
         }
       }
-      catch (Exception exp)
+      catch 
       {
       }
 
@@ -3906,7 +3857,7 @@ namespace UlcWin
             if (client == null)
               throw new Exception("Ошибка соединения");
             bool request = false;
-            Exception exc = null;
+           // Exception exc = null;
             foreach (MeterInfo itM in ositem.meters)
             {
               if (itM.meter_type.Contains("CE102") || itM.meter_type.Contains("СЕ102"))
@@ -4067,9 +4018,9 @@ namespace UlcWin
             __frm.CompleetWork(false);
           }));
         }
-        catch (Exception)
+        catch 
         {
-          int x = 0;
+          
         }
         List<ItemCallBack> lstCbk = new List<ItemCallBack>();
         foreach (var item in __lip)

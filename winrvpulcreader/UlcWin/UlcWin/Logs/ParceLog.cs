@@ -158,7 +158,7 @@ namespace InterUlc.Logs
             l.Add(log);
             if (l.Count == 241)
             {
-              int x = 0;
+              //int x = 0;
             }
           }
 

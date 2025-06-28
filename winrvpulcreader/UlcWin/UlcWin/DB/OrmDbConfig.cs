@@ -194,7 +194,7 @@ namespace UlcWin.DB
           return false;
         }
       }
-      catch (Exception exp)
+      catch
       {
         return false;
       }

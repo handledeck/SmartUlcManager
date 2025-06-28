@@ -21,7 +21,7 @@ namespace Uart.Function
   [TypeConverter(typeof(PropertySorter))]
   internal class EthernetItem : DataGridViewConverter
   {
-    private object tbLanIP;
+    //private object tbLanIP;
 
     [Category("Настройки"), PropertyOrder(1)]
     [Description("Ip адрес")]

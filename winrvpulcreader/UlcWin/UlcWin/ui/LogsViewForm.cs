@@ -103,7 +103,7 @@ namespace UlcWin.ui
           return dbLogMsg;
         }
       }
-      catch (Exception e)
+      catch 
       {
         return null;
       }
@@ -193,7 +193,7 @@ namespace UlcWin.ui
           }
           return ormDbLogs.OrderByDescending(x => x.current_time).ToList();
         }
-        catch (Exception exp) {
+        catch  {
           return null;
         }
       }
@@ -357,7 +357,7 @@ namespace UlcWin.ui
         itr.ImageIndex = SetIconEvent((EnLogEvt)__sortList[e.ItemIndex].log_event);
         e.Item = itr;
       }
-      catch (Exception ex)
+      catch
       {
 
        // throw;
@@ -473,10 +473,10 @@ namespace UlcWin.ui
                   DbLogMsg dbLogMsg = (DbLogMsg)System.Text.Json.JsonSerializer.Deserialize(item.message, typeof(DbLogMsg), DbLogMsg.GetSerializeOption());
                   if (dbLogMsg.feature != null)
                   {
-                    int x = 0;
+                    //int x = 0;
                   }
                 }
-                catch (Exception ex)
+                catch 
                 {
 
                 }
@@ -497,7 +497,7 @@ namespace UlcWin.ui
 
     private void popupComboBox1_DropDown(object sender, EventArgs e)
     {
-      int x = 0;
+      
     }
 
     private void lstLogEvents_SelectedIndexChanged(object sender, EventArgs e)
@@ -546,9 +546,9 @@ namespace UlcWin.ui
                 this.lstViewArchEvent.Visible = false;
               }
             }
-            catch (Exception exp)
+            catch 
             {
-              int x = 0;
+              
             }
           }
         }

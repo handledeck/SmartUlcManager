@@ -185,7 +185,7 @@ namespace UlcWin
           return false;
         }
       }
-      catch (Exception exp)
+      catch 
       {
         return false;
       }

@@ -190,9 +190,9 @@ namespace GettingStartedTree
               controller_active = reader["controller_active"].GetType() == typeof(DBNull) ? -1 : (int)reader["controller_active"];
               value_month = reader["mv_month"].GetType() == typeof(DBNull) ? 0 : (double)reader["mv_month"];
             }
-            catch (Exception el)
+            catch
             {
-              int x = 0;
+              
             }
             TreeListNodeModel mt = new TreeListNodeModel
             {
@@ -332,9 +332,9 @@ namespace GettingStartedTree
           this.treeListView1_ColumnClick(this.treeListView1, new ColumnClickEventArgs(sort_column_num));
         }
       }
-      catch (Exception ex)
+      catch 
       {
-        int xx = 0;
+        
       }
     }
 
@@ -719,7 +719,7 @@ namespace GettingStartedTree
            
 
           }
-          catch (Exception exp)
+          catch 
           {
 
             throw;
@@ -747,7 +747,7 @@ namespace GettingStartedTree
         e.Item.ForeColor = Color.Black;
       }
 
-      int x = 0;
+     
     }
 
 
@@ -933,9 +933,8 @@ namespace GettingStartedTree
                   }
                 }
               }
-              catch (Exception ex)
+              catch
               {
-                int xxx = 0;
               }
               Interlocked.Increment(ref prog_value);
               mp.SetProgressValue(Interlocked.Read(ref prog_value));

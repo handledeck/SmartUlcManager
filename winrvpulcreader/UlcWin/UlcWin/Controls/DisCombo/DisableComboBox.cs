@@ -12,7 +12,7 @@ namespace UlcWin.Controls.DisCombo
 {
   public partial class DisableComboBox : ComboBox
   {
-    bool __init_cb = false;
+    //bool __init_cb = false;
     int __old_index = 0;
     public DisableComboBox()
     {

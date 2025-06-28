@@ -42,31 +42,31 @@ namespace UlcWin.ui
             this.lblAllNot.Text = ulcStatistic.NetErrorAll.ToString();
             this.lblAllTvpNot.Text = ulcStatistic.NetErrorRvp.ToString();
             this.lblAllUlcNot.Text = ulcStatistic.NetErrorUlc.ToString();
-            this.lblFirstOrSecond.Text = ulcStatistic.AllUlcFirstOrTwo.ToString();
-            this.lblFirstOrSecondNetNot.Text = ulcStatistic.AllUlcFirstOrTwoOnNet.ToString();
-            this.lblFirstOrSecondRSNotTrue.Text = ulcStatistic.AllUlcFirstOrTwoRsNotTrue.ToString();
-            this.lblThreeOrFour.Text = ulcStatistic.AllUlcThreeOrFour.ToString();
-            this.lblThreeOrFourNotTrue.Text = ulcStatistic.AllUlcThreeOrFourOnNet.ToString();
-            this.lblThreeOrFourRSNotTrue.Text = ulcStatistic.AllUlcThreeOrFourRsNotTrue.ToString();
-            this.lblFive.Text = ulcStatistic.AllUlcFive.ToString();
-            this.lblFiveNotTrue.Text = ulcStatistic.AllUlcFiveOnNet.ToString();
-            this.lblFiveRSNotTrue.Text = ulcStatistic.AllUlcFiveRsNotTrue.ToString();
+            //this.lblFirstOrSecond.Text = ulcStatistic.AllUlcFirstOrTwo.ToString();
+            //this.lblFirstOrSecondNetNot.Text = ulcStatistic.AllUlcFirstOrTwoOnNet.ToString();
+            //this.lblFirstOrSecondRSNotTrue.Text = ulcStatistic.AllUlcFirstOrTwoRsNotTrue.ToString();
+            //this.lblThreeOrFour.Text = ulcStatistic.AllUlcThreeOrFour.ToString();
+            //this.lblThreeOrFourNotTrue.Text = ulcStatistic.AllUlcThreeOrFourOnNet.ToString();
+            //this.lblThreeOrFourRSNotTrue.Text = ulcStatistic.AllUlcThreeOrFourRsNotTrue.ToString();
+            //this.lblFive.Text = ulcStatistic.AllUlcFive.ToString();
+            //this.lblFiveNotTrue.Text = ulcStatistic.AllUlcFiveOnNet.ToString();
+            //this.lblFiveRSNotTrue.Text = ulcStatistic.AllUlcFiveRsNotTrue.ToString();
             this.lblAllNotRs.Text = ulcStatistic.AllErrorRs.ToString();
             this.lblAllGsm.Text = ulcStatistic.AllErrorGsm.ToString();
             this.lblUlcRs.Text = ulcStatistic.UlcErrorRs.ToString();
             this.lblUlcGsm.Text = ulcStatistic.UlcErrorGsm.ToString();
             this.lblRvpRs.Text = /*ulcStatistic.RvpErrorRs.ToString();*/"нет";
             this.lblRvpGsm.Text = ulcStatistic.RvpErrorGsm.ToString();
-            this.lblFirstOrSecondLowGsm.Text = ulcStatistic.AllUlcFirstOrTwoGsm.ToString();
-            this.lblFirstOrSecondVers.Text = ulcStatistic.AllUlcFirstOrTwoVersion.ToString();
-            this.lblThreeOrFourGsm.Text = ulcStatistic.AllUlcThreeOrFourGsm.ToString();
-            this.lblThreeOrFourVers.Text = ulcStatistic.AllUlcThreeOrFourVersion.ToString();
-            this.lblFiveGsm.Text = ulcStatistic.AllUlcFiveGsm.ToString();
-            this.lblFiveVers.Text = ulcStatistic.AllUlcFiveVersion.ToString();
-            this.lblRvp.Text = ulcStatistic.AllCRvp.ToString();
-            this.lblUusi.Text = ulcStatistic.AllUusi.ToString();
-            this.lblCRvpNotNet.Text = (ulcStatistic.AllCRvp - ulcStatistic.AllCRvpNet).ToString();
-            this.lblUusiNotNet.Text = (ulcStatistic.AllUusi - ulcStatistic.AllUusiNet).ToString();
+            //this.lblFirstOrSecondLowGsm.Text = ulcStatistic.AllUlcFirstOrTwoGsm.ToString();
+            //this.lblFirstOrSecondVers.Text = ulcStatistic.AllUlcFirstOrTwoVersion.ToString();
+            //this.lblThreeOrFourGsm.Text = ulcStatistic.AllUlcThreeOrFourGsm.ToString();
+            //this.lblThreeOrFourVers.Text = ulcStatistic.AllUlcThreeOrFourVersion.ToString();
+            //this.lblFiveGsm.Text = ulcStatistic.AllUlcFiveGsm.ToString();
+            //this.lblFiveVers.Text = ulcStatistic.AllUlcFiveVersion.ToString();
+            //this.lblRvp.Text = ulcStatistic.AllCRvp.ToString();
+            //this.lblUusi.Text = ulcStatistic.AllUusi.ToString();
+            //this.lblCRvpNotNet.Text = (ulcStatistic.AllCRvp - ulcStatistic.AllCRvpNet).ToString();
+            //this.lblUusiNotNet.Text = (ulcStatistic.AllUusi - ulcStatistic.AllUusiNet).ToString();
             if (ulcStatistic.All > 0)
             {
               double count = (double)((100 * ((double)ulcStatistic.NetErrorAll + (double)ulcStatistic.AllErrorRs)) / (double)ulcStatistic.All);
@@ -102,15 +102,15 @@ namespace UlcWin.ui
 
     private void UsrUlcChartCtrl1_monthViewClose()
     {
-      this.usrUlcChartCtrl1.Visible = false;
-      this.roundBorderPanel1.Visible = true;
+      this.usrUlcChartCtrl1.Visible = true;
+      //this.roundBorderPanel1.Visible = true;
       this.roundBorderPanel5.Visible = true;
     }
 
     private void btnMonthView_Click(object sender, EventArgs e)
     {
-      this.roundBorderPanel1.Visible = false;
-      this.roundBorderPanel5.Visible = false;
+      //this.roundBorderPanel1.Visible = false;
+      this.roundBorderPanel5.Visible = true;
 
       this.usrUlcChartCtrl1.Visible = true;
       //using (AllStatMonthView frm = new AllStatMonthView(this.__db.__connection))
