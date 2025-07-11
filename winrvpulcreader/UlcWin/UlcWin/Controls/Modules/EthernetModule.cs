@@ -267,14 +267,20 @@ namespace UlcWin.Controls.Modules
           Array.Copy(Value, 4, tmp, 0, 4);
           Array.Reverse(tmp);
           lanIP = BitConverter.ToUInt32(tmp, 0);
-          offset = 8;
+          offset = 12;
           this.ParentsForm.txtGateway.Text = IPAddress.Parse(lanIP.ToString()).ToString();
-          count = (Value.Length - 8) / 9;
+          Array.Copy(Value, 8, tmp, 0, 4);
+          Array.Reverse(tmp);
+          lanIP = BitConverter.ToUInt32(tmp, 0);
+          this.ParentsForm.txtMask.Text = IPAddress.Parse(lanIP.ToString()).ToString();
+
+          count = (Value.Length - 12) / 9;
         }
         else
         {
           this.ParentsForm.txtIp.Text = "192.168.1.1";
           this.ParentsForm.txtGateway.Text = "192.168.1.1";
+          this.ParentsForm.txtMask.Text = "255.255.255.0";
           count = Value.Length / 9;
         }
         for (int i = 0; i < count; ++i)
@@ -288,11 +294,11 @@ namespace UlcWin.Controls.Modules
           ushort dest = BitConverter.ToUInt16(Value, i * 9 + 6 + offset);
           int protocol = Value[i * 9 + 8 + offset];
           EthernetItem ethernetItem = new EthernetItem()
-          { 
-             IPAddress=ips,
-              InPort=src,
-               OutPort=dest,
-                Protocol=(EthernetProtocol)protocol
+          {
+            IPAddress = ips,
+            InPort = src,
+            OutPort = dest,
+            Protocol = (EthernetProtocol)protocol
           };
           list.Add(ethernetItem);
           

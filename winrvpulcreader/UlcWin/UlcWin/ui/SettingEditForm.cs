@@ -436,7 +436,7 @@ namespace UlcWin.ui
             Exception e= usrUartModule1.WriteExpandUart(client, __pwd, cbIndex);
             if (ControllerType.GetControllerType(this.__ztpConfig.Version) == EnumTypeController.ULC2Lite) {
               e = EthernetItem.WriteEternetSettings(client, __pwd, this.txtIp.Text,
-                    this.txtGateway.Text, ethernetModule1.DataSet.Tables[0]);
+                    this.txtGateway.Text,this.txtMask.Text, ethernetModule1.DataSet.Tables[0]);
             }
             
             if (e != null)

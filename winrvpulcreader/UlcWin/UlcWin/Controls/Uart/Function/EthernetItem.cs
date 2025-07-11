@@ -84,27 +84,30 @@ namespace Uart.Function
       return ethernetItem;
     }
 
-    public static Exception WriteEternetSettings(TcpClient client, string password, string ip_address, string ip_gateway, DataTable dw = null)
+    public static Exception WriteEternetSettings(TcpClient client, string password, string ip_address, string ip_gateway,string ip_mask, DataTable dw = null)
     {
       Exception exception = null;
       int count = dw.Rows.Count;
       try
       {
-        byte[] tmp = new byte[count * 9 + 8];
+        int offset = 12;
+        byte[] tmp = new byte[count * 9 + offset];
         byte[] lanIp = System.Net.IPAddress.Parse(ip_address).GetAddressBytes();
         Array.Copy(lanIp, 0, tmp, 0, 4);
         byte[] lanIp1 = System.Net.IPAddress.Parse(ip_gateway).GetAddressBytes();
         Array.Copy(lanIp1, 0, tmp, 4, 4);
+        byte[] lanIp2 = System.Net.IPAddress.Parse(ip_mask).GetAddressBytes();
+        Array.Copy(lanIp2, 0, tmp, 8, 4);
         for (int i = 0; i < count; ++i)
         {
           byte[] ip = System.Net.IPAddress.Parse((string)dw.Rows[i].ItemArray[0]).GetAddressBytes();
-          Array.Copy(ip, 0, tmp, i * 9 + 8, 4);
+          Array.Copy(ip, 0, tmp, i * 9 + offset, 4);
           byte[] src = BitConverter.GetBytes((ushort)dw.Rows[i].ItemArray[1]);
-          Array.Copy(src, 0, tmp, i * 9 + 12, 2);
+          Array.Copy(src, 0, tmp, i * 9 + offset+4, 2);
           byte[] dest = BitConverter.GetBytes((ushort)dw.Rows[i].ItemArray[2]);
-          Array.Copy(dest, 0, tmp, i * 9 + 14, 2);
+          Array.Copy(dest, 0, tmp, i * 9 + offset+6, 2);
           byte proto = (byte)((int)dw.Rows[i].ItemArray[3]);
-          tmp[i * 9 + 16] = proto;
+          tmp[i * 9 + offset+8] = proto;
         }
         NetworkStream nstream = client.GetStream();
         DevicePackage.EthernetSetRules(nstream, password, tmp);
