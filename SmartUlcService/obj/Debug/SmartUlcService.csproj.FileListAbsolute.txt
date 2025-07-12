@@ -131,7 +131,6 @@ D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Numerics.Vectors.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Text.Encodings.Web.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Text.Json.xml
-D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.ValueTuple.xml
 D:\99\SmartUlcManager\SmartUlcService\obj\Debug\SmartUlcService.csproj.CoreCompileInputs.cache
 D:\99\SmartUlcManager\SmartUlcService\obj\Debug\SmartUlcService.exe

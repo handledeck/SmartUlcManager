@@ -273,7 +273,6 @@ namespace UlcWin.Controls.Modules
           Array.Reverse(tmp);
           lanIP = BitConverter.ToUInt32(tmp, 0);
           this.ParentsForm.txtMask.Text = IPAddress.Parse(lanIP.ToString()).ToString();
-
           count = (Value.Length - 12) / 9;
         }
         else
@@ -307,17 +306,11 @@ namespace UlcWin.Controls.Modules
       }
     }
 
-
-
     public Exception WriteExpandUart(TcpClient client, string password, int index)
     {
-
       Exception e = null;
-
       return e;
     }
-
-
 
     private void dataGridView1_DataMemberChanged(object sender, EventArgs e)
     {
@@ -325,7 +318,5 @@ namespace UlcWin.Controls.Modules
       //  EventHandlerUartData(UartEvents.Add, this.cbFunction.SelectedIndex,
       //    this.dataSet1.Tables[this.cbFunction.SelectedIndex].Rows.Count);
     }
-
-  
   }
 }

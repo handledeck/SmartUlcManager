@@ -251,6 +251,7 @@ namespace CtmAction
       __pSql.db_port = 5432;
       __pSql.db_pwd = "root";
       Exception exp = null;
+      TryConnectDb(out exp);
       CreateDb(out exp);
     }
   }

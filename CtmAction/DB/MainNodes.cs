@@ -31,6 +31,9 @@ namespace DB
     public int? light { get; set; }
     public string  comments { get; set; }
 
+    public float longit { get; set; }
+    public float letit { get; set; }
+
     public static string CreateTable() {
       return ""; 
     }
