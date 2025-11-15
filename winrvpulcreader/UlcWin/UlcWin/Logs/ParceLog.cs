@@ -51,7 +51,7 @@ namespace InterUlc.Logs
                   exception = new Exception("Ошибка запроса");
                   break;
                 case 2:
-                  exception = new Exception("Дог не найден");
+                  exception = new Exception("Лог не найден");
                   break;
               }
               stream.Close();

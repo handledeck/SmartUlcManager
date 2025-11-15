@@ -1183,7 +1183,7 @@ namespace UlcWin
       {
         buffer = new byte[1024];
         stream = client.GetStream();
-        stream.ReadTimeout = 10000;
+        stream.ReadTimeout = 15000;
         byte[] bRng = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
 
         for (int i = 0; i < 2; i++)
@@ -1191,7 +1191,7 @@ namespace UlcWin
           try
           {
             stream.Write(bRng, 0, bRng.Length);
-            Thread.Sleep(10);
+            Thread.Sleep(100);
 
             int size = stream.Read(buffer, 0, buffer.Length);
 

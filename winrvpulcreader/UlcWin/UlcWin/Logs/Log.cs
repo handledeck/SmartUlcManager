@@ -35,8 +35,8 @@ namespace InterUlc.Logs
       string result = string.Empty;
       //result += logEntry.dt.ToString("G") + ":";
       //result += $" [{ParceLevel((LOG_LVL)logEntry.Log_level)}]";
-      //result += $" --> {TypeToString((LOG_TYPE)logEntry.Log_type)}";
-      result = $"{CodeToString((LOG_TYPE)logEntry.event_type, logEntry.event_value)}";
+      result = $"{TypeToString((LOG_TYPE)logEntry.event_type)}";
+      result += $"({CodeToString((LOG_TYPE)logEntry.event_type, logEntry.event_value)})";
 
       return result;
     }

@@ -1228,19 +1228,24 @@ namespace InterUlc.Db
         if (item.Value.Phone.StartsWith("---"))
           item.Value.Phone = "нет информ...";
         it.SubItems.Add(item.Value.Phone);
-        string utype=string.Empty;
-        if (item.Value.UType == 0)
-          utype = "РВП-18";
-        else if (item.Value.UType == 1)
-          utype = "ULC-2";
-        else if (item.Value.UType == 2)
-          utype = "ULC-3-Lite";
-        else if (item.Value.UType == 3)
-          utype = "ULC-3";
-        it.SubItems.Add(utype);
+        
+        
         
         if (dr_ip.Read())
         {
+          UlcCfg uc = new UlcCfg();
+          if (uc.GetExtarctRvpConfig((string)dr_ip[2]))
+          {
+            item.Value.UlcConfig = uc;
+          }
+          string utype = "неизвестно";
+          if (uc.VER == "I16O2A2-LDC-3-FOTA" || uc.VER == "I16O2A2-LDC-3-FOTA-BT") 
+            utype = "РВП-18";
+          else if (uc.VER == "I4O1A1-LDC-3-FOTA-DM" || uc.VER == "I4O1A1-LDC-3-FOTA")
+            utype = "ULC-2";
+          else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM")
+            utype = "ULC-3-Lite";
+          it.SubItems.Add(utype);
           DateTime dtRecord = (DateTime)dr_ip[1];
           it.SubItems[0].Text = dtRecord.ToString("dd.MM.yy HH:mm:ss");
           item.Value.IdMessage = (int)dr_ip[0];
@@ -1263,29 +1268,21 @@ namespace InterUlc.Db
             ++this.__notTrue;
           }
 
-          UlcCfg uc = new UlcCfg();
-          if (uc.GetExtarctRvpConfig(item.Value.MsgConfig.Message))
-          {
-            item.Value.UlcConfig = uc;
-          }
-          else
-          {
-            
-          }
+          
           it.Tag = item.Value;
 
           ListViewItem.ListViewSubItem sver = it.SubItems.Add(uc.SVERS);
-          if (!string.IsNullOrEmpty(uc.SVERS))
-          {
-            if (item.Value.UType == 1)
-            {
-              if (!uc.SVERS.StartsWith("1.7.9") && !uc.SVERS.StartsWith("1.7.10"))
-              {
-                it.UseItemStyleForSubItems = false;
-                sver.ForeColor = Color.Red;
-              }
-            }
-          }
+          //if (!string.IsNullOrEmpty(uc.SVERS))
+          //{
+          //  if (item.Value.UType == 1)
+          //  {
+          //    if (!uc.SVERS.StartsWith("1.7.9") && !uc.SVERS.StartsWith("1.7.10"))
+          //    {
+          //      it.UseItemStyleForSubItems = false;
+          //      sver.ForeColor = Color.Red;
+          //    }
+          //  }
+          //}
           int signal = 0;
           signal = ((-113 + (uc.SIGNAL) * 2));
           ListViewItem.ListViewSubItem sit = it.SubItems.Add(string.Format("{0} dBm", signal));
@@ -1343,11 +1340,11 @@ namespace InterUlc.Db
             try
             {
               string imei = uc.IMEI.TrimEnd(new char[] { '\r', '\n' });
-              if (uc.VER.StartsWith("I3O2A1-LEM-4-FOTA")) {
+              //if (uc.VER.StartsWith("I3O2A1-LEM-4-FOTA")) {
                 it.SubItems.Add(imei);
-              }
-              else
-              it.SubItems.Add(imei.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
+              //}
+              //else
+              //it.SubItems.Add(imei.Substring(uc.IMEI.Length - 7, uc.IMEI.Length - 8));
             }
             catch {
               it.SubItems.Add("---");

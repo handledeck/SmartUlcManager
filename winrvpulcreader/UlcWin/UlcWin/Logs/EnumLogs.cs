@@ -73,7 +73,15 @@ namespace InterUlc.Logs
       [Description("Успешный выход в работу")]
       StartSuccess = 4,
       [Description("Успешная перерегистрация сети")]
-      ReRegistrSuccess = 5
+      ReRegistrSuccess = 5,
+      [Description("Ошибка создания внутреннего потока")]
+      ThreadInitFail = 6,
+      [Description("Ошибка инициализации")]
+      InitFail = 7,
+      [Description("Ошибка связи GSM")]
+      NetFail = 8,
+      [Description("Восстановление PDP без перезагрузки")]
+      PdpRestore = 9
     }
 
     internal enum RegStatEventCode
@@ -89,7 +97,9 @@ namespace InterUlc.Logs
       [Description("Неизвестный статус")]
       Unknown = 4,
       [Description("Зарегистрирован, роуминг")]
-      RegRoaming = 5
+      RegRoaming = 5,
+      [Description("Переключение вышки")]
+      CellSwitch = 6
     }
 
 
@@ -153,6 +163,14 @@ namespace InterUlc.Logs
       ConfigSave = 3,
       [Description("Сохранение конфигурации Modbus")]
       MbConfigSave = 4,
+      [Description("Ошибка потока конфигурации")]
+      TaskParserError = 5,
+      [Description("Синхронизация времени контроллера")]
+      SyncTimeMCU = 6,
+      [Description("Считывание времени с контроллера")]
+      GetTimeFromMCU = 7,
+      [Description("Сохранение конфигурации Ethernet")]
+      EthernetConfigSave = 8,
     }
 
     internal enum DeviceControlCode
@@ -230,6 +248,20 @@ namespace InterUlc.Logs
       Success = 2,
       [Description("Ошибка при обновлении")]
       Error = 3,
+      [Description("Неверная контрольная сумма MD5")]
+      WrongMD5 = 4,
+      [Description("Ошибка очистики OTA")]
+      EraseOTA_Fail = 5,
+      [Description("ошибка открытия файла для OTA")]
+      OpenFileError = 6,
+      [Description("ошибка смещения OTA")]
+      OffsetIsBig = 7,
+      [Description("Ошибка записи OTA")]
+      WriteError = 8,
+      [Description("Запуск патча")]
+      PatchAccept = 9,
+      [Description("Ошибка размеров патча при записи")]
+      PatchSizeDiff = 10
     }
 
     internal enum PdpCode
@@ -359,6 +391,12 @@ namespace InterUlc.Logs
       eLC_IC_ByTimerT3 = 2,
       [Description("По нарушению формата протокола")]
       eLC_IC_ByErrorPack = 3,
+      [Description("По таймеру Т3 не пришел в ответ пакет синхронизации")]
+      eLC_IC_T3NotResponse = 4,
+      [Description("Ответ на синхронизацию по Т3 пришел спустя более чем 5 секунд")]
+      eLC_IC_T3respOver5sec = 5,
+      [Description("Ошибочная нумерация пакетов МЭК")]
+      eLC_IC_WrongCount = 6,
     }
 
     internal enum UartControlCode

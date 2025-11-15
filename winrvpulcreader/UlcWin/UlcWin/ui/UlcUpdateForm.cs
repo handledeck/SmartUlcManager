@@ -209,6 +209,7 @@ namespace UlcWin.ui
             {
               stream.Close();
               stream = null;
+              
             }
             Interlocked.Decrement(ref count_all);
             Interlocked.Decrement(ref count);
