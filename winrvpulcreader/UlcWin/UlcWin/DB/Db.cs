@@ -1243,7 +1243,7 @@ namespace InterUlc.Db
             utype = "РВП-18";
           else if (uc.VER == "I4O1A1-LDC-3-FOTA-DM" || uc.VER == "I4O1A1-LDC-3-FOTA")
             utype = "ULC-2";
-          else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM")
+          else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM" || uc.VER== "I1O1A1-LEM-4-FOTA")
             utype = "ULC-3-Lite";
           it.SubItems.Add(utype);
           DateTime dtRecord = (DateTime)dr_ip[1];
@@ -2516,19 +2516,19 @@ namespace InterUlc.Db
       {
         statisticRes = new List<StatisticRes>();
         string query_all = "SELECT count(*) FROM main_nodes mn right join main_ctrlinfo mc on mn.id = mc.id where mn.parent_id = {0} and mn.active=1";
-        string query_dev = "SELECT count(*) FROM main_nodes mn right join main_ctrlinfo mc on mn.id = mc.id where mn.parent_id = {0} and mn.active=1 and mc.unit_type_id ={1} ";
+        string query_dev = "SELECT count(*) FROM main_nodes mn right join main_ctrlinfo mc on mn.id = mc.id where mn.parent_id = {0} and mn.active=1 and mc.unit_type_id {1} {2} ";
         string query_net = "SELECT count(*) FROM main_nodes mn "+
           "right JOIN main_ctrldata mc ON mn.id = mc.ctrl_id "+
           "right join main_ctrlinfo mc2 on mc.ctrl_id = mc2.id where mc.\"current_time\" > '{0}' "+
           "and mn.parent_id = {1} "+
           "and mn.active = 1 "+
-          "and mc2.unit_type_id = {2}";
+          "and mc2.unit_type_id {2} {3}";
         string query_rs = "SELECT count(*) FROM main_nodes mn " +
           "right JOIN main_ctrldata mc ON mn.id = mc.ctrl_id " +
           "right join main_ctrlinfo mc2 on mc.ctrl_id = mc2.id and mc2.rs_stat =1 where mc.\"current_time\" > '{0}' " +
           "and mn.parent_id = {1} " +
           "and mn.active = 1 " +
-          "and mc2.unit_type_id = 1 "+
+          "and mc2.unit_type_id > 0 "+
           "and (mc.cdin >>7)=0";
         string query_bad_signal = "SELECT count(*) FROM main_nodes mn " +
           "right JOIN main_ctrldata mc ON mn.id = mc.ctrl_id " +
@@ -2549,16 +2549,16 @@ namespace InterUlc.Db
             string qury = string.Format(query_all, item.Id);
             long count=db.Scalar<long>(qury);
             statRes.All = count;
-            qury = string.Format(query_dev, item.Id,0);
+            qury = string.Format(query_dev, item.Id,"=",0);
             count = db.Scalar<long>(qury);
             statRes.AllRvp = count;
-            qury = string.Format(query_dev, item.Id, 1);
+            qury = string.Format(query_dev, item.Id,">", 0);
             count = db.Scalar<long>(qury);
             statRes.AllUlc = count;
-            qury = string.Format(query_net,DateTime.Now.ToString("yyyy-MM-dd"), item.Id, 0);
+            qury = string.Format(query_net,DateTime.Now.ToString("yyyy-MM-dd"), item.Id,"=", 0);
             count = db.Scalar<long>(qury);
             statRes.AllRvpNet = count;
-            qury = string.Format(query_net, DateTime.Now.ToString("yyyy-MM-dd"), item.Id, 1);
+            qury = string.Format(query_net, DateTime.Now.ToString("yyyy-MM-dd"), item.Id,">", 0);
             count = db.Scalar<long>(qury);
             statRes.AllUlcNet = count;
             qury = string.Format(query_rs, DateTime.Now.ToString("yyyy-MM-dd"), item.Id);

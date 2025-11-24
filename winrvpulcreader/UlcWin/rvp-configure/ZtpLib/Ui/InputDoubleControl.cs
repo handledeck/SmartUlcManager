@@ -31,6 +31,9 @@ namespace Ztp.Ui
       get { return numericUpDown.Value; }
       set
       {
+        if(value<1)
+          numericUpDown.Value = 255;
+        else
         numericUpDown.Value = value; 
       }
     }

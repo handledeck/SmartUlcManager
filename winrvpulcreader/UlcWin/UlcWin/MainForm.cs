@@ -2586,6 +2586,7 @@ namespace UlcWin
             {
               sform.SetLabelText(string.Format("Обработка журнала сообщений:{0}-{1}", it.Name, it.Ip));
               dicEvt = new Dictionary<DateTime, List<Log>>();
+              
               foreach (var item in lstLog)
               {
                 var dtg = new DateTime(item.event_time.Year, item.event_time.Month, item.event_time.Day);
@@ -2598,6 +2599,7 @@ namespace UlcWin
                   dicEvt[dtg].Add(item);
                 }
               }
+              var sortedByKeyAsc = dicEvt.OrderBy(x => x.Key);
               sform.DialogResult = DialogResult.OK;
             }
             else
@@ -2627,10 +2629,12 @@ namespace UlcWin
             evf.listView1.Groups.Clear();
             string dt_evtLst = "dd.MM.yy HH:mm:ss";
             string dt_evtGrp = "dd.MM.yy";
+            
             foreach (var item in dicEvt)
             {
               var grp = evf.listView1.Groups.Add(item.Key.ToString(dt_evtGrp), item.Key.ToString("dd.MM.yy"));
-              foreach (var itdata in item.Value)
+              var ord = item.Value.ToList().OrderBy(x=>x.event_time);
+              foreach (var itdata in ord)
               {
                 ListViewItem itevt = new ListViewItem(itdata.event_time.ToString(dt_evtLst), grp);
 

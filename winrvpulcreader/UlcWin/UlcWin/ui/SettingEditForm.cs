@@ -779,6 +779,8 @@ namespace UlcWin.ui
       string command = ZtpProtocol.LightSwitchOnOffCommand(this.__pwd, !__ztpConfig.IsSwitchOn);
       try
       {
+        //Command = PWD:YWRtaW4 = LIGHTS:0
+
         sf.SetLabelText(string.Format("Запись в контроллер {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
         client = GetTcpConnection(__ztpConfig.IpOwn);
         NetworkStream stream = client.GetStream();
@@ -825,6 +827,10 @@ namespace UlcWin.ui
             }
           }
         }
+        else {
+          throw new Exception();
+        } 
+          
       }
       catch (Exception exp)
       {
