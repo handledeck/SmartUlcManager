@@ -3575,14 +3575,20 @@ namespace UlcWin
     {
       bool op = false;
       //string at = string.Empty;
-        if(itip.UType==1)
-        command="###AT#ENHRST=1,0\r";
+      //if(itip.UType==1)
+      //command="###AT#ENHRST=1,0\r";
+      //if (itip.UlcConfig.VER == "I16O2A2-LDC-3-FOTA" || itip.UlcConfig.VER == "I16O2A2-LDC-3-FOTA-BT")
+        //utype = "РВП-18";
+      if (itip.UlcConfig.VER == "I4O1A1-LDC-3-FOTA-DM" || itip.UlcConfig.VER == "I4O1A1-LDC-3-FOTA")
+        command = "###AT#ENHRST=1,0\r";
+      //else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM" || uc.VER == "I1O1A1-LEM-4-FOTA")
+      //utype = "ULC-3-Lite";
       byte[] bAt = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
       byte[] bRead = new byte[128];
       try
       {
         stream.Write(bAt, 0, bAt.Length);
-        int len = stream.Read(bRead, 0, bRead.Length);
+        /*int len = stream.Read(bRead, 0, bRead.Length);
         if (len > 0)
         {
           string answ = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, bRead.Length);
@@ -3594,7 +3600,8 @@ namespace UlcWin
         else
         {
           throw new Exception("Ошибка чтения...");
-        }
+        }*/
+        op = true;
       }
       catch 
       {

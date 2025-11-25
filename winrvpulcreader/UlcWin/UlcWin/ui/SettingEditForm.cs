@@ -782,10 +782,11 @@ namespace UlcWin.ui
         //Command = PWD:YWRtaW4 = LIGHTS:0
 
         sf.SetLabelText(string.Format("Запись в контроллер {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
-        client = GetTcpConnection(__ztpConfig.IpOwn);
+        client = this.__getConnection(this.__ztpConfig.IpOwn, 10251);
+        //client = GetTcpConnection(__ztpConfig.IpOwn);
         NetworkStream stream = client.GetStream();
         stream.ReadTimeout = 10000;
-        byte[] bSend = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
+        byte[] bSend = System.Text.ASCIIEncoding.UTF8.GetBytes(command);
         byte[] bRead = new byte[1024];
         stream.Write(bSend, 0, bSend.Length);
         int len = stream.Read(bRead, 0, bRead.Length);

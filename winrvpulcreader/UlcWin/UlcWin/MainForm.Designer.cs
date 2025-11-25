@@ -1345,7 +1345,7 @@ namespace UlcWin
             this.mapsToolStripMenuItem});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 314);
+      this.LvMenu.Size = new System.Drawing.Size(224, 292);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
