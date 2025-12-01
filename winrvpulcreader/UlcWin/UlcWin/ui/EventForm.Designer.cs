@@ -33,11 +33,13 @@
       this.listView1 = new System.Windows.Forms.ListView();
       this.Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.Evt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.evtDsc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.EvtImageList = new System.Windows.Forms.ImageList(this.components);
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.button1 = new System.Windows.Forms.Button();
+      this.btnUpdate = new System.Windows.Forms.Button();
       this.btnSave = new System.Windows.Forms.Button();
-      this.evtDsc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.SuspendLayout();
@@ -53,7 +55,7 @@
       this.listView1.HideSelection = false;
       this.listView1.Location = new System.Drawing.Point(3, 3);
       this.listView1.Name = "listView1";
-      this.listView1.Size = new System.Drawing.Size(835, 602);
+      this.listView1.Size = new System.Drawing.Size(835, 603);
       this.listView1.SmallImageList = this.EvtImageList;
       this.listView1.TabIndex = 0;
       this.listView1.UseCompatibleStateImageBehavior = false;
@@ -68,6 +70,11 @@
       // 
       this.Evt.Text = "Событие";
       this.Evt.Width = 168;
+      // 
+      // evtDsc
+      // 
+      this.evtDsc.Text = "Комментарий";
+      this.evtDsc.Width = 447;
       // 
       // EvtImageList
       // 
@@ -95,27 +102,44 @@
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.button1);
+      this.panel1.Controls.Add(this.btnUpdate);
       this.panel1.Controls.Add(this.btnSave);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(3, 611);
+      this.panel1.Location = new System.Drawing.Point(3, 612);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(835, 38);
+      this.panel1.Size = new System.Drawing.Size(835, 37);
       this.panel1.TabIndex = 1;
+      // 
+      // button1
+      // 
+      this.button1.Location = new System.Drawing.Point(9, 5);
+      this.button1.Name = "button1";
+      this.button1.Size = new System.Drawing.Size(116, 23);
+      this.button1.TabIndex = 3;
+      this.button1.Text = "Очистить лог";
+      this.button1.UseVisualStyleBackColor = true;
+      this.button1.Click += new System.EventHandler(this.Evt_clearLog);
+      // 
+      // btnUpdate
+      // 
+      this.btnUpdate.Location = new System.Drawing.Point(131, 6);
+      this.btnUpdate.Name = "btnUpdate";
+      this.btnUpdate.Size = new System.Drawing.Size(89, 23);
+      this.btnUpdate.TabIndex = 2;
+      this.btnUpdate.Text = "Обновить";
+      this.btnUpdate.UseVisualStyleBackColor = true;
+      this.btnUpdate.Click += new System.EventHandler(this.btnUpdateEvents);
       // 
       // btnSave
       // 
+      this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.btnSave.Location = new System.Drawing.Point(737, 6);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(89, 23);
       this.btnSave.TabIndex = 1;
-      this.btnSave.Text = "Ок";
+      this.btnSave.Text = "Выход";
       this.btnSave.UseVisualStyleBackColor = true;
-      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-      // 
-      // evtDsc
-      // 
-      this.evtDsc.Text = "Комментарий";
-      this.evtDsc.Width = 447;
       // 
       // EventForm
       // 
@@ -144,5 +168,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.ColumnHeader evtDsc;
-  }
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button button1;
+    }
 }

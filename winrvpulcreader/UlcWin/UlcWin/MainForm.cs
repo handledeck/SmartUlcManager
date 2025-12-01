@@ -42,6 +42,7 @@ namespace UlcWin
 
   public partial class LoadForm : Form
   {
+    public delegate void eventdata(object sender, EventArgs e);
     public delegate void UpdateItemDelegate(ListViewItem selItem, string message);
     public DbReader __db;
     UlcWin.win.WaitForm __frm = null;
@@ -2544,8 +2545,82 @@ namespace UlcWin
       }
     }
 
-    private void tsMenuReadCurrentLog_Click(object sender, EventArgs e)
+    /// <summary>
+    /// Любая команда. Обязательно с окончанием \r
+    /// </summary>
+    /// <param name="command">Любая команда. Обязательно с окончанием \r</param>
+    /// <returns></returns>
+    internal byte[] WriteCommandTo(string command)
     {
+      if (CheckSessionPassword())
+      {
+        string comm = ZtpProtocol.SetPasswordCommand(__pwd, command);
+        SimpleWaitForm siForm = null;
+        TcpClient client = null;
+        byte[] bCfg = null;
+        using (siForm = new SimpleWaitForm(new Action(() =>
+        {
+          try
+          {
+            ItemIp it = null;
+            this.Invoke(new Action(() => {
+              var itm = this.LstViewItm.SelectedItems[0];
+              it = (ItemIp)itm.Tag;
+            }));
+            
+            siForm.SetLabelText(string.Format("Соединяюсь с {0}-{1}", it.Name, it.Ip));
+            client = this.GetConnection(it.Ip, 10251);
+            if (client == null)
+              throw new Exception("Ошибка соединения...");
+            NetworkStream stream = client.GetStream();
+            bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
+            stream.Write(bCfg, 0, bCfg.Length);
+            siForm.SetLabelText(string.Format("Запись команды {0}-{1}", it.Name, it.Ip));
+            int len = stream.Read(bCfg, 0, bCfg.Length);
+            if (len > 0)
+            {
+              string answ = System.Text.ASCIIEncoding.ASCII.GetString(bCfg, 0, len);
+              if (answ.Equals("PWD:OK\r\n"))
+              {
+                siForm.DialogResult = DialogResult.OK;
+              }
+              else
+              {
+                throw new Exception("Ошибка записи команды в устройство");
+              }
+            }
+            else
+            {
+              throw new Exception("Ошибка записи команды в устройство");
+            }
+          }
+          catch (Exception exc)
+          {
+            MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            siForm.DialogResult = DialogResult.Cancel;
+          }
+          finally
+          {
+            if (client != null)
+              client.Close();
+          }
+        })))
+        {
+          DialogResult res = siForm.ShowDialog();
+          if (res == DialogResult.OK)
+          {
+            return bCfg;
+          }
+        }
+      }
+      return null;
+    }
+
+    EventForm __evf = null;
+     internal void tsMenuReadCurrentLog_Click(object sender, EventArgs e)
+    {
+
+      
       if (this.LstViewItm.SelectedItems[0] != null)
       {
         ListViewItem itm = this.LstViewItm.SelectedItems[0];
@@ -2557,6 +2632,7 @@ namespace UlcWin
         }
       }
       Dictionary<DateTime, List<Log>> dicEvt = null;
+      
       using (SimpleWaitForm sform = new SimpleWaitForm())
       {
         sform.Text = "Запрос журнала сообщений";
@@ -2564,6 +2640,9 @@ namespace UlcWin
         ItemIp it = (ItemIp)itm.Tag;
         Exception outExp = null;
         List<Log> lstLog = null;
+        bool result = false;
+        if(__evf==null)
+        __evf = new EventForm(this.tsMenuReadCurrentLog_Click,this.WriteCommandTo);
         sform.RunAction(new Action(() =>
         {
           try
@@ -2599,8 +2678,21 @@ namespace UlcWin
                   dicEvt[dtg].Add(item);
                 }
               }
-              var sortedByKeyAsc = dicEvt.OrderBy(x => x.Key);
+              //Dictionary<DateTime, List<Log>> sortedByKeyAsc =(Dictionary<DateTime, List<Log>>) dicEvt.OrderBy(x => x.Key);
+              __evf.Events = dicEvt;
+             
               sform.DialogResult = DialogResult.OK;
+              if (sender == null)
+              {
+                result=false;
+                __evf.SetEventList();
+                //sform.DialogResult = DialogResult;
+              }
+              else {
+                result = true;
+              }
+                
+                //
             }
             else
             {
@@ -2620,68 +2712,11 @@ namespace UlcWin
             //MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
           }
         }));
-        DialogResult result = sform.ShowDialog();
-        if (result == DialogResult.OK)
-        {
-          using (EventForm evf = new EventForm())
-          {
-            evf.listView1.Items.Clear();
-            evf.listView1.Groups.Clear();
-            string dt_evtLst = "dd.MM.yy HH:mm:ss";
-            string dt_evtGrp = "dd.MM.yy";
-            
-            foreach (var item in dicEvt)
-            {
-              var grp = evf.listView1.Groups.Add(item.Key.ToString(dt_evtGrp), item.Key.ToString("dd.MM.yy"));
-              var ord = item.Value.ToList().OrderBy(x=>x.event_time);
-              foreach (var itdata in ord)
-              {
-                ListViewItem itevt = new ListViewItem(itdata.event_time.ToString(dt_evtLst), grp);
 
-                switch (itdata.event_level)
-                {
-                  case EnumLogs.LOG_LVL.logDEBUG:
-                    itevt.ImageIndex = 2;
-                    break;
-                  case EnumLogs.LOG_LVL.logINFO:
-                    itevt.ImageIndex = 0;
-                    break;
-                  case EnumLogs.LOG_LVL.logWARNING:
-                    itevt.ImageIndex = 1;
-                    break;
-                  case EnumLogs.LOG_LVL.logERROR:
-                    itevt.ImageIndex = 3;
-                    break;
-                  case EnumLogs.LOG_LVL.logFATAL:
-                    itevt.ImageIndex = 3;
-                    break;
-                  default:
-                    itevt.ImageIndex = 0;
-                    break;
-                }
-                itevt.SubItems.Add(Log.ParceLevel((EnumLogs.LOG_LVL)itdata.event_level));
-                itevt.SubItems.Add(itdata.event_msg);
-                evf.listView1.Items.Add(itevt);
-              }
-            }
-            if (evf.ShowDialog() == DialogResult.OK)
-            {
-              //using (SimpleWaitForm siForm = new SimpleWaitForm())
-              //{
-              //  siForm.RunAction(new Action(() =>
-              //  {
-              //    siForm.SetLabelText("Обновляю базу данных...");
-              //    foreach (var item in dicEvt)
-              //    {
-              //      this.__db.InsertLogMsg(item.Value, it.Id);
-              //    }
-              //    siForm.DialogResult = DialogResult.OK;
-              //  }));
-              //  siForm.ShowDialog();
-              //}
-
-            }
-          }
+        DialogResult res=sform.ShowDialog();
+      if(res == DialogResult.OK) { 
+        if(result)
+            __evf.ShowDialog();
         }
         else
         {
@@ -2689,6 +2724,9 @@ namespace UlcWin
         }
       }
     }
+   
+    
+   
 
     string RemChar(string name)
     {
@@ -3584,7 +3622,7 @@ namespace UlcWin
       //else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM" || uc.VER == "I1O1A1-LEM-4-FOTA")
       //utype = "ULC-3-Lite";
       byte[] bAt = System.Text.ASCIIEncoding.ASCII.GetBytes(command);
-      byte[] bRead = new byte[128];
+      //byte[] bRead = new byte[128];
       try
       {
         stream.Write(bAt, 0, bAt.Length);
@@ -3605,6 +3643,7 @@ namespace UlcWin
       }
       catch 
       {
+        op = false;
       }
 
       return op;

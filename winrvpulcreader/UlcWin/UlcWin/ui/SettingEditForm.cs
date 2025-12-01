@@ -33,7 +33,7 @@ namespace UlcWin.ui
   {
     //string __default = "APN:vpn2.mts.by USER:vpn PASS:gsd9drekj5 DT:1486391398 DEBOUNCE:110 DEBUG:0 EST:1 IP:15;10;20;1 TCP:3080 TSEND:1 DBZ:1 AIN:1 DIN:15 DOUT:1 DOOR:15 LATIT:55.191 LONGIT:30.125 TZ:3 NUM:1 SERIAL:9600,8,0,1 TMSET:00:30 IPP:255.255.255.255 PERP:1 LOGSLVL:0 RAS:1 SCHED:EQEBDB8BAwAeABQ==";
     string __messgage;
-    ZtpConfig __ztpConfig = null;
+    public ZtpConfig __ztpConfig = null;
     DbReader __db = null;
     GetConnectionDelegate __getConnection = null;
     string __name_object = string.Empty;
@@ -147,7 +147,8 @@ namespace UlcWin.ui
       ZtpConfig config = __config.Value;
       if (ControllerType.GetControllerType(config.Version) != EnumTypeController.ULC2Lite)
       {
-        this.TabsController.TabPages.Remove(this.TabsController.TabPages[3]);
+        if(this.TabsController.TabPages.Count>3)
+          this.TabsController.TabPages.Remove(this.TabsController.TabPages[3]);
       }
       else {
         ethernetModule1.Value = __forwards;
@@ -371,9 +372,15 @@ namespace UlcWin.ui
 
     }
 
+    public delegate byte[] CommandWriteDelegate(string command);
+
+    /// <summary>
+    /// Запись любой команды 
+    /// </summary>
+    
+
     void SingleSettingWrite()
     {
-
       if (CheckSessionPassword())
       {
         __ztpConfig = __config.Value;
@@ -457,7 +464,8 @@ namespace UlcWin.ui
           DialogResult res = siForm.ShowDialog();
           if (res == DialogResult.OK)
           {
-            MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btnSave_Click(null, null);
+            //MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
         }
       }
@@ -704,16 +712,19 @@ namespace UlcWin.ui
                 throw new Exception("Ошибка обновления данных");
               }
             }
+            __ztpConfig = ZtpProtocol.DeserializeZtpConfig(message);
             this.usrUartModule1.Value = buffer;
             this.usrUartModule1.ListMBLabel = lstLbl;
             this.usrUartModule1.SetUartArray(buffer, lstLbl);
-            this.ethernetModule1.Value = forward;
+            //this.ethernetModule1.Value = forward;
+            this.__forwards=forward;
             this.BeginInvoke(new Action(() => { this.ethernetModule1.InitCB(); }));
+            this.BeginInvoke(new Action(() => { this.InitConfig(); }));
             
             //getConfig();
             sfrm.DialogResult = DialogResult.OK;
           }
-          catch
+          catch(Exception ee)
           {
             sfrm.DialogResult = DialogResult.Cancel;
 
@@ -800,32 +811,37 @@ namespace UlcWin.ui
           }
           else
           {
-            byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
-            sf.SetLabelText(string.Format("Чтение конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
-            stream.Write(bCfg, 0, bCfg.Length);
-            for (int i = 0; i < 2; i++)
-            {
-              len = stream.Read(bRead, 0, bRead.Length);
-              if (len == 0)
-                throw new Exception("Ошибка чтения конфигурации");
-              string message = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, len);
-              if (!string.IsNullOrEmpty(message))
-              {
-                int ind = message.IndexOf("CONFIG");
-                if (ind != -1)
-                {
-                  string msg = message.Substring(ind, message.Length - ind);
-                  __messgage = msg;
-                  __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(msg);
-                  sf.DialogResult = DialogResult.OK;
-                  break;
-                }
-              }
-              else
-              {
-                throw new Exception("Ошибка чтения...");
-              }
-            }
+            //byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
+            //sf.SetLabelText(string.Format("Чтение конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
+            //stream.Write(bCfg, 0, bCfg.Length);
+            
+            //for (int i = 0; i < 2; i++)
+            //{
+            //  Thread.Sleep(5000);
+            //  len = stream.Read(bRead, 0, bRead.Length);
+            //  if (len == 0)
+            //    throw new Exception("Ошибка чтения конфигурации");
+            //  string message = System.Text.ASCIIEncoding.ASCII.GetString(bRead, 0, len);
+            //  if (!string.IsNullOrEmpty(message))
+            //  {
+            //    int ind = message.IndexOf("CONFIG");
+            //    if (ind != -1)
+            //    {
+            //      string msg = message.Substring(ind, message.Length - ind);
+            //      __messgage = msg;
+            //      __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(msg);
+                  
+            //      sf.DialogResult = DialogResult.OK;
+            //      break;
+            //    }
+            //  }
+            //  else
+            //  {
+            //    throw new Exception("Ошибка чтения...");
+            //  }
+            //}
+            ////btnSave_Click(null, null);
+            sf.DialogResult = DialogResult.OK;
           }
         }
         else {
@@ -848,7 +864,9 @@ namespace UlcWin.ui
         DialogResult res = sf.ShowDialog();
         if (res == DialogResult.OK)
         {
-          InitConfig();
+          Thread.Sleep(100);
+          this.btnSave_Click(null, null);
+          //this.BeginInvoke(new Action(() => { this.InitConfig(); }));
         }
         else
         {
