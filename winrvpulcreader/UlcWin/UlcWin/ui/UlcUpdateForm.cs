@@ -335,11 +335,14 @@ namespace UlcWin.ui
     {
       try
       {
-        if (this.__cancelTokenSource.Token != null)
+        if (this.__cancelTokenSource != null)
+        {
+          if (this.__cancelTokenSource.Token != null)
 
-          this.__cancelTokenSource.Cancel();
+            this.__cancelTokenSource.Cancel();
+        }
       }
-      catch {}
+      catch { }
       
     }
   }

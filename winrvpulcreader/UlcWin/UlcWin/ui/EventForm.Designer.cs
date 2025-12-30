@@ -37,7 +37,7 @@
       this.EvtImageList = new System.Windows.Forms.ImageList(this.components);
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.panel1 = new System.Windows.Forms.Panel();
-      this.button1 = new System.Windows.Forms.Button();
+      this.btnClearLog = new System.Windows.Forms.Button();
       this.btnUpdate = new System.Windows.Forms.Button();
       this.btnSave = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
@@ -102,7 +102,7 @@
       // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.button1);
+      this.panel1.Controls.Add(this.btnClearLog);
       this.panel1.Controls.Add(this.btnUpdate);
       this.panel1.Controls.Add(this.btnSave);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -111,18 +111,20 @@
       this.panel1.Size = new System.Drawing.Size(835, 37);
       this.panel1.TabIndex = 1;
       // 
-      // button1
+      // btnClearLog
       // 
-      this.button1.Location = new System.Drawing.Point(9, 5);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(116, 23);
-      this.button1.TabIndex = 3;
-      this.button1.Text = "Очистить лог";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Click += new System.EventHandler(this.Evt_clearLog);
+      this.btnClearLog.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.btnClearLog.Location = new System.Drawing.Point(9, 5);
+      this.btnClearLog.Name = "btnClearLog";
+      this.btnClearLog.Size = new System.Drawing.Size(116, 23);
+      this.btnClearLog.TabIndex = 3;
+      this.btnClearLog.Text = "Очистить лог";
+      this.btnClearLog.UseVisualStyleBackColor = true;
+      this.btnClearLog.Click += new System.EventHandler(this.Evt_clearLog);
       // 
       // btnUpdate
       // 
+      this.btnUpdate.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.btnUpdate.Location = new System.Drawing.Point(131, 6);
       this.btnUpdate.Name = "btnUpdate";
       this.btnUpdate.Size = new System.Drawing.Size(89, 23);
@@ -133,12 +135,13 @@
       // 
       // btnSave
       // 
+      this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
       this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.btnSave.Location = new System.Drawing.Point(737, 6);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(89, 23);
       this.btnSave.TabIndex = 1;
-      this.btnSave.Text = "Выход";
+      this.btnSave.Text = "Закрыть";
       this.btnSave.UseVisualStyleBackColor = true;
       // 
       // EventForm
@@ -169,6 +172,6 @@
         private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.ColumnHeader evtDsc;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClearLog;
     }
 }

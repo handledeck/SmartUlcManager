@@ -36,6 +36,10 @@ namespace UlcWin
       __eventdata = eventdata;
       InitializeComponent();
       this.Shown += EventForm_Shown;
+      if (commandWrite == null)
+        this.btnClearLog.Enabled = false;
+      else
+        this.btnClearLog.Enabled = true;
     }
 
     private void EventForm_Shown(object sender, EventArgs e)

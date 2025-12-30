@@ -49,7 +49,7 @@ namespace Ztp.Enums
       {
         return Device.ULC2;
       }
-      else if (version == "I3O2A1-LEM-4-FOTA-prIM")
+      else if (version == "I3O2A1-LEM-4-FOTA-prIM" || version=="I1O1A1-LEM-4-FOTA")
       {
         return Device.ULC2Lite;
       }

@@ -1239,12 +1239,22 @@ namespace InterUlc.Db
             item.Value.UlcConfig = uc;
           }
           string utype = "неизвестно";
-          if (uc.VER == "I16O2A2-LDC-3-FOTA" || uc.VER == "I16O2A2-LDC-3-FOTA-BT") 
+          if (uc.VER == "I16O2A2-LDC-3-FOTA" || uc.VER == "I16O2A2-LDC-3-FOTA-BT")
+          {
             utype = "РВП-18";
+            item.Value.UType = 0;
+          }
           else if (uc.VER == "I4O1A1-LDC-3-FOTA-DM" || uc.VER == "I4O1A1-LDC-3-FOTA")
+          {
+            item.Value.UType = 1;
             utype = "ULC-2";
-          else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM" || uc.VER== "I1O1A1-LEM-4-FOTA")
+          }
+
+          else if (uc.VER == "I3O2A1-LEM-4-FOTA-prIM" || uc.VER == "I1O1A1-LEM-4-FOTA") {
             utype = "ULC-3-Lite";
+            item.Value.UType = 2;
+          }
+            
           it.SubItems.Add(utype);
           DateTime dtRecord = (DateTime)dr_ip[1];
           it.SubItems[0].Text = dtRecord.ToString("dd.MM.yy HH:mm:ss");
@@ -1435,16 +1445,28 @@ namespace InterUlc.Db
           }));//
         }*/
       }
+      
       con_ip.Close();
       if (list != null)
       {
         IAsyncResult result = list.BeginInvoke(new Action(() =>
          {
+           const string sql = @"UPDATE main_ctrlinfo SET unit_type_id = @unit_type_id WHERE id = @id";
+
+           con_ip = new NpgsqlConnection(this.__connection);
+           con_ip.Open();
+
            foreach (var item in lstRes)
            {
              list.Items.Add(item);
+             ItemIp itemIp = (ItemIp)item.Tag;
+
+             cmd_ip = new NpgsqlCommand(sql, con_ip);
+             cmd_ip.Parameters.AddWithValue("unit_type_id", (int)itemIp.UType);
+             cmd_ip.Parameters.AddWithValue("id", itemIp.Id);
+
+             int resu=cmd_ip.ExecuteNonQuery();
            }
-           //list.Items.Add(it);
            list.Visible = true;
          }));
         result.AsyncWaitHandle.WaitOne();
