@@ -46,6 +46,7 @@
       this.TabScheduleLight = new System.Windows.Forms.TabPage();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.@__planEditor = new Ztp.Ui.LightPlanEditorControl();
+      this.btnShowAll = new System.Windows.Forms.Button();
       this.PicLightSwitcher = new System.Windows.Forms.PictureBox();
       this.btnLightSwitcher = new System.Windows.Forms.Button();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -75,10 +76,10 @@
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.ethernetModule1 = new UlcWin.Controls.Modules.EthernetModule();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-      this.btnOk = new System.Windows.Forms.Button();
+      this.panel3 = new System.Windows.Forms.Panel();
+      this.btnClose = new System.Windows.Forms.Button();
       this.btnSave = new System.Windows.Forms.Button();
-      this.btnFile = new System.Windows.Forms.Button();
+      this.btnOk = new System.Windows.Forms.Button();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -102,7 +103,7 @@
       this.panel2.SuspendLayout();
       this.groupBox5.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
-      this.flowLayoutPanel1.SuspendLayout();
+      this.panel3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
       this.SuspendLayout();
       // 
@@ -378,6 +379,7 @@
       // 
       // splitContainer1.Panel2
       // 
+      this.splitContainer1.Panel2.Controls.Add(this.btnShowAll);
       this.splitContainer1.Panel2.Controls.Add(this.PicLightSwitcher);
       this.splitContainer1.Panel2.Controls.Add(this.btnLightSwitcher);
       this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
@@ -403,6 +405,19 @@
       ztpLocation1.Longitude = 0F;
       ztpLocation1.TimeZone = ((sbyte)(0));
       this.@__planEditor.ZtpLocation = ztpLocation1;
+      // 
+      // btnShowAll
+      // 
+      this.btnShowAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnShowAll.ImageIndex = 17;
+      this.btnShowAll.ImageList = this.imlTc;
+      this.btnShowAll.Location = new System.Drawing.Point(50, 542);
+      this.btnShowAll.Name = "btnShowAll";
+      this.btnShowAll.Size = new System.Drawing.Size(198, 26);
+      this.btnShowAll.TabIndex = 12;
+      this.btnShowAll.Text = "Просмотр расписаний";
+      this.btnShowAll.UseVisualStyleBackColor = false;
+      this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
       // 
       // PicLightSwitcher
       // 
@@ -476,6 +491,7 @@
       this.imlTc.Images.SetKeyName(14, "lightbulb.ico");
       this.imlTc.Images.SetKeyName(15, "lightbulb_off.ico");
       this.imlTc.Images.SetKeyName(16, "network_ip.png");
+      this.imlTc.Images.SetKeyName(17, "time.png");
       // 
       // btnScheduleDelete
       // 
@@ -688,7 +704,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(384, 30);
+      this.label3.Location = new System.Drawing.Point(384, 38);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(94, 13);
       this.label3.TabIndex = 6;
@@ -697,7 +713,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(55, 35);
+      this.label1.Location = new System.Drawing.Point(55, 43);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(59, 13);
       this.label1.TabIndex = 2;
@@ -724,7 +740,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(55, 67);
+      this.label2.Location = new System.Drawing.Point(55, 75);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(100, 13);
       this.label2.TabIndex = 3;
@@ -767,61 +783,60 @@
       this.tableLayoutPanel1.ColumnCount = 1;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.Controls.Add(this.TabsController, 0, 0);
-      this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 2;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.22767F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.772334F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 695);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
-      // flowLayoutPanel1
+      // panel3
       // 
-      this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.flowLayoutPanel1.Controls.Add(this.btnOk);
-      this.flowLayoutPanel1.Controls.Add(this.btnSave);
-      this.flowLayoutPanel1.Controls.Add(this.btnFile);
-      this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-      this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 650);
-      this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-      this.flowLayoutPanel1.Size = new System.Drawing.Size(992, 41);
-      this.flowLayoutPanel1.TabIndex = 1;
+      this.panel3.Controls.Add(this.btnClose);
+      this.panel3.Controls.Add(this.btnSave);
+      this.panel3.Controls.Add(this.btnOk);
+      this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel3.Location = new System.Drawing.Point(4, 650);
+      this.panel3.Name = "panel3";
+      this.panel3.Size = new System.Drawing.Size(992, 41);
+      this.panel3.TabIndex = 1;
+      // 
+      // btnClose
+      // 
+      this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.btnClose.Location = new System.Drawing.Point(878, 6);
+      this.btnClose.Name = "btnClose";
+      this.btnClose.Size = new System.Drawing.Size(104, 30);
+      this.btnClose.TabIndex = 2;
+      this.btnClose.Text = "Выход";
+      this.btnClose.UseVisualStyleBackColor = true;
+      this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+      // 
+      // btnSave
+      // 
+      this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this.btnSave.Location = new System.Drawing.Point(10, 6);
+      this.btnSave.Name = "btnSave";
+      this.btnSave.Size = new System.Drawing.Size(106, 30);
+      this.btnSave.TabIndex = 0;
+      this.btnSave.Text = "Обновить";
+      this.btnSave.UseVisualStyleBackColor = true;
+      this.btnSave.Click += new System.EventHandler(this.btnUpdate_Click);
       // 
       // btnOk
       // 
       this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Right;
-      this.btnOk.Location = new System.Drawing.Point(885, 3);
+      this.btnOk.Location = new System.Drawing.Point(122, 6);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(104, 30);
       this.btnOk.TabIndex = 1;
       this.btnOk.Text = "Записать";
       this.btnOk.UseVisualStyleBackColor = true;
       this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-      // 
-      // btnSave
-      // 
-      this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
-      this.btnSave.Location = new System.Drawing.Point(773, 3);
-      this.btnSave.Name = "btnSave";
-      this.btnSave.Size = new System.Drawing.Size(106, 29);
-      this.btnSave.TabIndex = 0;
-      this.btnSave.Text = "Обновить";
-      this.btnSave.UseVisualStyleBackColor = true;
-      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-      // 
-      // btnFile
-      // 
-      this.btnFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
-      this.btnFile.Location = new System.Drawing.Point(645, 4);
-      this.btnFile.Name = "btnFile";
-      this.btnFile.Size = new System.Drawing.Size(122, 27);
-      this.btnFile.TabIndex = 1;
-      this.btnFile.Text = "Из файла";
-      this.btnFile.UseVisualStyleBackColor = true;
-      this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
       // 
       // openFileDialog1
       // 
@@ -865,7 +880,7 @@
       this.panel2.ResumeLayout(false);
       this.groupBox5.ResumeLayout(false);
       this.tableLayoutPanel1.ResumeLayout(false);
-      this.flowLayoutPanel1.ResumeLayout(false);
+      this.panel3.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
       this.ResumeLayout(false);
 
@@ -892,10 +907,6 @@
     private System.Windows.Forms.Button btnScheduleAdd;
     private System.Windows.Forms.Button btnScheduleDelete;
     private System.Windows.Forms.Button btnScheduleEdit;
-    private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-    private System.Windows.Forms.Button btnOk;
-    private System.Windows.Forms.Button btnFile;
-    private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
     public System.Windows.Forms.ImageList imlTc;
@@ -917,5 +928,10 @@
     private System.Windows.Forms.ErrorProvider errorProvider1;
     public System.Windows.Forms.TextBox txtMask;
     private System.Windows.Forms.Label label3;
-  }
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnShowAll;
+    }
 }

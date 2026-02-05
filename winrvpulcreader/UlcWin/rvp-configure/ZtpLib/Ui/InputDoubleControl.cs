@@ -32,7 +32,7 @@ namespace Ztp.Ui
       set
       {
         if(value<1)
-          numericUpDown.Value = 255;
+          numericUpDown.Value = numericUpDown.Minimum;
         else
         numericUpDown.Value = value; 
       }

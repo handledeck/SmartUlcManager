@@ -1551,6 +1551,7 @@ namespace UlcWin
             }
             else
             {
+
               itip.IsTrue = false;
               __frm.ChangeLabelText(itip.Name, itip.Name, itip.Ip, false, itip.UType, 2);
             }
@@ -1952,27 +1953,41 @@ namespace UlcWin
         selItem.SubItems[9].Text = "нет";
       }
 
-      string it_core = "----";
-      if (!string.IsNullOrEmpty(uc.CORV))
+      //string it_core = "----";
+      //if (!string.IsNullOrEmpty(uc.CORV))
+      //{
+      //  string core = uc.CORV.Replace("\r\n", string.Empty);
+
+      //  if (!core.Equals("12.01.830-B006"))
+      //  {
+
+      //    it_core = "патч";
+      //  }
+      //  else
+      //  {
+      //    it_core = "ok";
+      //  }
+      //}
+      //selItem.SubItems[10].Text = it_core;
+      ListViewItem.ListViewSubItem sbI = selItem.SubItems.Add("\U0001F535");
+      if (uc.CDOUT > 0)
       {
-        string core = uc.CORV.Replace("\r\n", string.Empty);
+        selItem.UseItemStyleForSubItems = false;
 
-        if (!core.Equals("12.01.830-B006"))
-        {
-
-          it_core = "патч";
-        }
-        else
-        {
-          it_core = "ok";
-        }
+        //sbItem.BackColor = Color.LightGray;
+        sbI.ForeColor = Color.DarkOrange;
       }
-      selItem.SubItems[10].Text = it_core;
+      else
+      {
+        selItem.UseItemStyleForSubItems = false;
+        //sbItem.BackColor = Color.LightGray;
+        sbI.ForeColor = Color.DarkGray;
+      }
       if (!string.IsNullOrEmpty(uc.IMEI))
       {
 
-        string emi = uc.IMEI.Replace("\r\n", "");
-        selItem.SubItems[11].Text = emi.Substring(emi.Length - 7, emi.Length - 8);
+        //string emi = uc.IMEI.Replace("\r\n", "");
+        selItem.SubItems[11].Text = uc.IMEI; //emi.Substring(emi.Length - 7, emi.Length - 8);
       }
 
       else
@@ -4437,10 +4452,15 @@ namespace UlcWin
     {
 
     }
-  }
+
+        private void ulcMeterTreeView_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 
 
-  public enum UlcSort
+    public enum UlcSort
   {
     DEFAULT = 0,
     IP = 1,

@@ -1,4 +1,5 @@
 ﻿using InterUlc.Db;
+
 using ServiceStack;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,10 @@ using Ztp.Configuration;
 using Ztp.Enums;
 using Ztp.Protocol;
 using Ztp.Ui;
-
 using static UlcWin.LoadForm;
+using static Ztp.MainForm;
+using static Ztp.Ui.LocationEditorControl;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace UlcWin.ui
 {
@@ -48,7 +51,7 @@ namespace UlcWin.ui
     byte[] __forwards = null;
     public SettingEditForm(string message, List<ListViewItem> items_checked,
       GetConnectionDelegate getConnection, bool multiWrite, Ztp.Enums.Device device, ItemIp selItem, DbReader db)
-      : this(message, getConnection, multiWrite, device, selItem, db,null)
+      : this(message, getConnection, multiWrite, device, selItem, db, null)
     {
       this.__db = db;
       this.__items_checked = items_checked;
@@ -57,14 +60,15 @@ namespace UlcWin.ui
       this.ethernetModule1.ParentsForm = this;
     }
 
-   
 
-    public void SetUartArray(byte[] vs,List<string> vs1) {
+
+    public void SetUartArray(byte[] vs, List<string> vs1)
+    {
       this.__uart_array = vs;
       this.__mbLbl = vs1;
       this.usrUartModule1.Value = this.__uart_array;
-      this.usrUartModule1.ListMBLabel = vs1;  
-      
+      this.usrUartModule1.ListMBLabel = vs1;
+
     }
 
     void SetConfigSettings(Ztp.Enums.Device device)
@@ -132,12 +136,12 @@ namespace UlcWin.ui
       //this.__modBusSettings.TagTableVisible += ModBusSettingsEditorControl1_TagTableVisible;
       //this.__modBusSettings.Download += __modBusSettings_Download;
       //this.__modBusSettings.Upload += __modBusSettings_Upload;
-     // this.__modBusSettings.getCollectionFromTable += __modBusSettings_getCollectionFromTable;
-     // this.__modBusSettings.getStringsTable += __modBusSettings_getStringsTable;
-     // this.__modBusSettings.getGzipLabel += __modBusSettings_getGzipLabel;
+      // this.__modBusSettings.getCollectionFromTable += __modBusSettings_getCollectionFromTable;
+      // this.__modBusSettings.getStringsTable += __modBusSettings_getStringsTable;
+      // this.__modBusSettings.getGzipLabel += __modBusSettings_getGzipLabel;
       //this.__modBusSettings.LoadMBLabels += __modBusSettings_LoadMBLabels;
-    //  this.__modbusItemList.Enabled = false;
-    //  this.__modBusSettings.TagTableVisible += __modBusSettings_TagTableVisible;
+      //  this.__modbusItemList.Enabled = false;
+      //  this.__modBusSettings.TagTableVisible += __modBusSettings_TagTableVisible;
     }
 
     void InitConfig()
@@ -147,12 +151,13 @@ namespace UlcWin.ui
       ZtpConfig config = __config.Value;
       if (ControllerType.GetControllerType(config.Version) != EnumTypeController.ULC2Lite)
       {
-        if(this.TabsController.TabPages.Count>3)
+        if (this.TabsController.TabPages.Count > 3)
           this.TabsController.TabPages.Remove(this.TabsController.TabPages[3]);
       }
-      else {
+      else
+      {
         ethernetModule1.Value = __forwards;
-        ethernetModule1.ParentsForm=this;
+        ethernetModule1.ParentsForm = this;
       }
       if (config.IsSwitchOn)
       {
@@ -192,7 +197,8 @@ namespace UlcWin.ui
       __loadForm = (LoadForm)this.Tag;
       if (this.__selItem.UType == 0)
         this.usrUartModule1.Enabled = false;
-      else {
+      else
+      {
         this.usrUartModule1.Enabled = true;
         this.usrUartModule1.Value = __uart_array;
       }
@@ -208,14 +214,14 @@ namespace UlcWin.ui
     {
       InitializeComponent();
       this.btnSave.Visible = true;
-      this.btnFile.Visible = false;
+      //this.btnFile.Visible = false;
       this.__selItem = selItem;
       this.__name_object = __selItem.Name;
       this.__db = db;
-     this.__forwards = forwards;
+      this.__forwards = forwards;
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
-      device= CtrlType.GetControllerType(__ztpConfig.Version);
+      device = CtrlType.GetControllerType(__ztpConfig.Version);
       this.__device = device;
       this.__config._devType = device;
       Application.Idle += Application_Idle;
@@ -346,7 +352,7 @@ namespace UlcWin.ui
               throw new Exception("Ошибка чтения...");
             }
           }
-          catch 
+          catch
           {
             siForm.DialogResult = DialogResult.Cancel;
           }
@@ -377,7 +383,7 @@ namespace UlcWin.ui
     /// <summary>
     /// Запись любой команды 
     /// </summary>
-    
+
 
     void SingleSettingWrite()
     {
@@ -440,16 +446,17 @@ namespace UlcWin.ui
             }
             ///Запись UART настроек
             ///
-            Exception e= usrUartModule1.WriteExpandUart(client, __pwd, cbIndex);
-            if (ControllerType.GetControllerType(this.__ztpConfig.Version) == EnumTypeController.ULC2Lite) {
+            Exception e = usrUartModule1.WriteExpandUart(client, __pwd, cbIndex);
+            if (ControllerType.GetControllerType(this.__ztpConfig.Version) == EnumTypeController.ULC2Lite)
+            {
               e = EthernetItem.WriteEternetSettings(client, __pwd, this.txtIp.Text,
-                    this.txtGateway.Text,this.txtMask.Text, ethernetModule1.DataSet.Tables[0]);
+                    this.txtGateway.Text, this.txtMask.Text, ethernetModule1.DataSet.Tables[0]);
             }
-            
+
             if (e != null)
               throw e;
           }
-          catch(Exception exc)
+          catch (Exception exc)
           {
             MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             siForm.DialogResult = DialogResult.Cancel;
@@ -464,14 +471,12 @@ namespace UlcWin.ui
           DialogResult res = siForm.ShowDialog();
           if (res == DialogResult.OK)
           {
-            btnSave_Click(null, null);
+            btnUpdate_Click(null, null);
             //MessageBox.Show("Конфигурация обновлена", "Запись", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
         }
       }
     }
-
-
 
     void SetSettingsMultiWrite()
     {
@@ -559,7 +564,7 @@ namespace UlcWin.ui
     {
       if (!this.__multiWrite)
       {
-        
+
         this.SingleSettingWrite();
       }
       else
@@ -691,12 +696,12 @@ namespace UlcWin.ui
     }
 
 
-    private void btnSave_Click(object sender, EventArgs e)
+    private void btnUpdate_Click(object sender, EventArgs e)
     {
       byte[] buffer = null;
       List<string> lstLbl = null;
-      string message=null;
-      byte[] forward=null;
+      string message = null;
+      byte[] forward = null;
       using (SimpleWaitForm sfrm = new SimpleWaitForm())
       {
         sfrm.RunAction(new Action(() =>
@@ -708,7 +713,8 @@ namespace UlcWin.ui
             client = __loadForm.GetConnection(__selItem.Ip, 10251);
             if (client != null)
             {
-              if (!__loadForm.GetConfigIP(client, out message, out buffer, out lstLbl, out forward)) {
+              if (!__loadForm.GetConfigIP(client, out message, out buffer, out lstLbl, out forward))
+              {
                 throw new Exception("Ошибка обновления данных");
               }
             }
@@ -717,14 +723,14 @@ namespace UlcWin.ui
             this.usrUartModule1.ListMBLabel = lstLbl;
             this.usrUartModule1.SetUartArray(buffer, lstLbl);
             //this.ethernetModule1.Value = forward;
-            this.__forwards=forward;
+            this.__forwards = forward;
             this.BeginInvoke(new Action(() => { this.ethernetModule1.InitCB(); }));
             this.BeginInvoke(new Action(() => { this.InitConfig(); }));
-            
+
             //getConfig();
             sfrm.DialogResult = DialogResult.OK;
           }
-          catch(Exception ee)
+          catch (Exception ee)
           {
             sfrm.DialogResult = DialogResult.Cancel;
 
@@ -766,7 +772,7 @@ namespace UlcWin.ui
     {
       string str =
           "При ручном режиме управления освещением расписания освещения будут отключены. Для их повторного включения установите флажок 'Активность планов освещения' и запишите конфигурацию в контроллер\r\n";
-      DialogResult result= MessageBox.Show(str,"Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+      DialogResult result = MessageBox.Show(str, "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
       if (result == DialogResult.No)
         return;
       if (string.IsNullOrEmpty(__pwd))
@@ -814,7 +820,7 @@ namespace UlcWin.ui
             //byte[] bCfg = System.Text.ASCIIEncoding.ASCII.GetBytes("CONFIG?\r");
             //sf.SetLabelText(string.Format("Чтение конфигурации {0}-{1}", __name_object, this.__ztpConfig.IpOwn));
             //stream.Write(bCfg, 0, bCfg.Length);
-            
+
             //for (int i = 0; i < 2; i++)
             //{
             //  Thread.Sleep(5000);
@@ -830,7 +836,7 @@ namespace UlcWin.ui
             //      string msg = message.Substring(ind, message.Length - ind);
             //      __messgage = msg;
             //      __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(msg);
-                  
+
             //      sf.DialogResult = DialogResult.OK;
             //      break;
             //    }
@@ -844,10 +850,11 @@ namespace UlcWin.ui
             sf.DialogResult = DialogResult.OK;
           }
         }
-        else {
+        else
+        {
           throw new Exception();
-        } 
-          
+        }
+
       }
       catch (Exception exp)
       {
@@ -865,7 +872,7 @@ namespace UlcWin.ui
         if (res == DialogResult.OK)
         {
           Thread.Sleep(100);
-          this.btnSave_Click(null, null);
+          this.btnUpdate_Click(null, null);
           //this.BeginInvoke(new Action(() => { this.InitConfig(); }));
         }
         else
@@ -880,7 +887,7 @@ namespace UlcWin.ui
 
     }
 
-    
+
     private bool usrUartModule1_EventReadUartData(out byte[] buffer)
     {
       buffer = null;
@@ -913,7 +920,7 @@ namespace UlcWin.ui
         if (client != null)
           client.Close();
       }
-      
+
     }
 
     private void usrUartModule1_EventWriteUartData()
@@ -939,13 +946,15 @@ namespace UlcWin.ui
           this.btnOk.Enabled = true;
         }
       }
-      else {
+      else
+      {
         this.btnOk.Enabled = true;
       }
     }
 
 
-    bool IsTextAValidIPAddress(string text) {
+    bool IsTextAValidIPAddress(string text)
+    {
       bool result = true;
       string[] values = text.Split(new[] { "." }, StringSplitOptions.None); //keep empty strings when splitting
       result &= values.Length == 4; // aka string has to be like "xx.xx.xx.xx"
@@ -991,9 +1000,83 @@ namespace UlcWin.ui
         btnOk.Enabled = false;
       }
     }
+
+    private void btnClose_Click(object sender, EventArgs e)
+    {
+      this.Close();
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void btnShowAll_Click(object sender, EventArgs e)
+    {
+      ZtpConfig config = __ztpConfig;
+      using (AllShcedulesForm shf = new AllShcedulesForm(config, __selItem))
+      {   
+        
+        shf.ShowAllSchedulers();
+        shf.ShowDialog();
+      }
+    }
+
+
+
+
+
+
+    //using (SimpleWaitForm sfrm = new SimpleWaitForm())
+    //{
+    //  sfrm.RunAction(new Action(() =>
+    //  {
+    //    sfrm.SetHeaderText("Экспорт в Excel");
+    //    sfrm.SetLabelText("Формирую документ");
+    //    ExportToExcelWithGroupingAndHeader();
+    //    sfrm.DialogResult = DialogResult.OK;
+    //  }));
+    //  DialogResult result = sfrm.ShowDialog();
+    //}
+    //ZtpConfig config = __ztpConfig;
+    //ZtpSeason season = config.Light.Scheduler.Seasons[0];
+    //List<DateTimePair> list= ZtpScheduler.CalcTicks(season, config.Light.Scheduler.Seasons[0].Intervals[0],config.TimeZone, config.Latitude,
+    //  config.Longitude);
+    //ListView listView = new ListView();
+    //listView.Items.Clear();
+    //ListViewGroup group = null;
+    //foreach (DateTimePair tuple in list)
+    //{
+    //  Month month = GetMonth(tuple);
+    //  string groupName = month.ToString();
+    //  if (group == null || group.Name != groupName)
+    //  {
+    //    group = new ListViewGroup(month.ToString(), month.GetFieldAttribute().DisplayName);
+    //    listView.Groups.Add(group);
+    //  }
+
+    //  string first = tuple.Item1.HasValue ? tuple.Item1.Value.ToString("dd MMM yyyy HH:mm") : "Нет";
+    //  string second = tuple.Item2.HasValue ? tuple.Item2.Value.ToString("dd MMM yyyy HH:mm") : "Нет";
+
+    //  ListViewItem item = new ListViewItem(new string[] { first, second }, group);
+    //  item.ImageIndex = 0;
+    //  listView.Items.Add(item);
+    //}
+    //listView.ShowGroups = true;
+
+    //__planEditor.ZtpLocation = new LocationEditorControl.ZtpLocation()
+    //{
+    //  Latitude = (float)config.Latitude,
+    //  Longitude = (float)config.Longitude,
+    //  TimeZone = config.TimeZone
+    //};
+    //__planEditor.DoScheduleShow();
+
+
   }
 }
- 
 
 
-  
+
+
+

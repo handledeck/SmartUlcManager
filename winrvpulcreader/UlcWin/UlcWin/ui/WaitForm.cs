@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.Fota;
+using Ztp.Enums;
 
 namespace UlcWin.win
 {
@@ -252,7 +253,23 @@ namespace UlcWin.win
           var it = this.listView1.Items.Add("", isTrue ? 0 : 1);
           it.SubItems.Add(tpName);
           it.SubItems.Add(iPAddress);
-          it.SubItems.Add(isUlc == 1 ? "ULC 2" : "РВП-18");
+          string crlType=string.Empty;
+          if (isUlc == 0)
+          {
+            crlType = "РВП-18";
+          }
+          else if (isUlc == 1)
+          {
+            crlType = "ULC-2";
+          }
+          else if (isUlc == 2)
+          {
+            crlType = "ULC-3-Lite";
+          }
+          else {
+            crlType = "Неопознан";
+          }
+          it.SubItems.Add(crlType);
           it.SubItems.Add(ParceError(error));
           this._wortxt = lblText;
           this.listView1.Items[listView1.Items.Count - 1].EnsureVisible();

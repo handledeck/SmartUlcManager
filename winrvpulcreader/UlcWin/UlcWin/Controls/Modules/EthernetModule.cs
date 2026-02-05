@@ -252,12 +252,12 @@ namespace UlcWin.Controls.Modules
       if (this.dataGridView1.Rows.Count > 0)
         this.BeginInvoke(new Action(() => { this.dataGridView1.Rows.Clear(); }));
         
-      if (Value != null)
+      if (Value != null) 
       {
         byte offset = 0;
         int count = 0;
         List<EthernetItem> list = new List<EthernetItem>();
-        if (Value.Length % 9 != 0)
+        if (Value.Length == 12)
         {
           byte[] tmp = new byte[4];
           Array.Copy(Value, 0, tmp, 0, 4);

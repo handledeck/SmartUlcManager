@@ -1317,7 +1317,8 @@ namespace InterUlc.Db
           {
             it.SubItems.Add("---");
           }
-          string it_core = "----";
+
+          string it_core = string.Empty;
           if (!string.IsNullOrEmpty(uc.CORV))
           {
             string core = uc.CORV.Replace("\r\n", string.Empty);
@@ -1330,11 +1331,16 @@ namespace InterUlc.Db
             {
               it_core = "ok";
             }
+            it.SubItems.Add(it_core);
           }
-          it.SubItems.Add(it_core);
-          //it.SubItems.Add("----");
+          else
+          {
+            //it.SubItems.Add(sbI);
+            it.SubItems.Add("----");
+          }
           if (!string.IsNullOrEmpty(uc.IMEI))
           {
+            it.UseItemStyleForSubItems = false;
             long emai;
             bool bp = long.TryParse(uc.IMEI, out emai);
             /*Поиск отремонтированных контроллеров
@@ -1363,11 +1369,12 @@ namespace InterUlc.Db
           else
             it.SubItems.Add("----");
           it.SubItems.Add(uc.RAS.ToString());
+          
           if (item.Value.UType == 1)
           {
             if (item.Value.Rs_Stat == 0)
             {
-              ListViewItem.ListViewSubItem sbItem= it.SubItems.Add("X");
+              it.SubItems.Add("X");
               //it.UseItemStyleForSubItems = false;
               //sbItem.BackColor = Color.LightGray;
               //sbItem.ForeColor = Color.Gray;
@@ -1383,7 +1390,22 @@ namespace InterUlc.Db
           if (item.Value.UlcConfig != null)
             it.SubItems.Add(((double)(item.Value.UlcConfig.TRAFC / 1024)).ToString() + " KB");
           it.SubItems.Add(item.Value.Active.ToString());
-          it.SubItems.Add(item.Value.IsLight.ToString());
+
+          ListViewItem.ListViewSubItem sbI = it.SubItems.Add("\U0001F535");
+          if (uc.CDOUT > 0)
+          {
+            it.UseItemStyleForSubItems = false;
+
+            //sbItem.BackColor = Color.LightGray;
+            sbI.ForeColor = Color.DarkOrange;
+          }
+          else
+          {
+            it.UseItemStyleForSubItems = false;
+            //sbItem.BackColor = Color.LightGray;
+            sbI.ForeColor = Color.DarkGray;
+          }
+          //it.SubItems.Add(item.Value.IsLight.ToString());
           it.SubItems.Add(item.Value.Comments);
           if (item.Value.Active == 0)
           {
@@ -1411,7 +1433,7 @@ namespace InterUlc.Db
           it.SubItems.Add(item.Value.Rs_Stat.ToString());
           it.SubItems.Add("----");
           it.SubItems.Add(item.Value.Active.ToString());
-          it.SubItems.Add(item.Value.IsLight.ToString());
+          it.SubItems.Add("---");// item.Value.IsLight.ToString());
           it.SubItems.Add(item.Value.Comments);
           if (item.Value.Active == 0)
           {
@@ -2583,9 +2605,9 @@ namespace InterUlc.Db
             qury = string.Format(query_net, DateTime.Now.ToString("yyyy-MM-dd"), item.Id,">", 0);
             count = db.Scalar<long>(qury);
             statRes.AllUlcNet = count;
-            qury = string.Format(query_rs, DateTime.Now.ToString("yyyy-MM-dd"), item.Id);
-            count = db.Scalar<long>(qury);
-            statRes.AllUlcRs = count;
+            //qury = string.Format(query_rs, DateTime.Now.ToString("yyyy-MM-dd"), item.Id);
+            //count = db.Scalar<long>(qury);
+            statRes.AllUlcRs = 0;// count;
             qury = string.Format(query_bad_signal, DateTime.Now.ToString("yyyy-MM-dd"), item.Id,0);
             count = db.Scalar<long>(qury);
             statRes.AllRvpBadSignal = count;

@@ -69,7 +69,7 @@ namespace UlcWin.ui
             //this.lblUusiNotNet.Text = (ulcStatistic.AllUusi - ulcStatistic.AllUusiNet).ToString();
             if (ulcStatistic.All > 0)
             {
-              double count = (double)((100 * ((double)ulcStatistic.NetErrorAll + (double)ulcStatistic.AllErrorRs)) / (double)ulcStatistic.All);
+              double count = (double)((100 * ((double)ulcStatistic.NetErrorAll /*+ (double)ulcStatistic.AllErrorRs*/)) / (double)ulcStatistic.All);
               if (count > 5)
               {
                 this.lblAllPercent.ForeColor = Color.Salmon;

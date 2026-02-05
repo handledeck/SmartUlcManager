@@ -29,7 +29,7 @@ namespace Ztp.Protocol
     public const string Ok = "OK";
     public const string Error = "ERROR";
     public const string MBConfig = "MBCFG";
-    
+
     public const string MBStartPack = "MBP";
     public const string MBLbl = "MBLBL";
     public const string MBstartLbl = "MBL";
@@ -59,7 +59,7 @@ namespace Ztp.Protocol
     public static byte[] ToBytes(string str)
     {
       return DefaultEncoding.GetBytes(str);
-    } 
+    }
 
     public static string FromBytes(byte[] buff)
     {
@@ -153,7 +153,7 @@ namespace Ztp.Protocol
         string[] keyValue = part.Split(new[] { Sep }, StringSplitOptions.RemoveEmptyEntries);
         if (keyValue.Length != 2)
         {
-          if(keyValue[0].CompareTo("TMSET") == 0)
+          if (keyValue[0].CompareTo("TMSET") == 0)
           {
             if (keyValue.Length != 1)
             {
@@ -163,10 +163,10 @@ namespace Ztp.Protocol
           else
             continue;
         }
-          
+
 
         string key = keyValue[0];
-        string value = (keyValue.Length == 1)?"": keyValue[1];
+        string value = (keyValue.Length == 1) ? "" : keyValue[1];
         try
         {
           switch (key)
@@ -260,7 +260,7 @@ namespace Ztp.Protocol
               break;
             case "SIGNAL":
               int s = Int32.Parse(value);
-              int sign = s < 0 ? s : -113 + s*2;
+              int sign = s < 0 ? s : -113 + s * 2;
               zc.Signal = sign;//Int32.Parse(value);
               break;
             case "IPOWN":
@@ -302,7 +302,7 @@ namespace Ztp.Protocol
               break;
             case "IPP":
               //if (!string.IsNullOrEmpty(value))
-                zc.IpPing = value;
+              zc.IpPing = value;
               break;
             case "PERP":
               zc.PingPeriod = byte.Parse(value);
@@ -332,7 +332,7 @@ namespace Ztp.Protocol
       return zc;
     }
 
-    
+
     public static string SerializeZtpConfig(ZtpConfig zc)
     {
       StringBuilder sb = new StringBuilder();
@@ -357,7 +357,8 @@ namespace Ztp.Protocol
           sb.Append($"TCP{Sep}{zc.EstPort}{WhiteSpace}");
           sb.Append($"TSEND{Sep}{zc.EstTsend}{WhiteSpace}");
         }
-      } else if (zc.Flags.HasFlag(ZtpConfig.ConfigFlag.EstParams) || zc.Flags.HasFlag(ZtpConfig.ConfigFlag.UseIec))
+      }
+      else if (zc.Flags.HasFlag(ZtpConfig.ConfigFlag.EstParams) || zc.Flags.HasFlag(ZtpConfig.ConfigFlag.UseIec))
       {
         sb.Append($"IP{Sep}{zc.EstAddress}{WhiteSpace}");
         sb.Append($"TCP{Sep}{zc.EstPort}{WhiteSpace}");
@@ -385,7 +386,7 @@ namespace Ztp.Protocol
         sb.Append($"NUM{Sep}{zc.Number}{WhiteSpace}");
       if (zc.Flags.HasFlag(ZtpConfig.ConfigFlag.Rs485))
         sb.Append($"SERIAL{Sep}{SerializeComPortSetting(zc.ComPortSetting)}{WhiteSpace}");
-      
+
 
       bool needTMSET = false;
       bool needPing = false;
@@ -394,12 +395,12 @@ namespace Ztp.Protocol
       if (zc.Version.Equals("I1O1A1-LDC-3"))
         needTMSET = true;
 
-      if(zc.Version.Equals("I16O2A2-LDC-3-FOTA") || zc.Version.Equals("I16O2A2-LDC-3-FOTA-BT"))
+      if (zc.Version.Equals("I16O2A2-LDC-3-FOTA") || zc.Version.Equals("I16O2A2-LDC-3-FOTA-BT"))
       {
         if (zc.SoftVersion.CompareTo("1.1.18") >= 0)
           needTMSET = true;
       }
-      else if(zc.Version.Equals("I4O1A1-LDC-3-FOTA") || zc.Version.Equals("I4O1A1-LDC-3-FOTA-DM"))
+      else if (zc.Version.Equals("I4O1A1-LDC-3-FOTA") || zc.Version.Equals("I4O1A1-LDC-3-FOTA-DM"))
       {
         if (zc.SoftVersion.CompareTo("1.0.3") >= 0)
           needTMSET = true;
@@ -410,21 +411,21 @@ namespace Ztp.Protocol
         if (zc.SoftVersion.CompareTo("1.7.7") >= 0)
           needLogs = true;
       }
-      else if(zc.Version.Equals("I8O2A2-LEM-4-FOTA-prIM"))
+      else if (zc.Version.Equals("I8O2A2-LEM-4-FOTA-prIM") || zc.Version.Equals("I3O2A1-LEM-4-FOTA-prIM"))
       {
         needTMSET = true;
         needPing = true;
         needLogs = true;
       }
-      if(needTMSET && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.PlanReboot))
+      if (needTMSET && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.PlanReboot))
         sb.Append($"TMSET{Sep}{zc.rebootTime}{WhiteSpace}");
 
-      if(needPing && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.Ping))
+      if (needPing && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.Ping))
       {
         sb.Append($"IPP{Sep}{zc.IpPing}{WhiteSpace}");
         sb.Append($"PERP{Sep}{zc.PingPeriod}{WhiteSpace}");
       }
-      if(needLogs && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.Logs))
+      if (needLogs && zc.Flags.HasFlag(ZtpConfig.ConfigFlag.Logs))
       {
         sb.Append($"LOGSLVL{Sep}{zc.logLevel}{WhiteSpace}");
       }
@@ -575,8 +576,8 @@ namespace Ztp.Protocol
       byte[] val = ToBytes(sb.ToString());
       int prev_size = val.Length;
       Array.Resize(ref val, prev_size + size);
-      Array.Copy(dat,0, val,prev_size, size);
-      return  val;
+      Array.Copy(dat, 0, val, prev_size, size);
+      return val;
     }
 
     /// <summary>

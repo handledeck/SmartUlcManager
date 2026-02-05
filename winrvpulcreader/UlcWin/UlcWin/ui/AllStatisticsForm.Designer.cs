@@ -86,7 +86,7 @@
       this.roundBorderPanel5.ShapeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(51)))), ((int)(((byte)(94)))), ((int)(((byte)(129)))));
       this.roundBorderPanel5.ShapeBorderPadding = 1;
       this.roundBorderPanel5.ShapeBorderWitdh = 1;
-      this.roundBorderPanel5.Size = new System.Drawing.Size(1202, 179);
+      this.roundBorderPanel5.Size = new System.Drawing.Size(1361, 179);
       this.roundBorderPanel5.TabIndex = 61;
       this.roundBorderPanel5.Visible = false;
       // 
@@ -537,7 +537,7 @@
       this.usrUlcChartCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.usrUlcChartCtrl1.Location = new System.Drawing.Point(0, 0);
       this.usrUlcChartCtrl1.Name = "usrUlcChartCtrl1";
-      this.usrUlcChartCtrl1.Size = new System.Drawing.Size(1222, 637);
+      this.usrUlcChartCtrl1.Size = new System.Drawing.Size(1385, 695);
       this.usrUlcChartCtrl1.TabIndex = 62;
       // 
       // AllStatisticsForm
@@ -545,7 +545,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.ClientSize = new System.Drawing.Size(1222, 637);
+      this.ClientSize = new System.Drawing.Size(1385, 695);
       this.Controls.Add(this.roundBorderPanel5);
       this.Controls.Add(this.usrUlcChartCtrl1);
       this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

@@ -26,7 +26,7 @@ namespace UlcWin.ui
   public partial class UlcUpdateForm : Form
   {
     List<CD> cDs = null;
-    string __path = $"{Application.StartupPath}\\fota\\firmware_lite.tgz";
+    string __path = $"{Application.StartupPath}\\fota\\";
     const int _port = 10255;
     const string _end = "_E_N_D";
     static string _mdm = "_TELL";
@@ -97,9 +97,10 @@ namespace UlcWin.ui
       int count = 0;
       int count_all = cDs.Count;
       List<Task> tasks = new List<Task>();
-
+      
       for (int i = 0; i < cDs.Count; i++)
       {
+        string p_path = __path;
         Task tsk = new Task(new Action<object>((iObj) =>
         {
           int row = 0;
@@ -136,7 +137,8 @@ namespace UlcWin.ui
                   //SayMessage(row, 4, 0, Color.Gray);
                   return;
                 }
-                else if (config.Version == "I4O1A1-LDC-3-FOTA-DM" || config.Version == "I4O1A1-LDC-3-FOTA")
+                else if (config.Version == "I4O1A1-LDC-3-FOTA-DM" ||
+                          config.Version == "I4O1A1-LDC-3-FOTA" )
                 {
                   SayMessage(row, 2, $"ULC-2({version})", Color.Gray);
                   SayMessage(row, 3, "Обновление невозможно", Color.Gray);
@@ -145,9 +147,19 @@ namespace UlcWin.ui
                 }
 
                 //SayMessage(row, 2, $"ULC-2({config.SoftVersion})", Color.Brown);
-                else if (config.Version == "I3O2A1-LEM-4-FOTA-prIM")
+                else if (config.Version == "I3O2A1-LEM-4-FOTA-prIM" ||
+                          config.Version == "I1O1A1-LEM-4-FOTA")
                 {
-                  SayMessage(row, 2, $"ULC-2-Lite({config.SoftVersion})", Color.Green);
+                  Version v = new Version(version);
+                  Version v1 = new Version("1.2.0");
+                  if (v < v1)
+                  {
+                    p_path += "firmware_lite-2-1.tgz";
+                  }
+                  else {
+                    p_path += "firmware_lite-3-1.tgz";
+                  }
+                    SayMessage(row, 2, $"ULC-2-Lite({config.SoftVersion})", Color.Green);
                 }
                 else
                 {
@@ -175,7 +187,7 @@ namespace UlcWin.ui
                 {
                   throw new Exception("Ошибка окрытия порта прошивки");
                 }
-                byte[] modemBuff = GetBuffer(__path);
+                byte[] modemBuff = GetBuffer(p_path);
                 // расчет MD5 хеша от файла прошивки
                 byte[] hashcode = MD5Hash(modemBuff);
                

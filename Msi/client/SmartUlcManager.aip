@@ -38,7 +38,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{27D88111-2305-4A46-8980-604F19A0C8E5}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="CHANGELOG.txt" ComponentId="{4C79A9BD-F60E-4780-9B85-D47B4D7488D3}" Directory_="fota_Dir" Attributes="0" KeyPath="CHANGELOG.txt" Type="0"/>
+    <ROW Component="CHANGELOG.txt" ComponentId="{4C79A9BD-F60E-4780-9B85-D47B4D7488D3}" Directory_="fota_Dir" Attributes="0" KeyPath="firmware_lite.tgz" Type="0"/>
     <ROW Component="Delta.bin.env" ComponentId="{B44A6592-81EA-428C-8176-A12F2D541956}" Directory_="__Dir" Attributes="0" KeyPath="Delta.bin.env" Type="0"/>
     <ROW Component="Delta.bin.env_1" ComponentId="{2330324A-E10C-4355-BD79-FF91A5947711}" Directory_="__1_Dir" Attributes="0" KeyPath="Delta.bin.env_1" Type="0"/>
     <ROW Component="GMap.NET.Core.dll" ComponentId="{39BF8405-B571-425B-9F10-AD9DF3C5185C}" Directory_="soft_Dir" Attributes="0" KeyPath="GMap.NET.Core.dll"/>
@@ -79,9 +79,7 @@
     <ROW File="Delta.bin.env" Component_="Delta.bin.env" FileName="DELTAB~1.ENV|Delta.bin.env" Attributes="0" SourcePath="soft\12.00.839\Delta.bin.env" SelfReg="false"/>
     <ROW File="Delta.bin.env_1" Component_="Delta.bin.env_1" FileName="DELTAB~1.ENV|Delta.bin.env" Attributes="0" SourcePath="soft\12.01.830\Delta.bin.env" SelfReg="false"/>
     <ROW File="appdevice.bin" Component_="appdevice.bin" FileName="APPDEV~1.BIN|appdevice.bin" Attributes="0" SourcePath="soft\appdevice.bin" SelfReg="false"/>
-    <ROW File="CHANGELOG.txt" Component_="CHANGELOG.txt" FileName="CHANGE~1.TXT|CHANGELOG.txt" Attributes="0" SourcePath="soft\fota\CHANGELOG.txt" SelfReg="false"/>
     <ROW File="firmware_lite.tgz" Component_="CHANGELOG.txt" FileName="FIRMWA~1.TGZ|firmware_lite.tgz" Attributes="0" SourcePath="soft\fota\firmware_lite.tgz" SelfReg="false"/>
-    <ROW File="m2mapz.bin" Component_="CHANGELOG.txt" FileName="m2mapz.bin" Attributes="0" SourcePath="soft\fota\m2mapz.bin" SelfReg="false"/>
     <ROW File="GMap.NET.Core.dll" Component_="GMap.NET.Core.dll" FileName="GMAPNE~1.DLL|GMap.NET.Core.dll" Attributes="0" SourcePath="soft\GMap.NET.Core.dll" SelfReg="false"/>
     <ROW File="GMap.NET.WindowsForms.dll" Component_="GMap.NET.WindowsForms.dll" FileName="GMAPNE~2.DLL|GMap.NET.WindowsForms.dll" Attributes="0" SourcePath="soft\GMap.NET.WindowsForms.dll" SelfReg="false"/>
     <ROW File="ListViewPrinter.dll" Component_="ListViewPrinter.dll" FileName="LISTVI~1.DLL|ListViewPrinter.dll" Attributes="0" SourcePath="soft\ListViewPrinter.dll" SelfReg="false"/>

@@ -173,6 +173,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ui\AllShcedulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\AllShcedulesForm.Designer.cs">
+      <DependentUpon>AllShcedulesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AplSetings\ASettings.cs" />
     <Compile Include="Controls\ChBoxCombo\CheckBoxComboBox.cs">
       <SubType>Component</SubType>
@@ -596,6 +602,9 @@
     <Compile Include="ui\WaitForm.Designer.cs">
       <DependentUpon>WaitForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ui\AllShcedulesForm.resx">
+      <DependentUpon>AllShcedulesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ChBoxCombo\PopupComboBox.resx">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </EmbeddedResource>
