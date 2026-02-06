@@ -41,7 +41,7 @@ namespace UlcWin
         // Создаем новую книгу
         workbook = excelApp.Workbooks.Add();
         worksheet = (Excel.Worksheet)workbook.Sheets[1];
-        worksheet.Name = $"{itemIp.NodeFullPath} {itemIp.Name}";
+        worksheet.Name = $"{itemIp.Name}";
 
         // ===== ЗАГОЛОВОК =====
         // Пустая первая строка
@@ -62,8 +62,8 @@ namespace UlcWin
 
         // ===== ЗАГОЛОВКИ ТАБЛИЦЫ =====
         worksheet.Cells[4, 1] = "Месяц";
-        worksheet.Cells[4, 2] = "Начало";
-        worksheet.Cells[4, 3] = "Конец";
+        worksheet.Cells[4, 2] = "Включение";
+        worksheet.Cells[4, 3] = "Отключение";
 
         // Форматирование заголовков таблицы
         Excel.Range tableHeaderRange = worksheet.Range["A4", "C4"];
