@@ -40,36 +40,37 @@
     <ROW Component="APPDIR" ComponentId="{27D88111-2305-4A46-8980-604F19A0C8E5}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="Delta.bin.env" ComponentId="{B44A6592-81EA-428C-8176-A12F2D541956}" Directory_="__Dir" Attributes="0" KeyPath="Delta.bin.env" Type="0"/>
     <ROW Component="Delta.bin.env_1" ComponentId="{2330324A-E10C-4355-BD79-FF91A5947711}" Directory_="__1_Dir" Attributes="0" KeyPath="Delta.bin.env_1" Type="0"/>
-    <ROW Component="GMap.NET.Core.dll" ComponentId="{39BF8405-B571-425B-9F10-AD9DF3C5185C}" Directory_="soft_Dir" Attributes="0" KeyPath="GMap.NET.Core.dll"/>
-    <ROW Component="GMap.NET.WindowsForms.dll" ComponentId="{E91D2C9B-B622-4DB3-B08D-505B00377B00}" Directory_="soft_Dir" Attributes="0" KeyPath="GMap.NET.WindowsForms.dll"/>
-    <ROW Component="ListViewPrinter.dll" ComponentId="{4DDAC9A0-2CB0-4019-AB95-F9642DFE05F9}" Directory_="soft_Dir" Attributes="0" KeyPath="ListViewPrinter.dll"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{45279747-1CFF-46DC-B26D-970A3EAB41F4}" Directory_="soft_Dir" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Component="NLog.dll" ComponentId="{9FAB84A9-634E-4A6D-8A1A-615A6CB3436C}" Directory_="soft_Dir" Attributes="0" KeyPath="NLog.dll"/>
-    <ROW Component="Npgsql.dll" ComponentId="{F58DD285-79A6-4C71-8D2A-A274B6382ABB}" Directory_="soft_Dir" Attributes="0" KeyPath="Npgsql.dll"/>
-    <ROW Component="ObjectListView.dll" ComponentId="{4EFAF5DF-BB4F-4CF0-BC9C-AC6E03378515}" Directory_="soft_Dir" Attributes="0" KeyPath="ObjectListView.dll"/>
+    <ROW Component="GMap.NET.Core.dll" ComponentId="{C9F61139-84B5-4B45-A105-8FB6F3C7AB4C}" Directory_="soft_Dir" Attributes="0" KeyPath="GMap.NET.Core.dll"/>
+    <ROW Component="GMap.NET.WindowsForms.dll" ComponentId="{78863A19-AA3C-4262-A86F-0522BC61852A}" Directory_="soft_Dir" Attributes="0" KeyPath="GMap.NET.WindowsForms.dll"/>
+    <ROW Component="ListViewPrinter.dll" ComponentId="{7ACCA390-9563-4B1F-ACCF-C920D40768B4}" Directory_="soft_Dir" Attributes="0" KeyPath="ListViewPrinter.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{8C56D2DC-17AF-4501-BCC5-69D11A027352}" Directory_="soft_Dir" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{363605BA-2A97-4BCA-9E54-7E0594006F57}" Directory_="soft_Dir" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="Npgsql.dll" ComponentId="{49F469CD-42EF-4EC5-B152-04E664332693}" Directory_="soft_Dir" Attributes="0" KeyPath="Npgsql.dll"/>
+    <ROW Component="ObjectListView.dll" ComponentId="{D5848667-069F-419E-97DB-92A3A5C2B2A3}" Directory_="soft_Dir" Attributes="0" KeyPath="ObjectListView.dll"/>
     <ROW Component="ProductInformation" ComponentId="{4B0F8FB0-A6C8-4483-81FE-6610CFD48284}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="ServiceStack.Common.dll" ComponentId="{DBACB287-64F5-4C43-95B3-2B43EBA1AEFF}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
-    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{EC8B0967-2C67-4CCB-8D60-A8DB5C5A5486}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
-    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{DF4D010B-F7A5-4D67-90C9-D0B68F808E8B}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
-    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{986AE471-A04D-47F1-ACEF-21B1EC00F6CE}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
-    <ROW Component="ServiceStack.Text.dll" ComponentId="{47AA372A-90CE-4918-86C7-C65708C23B8C}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
-    <ROW Component="SmartUlcManager.exe" ComponentId="{BF2DB4B6-B991-44CE-9C72-E1B295BBE028}" Directory_="soft_Dir" Attributes="0" KeyPath="SmartUlcManager.exe"/>
-    <ROW Component="SparkleLibrary.dll" ComponentId="{3C832538-7F40-4E6E-A362-E25E0D7004C4}" Directory_="soft_Dir" Attributes="0" KeyPath="SparkleLibrary.dll"/>
-    <ROW Component="System.Buffers.dll" ComponentId="{6F0CD172-DAC2-4C1E-A23E-67410FFBF45E}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Buffers.dll"/>
-    <ROW Component="System.ComponentModel.Annotations.dll" ComponentId="{A93C707B-F67C-4A1A-8C04-5AC48BC451D5}" Directory_="soft_Dir" Attributes="0" KeyPath="System.ComponentModel.Annotations.dll"/>
-    <ROW Component="System.Memory.dll" ComponentId="{B13796BE-B318-442A-9DD5-94D0F807C14A}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Memory.dll"/>
-    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{D3AADB1A-0C6B-41E6-B7FA-4A16F924F7E7}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
-    <ROW Component="System.Reflection.TypeExtensions.dll" ComponentId="{A49865DF-32CD-464F-9D7F-6F79D4FDCA47}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Reflection.TypeExtensions.dll"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{86A5A71C-1E41-4754-BE72-6F2D5F6E5937}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{3F4FD345-7FC7-457C-8FFF-14A227633C6C}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
-    <ROW Component="System.Text.Json.dll" ComponentId="{C05831F5-12DA-4FE9-AF92-35406555CC3F}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Text.Json.dll"/>
-    <ROW Component="System.Threading.Channels.dll" ComponentId="{822A0372-A978-435A-86B1-DCB3E6946A64}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
-    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{01A35E1A-592E-44F4-97BC-6012F9D181E2}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Component="System.ValueTuple.dll" ComponentId="{8CC6237D-8DB3-4ECB-95EC-4495205DF373}" Directory_="soft_Dir" Attributes="0" KeyPath="System.ValueTuple.dll"/>
-    <ROW Component="System.Windows.Forms.Ribbon35.dll" ComponentId="{95624DAB-E424-4C61-99AD-CE7248FED18C}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Windows.Forms.Ribbon35.dll"/>
-    <ROW Component="ZtpLib.dll" ComponentId="{81384305-6FE2-4445-BF15-75B19D213F4A}" Directory_="soft_Dir" Attributes="0" KeyPath="ZtpLib.dll"/>
-    <ROW Component="appdevice.bin" ComponentId="{256966A1-AB91-4880-BC16-8F6381237711}" Directory_="soft_Dir" Attributes="0" KeyPath="appdevice.bin" Type="0"/>
-    <ROW Component="firmware_lite21.tgz" ComponentId="{FA39955F-FE19-419E-BD82-4F5865DBB744}" Directory_="fota_Dir" Attributes="0" KeyPath="firmware_lite21.tgz" Type="0"/>
+    <ROW Component="ServiceStack.Common.dll" ComponentId="{E5477F6E-7477-48C5-94DF-942D9B2612AE}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
+    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{7A0ED9D6-873C-414C-BB9C-A67412BAAC58}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
+    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{55F9575E-EA5E-4176-8DFF-F10FA0A61FE1}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
+    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{CCEFC4B1-EA2E-43AB-BD8E-9A79092A8CA8}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
+    <ROW Component="ServiceStack.Text.dll" ComponentId="{51BDBFD5-FB7D-4AF6-A267-4832777B3643}" Directory_="soft_Dir" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
+    <ROW Component="SmartUlcManager.exe" ComponentId="{9D80D1CA-F7A3-4DA5-AC0B-763EE19D1AF5}" Directory_="soft_Dir" Attributes="0" KeyPath="SmartUlcManager.exe"/>
+    <ROW Component="SmartUlcManager.exe.config" ComponentId="{1AB5B57C-C0FA-4442-8A24-CDEA3CFD237B}" Directory_="soft_Dir" Attributes="0" KeyPath="SmartUlcManager.exe.config" Type="0"/>
+    <ROW Component="SparkleLibrary.dll" ComponentId="{21829053-25F4-4FD7-9B05-877CB9519350}" Directory_="soft_Dir" Attributes="0" KeyPath="SparkleLibrary.dll"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{DDFA5523-CA43-4085-BAE9-947D81DFFEB9}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.ComponentModel.Annotations.dll" ComponentId="{0B049772-6A04-443D-BA73-9B6F552BEBBE}" Directory_="soft_Dir" Attributes="0" KeyPath="System.ComponentModel.Annotations.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{E4BCB8DF-A1C1-4298-BFAB-C264790028B5}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{40E35339-7587-447D-9887-A8CA4A6F56D2}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Reflection.TypeExtensions.dll" ComponentId="{C9B8C3AD-5B71-49F4-8A9D-7A5C4D8EEA77}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Reflection.TypeExtensions.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{F1AC4BCD-94BC-4EE5-831B-2569B300CEB4}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{11CCF3C4-CDCE-42EF-9E8F-01FFD168CCD8}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{90F81528-423E-4584-9914-78D3B6D4C9B2}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Channels.dll" ComponentId="{01E89B58-369A-4292-B38D-3DA13F03C51E}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{825CBDE7-0BC4-4C95-8EE9-56F0F36F1227}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{3F711D2D-E81E-4789-96A4-1FF21D638E13}" Directory_="soft_Dir" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="System.Windows.Forms.Ribbon35.dll" ComponentId="{A4A7D0B6-292D-42E9-BB53-CD65B493E840}" Directory_="soft_Dir" Attributes="0" KeyPath="System.Windows.Forms.Ribbon35.dll"/>
+    <ROW Component="ZtpConfig.exe" ComponentId="{CF7658A1-D445-4505-8592-0F3A90F414F4}" Directory_="soft_Dir" Attributes="0" KeyPath="ZtpConfig.exe"/>
+    <ROW Component="ZtpLib.dll" ComponentId="{7FCE2145-5E48-45DC-80FE-3BD2CC77DD94}" Directory_="soft_Dir" Attributes="0" KeyPath="ZtpLib.dll"/>
+    <ROW Component="firmware.tgz" ComponentId="{57BFEB75-B6A7-4902-BC63-1BBA4F7782B6}" Directory_="fota_Dir" Attributes="0" KeyPath="firmware.tgz" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="Программа диагностики ULC 02" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="24"/>
@@ -78,38 +79,42 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="Delta.bin.env" Component_="Delta.bin.env" FileName="DELTAB~1.ENV|Delta.bin.env" Attributes="0" SourcePath="soft\12.00.839\Delta.bin.env" SelfReg="false"/>
     <ROW File="Delta.bin.env_1" Component_="Delta.bin.env_1" FileName="DELTAB~1.ENV|Delta.bin.env" Attributes="0" SourcePath="soft\12.01.830\Delta.bin.env" SelfReg="false"/>
-    <ROW File="appdevice.bin" Component_="appdevice.bin" FileName="APPDEV~1.BIN|appdevice.bin" Attributes="0" SourcePath="soft\appdevice.bin" SelfReg="false"/>
-    <ROW File="GMap.NET.Core.dll" Component_="GMap.NET.Core.dll" FileName="GMAPNE~1.DLL|GMap.NET.Core.dll" Attributes="0" SourcePath="soft\GMap.NET.Core.dll" SelfReg="false"/>
-    <ROW File="GMap.NET.WindowsForms.dll" Component_="GMap.NET.WindowsForms.dll" FileName="GMAPNE~2.DLL|GMap.NET.WindowsForms.dll" Attributes="0" SourcePath="soft\GMap.NET.WindowsForms.dll" SelfReg="false"/>
-    <ROW File="ListViewPrinter.dll" Component_="ListViewPrinter.dll" FileName="LISTVI~1.DLL|ListViewPrinter.dll" Attributes="0" SourcePath="soft\ListViewPrinter.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="soft\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
-    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="soft\NLog.dll" SelfReg="false"/>
-    <ROW File="Npgsql.dll" Component_="Npgsql.dll" FileName="Npgsql.dll" Attributes="0" SourcePath="soft\Npgsql.dll" SelfReg="false"/>
-    <ROW File="ObjectListView.dll" Component_="ObjectListView.dll" FileName="OBJECT~1.DLL|ObjectListView.dll" Attributes="0" SourcePath="soft\ObjectListView.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Common.dll" Component_="ServiceStack.Common.dll" FileName="SERVIC~1.DLL|ServiceStack.Common.dll" Attributes="0" SourcePath="soft\ServiceStack.Common.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Interfaces.dll" Component_="ServiceStack.Interfaces.dll" FileName="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Attributes="0" SourcePath="soft\ServiceStack.Interfaces.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.OrmLite.dll" Component_="ServiceStack.OrmLite.dll" FileName="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Attributes="0" SourcePath="soft\ServiceStack.OrmLite.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.OrmLite.PostgreSQL.dll" Component_="ServiceStack.OrmLite.PostgreSQL.dll" FileName="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Attributes="0" SourcePath="soft\ServiceStack.OrmLite.PostgreSQL.dll" SelfReg="false"/>
-    <ROW File="ServiceStack.Text.dll" Component_="ServiceStack.Text.dll" FileName="SERVIC~5.DLL|ServiceStack.Text.dll" Attributes="0" SourcePath="soft\ServiceStack.Text.dll" SelfReg="false"/>
-    <ROW File="SmartUlcManager.exe" Component_="SmartUlcManager.exe" FileName="SMARTU~1.EXE|SmartUlcManager.exe" Attributes="0" SourcePath="soft\SmartUlcManager.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="SmartUlcManager.exe.config" Component_="appdevice.bin" FileName="SMARTU~1.CON|SmartUlcManager.exe.config" Attributes="0" SourcePath="soft\SmartUlcManager.exe.config" SelfReg="false"/>
-    <ROW File="SparkleLibrary.dll" Component_="SparkleLibrary.dll" FileName="SPARKL~1.DLL|SparkleLibrary.dll" Attributes="0" SourcePath="soft\SparkleLibrary.dll" SelfReg="false"/>
-    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="soft\System.Buffers.dll" SelfReg="false"/>
-    <ROW File="System.ComponentModel.Annotations.dll" Component_="System.ComponentModel.Annotations.dll" FileName="SYSTEM~2.DLL|System.ComponentModel.Annotations.dll" Attributes="0" SourcePath="soft\System.ComponentModel.Annotations.dll" SelfReg="false"/>
-    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~3.DLL|System.Memory.dll" Attributes="0" SourcePath="soft\System.Memory.dll" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~4.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="soft\System.Numerics.Vectors.dll" SelfReg="false"/>
-    <ROW File="System.Reflection.TypeExtensions.dll" Component_="System.Reflection.TypeExtensions.dll" FileName="SYSTEM~5.DLL|System.Reflection.TypeExtensions.dll" Attributes="0" SourcePath="soft\System.Reflection.TypeExtensions.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="soft\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
-    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="soft\System.Text.Encodings.Web.dll" SelfReg="false"/>
-    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~8.DLL|System.Text.Json.dll" Attributes="0" SourcePath="soft\System.Text.Json.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Channels.dll" Component_="System.Threading.Channels.dll" FileName="SYSTEM~9.DLL|System.Threading.Channels.dll" Attributes="0" SourcePath="soft\System.Threading.Channels.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="soft\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
-    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTE~11.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="soft\System.ValueTuple.dll" SelfReg="false"/>
-    <ROW File="System.Windows.Forms.Ribbon35.dll" Component_="System.Windows.Forms.Ribbon35.dll" FileName="SYSTE~12.DLL|System.Windows.Forms.Ribbon35.dll" Attributes="0" SourcePath="soft\System.Windows.Forms.Ribbon35.dll" SelfReg="false"/>
-    <ROW File="ZtpConfig.exe.config" Component_="appdevice.bin" FileName="ZTPCON~1.CON|ZtpConfig.exe.config" Attributes="0" SourcePath="soft\ZtpConfig.exe.config" SelfReg="false"/>
-    <ROW File="ZtpLib.dll" Component_="ZtpLib.dll" FileName="ZtpLib.dll" Attributes="0" SourcePath="soft\ZtpLib.dll" SelfReg="false"/>
-    <ROW File="firmware_lite21.tgz" Component_="firmware_lite21.tgz" FileName="FIRMWA~1.TGZ|firmware_lite-2-1.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_lite-2-1.tgz" SelfReg="false"/>
-    <ROW File="firmware_lite31.tgz" Component_="firmware_lite21.tgz" FileName="FIRMWA~2.TGZ|firmware_lite-3-1.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_lite-3-1.tgz" SelfReg="false"/>
+    <ROW File="firmware.tgz" Component_="firmware.tgz" FileName="firmware.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware.tgz" SelfReg="false"/>
+    <ROW File="firmware_lite.tgz" Component_="firmware.tgz" FileName="FIRMWA~1.TGZ|firmware_lite.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_lite.tgz" SelfReg="false"/>
+    <ROW File="firmware_lite21.tgz" Component_="firmware.tgz" FileName="FIRMWA~2.TGZ|firmware_lite-2-1.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_lite-2-1.tgz" SelfReg="false"/>
+    <ROW File="firmware_secure_f.tgz" Component_="firmware.tgz" FileName="FIRMWA~3.TGZ|firmware_secure_f.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_secure_f.tgz" SelfReg="false"/>
+    <ROW File="firmware_tnc.tgz" Component_="firmware.tgz" FileName="FIRMWA~4.TGZ|firmware_tnc.tgz" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\firmware_tnc.tgz" SelfReg="false"/>
+    <ROW File="m2mapz.bin" Component_="firmware.tgz" FileName="m2mapz.bin" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\fota\m2mapz.bin" SelfReg="false"/>
+    <ROW File="GMap.NET.Core.dll" Component_="GMap.NET.Core.dll" FileName="GMAPNE~1.DLL|GMap.NET.Core.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\GMap.NET.Core.dll" SelfReg="false"/>
+    <ROW File="GMap.NET.WindowsForms.dll" Component_="GMap.NET.WindowsForms.dll" FileName="GMAPNE~2.DLL|GMap.NET.WindowsForms.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\GMap.NET.WindowsForms.dll" SelfReg="false"/>
+    <ROW File="ListViewPrinter.dll" Component_="ListViewPrinter.dll" FileName="LISTVI~1.DLL|ListViewPrinter.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ListViewPrinter.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\NLog.dll" SelfReg="false"/>
+    <ROW File="Npgsql.dll" Component_="Npgsql.dll" FileName="Npgsql.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\Npgsql.dll" SelfReg="false"/>
+    <ROW File="ObjectListView.dll" Component_="ObjectListView.dll" FileName="OBJECT~1.DLL|ObjectListView.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ObjectListView.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Common.dll" Component_="ServiceStack.Common.dll" FileName="SERVIC~1.DLL|ServiceStack.Common.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ServiceStack.Common.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Interfaces.dll" Component_="ServiceStack.Interfaces.dll" FileName="SERVIC~2.DLL|ServiceStack.Interfaces.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ServiceStack.Interfaces.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.OrmLite.dll" Component_="ServiceStack.OrmLite.dll" FileName="SERVIC~3.DLL|ServiceStack.OrmLite.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ServiceStack.OrmLite.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.OrmLite.PostgreSQL.dll" Component_="ServiceStack.OrmLite.PostgreSQL.dll" FileName="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ServiceStack.OrmLite.PostgreSQL.dll" SelfReg="false"/>
+    <ROW File="ServiceStack.Text.dll" Component_="ServiceStack.Text.dll" FileName="SERVIC~5.DLL|ServiceStack.Text.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ServiceStack.Text.dll" SelfReg="false"/>
+    <ROW File="SmartUlcManager.exe" Component_="SmartUlcManager.exe" FileName="SMARTU~1.EXE|SmartUlcManager.exe" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\SmartUlcManager.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="SmartUlcManager.exe.config" Component_="SmartUlcManager.exe.config" FileName="SMARTU~1.CON|SmartUlcManager.exe.config" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\SmartUlcManager.exe.config" SelfReg="false"/>
+    <ROW File="SparkleLibrary.dll" Component_="SparkleLibrary.dll" FileName="SPARKL~1.DLL|SparkleLibrary.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\SparkleLibrary.dll" SelfReg="false"/>
+    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Buffers.dll" SelfReg="false"/>
+    <ROW File="System.ComponentModel.Annotations.dll" Component_="System.ComponentModel.Annotations.dll" FileName="SYSTEM~2.DLL|System.ComponentModel.Annotations.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.ComponentModel.Annotations.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~3.DLL|System.Memory.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~4.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Reflection.TypeExtensions.dll" Component_="System.Reflection.TypeExtensions.dll" FileName="SYSTEM~5.DLL|System.Reflection.TypeExtensions.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Reflection.TypeExtensions.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~6.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~7.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~8.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Channels.dll" Component_="System.Threading.Channels.dll" FileName="SYSTEM~9.DLL|System.Threading.Channels.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Threading.Channels.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTE~10.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTE~11.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.ValueTuple.dll" SelfReg="false"/>
+    <ROW File="System.Windows.Forms.Ribbon35.dll" Component_="System.Windows.Forms.Ribbon35.dll" FileName="SYSTE~12.DLL|System.Windows.Forms.Ribbon35.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\System.Windows.Forms.Ribbon35.dll" SelfReg="false"/>
+    <ROW File="ZtpConfig.exe" Component_="ZtpConfig.exe" FileName="ZTPCON~1.EXE|ZtpConfig.exe" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ZtpConfig.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="ZtpConfig.exe.config" Component_="SmartUlcManager.exe.config" FileName="ZTPCON~1.CON|ZtpConfig.exe.config" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ZtpConfig.exe.config" SelfReg="false"/>
+    <ROW File="ZtpLib.dll" Component_="ZtpLib.dll" FileName="ZtpLib.dll" Attributes="0" SourcePath="..\..\winrvpulcreader\UlcWin\out\ZtpLib.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -335,7 +340,6 @@
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="Delta.bin.env"/>
     <ROW Feature_="MainFeature" Component_="Delta.bin.env_1"/>
-    <ROW Feature_="MainFeature" Component_="appdevice.bin"/>
     <ROW Feature_="MainFeature" Component_="GMap.NET.Core.dll"/>
     <ROW Feature_="MainFeature" Component_="GMap.NET.WindowsForms.dll"/>
     <ROW Feature_="MainFeature" Component_="ListViewPrinter.dll"/>
@@ -349,6 +353,7 @@
     <ROW Feature_="MainFeature" Component_="ServiceStack.OrmLite.PostgreSQL.dll"/>
     <ROW Feature_="MainFeature" Component_="ServiceStack.Text.dll"/>
     <ROW Feature_="MainFeature" Component_="SmartUlcManager.exe"/>
+    <ROW Feature_="MainFeature" Component_="SmartUlcManager.exe.config"/>
     <ROW Feature_="MainFeature" Component_="SparkleLibrary.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Buffers.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ComponentModel.Annotations.dll"/>
@@ -362,8 +367,9 @@
     <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ValueTuple.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Windows.Forms.Ribbon35.dll"/>
+    <ROW Feature_="MainFeature" Component_="ZtpConfig.exe"/>
     <ROW Feature_="MainFeature" Component_="ZtpLib.dll"/>
-    <ROW Feature_="MainFeature" Component_="firmware_lite21.tgz"/>
+    <ROW Feature_="MainFeature" Component_="firmware.tgz"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="PCIcard_view.exe" SourcePath="..\..\winrvpulcreader\UlcWin\UlcWin\PCI-card_view.ico" Index="0"/>
