@@ -1031,25 +1031,25 @@ namespace InterUlc.Db
     }
 
     //Загрузка данных из 1с бухгалтерии о контроллерах которые были отремонтированы   
-    public void LoadRapairDevices()
-    {
-      //
-      NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
-      if (__listRapair == null)
-      {
-        string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
-        if (!string.IsNullOrEmpty(tsk))
-        {
-          Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
-          __listRapair = new List<Repair>(repairs);
-        }
-        else
-        {
-          MessageBox.Show("Нет соединения с базой данных о ремонте", "Ошибка", MessageBoxButtons.OK);
-          return;
-        }
-      }
-    }
+    //public void LoadRapairDevices()
+    //{
+    //  //
+    //  NetworkCredential networkCredential = new NetworkCredential("HTTP_services", "S8IBkoYF");
+    //  if (__listRapair == null)
+    //  {
+    //    string tsk = HttpGet("http://1csrv-uc.vitebsk.energo.net/Data1c8_ITU/hs/getcontroller/?action=allimei", networkCredential);
+    //    if (!string.IsNullOrEmpty(tsk))
+    //    {
+    //      Repair[] repairs = (Repair[])System.Text.Json.JsonSerializer.Deserialize(tsk, typeof(Repair[]));
+    //      __listRapair = new List<Repair>(repairs);
+    //    }
+    //    else
+    //    {
+    //      MessageBox.Show("Нет соединения с базой данных о ремонте", "Ошибка", MessageBoxButtons.OK);
+    //      return;
+    //    }
+    //  }
+    //}
 
     //Поиск в списке отремонтрованных контроллеров 
     private bool FindRepairDevice(ItemIp itemIp)
@@ -1117,8 +1117,8 @@ namespace InterUlc.Db
         string comment;
         string meters;
         int rs_stat;
-        float longit = -1;
-        float letit = -1;
+        double longit = -1;
+        double letit = -1;
         if (dr_ip["ip_address"].GetType() == typeof(DBNull))
           ip = "---";
         else
@@ -1159,9 +1159,9 @@ namespace InterUlc.Db
           }
         }
         if (dr_ip["longit"].GetType() != typeof(DBNull))
-          longit = (float)dr_ip["longit"];
+          longit = (double)dr_ip["longit"];
         if (dr_ip["letit"].GetType() != typeof(DBNull))
-          letit = (float)dr_ip["letit"];
+          letit = (double)dr_ip["letit"];
         //if (dr_ip["meter_type"].GetType() != typeof(DBNull))
         //{
         //  meter_factory = (string)dr_ip["meter_factory"];
@@ -1202,7 +1202,7 @@ namespace InterUlc.Db
       List<ListViewItem> lstRes = new List<ListViewItem>();
       if (this.__super_user)
       {
-        LoadRapairDevices();
+        //LoadRapairDevices();
       }
       
       foreach (var item in dlst)

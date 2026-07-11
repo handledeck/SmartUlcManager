@@ -32,8 +32,8 @@ namespace UlcWin
     public string Comments { get; set; }
     public string  Meters { get; set; }
     public int Rs_Stat { get; set; }
-    public float longit { get; set; }
-    public float letit { get; set; }
+    public double longit { get; set; }
+    public double letit { get; set; }
     public bool HasRepeir { get; set; }
   }
 }

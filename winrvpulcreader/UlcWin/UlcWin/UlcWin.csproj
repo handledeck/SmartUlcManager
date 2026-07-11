@@ -91,7 +91,9 @@
     <Reference Include="SparkleLibrary, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ObjectListView.2.7.1.5\lib\SparkleLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -378,18 +380,6 @@
     <Compile Include="Native\Native.cs" />
     <Compile Include="Native\NativeSort.cs" />
     <Compile Include="Statistics\StatRes.cs" />
-    <Compile Include="test\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="test\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="test\UserControl1.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="test\UserControl1.Designer.cs">
-      <DependentUpon>UserControl1.cs</DependentUpon>
-    </Compile>
     <Compile Include="ui\AddEthRuleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -656,12 +646,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Edit\MeterEditFrom.resx">
       <DependentUpon>MeterEditFrom.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="test\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="test\UserControl1.resx">
-      <DependentUpon>UserControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\AddEthRuleForm.resx">
       <DependentUpon>AddEthRuleForm.cs</DependentUpon>
@@ -981,6 +965,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\" />
+    <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
