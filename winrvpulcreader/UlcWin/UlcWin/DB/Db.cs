@@ -1159,9 +1159,11 @@ namespace InterUlc.Db
           }
         }
         if (dr_ip["longit"].GetType() != typeof(DBNull))
-          longit = (double)dr_ip["longit"];
+          longit = Convert.ToDouble(dr_ip["longit"]);
+        //longit = (double)dr_ip["longit"];
         if (dr_ip["letit"].GetType() != typeof(DBNull))
-          letit = (double)dr_ip["letit"];
+          longit = Convert.ToDouble(dr_ip["letit"]);
+        //letit = (double)dr_ip["letit"];
         //if (dr_ip["meter_type"].GetType() != typeof(DBNull))
         //{
         //  meter_factory = (string)dr_ip["meter_factory"];
