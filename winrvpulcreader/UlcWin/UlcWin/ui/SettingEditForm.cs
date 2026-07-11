@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Uart.Attributes;
 using Uart.Function;
 using UlcWin.Controls.Modules;
 using UlcWin.DB;
@@ -111,7 +112,7 @@ namespace UlcWin.ui
       __config.PlanRebootShow(false);
       __config.LogsControlShow(false);
       __config.RechangeField(Ztp.Enums.Device.RVP);
-
+      
       //this.__modbusItemList.Enabled = false;
       //this.__modBusSettings.Enabled = false;
       __planEditor.Value = __ztpConfig.Light;
@@ -123,6 +124,7 @@ namespace UlcWin.ui
     {
       //__config._devType = __device;
       __config.GsmTechShow(true);
+      
       __config.ShowApnProperty = false;
       __config.PingIpShow(true);
       __config.PlanRebootShow(true);
@@ -146,7 +148,10 @@ namespace UlcWin.ui
 
     void InitConfig()
     {
+
+      __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       __config.Value = __ztpConfig;
+
       __currentStateViewControl.Value = __ztpConfig;
       ZtpConfig config = __config.Value;
       if (ControllerType.GetControllerType(config.Version) != EnumTypeController.ULC2Lite)
@@ -169,6 +174,7 @@ namespace UlcWin.ui
         PicLightSwitcher.Image = UlcWin.Properties.Resources.lightbulb_off;
         btnLightSwitcher.Text = "Включить освещение";
       }
+      
       switch (__device)
       {
         case Ztp.Enums.Device.Unknown:
@@ -189,8 +195,8 @@ namespace UlcWin.ui
     {
       //__config.Dock = DockStyle.Fill;
       //__currentStateViewControl.Dock = DockStyle.Fill;
-      InitConfig();
-
+      
+      
       this.tableLayoutPanel2.Controls.Add(__config);
       this.tableLayoutPanel2.Controls.Add(__currentStateViewControl);
       this.TabSerialPort.Controls.Add(__comPortEditor);
@@ -207,6 +213,7 @@ namespace UlcWin.ui
       base.OnShown(e);
       this.usrUartModule1.InitCB();
       this.ethernetModule1.InitCB();
+      InitConfig();
     }
 
     public SettingEditForm(string message, GetConnectionDelegate getConnection, bool multiWrite,
@@ -222,10 +229,13 @@ namespace UlcWin.ui
       this.__messgage = message;
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       device = CtrlType.GetControllerType(__ztpConfig.Version);
-      this.__device = device;
-      this.__config._devType = device;
+      __device = device;
+      __config._devType = device;
+      __config.Value = __ztpConfig;
       Application.Idle += Application_Idle;
       this.__getConnection = getConnection;
+      
+        
     }
 
     private void Application_Idle(object sender, EventArgs e)

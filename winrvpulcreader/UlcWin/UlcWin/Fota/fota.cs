@@ -225,7 +225,7 @@ namespace UlcWin.Fota
     public int PackageSize
     {
       get; set;
-    } = 512;
+    } = 1024;
 
     public string Address
     {

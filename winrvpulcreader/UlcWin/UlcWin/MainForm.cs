@@ -23,7 +23,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UlcWin.AplSetings;
 using UlcWin.Controls.ListViewHeaderMenu;
+using UlcWin.Controls.LogNet;
 using UlcWin.Controls.UlcMeterComponet;
+using UlcWin.Controls.Wait;
 using UlcWin.DB;
 using UlcWin.Devices;
 using UlcWin.Drivers;
@@ -2676,17 +2678,18 @@ namespace UlcWin
         {
           if (it.UlcConfig != null)
           {
-           
+
             if (it.UlcConfig.VER == "I3O2A1-LEM-4-FOTA-prIM")
             {
               __evf = new EventForm(this.tsMenuReadCurrentLog_Click, this.WriteCommandTo);
             }
-            else {
+            else
+            {
               __evf = new EventForm(this.tsMenuReadCurrentLog_Click, null);
             }
           }
-          
-          
+
+
         }
         sform.RunAction(new Action(() =>
         {
@@ -2762,14 +2765,16 @@ namespace UlcWin
         DialogResult res = sform.ShowDialog();
         if (res == DialogResult.OK)
         {
-          if (result) {
+          if (result)
+          {
             DialogResult re = __evf.ShowDialog();
             if (re == DialogResult.Cancel)
               this.__evf = null;
           }
-          
+
         }
-        else if (res == DialogResult.Cancel) { 
+        else if (res == DialogResult.Cancel)
+        {
           __evf.Close();
           __evf = null;
         }
@@ -2946,7 +2951,7 @@ namespace UlcWin
         {
 
           using (SettingEditForm rqf = new SettingEditForm(message, this.GetConnection, false,
-            tsComboBoxDev.SelectedIndex == 1 ? Ztp.Enums.Device.ULC2 : Ztp.Enums.Device.RVP,
+            tsComboBoxDev.SelectedIndex >= 1 ? Ztp.Enums.Device.ULC2 : Ztp.Enums.Device.RVP,
              /*selItem.Name*/selItem, this.__db, forwards))
           {
             rqf.SetUartArray(buffer, mbLblBuf);
@@ -4438,29 +4443,117 @@ namespace UlcWin
       form.ShowDialog();
     }
 
-    private void mapsCoordinatesToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+    private async void click_logNetToolStripMenuItem(object sender, EventArgs e)
+    {
+      var dialog = new ProgressDialog();
+      dialog.DialogTitle = "Выполнение операции";
+      var itm = this.LstViewItm.SelectedItems[0];
+      List<string> lst_sygnal = new List<string>();
+      ItemIp itp = (ItemIp)itm.Tag;
+      string errorMessage = null; // Для хранения сообщения об ошибке
+
+      DialogResult result = await dialog.ShowTaskAsync(this, async (token, progress) =>
+      {
+        using (StreamReader reader = await TcpLogNet.DownloadLogsToReader(
+            itp.Ip,
+            "//",
+            onProgress: status => { },
+            onOverallProgress: overallPercent =>
+            {
+              progress.Report(new ProgressReport(overallPercent, $"Прогресс: {overallPercent}%"));
+            },
+            onError: error =>
+            {
+              errorMessage = error; // Сохраняем сообщение об ошибке
+            },
+            cancellationToken: token))
+        {
+          token.ThrowIfCancellationRequested();
+
+          if (reader != null)
+          {
+            string line;
+            while ((line = await reader.ReadLineAsync()) != null)
+            {
+              lst_sygnal.Add(line);
+              token.ThrowIfCancellationRequested();
+            }
+          }
+        }
+      });
+
+      // Обработка результатов
+      if (result == DialogResult.OK)
+      {
+        if (lst_sygnal != null && lst_sygnal.Count > 0)
+        {
+          var dia = new SignalChartDialog(lst_sygnal, itp.Name);
+          dia.ShowDialog();
+        }
+        else
+        {
+          MessageBox.Show("Не удалось получить данные", "Предупреждение",
+              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+      }
+      else if (result == DialogResult.Cancel)
+      {
+        if (!string.IsNullOrEmpty(errorMessage))
+        {
+          // Ошибка от сервера или сети
+          MessageBox.Show($"Ошибка: {errorMessage}", "Ошибка",
+              MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        else
+        {
+          // Пользователь нажал отмену
+          MessageBox.Show("Операция отменена пользователем", "Отмена",
+              MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+      }
+      else if (result == DialogResult.Abort)
+      {
+        // Непредвиденная ошибка
+        MessageBox.Show($"Произошла ошибка: {errorMessage ?? "Неизвестная ошибка"}",
+            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void ulcMeterTreeView_Load(object sender, EventArgs e)
     {
 
     }
 
     private void LvMenu_Opening(object sender, CancelEventArgs e)
     {
-
-    }
-
-    private void LstViewItm_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-    {
-
-    }
-
-        private void ulcMeterTreeView_Load(object sender, EventArgs e)
-        {
-
+      var itm = this.LstViewItm.SelectedItems[0];
+      if (itm != null) {
+        ItemIp itp = (ItemIp)itm.Tag;
+        if (itp.UType > 1) {
+          if (itp.UlcConfig != null)
+          {
+            Version tVersion = new Version(itp.UlcConfig.SVERS);
+            Version minVersion = new Version("1.3.3");
+            if (tVersion < minVersion)
+            {
+              this.logNetToolStripMenuItem.Enabled = false;
+            }
+            else {
+              this.logNetToolStripMenuItem.Enabled = true;
+            }
+          }
+          
         }
+        else
+        this.logNetToolStripMenuItem.Enabled = false;
+      }
     }
+  }
 
 
-    public enum UlcSort
+  public enum UlcSort
   {
     DEFAULT = 0,
     IP = 1,

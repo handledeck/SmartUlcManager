@@ -173,6 +173,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LogNet\SignalChartDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LogNet\TcpLogNet.cs" />
+    <Compile Include="Controls\Wait\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Wait\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\AllShcedulesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -602,6 +612,9 @@
     <Compile Include="ui\WaitForm.Designer.cs">
       <DependentUpon>WaitForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\Wait\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\AllShcedulesForm.resx">
       <DependentUpon>AllShcedulesForm.cs</DependentUpon>
     </EmbeddedResource>

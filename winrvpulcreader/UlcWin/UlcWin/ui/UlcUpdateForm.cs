@@ -157,7 +157,7 @@ namespace UlcWin.ui
                     p_path += "firmware_lite-2-1.tgz";
                   }
                   else {
-                    p_path += "firmware_lite-3-1.tgz";
+                    p_path += "firmware_lite.tgz";
                   }
                     SayMessage(row, 2, $"ULC-2-Lite({config.SoftVersion})", Color.Green);
                 }

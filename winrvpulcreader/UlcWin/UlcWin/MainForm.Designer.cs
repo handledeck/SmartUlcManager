@@ -77,6 +77,26 @@ namespace UlcWin
       this.panel1 = new System.Windows.Forms.Panel();
       this.tabItemsControl = new System.Windows.Forms.TabControl();
       this.tabControllers = new System.Windows.Forms.TabPage();
+      this.LstViewItm = new UlcWin.Controls.ListViewHeaderMenu.ListViewMenuHeaderControl(this.components);
+      this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Names = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.ztp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.UType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Version = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.Signal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.soft = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.logs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.core = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.imai = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.schedule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.rs485 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.traph = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.active = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.isLights = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.comments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
       this.tsResView = new System.Windows.Forms.ToolStrip();
       this.tsComboBoxDev = new System.Windows.Forms.ToolStripComboBox();
       this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
@@ -99,7 +119,9 @@ namespace UlcWin
       this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.tsLblFind = new System.Windows.Forms.ToolStripLabel();
       this.tsFilterText = new System.Windows.Forms.ToolStripTextBox();
+      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
       this.tabMeter = new System.Windows.Forms.TabPage();
+      this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
       this.imgTabs = new System.Windows.Forms.ImageList(this.components);
       this.tabEventController = new System.Windows.Forms.TabControl();
       this.tabEventCtrl = new System.Windows.Forms.TabPage();
@@ -139,6 +161,7 @@ namespace UlcWin
       this.ctxMenuMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.ctxNotTrueMeter = new System.Windows.Forms.ToolStripMenuItem();
       this.mapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.logNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tsStatusLbl = new System.Windows.Forms.StatusStrip();
       this.tsStsLabelAll = new System.Windows.Forms.ToolStripStatusLabel();
       this.tsStsLblNotTrue = new System.Windows.Forms.ToolStripStatusLabel();
@@ -149,28 +172,6 @@ namespace UlcWin
       this.imageList2 = new System.Windows.Forms.ImageList(this.components);
       this.helpProvider1 = new System.Windows.Forms.HelpProvider();
       this.ctxMenuHeader = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.LstViewItm = new UlcWin.Controls.ListViewHeaderMenu.ListViewMenuHeaderControl(this.components);
-      this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Names = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.ztp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.UType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Version = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.Signal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.soft = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.logs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.core = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.imai = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.schedule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.rs485 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.traph = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.active = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.comments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
-      this.usrFesStatistics1 = new UlcWin.ui.UsrFesStatistics();
-      this.ulcMeterTreeView = new GettingStartedTree.UlcTreeView();
-      this.isLights = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.toolStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -703,6 +704,163 @@ namespace UlcWin
       this.tabControllers.Text = "Контроллеры";
       this.tabControllers.UseVisualStyleBackColor = true;
       // 
+      // LstViewItm
+      // 
+      this.LstViewItm.AllowColumnReorder = true;
+      this.LstViewItm.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.LstViewItm.CheckBoxes = true;
+      this.LstViewItm.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Id,
+            this.Names,
+            this.ztp,
+            this.Ip,
+            this.phone,
+            this.UType,
+            this.Version,
+            this.Signal,
+            this.soft,
+            this.logs,
+            this.core,
+            this.imai,
+            this.schedule,
+            this.rs485,
+            this.traph,
+            this.active,
+            this.isLights,
+            this.comments});
+      this.LstViewItm.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.LstViewItm.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.LstViewItm.FullRowSelect = true;
+      this.LstViewItm.HideSelection = false;
+      this.LstViewItm.Location = new System.Drawing.Point(3, 36);
+      this.LstViewItm.MultiSelect = false;
+      this.LstViewItm.Name = "LstViewItm";
+      this.LstViewItm.OwnerDraw = true;
+      this.LstViewItm.Size = new System.Drawing.Size(1136, 336);
+      this.LstViewItm.SmallImageList = this.imageList1;
+      this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
+      this.LstViewItm.TabIndex = 0;
+      this.LstViewItm.UseCompatibleStateImageBehavior = false;
+      this.LstViewItm.View = System.Windows.Forms.View.Details;
+      this.LstViewItm.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LstViewItm_ColumnClick);
+      this.LstViewItm.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LstViewItm_ColumnWidthChanged);
+      this.LstViewItm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LstViewItm_ItemCheck);
+      this.LstViewItm.SelectedIndexChanged += new System.EventHandler(this.LstViewItm_SelectedIndexChanged);
+      this.LstViewItm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseClick);
+      this.LstViewItm.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseDoubleClick);
+      // 
+      // Id
+      // 
+      this.Id.Text = "Дата";
+      this.Id.Width = 155;
+      // 
+      // Names
+      // 
+      this.Names.Text = "Имя объекта";
+      this.Names.Width = 264;
+      // 
+      // ztp
+      // 
+      this.ztp.Text = "ТП";
+      // 
+      // Ip
+      // 
+      this.Ip.Text = "IP Адрес";
+      this.Ip.Width = 120;
+      // 
+      // phone
+      // 
+      this.phone.Text = "Телефон";
+      this.phone.Width = 116;
+      // 
+      // UType
+      // 
+      this.UType.Text = "Тип";
+      this.UType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.UType.Width = 72;
+      // 
+      // Version
+      // 
+      this.Version.Text = "Версия";
+      this.Version.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
+      // Signal
+      // 
+      this.Signal.Text = "Сигнал";
+      this.Signal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.Signal.Width = 71;
+      // 
+      // soft
+      // 
+      this.soft.Text = "Прошивка";
+      this.soft.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.soft.Width = 161;
+      // 
+      // logs
+      // 
+      this.logs.Text = "Уровень лога";
+      this.logs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.logs.Width = 66;
+      // 
+      // core
+      // 
+      this.core.Text = "Патч";
+      this.core.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
+      // imai
+      // 
+      this.imai.Text = "IMEI";
+      this.imai.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.imai.Width = 68;
+      // 
+      // schedule
+      // 
+      this.schedule.Text = "Активность расписания";
+      this.schedule.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.schedule.Width = 72;
+      // 
+      // rs485
+      // 
+      this.rs485.Text = "RS-485";
+      this.rs485.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.rs485.Width = 55;
+      // 
+      // traph
+      // 
+      this.traph.Text = "Траффик";
+      this.traph.Width = 80;
+      // 
+      // active
+      // 
+      this.active.Text = "Активнсть контроллера";
+      this.active.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
+      // isLights
+      // 
+      this.isLights.DisplayIndex = 17;
+      this.isLights.Text = "Освещение";
+      this.isLights.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
+      // comments
+      // 
+      this.comments.DisplayIndex = 16;
+      this.comments.Text = "Коментарий";
+      this.comments.Width = 120;
+      // 
+      // checkBoxComboBox1
+      // 
+      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
+      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
+      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.checkBoxComboBox1.FormattingEnabled = true;
+      this.checkBoxComboBox1.Location = new System.Drawing.Point(108, 73);
+      this.checkBoxComboBox1.MaxDropDownItems = 15;
+      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
+      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
+      this.checkBoxComboBox1.TabIndex = 3;
+      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
+      // 
       // tsResView
       // 
       this.tsResView.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -933,6 +1091,21 @@ namespace UlcWin
       this.tsFilterText.Size = new System.Drawing.Size(200, 23);
       this.tsFilterText.TextChanged += new System.EventHandler(this.txtBoxFilter_Cnanged);
       // 
+      // usrFesStatistics1
+      // 
+      this.usrFesStatistics1.AutoScroll = true;
+      this.usrFesStatistics1.AutoSize = true;
+      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
+      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrFesStatistics1.Location = new System.Drawing.Point(3, 3);
+      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
+      this.usrFesStatistics1.Name = "usrFesStatistics1";
+      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
+      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 369);
+      this.usrFesStatistics1.TabIndex = 1;
+      this.usrFesStatistics1.Value = null;
+      this.usrFesStatistics1.Visible = false;
+      // 
       // tabMeter
       // 
       this.tabMeter.Controls.Add(this.ulcMeterTreeView);
@@ -944,6 +1117,16 @@ namespace UlcWin
       this.tabMeter.TabIndex = 1;
       this.tabMeter.Text = "Счетчики";
       this.tabMeter.UseVisualStyleBackColor = true;
+      // 
+      // ulcMeterTreeView
+      // 
+      this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ulcMeterTreeView.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
+      this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
+      this.ulcMeterTreeView.Name = "ulcMeterTreeView";
+      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 369);
+      this.ulcMeterTreeView.TabIndex = 0;
       // 
       // imgTabs
       // 
@@ -1162,10 +1345,11 @@ namespace UlcWin
             this.ctxSeparatePing,
             this.ctxMenuMeter,
             this.ctxNotTrueMeter,
-            this.mapsToolStripMenuItem});
+            this.mapsToolStripMenuItem,
+            this.logNetToolStripMenuItem});
       this.LvMenu.Name = "contextMenuStrip1";
       this.LvMenu.ShowImageMargin = false;
-      this.LvMenu.Size = new System.Drawing.Size(224, 292);
+      this.LvMenu.Size = new System.Drawing.Size(224, 314);
       this.LvMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LvMenu_Opening);
       // 
       // ctxMenuUpdateCurrent
@@ -1277,6 +1461,13 @@ namespace UlcWin
       this.mapsToolStripMenuItem.Visible = false;
       this.mapsToolStripMenuItem.Click += new System.EventHandler(this.mapsToolStripMenuItem_Click);
       // 
+      // logNetToolStripMenuItem
+      // 
+      this.logNetToolStripMenuItem.Name = "logNetToolStripMenuItem";
+      this.logNetToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+      this.logNetToolStripMenuItem.Text = "Лог связи";
+      this.logNetToolStripMenuItem.Click += new System.EventHandler(this.click_logNetToolStripMenuItem);
+      // 
       // tsStatusLbl
       // 
       this.tsStatusLbl.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -1360,189 +1551,6 @@ namespace UlcWin
       // 
       this.ctxMenuHeader.Name = "ctxMenuHeader";
       this.ctxMenuHeader.Size = new System.Drawing.Size(61, 4);
-      // 
-      // LstViewItm
-      // 
-      this.LstViewItm.AllowColumnReorder = true;
-      this.LstViewItm.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.LstViewItm.CheckBoxes = true;
-      this.LstViewItm.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Id,
-            this.Names,
-            this.ztp,
-            this.Ip,
-            this.phone,
-            this.UType,
-            this.Version,
-            this.Signal,
-            this.soft,
-            this.logs,
-            this.core,
-            this.imai,
-            this.schedule,
-            this.rs485,
-            this.traph,
-            this.active,
-            this.isLights,
-            this.comments});
-      this.LstViewItm.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.LstViewItm.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.LstViewItm.FullRowSelect = true;
-      this.LstViewItm.HideSelection = false;
-      this.LstViewItm.Location = new System.Drawing.Point(3, 36);
-      this.LstViewItm.MultiSelect = false;
-      this.LstViewItm.Name = "LstViewItm";
-      this.LstViewItm.OwnerDraw = true;
-      this.LstViewItm.Size = new System.Drawing.Size(1136, 336);
-      this.LstViewItm.SmallImageList = this.imageList1;
-      this.LstViewItm.Sorting = System.Windows.Forms.SortOrder.Ascending;
-      this.LstViewItm.TabIndex = 0;
-      this.LstViewItm.UseCompatibleStateImageBehavior = false;
-      this.LstViewItm.View = System.Windows.Forms.View.Details;
-      this.LstViewItm.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LstViewItm_ColumnClick);
-      this.LstViewItm.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LstViewItm_ColumnWidthChanged);
-      this.LstViewItm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LstViewItm_ItemCheck);
-      this.LstViewItm.SelectedIndexChanged += new System.EventHandler(this.LstViewItm_SelectedIndexChanged);
-      this.LstViewItm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseClick);
-      this.LstViewItm.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LstViewItm_MouseDoubleClick);
-      // 
-      // Id
-      // 
-      this.Id.Text = "Дата";
-      this.Id.Width = 155;
-      // 
-      // Names
-      // 
-      this.Names.Text = "Имя объекта";
-      this.Names.Width = 264;
-      // 
-      // ztp
-      // 
-      this.ztp.Text = "ТП";
-      // 
-      // Ip
-      // 
-      this.Ip.Text = "IP Адрес";
-      this.Ip.Width = 120;
-      // 
-      // phone
-      // 
-      this.phone.Text = "Телефон";
-      this.phone.Width = 116;
-      // 
-      // UType
-      // 
-      this.UType.Text = "Тип";
-      this.UType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.UType.Width = 72;
-      // 
-      // Version
-      // 
-      this.Version.Text = "Версия";
-      this.Version.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      // 
-      // Signal
-      // 
-      this.Signal.Text = "Сигнал";
-      this.Signal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.Signal.Width = 71;
-      // 
-      // soft
-      // 
-      this.soft.Text = "Прошивка";
-      this.soft.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.soft.Width = 161;
-      // 
-      // logs
-      // 
-      this.logs.Text = "Уровень лога";
-      this.logs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.logs.Width = 66;
-      // 
-      // core
-      // 
-      this.core.Text = "Патч";
-      this.core.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      // 
-      // imai
-      // 
-      this.imai.Text = "IMEI";
-      this.imai.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.imai.Width = 68;
-      // 
-      // schedule
-      // 
-      this.schedule.Text = "Активность расписания";
-      this.schedule.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.schedule.Width = 72;
-      // 
-      // rs485
-      // 
-      this.rs485.Text = "RS-485";
-      this.rs485.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.rs485.Width = 55;
-      // 
-      // traph
-      // 
-      this.traph.Text = "Траффик";
-      this.traph.Width = 80;
-      // 
-      // active
-      // 
-      this.active.Text = "Активнсть контроллера";
-      this.active.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      // 
-      // comments
-      // 
-      this.comments.DisplayIndex = 16;
-      this.comments.Text = "Коментарий";
-      this.comments.Width = 120;
-      // 
-      // checkBoxComboBox1
-      // 
-      checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.checkBoxComboBox1.CheckBoxProperties = checkBoxProperties1;
-      this.checkBoxComboBox1.DisplayMemberSingleItem = "";
-      this.checkBoxComboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.checkBoxComboBox1.FormattingEnabled = true;
-      this.checkBoxComboBox1.Location = new System.Drawing.Point(108, 73);
-      this.checkBoxComboBox1.MaxDropDownItems = 15;
-      this.checkBoxComboBox1.Name = "checkBoxComboBox1";
-      this.checkBoxComboBox1.Size = new System.Drawing.Size(176, 21);
-      this.checkBoxComboBox1.TabIndex = 3;
-      this.checkBoxComboBox1.CheckBoxCheckedChanged += new System.EventHandler(this.checkBoxComboBox1_CheckBoxCheckedChanged);
-      // 
-      // usrFesStatistics1
-      // 
-      this.usrFesStatistics1.AutoScroll = true;
-      this.usrFesStatistics1.AutoSize = true;
-      this.usrFesStatistics1.BackColor = System.Drawing.SystemColors.Control;
-      this.usrFesStatistics1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrFesStatistics1.Location = new System.Drawing.Point(3, 3);
-      this.usrFesStatistics1.Margin = new System.Windows.Forms.Padding(4);
-      this.usrFesStatistics1.Name = "usrFesStatistics1";
-      this.usrFesStatistics1.Padding = new System.Windows.Forms.Padding(10);
-      this.usrFesStatistics1.Size = new System.Drawing.Size(1136, 369);
-      this.usrFesStatistics1.TabIndex = 1;
-      this.usrFesStatistics1.Value = null;
-      this.usrFesStatistics1.Visible = false;
-      // 
-      // ulcMeterTreeView
-      // 
-      this.ulcMeterTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ulcMeterTreeView.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.ulcMeterTreeView.Location = new System.Drawing.Point(3, 3);
-      this.ulcMeterTreeView.Margin = new System.Windows.Forms.Padding(2);
-      this.ulcMeterTreeView.Name = "ulcMeterTreeView";
-      this.ulcMeterTreeView.Size = new System.Drawing.Size(1136, 369);
-      this.ulcMeterTreeView.TabIndex = 0;
-      this.ulcMeterTreeView.Load += new System.EventHandler(this.ulcMeterTreeView_Load);
-      // 
-      // isLights
-      // 
-      this.isLights.DisplayIndex = 17;
-      this.isLights.Text = "Освещение";
-      this.isLights.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
       // 
       // LoadForm
       // 
@@ -1733,6 +1741,7 @@ namespace UlcWin
     private System.Windows.Forms.ToolStripMenuItem ctxMenuDelete;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ColumnHeader isLights;
+        private System.Windows.Forms.ToolStripMenuItem logNetToolStripMenuItem;
     }
 }
 

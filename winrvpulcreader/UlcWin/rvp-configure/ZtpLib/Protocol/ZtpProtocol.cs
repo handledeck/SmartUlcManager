@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Ztp.Configuration;
 using Ztp.Port.ComPort;
 using Ztp.Utils;
@@ -137,6 +138,8 @@ namespace Ztp.Protocol
 
     public static ZtpConfig DeserializeZtpConfig(string str)
     {
+      if(str==null)
+        throw new FormatException("Строка имеет не верный формат");
       ZtpConfig zc = new ZtpConfig();
       //могут быть не указаны в строке
       zc.EstPort = 10000;

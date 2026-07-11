@@ -65,7 +65,9 @@ namespace Ztp.Ui
       {
         iec104EditorControl.TimeValue = zc.EstAddress;
         iec104EditorControl.qValue = zc.EstPort;
+        gsmTechn.ChangeList(true);
         gsmTechn.Techn = zc.EstTsend;
+        
         logsStateControl.LogLevel = zc.logLevel;
       }
      
@@ -244,6 +246,10 @@ namespace Ztp.Ui
 
     public void GsmTechShow(bool value)
     {
+      if (_devType == Device.ULC2Lite || _devType == Device.ULC3)
+      gsmTechn.ChangeList(true);
+      gsmTechn.Techn = _ztpConfig.EstTsend;
+      
       gsmTechn.Visible = value;
     }
 
