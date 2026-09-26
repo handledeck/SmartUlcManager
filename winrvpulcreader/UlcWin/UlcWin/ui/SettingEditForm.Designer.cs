@@ -47,11 +47,11 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.@__planEditor = new Ztp.Ui.LightPlanEditorControl();
       this.btnShowAll = new System.Windows.Forms.Button();
+      this.imlTc = new System.Windows.Forms.ImageList(this.components);
       this.PicLightSwitcher = new System.Windows.Forms.PictureBox();
       this.btnLightSwitcher = new System.Windows.Forms.Button();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.btnScheduleAdd = new System.Windows.Forms.Button();
-      this.imlTc = new System.Windows.Forms.ImageList(this.components);
       this.btnScheduleDelete = new System.Windows.Forms.Button();
       this.btnScheduleEdit = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -419,6 +419,29 @@
       this.btnShowAll.UseVisualStyleBackColor = false;
       this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
       // 
+      // imlTc
+      // 
+      this.imlTc.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlTc.ImageStream")));
+      this.imlTc.TransparentColor = System.Drawing.Color.Transparent;
+      this.imlTc.Images.SetKeyName(0, "history.png");
+      this.imlTc.Images.SetKeyName(1, "port.png");
+      this.imlTc.Images.SetKeyName(2, "bricks.png");
+      this.imlTc.Images.SetKeyName(3, "cpu_preferences.png");
+      this.imlTc.Images.SetKeyName(4, "bookmark_add.ico");
+      this.imlTc.Images.SetKeyName(5, "bookmarks_preferences.ico");
+      this.imlTc.Images.SetKeyName(6, "bookmark_delete.ico");
+      this.imlTc.Images.SetKeyName(7, "clock.ico");
+      this.imlTc.Images.SetKeyName(8, "clock_pause.ico");
+      this.imlTc.Images.SetKeyName(9, "clock_preferences.ico");
+      this.imlTc.Images.SetKeyName(10, "clock_refresh.ico");
+      this.imlTc.Images.SetKeyName(11, "clock_reset.ico");
+      this.imlTc.Images.SetKeyName(12, "clock_run.ico");
+      this.imlTc.Images.SetKeyName(13, "clock_stop.ico");
+      this.imlTc.Images.SetKeyName(14, "lightbulb.ico");
+      this.imlTc.Images.SetKeyName(15, "lightbulb_off.ico");
+      this.imlTc.Images.SetKeyName(16, "network_ip.png");
+      this.imlTc.Images.SetKeyName(17, "time.png");
+      // 
       // PicLightSwitcher
       // 
       this.PicLightSwitcher.Image = global::UlcWin.Properties.Resources.lightbulb_off;
@@ -469,29 +492,6 @@
       this.btnScheduleAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       this.btnScheduleAdd.UseVisualStyleBackColor = true;
       this.btnScheduleAdd.Click += new System.EventHandler(this.btnScheduleAdd_Click);
-      // 
-      // imlTc
-      // 
-      this.imlTc.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlTc.ImageStream")));
-      this.imlTc.TransparentColor = System.Drawing.Color.Transparent;
-      this.imlTc.Images.SetKeyName(0, "history.png");
-      this.imlTc.Images.SetKeyName(1, "port.png");
-      this.imlTc.Images.SetKeyName(2, "bricks.png");
-      this.imlTc.Images.SetKeyName(3, "cpu_preferences.png");
-      this.imlTc.Images.SetKeyName(4, "bookmark_add.ico");
-      this.imlTc.Images.SetKeyName(5, "bookmarks_preferences.ico");
-      this.imlTc.Images.SetKeyName(6, "bookmark_delete.ico");
-      this.imlTc.Images.SetKeyName(7, "clock.ico");
-      this.imlTc.Images.SetKeyName(8, "clock_pause.ico");
-      this.imlTc.Images.SetKeyName(9, "clock_preferences.ico");
-      this.imlTc.Images.SetKeyName(10, "clock_refresh.ico");
-      this.imlTc.Images.SetKeyName(11, "clock_reset.ico");
-      this.imlTc.Images.SetKeyName(12, "clock_run.ico");
-      this.imlTc.Images.SetKeyName(13, "clock_stop.ico");
-      this.imlTc.Images.SetKeyName(14, "lightbulb.ico");
-      this.imlTc.Images.SetKeyName(15, "lightbulb_off.ico");
-      this.imlTc.Images.SetKeyName(16, "network_ip.png");
-      this.imlTc.Images.SetKeyName(17, "time.png");
       // 
       // btnScheduleDelete
       // 
@@ -704,7 +704,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(384, 38);
+      this.label3.Location = new System.Drawing.Point(383, 29);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(94, 13);
       this.label3.TabIndex = 6;
@@ -713,7 +713,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(55, 43);
+      this.label1.Location = new System.Drawing.Point(96, 29);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(59, 13);
       this.label1.TabIndex = 2;
@@ -740,7 +740,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(55, 75);
+      this.label2.Location = new System.Drawing.Point(55, 66);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(100, 13);
       this.label2.TabIndex = 3;

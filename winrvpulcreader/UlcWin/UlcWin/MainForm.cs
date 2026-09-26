@@ -4538,7 +4538,8 @@ namespace UlcWin
                 {
                     if (itp.UlcConfig != null)
                     {
-                        Version tVersion = new Version(itp.UlcConfig.SVERS);
+            if (itp.UlcConfig.SVERS != null) { 
+            Version tVersion = new Version(itp.UlcConfig.SVERS);
                         Version minVersion = new Version("1.3.3");
                         if (tVersion < minVersion)
                         {
@@ -4552,13 +4553,15 @@ namespace UlcWin
 
                 }
                 else
-                    this.logNetToolStripMenuItem.Enabled = false;
+                    this.logNetToolStripMenuItem.Enabled = false;}
             }
         }
-    }
+
+   
+  }
 
 
-    public enum UlcSort
+  public enum UlcSort
     {
         DEFAULT = 0,
         IP = 1,

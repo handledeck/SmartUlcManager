@@ -13,7 +13,7 @@ namespace Ztp.Ui
     public Device _devType;//XXX
 
     public delegate void TestPingOwnHandler();
-    public event TestPingOwnHandler TestPing; 
+    public event TestPingOwnHandler TestPing;
 
     public ConfigEditorControl()
     {
@@ -46,9 +46,9 @@ namespace Ztp.Ui
         _devType = Device.Unknown;
         zc = ZtpConfig.GetDefault();
       }
-        
+
       ZtpVersion version = new ZtpVersion(zc.Version);
-      
+
 
       apnEditorControl.ApnAddress = zc.Apn;
       apnEditorControl.ApnUser = zc.ApnUser;
@@ -60,18 +60,18 @@ namespace Ztp.Ui
       ainEditor.Value = zc.Ain;
       ainEditor.VisibleItemCount = version.Ain;
       doorEditor.Value = zc.Door;
-     
-      if(_devType == Device.ULC2 || _devType == Device.ULC2Lite)
+
+      if (_devType == Device.ULC2 || _devType == Device.ULC2Lite)
       {
         iec104EditorControl.TimeValue = zc.EstAddress;
         iec104EditorControl.qValue = zc.EstPort;
         gsmTechn.ChangeList(true);
         gsmTechn.Techn = zc.EstTsend;
-        
+
         logsStateControl.LogLevel = zc.logLevel;
       }
-     
-      else if(_devType == Device.RVP)
+
+      else if (_devType == Device.RVP)
       {
         cbEstActive.Checked = zc.EstActive;
         itEstAddress.Value = zc.EstAddress;
@@ -145,7 +145,7 @@ namespace Ztp.Ui
         _ztpConfig.EstPort = Convert.ToUInt16(itEstPort.Value);
         _ztpConfig.EstTsend = Convert.ToUInt32(itEstTsend.Value);
       }
-      
+
 
       _ztpConfig.TimeZone = inputTimeZone.Value;
       _ztpConfig.Latitude = Convert.ToSingle(idLatitude.Value);
@@ -156,12 +156,12 @@ namespace Ztp.Ui
       _ztpConfig.Number = Convert.ToInt32(idNumber.Value);
       if (planResetControl.Visible)
         _ztpConfig.rebootTime = planResetControl.Value;
-      if(pingEditorControl.Visible)
+      if (pingEditorControl.Visible)
       {
         _ztpConfig.IpPing = pingEditorControl.Ip;
         _ztpConfig.PingPeriod = pingEditorControl.Period;
       }
-      if(logsStateControl.Visible)
+      if (logsStateControl.Visible)
       {
         _ztpConfig.logLevel = logsStateControl.LogLevel;
       }
@@ -247,9 +247,9 @@ namespace Ztp.Ui
     public void GsmTechShow(bool value)
     {
       if (_devType == Device.ULC2Lite || _devType == Device.ULC3)
-      gsmTechn.ChangeList(true);
+        gsmTechn.ChangeList(true);
       gsmTechn.Techn = _ztpConfig.EstTsend;
-      
+
       gsmTechn.Visible = value;
     }
 

@@ -539,7 +539,7 @@ namespace GettingStartedTree
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.panel1);
       this.Margin = new System.Windows.Forms.Padding(2);
-      //this.Name = "UlcTreeView";
+      this.Name.Name = "UlcTreeView";
       this.Size = new System.Drawing.Size(1107, 590);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);

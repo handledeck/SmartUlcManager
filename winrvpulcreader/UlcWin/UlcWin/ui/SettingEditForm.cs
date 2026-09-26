@@ -227,6 +227,7 @@ namespace UlcWin.ui
       this.__db = db;
       this.__forwards = forwards;
       this.__messgage = message;
+      
       __ztpConfig = Ztp.Protocol.ZtpProtocol.DeserializeZtpConfig(__messgage);
       device = CtrlType.GetControllerType(__ztpConfig.Version);
       __device = device;
@@ -399,10 +400,11 @@ namespace UlcWin.ui
     {
       if (CheckSessionPassword())
       {
+
         __ztpConfig = __config.Value;
         __ztpConfig.ComPortSetting = this.__comPortEditor.Value;
         __ztpConfig.Light = this.__planEditor.Value;
-
+        
         ZtpScheduler sched = __planEditor.Value.Scheduler;
         Exception ex = ZtpScheduler.CheckOverlap(sched, __ztpConfig.TimeZone,
           __ztpConfig.Latitude, __ztpConfig.Longitude);
@@ -734,6 +736,7 @@ namespace UlcWin.ui
             this.usrUartModule1.SetUartArray(buffer, lstLbl);
             //this.ethernetModule1.Value = forward;
             this.__forwards = forward;
+            this.__messgage = message;
             this.BeginInvoke(new Action(() => { this.ethernetModule1.InitCB(); }));
             this.BeginInvoke(new Action(() => { this.InitConfig(); }));
 

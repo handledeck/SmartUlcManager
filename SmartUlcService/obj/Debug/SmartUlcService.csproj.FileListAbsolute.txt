@@ -112,7 +112,6 @@ D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Numerics.Vectors.dll
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Text.Encodings.Web.dll
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Text.Json.dll
-D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.Threading.Tasks.Extensions.dll
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\System.ValueTuple.dll
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\INIFileParser.xml
 D:\99\SmartUlcManager\SmartUlcService\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
