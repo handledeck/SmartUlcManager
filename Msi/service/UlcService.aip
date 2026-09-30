@@ -42,38 +42,49 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{D04D721A-2045-401C-8AA0-53BBEC43394A}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="INIFileParser.dll" ComponentId="{29338D28-136B-4F46-8567-A81DB9ED3C5A}" Directory_="APPDIR" Attributes="0" KeyPath="INIFileParser.dll"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{6D638E2D-550C-418D-9925-39DE404B07D0}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Component="Microsoft.Extensions.Logging.Abstractions.dll" ComponentId="{7159EAF8-3043-4312-8098-8560CC833369}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Logging.Abstractions.dll"/>
-    <ROW Component="NLog.dll" ComponentId="{A993722C-88F7-4FBA-B7BA-A7CDDC804D85}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
-    <ROW Component="Npgsql.dll" ComponentId="{AC492FE3-A9D2-46CF-981F-F943C791D437}" Directory_="APPDIR" Attributes="0" KeyPath="Npgsql.dll"/>
+    <ROW Component="CtmAction.CA.dll" ComponentId="{3D944EBA-162B-47B0-8432-774FE4CBD015}" Directory_="APPDIR" Attributes="0" KeyPath="CtmAction.CA.dll"/>
+    <ROW Component="CtmAction.dll" ComponentId="{4D6A87F0-96F7-4B6C-85BA-04FD87D5BAE8}" Directory_="APPDIR" Attributes="0" KeyPath="CtmAction.dll"/>
+    <ROW Component="INIFileParser.dll" ComponentId="{29224F8F-FE39-466A-8A8C-755925E74F25}" Directory_="APPDIR" Attributes="0" KeyPath="INIFileParser.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{E0C5C951-149D-41B2-88FB-65389C7597C2}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{285F6F21-E115-49BA-8A79-DDC9FCAEE9D2}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyInjection.Abstractions.dll" ComponentId="{373CBA83-CBA6-4472-A8BF-B8B032A44928}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.Logging.Abstractions.dll" ComponentId="{DD4852C9-6DA0-4697-90FC-D7C9D09036BF}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Logging.Abstractions.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{F5D75493-51B7-4EF4-8D07-A51FCBC72718}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="Npgsql.dll" ComponentId="{34DAD5CD-AE56-404F-A82E-369F6936F7A0}" Directory_="APPDIR" Attributes="0" KeyPath="Npgsql.dll"/>
     <ROW Component="ProductInformation" ComponentId="{960A17A4-3584-46D7-B23A-4744449B01C6}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="Quartz.dll" ComponentId="{1D9C3920-0E97-47CF-8F26-062678307F4B}" Directory_="APPDIR" Attributes="0" KeyPath="Quartz.dll"/>
-    <ROW Component="ServiceStack.Common.dll" ComponentId="{A4D0E37E-854E-4BA9-9CD5-43B5477F8C56}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
-    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{D37AB8ED-88EC-4646-9DAE-1926A6F452A5}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
-    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{32BFFD97-1349-4D0E-AC6D-2A09DFE5CE4A}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
-    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{6D1D37EB-D71B-491E-A6B6-6CC670903823}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
-    <ROW Component="ServiceStack.Text.dll" ComponentId="{4FE2588B-7548-4170-84A5-FD3E33E1597C}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
-    <ROW Component="SmartUlcService.exe" ComponentId="{3703114F-9A20-477A-A9CB-873FE66B3D73}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe"/>
-    <ROW Component="SmartUlcService.exe.config" ComponentId="{A6E9386A-2378-42D4-B7CF-23B690F20EFB}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
-    <ROW Component="System.Buffers.dll" ComponentId="{3F17463E-134B-438A-B97F-506B6ED4ACA9}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
-    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{B456AF84-D474-41E3-9D73-03733F1122C2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
-    <ROW Component="System.Memory.dll" ComponentId="{DB7F3797-095F-4246-81A3-23D28790BB0E}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
-    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{FD224720-85D4-445F-9929-E93A6BB86308}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{4A511225-A600-45E9-9FEA-83BF072E67B3}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{6D7B737A-1761-40DC-AAF0-8AD76025AAEA}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
-    <ROW Component="System.Text.Json.dll" ComponentId="{C822FAFB-E77A-4D07-AE08-87FC2A10D656}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
-    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{0BA6FF87-FE20-4E85-9886-7911438E9ADB}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Component="System.ValueTuple.dll" ComponentId="{72C92A27-FCFC-405B-A71F-A98D29B24607}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="Quartz.dll" ComponentId="{97626D86-D41E-4C39-BC8C-997D3A75FE3E}" Directory_="APPDIR" Attributes="0" KeyPath="Quartz.dll"/>
+    <ROW Component="ServiceStack.Common.dll" ComponentId="{881D6DEE-14B9-471C-9CA5-277B965FEC36}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Common.dll"/>
+    <ROW Component="ServiceStack.Interfaces.dll" ComponentId="{AAB7B45D-5BDA-4030-AE3A-9BF051D611A7}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Interfaces.dll"/>
+    <ROW Component="ServiceStack.OrmLite.PostgreSQL.dll" ComponentId="{F87B3ADF-EC38-40D6-A409-69CA68A47EE4}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.PostgreSQL.dll"/>
+    <ROW Component="ServiceStack.OrmLite.dll" ComponentId="{0EDE87CE-5DD6-49B5-9EE7-B1AE2B283A5C}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.OrmLite.dll"/>
+    <ROW Component="ServiceStack.Text.dll" ComponentId="{389CF39A-BA02-4B5C-959B-5EC003C3AB19}" Directory_="APPDIR" Attributes="0" KeyPath="ServiceStack.Text.dll"/>
+    <ROW Component="SmartUlcService.exe" ComponentId="{DAB0CE55-8D07-4A4A-9EC8-A67D3CCFBEA5}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{DD7A8D4D-CBEA-49A6-9518-517EBB32531F}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.Collections.Immutable.dll" ComponentId="{FAD02344-7EE5-4943-80A3-CCDBAF90FDC2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Collections.Immutable.dll"/>
+    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{0E7DB943-FAB9-4F82-AB3A-12ED66C89520}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Component="System.IO.Pipelines.dll" ComponentId="{0CB37DA5-5A26-4978-8633-DED970940CF6}" Directory_="APPDIR" Attributes="0" KeyPath="System.IO.Pipelines.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{58B2C45A-13DE-4C6A-9FF4-FBE0015DBA91}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{BA97377E-3E45-45F4-B1BC-04A3F6125F1A}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{0D8FAC74-EA8B-4105-82D8-4A32066B515F}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{DA953229-7B00-4573-A01D-B4055112E1F3}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{72362625-5FBB-406B-98E5-47E42ADFF35F}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Channels.dll" ComponentId="{BC599ABE-92D2-4AA8-9DFD-A81940C18375}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Channels.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{55BB557B-7DAA-4616-AB82-F83BC0FB61C1}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{5EAB1B76-25DB-4A13-B0D8-F91DA708B402}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="schema.sql" ComponentId="{DF9BFCD5-8A57-4175-B380-31B2A47B036D}" Directory_="APPDIR" Attributes="0" KeyPath="SmartUlcService.exe.config" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="ServiceUlc" Title="Служба диагностики ULC" Description="Служба диагностики контроллеров" Display="2" Level="1" Directory_="APPDIR" Attributes="16"/>
     <ATTRIBUTE name="CurrentFeature" value="ServiceUlc"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="CtmAction.CA.dll" Component_="CtmAction.CA.dll" FileName="CTMACT~1.DLL|CtmAction.CA.dll" Attributes="0" SourcePath="soft\CtmAction.CA.dll" SelfReg="false"/>
+    <ROW File="CtmAction.dll" Component_="CtmAction.dll" FileName="CTMACT~2.DLL|CtmAction.dll" Attributes="0" SourcePath="soft\CtmAction.dll" SelfReg="false"/>
     <ROW File="INIFileParser.dll" Component_="INIFileParser.dll" FileName="INIFIL~1.DLL|INIFileParser.dll" Attributes="0" SourcePath="soft\INIFileParser.dll" SelfReg="false"/>
     <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="soft\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Extensions.Logging.Abstractions.dll" Component_="Microsoft.Extensions.Logging.Abstractions.dll" FileName="MICROS~2.DLL|Microsoft.Extensions.Logging.Abstractions.dll" Attributes="0" SourcePath="soft\Microsoft.Extensions.Logging.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.HashCode.dll" Component_="Microsoft.Bcl.HashCode.dll" FileName="MICROS~2.DLL|Microsoft.Bcl.HashCode.dll" Attributes="0" SourcePath="soft\Microsoft.Bcl.HashCode.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll" FileName="MICROS~3.DLL|Microsoft.Extensions.DependencyInjection.Abstractions.dll" Attributes="0" SourcePath="soft\Microsoft.Extensions.DependencyInjection.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Logging.Abstractions.dll" Component_="Microsoft.Extensions.Logging.Abstractions.dll" FileName="MICROS~4.DLL|Microsoft.Extensions.Logging.Abstractions.dll" Attributes="0" SourcePath="soft\Microsoft.Extensions.Logging.Abstractions.dll" SelfReg="false"/>
     <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="soft\NLog.dll" SelfReg="false"/>
     <ROW File="Npgsql.dll" Component_="Npgsql.dll" FileName="Npgsql.dll" Attributes="0" SourcePath="soft\Npgsql.dll" SelfReg="false"/>
     <ROW File="Quartz.dll" Component_="Quartz.dll" FileName="Quartz.dll" Attributes="0" SourcePath="soft\Quartz.dll" SelfReg="false"/>
@@ -83,17 +94,19 @@
     <ROW File="ServiceStack.OrmLite.PostgreSQL.dll" Component_="ServiceStack.OrmLite.PostgreSQL.dll" FileName="SERVIC~4.DLL|ServiceStack.OrmLite.PostgreSQL.dll" Attributes="0" SourcePath="soft\ServiceStack.OrmLite.PostgreSQL.dll" SelfReg="false"/>
     <ROW File="ServiceStack.Text.dll" Component_="ServiceStack.Text.dll" FileName="SERVIC~5.DLL|ServiceStack.Text.dll" Attributes="0" SourcePath="soft\ServiceStack.Text.dll" SelfReg="false"/>
     <ROW File="SmartUlcService.exe" Component_="SmartUlcService.exe" FileName="SMARTU~1.EXE|SmartUlcService.exe" Attributes="0" SourcePath="soft\SmartUlcService.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="SmartUlcService.exe.config" Component_="SmartUlcService.exe.config" FileName="SMARTU~1.CON|SmartUlcService.exe.config" Attributes="0" SourcePath="soft\SmartUlcService.exe.config" SelfReg="false"/>
+    <ROW File="SmartUlcService.exe.config" Component_="schema.sql" FileName="SMARTU~1.CON|SmartUlcService.exe.config" Attributes="0" SourcePath="soft\SmartUlcService.exe.config" SelfReg="false"/>
     <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~1.DLL|System.Buffers.dll" Attributes="0" SourcePath="soft\System.Buffers.dll" SelfReg="false"/>
-    <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTEM~2.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="soft\System.Diagnostics.DiagnosticSource.dll" SelfReg="false"/>
-    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~3.DLL|System.Memory.dll" Attributes="0" SourcePath="soft\System.Memory.dll" SelfReg="false"/>
-    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~4.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="soft\System.Numerics.Vectors.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~5.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="soft\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
-    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~6.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="soft\System.Text.Encodings.Web.dll" SelfReg="false"/>
-    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~7.DLL|System.Text.Json.dll" Attributes="0" SourcePath="soft\System.Text.Json.dll" SelfReg="false"/>
-    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTEM~8.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="soft\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
-    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTEM~9.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="soft\System.ValueTuple.dll" SelfReg="false"/>
-    <ROW File="UlcSrvSettings.ini" Component_="SmartUlcService.exe.config" FileName="ULCSRV~1.INI|UlcSrvSettings.ini" Attributes="0" SourcePath="soft\UlcSrvSettings.ini" SelfReg="false"/>
+    <ROW File="System.Collections.Immutable.dll" Component_="System.Collections.Immutable.dll" FileName="SYSTEM~2.DLL|System.Collections.Immutable.dll" Attributes="0" SourcePath="soft\System.Collections.Immutable.dll" SelfReg="false"/>
+    <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTEM~3.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="soft\System.Diagnostics.DiagnosticSource.dll" SelfReg="false"/>
+    <ROW File="System.IO.Pipelines.dll" Component_="System.IO.Pipelines.dll" FileName="SYSTEM~4.DLL|System.IO.Pipelines.dll" Attributes="0" SourcePath="soft\System.IO.Pipelines.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~5.DLL|System.Memory.dll" Attributes="0" SourcePath="soft\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~6.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="soft\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~7.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="soft\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~8.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="soft\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~9.DLL|System.Text.Json.dll" Attributes="0" SourcePath="soft\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Channels.dll" Component_="System.Threading.Channels.dll" FileName="SYSTE~10.DLL|System.Threading.Channels.dll" Attributes="0" SourcePath="soft\System.Threading.Channels.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTE~11.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="soft\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTE~12.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="soft\System.ValueTuple.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -331,26 +344,33 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="ServiceUlc" Component_="APPDIR"/>
     <ROW Feature_="ServiceUlc" Component_="ProductInformation"/>
+    <ROW Feature_="ServiceUlc" Component_="CtmAction.CA.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="CtmAction.dll"/>
     <ROW Feature_="ServiceUlc" Component_="INIFileParser.dll"/>
     <ROW Feature_="ServiceUlc" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="Microsoft.Bcl.HashCode.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
     <ROW Feature_="ServiceUlc" Component_="Microsoft.Extensions.Logging.Abstractions.dll"/>
     <ROW Feature_="ServiceUlc" Component_="NLog.dll"/>
     <ROW Feature_="ServiceUlc" Component_="Npgsql.dll"/>
     <ROW Feature_="ServiceUlc" Component_="Quartz.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="schema.sql"/>
     <ROW Feature_="ServiceUlc" Component_="ServiceStack.Common.dll"/>
     <ROW Feature_="ServiceUlc" Component_="ServiceStack.Interfaces.dll"/>
     <ROW Feature_="ServiceUlc" Component_="ServiceStack.OrmLite.dll"/>
     <ROW Feature_="ServiceUlc" Component_="ServiceStack.OrmLite.PostgreSQL.dll"/>
     <ROW Feature_="ServiceUlc" Component_="ServiceStack.Text.dll"/>
     <ROW Feature_="ServiceUlc" Component_="SmartUlcService.exe"/>
-    <ROW Feature_="ServiceUlc" Component_="SmartUlcService.exe.config"/>
     <ROW Feature_="ServiceUlc" Component_="System.Buffers.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="System.Collections.Immutable.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="System.IO.Pipelines.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Memory.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Numerics.Vectors.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Text.Encodings.Web.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Text.Json.dll"/>
+    <ROW Feature_="ServiceUlc" Component_="System.Threading.Channels.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.Threading.Tasks.Extensions.dll"/>
     <ROW Feature_="ServiceUlc" Component_="System.ValueTuple.dll"/>
   </COMPONENT>
@@ -403,7 +423,7 @@
     <ROW ServiceControl="SmartUlcService.exe" Name="SmartUlcService.exe" Event="161" Wait="1" Component_="SmartUlcService.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiServInstComponent">
-    <ROW ServiceInstall="SmartUlcService.exe" Name="SmartUlcService.exe" DisplayName="SmartUlcManager" ServiceType="16" StartType="2" ErrorControl="1" Component_="SmartUlcService.exe" Description="Служба опроса контроллеров ULC"/>
+    <ROW ServiceInstall="SmartUlcService.exe" Name="SmartUlcService.exe" DisplayName="SmartUlcService" ServiceType="16" StartType="2" ErrorControl="1" Component_="SmartUlcService.exe" Description="SmartUlcService"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -411,5 +431,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.NotesComponent">
+    <ROW Type="2" DisplayString="Install Parameters" Note="{\rtf1\ansi\ansicpg1251\deff0\deflang1049{\fonttbl{\f0\fnil\fcharset204 MS Shell Dlg 2;}}&#13;&#10;\viewkind4\uc1\pard\f0\fs17\par&#13;&#10;}&#13;&#10;" ViewId="Install Parameters"/>
   </COMPONENT>
 </DOCUMENT>

@@ -193,6 +193,7 @@ namespace SmartUlcService.Service
                     }
                   }
                 }
+                Console.WriteLine(Program.__cout_ulc_request);
                 //Interlocked.Increment(ref Worker.__cout_request);
               }
               catch (Exception exp)

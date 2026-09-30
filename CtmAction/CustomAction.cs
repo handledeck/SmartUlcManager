@@ -1,13 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using Db;
 using DB;
 using InterUlc.Db;
 using Microsoft.Deployment.WindowsInstaller;
 using ServiceStack.OrmLite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 using UlcWin;
 
 namespace CtmAction
@@ -41,15 +45,67 @@ namespace CtmAction
     " GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO ulc_read";
     const string __read_write = "GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO ulc_read_write;" +
       " GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO ulc_read_write";
+
+    // Имя ini-файла рядом с приложением
+    const string INI_FILE_NAME = "UlcSrvSettings.ini";
+
     static int result = 0;
     public static PSql __pSql = new PSql();
 
     //public static object MessageBox { get; private set; }
 
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    static extern long WritePrivateProfileString(
+        string section, string key, string value, string filePath);
+
+    /// <summary>
+    /// Создаёт или обновляет UlcSrvSettings.ini в папке установки.
+    /// Если файла нет — создаёт с дефолтными секциями.
+    /// Если файл есть — перезаписывает только ip/port/user/password,
+    /// остальные секции (например [Schedule]) сохраняются.
+    /// </summary>
+    static void WriteOrUpdateIniFile(string appDir, PSql pSql)
+    {
+      if (string.IsNullOrWhiteSpace(appDir))
+        throw new Exception("Не задана папка установки (APPDIR)");
+
+      string iniPath = Path.Combine(appDir, INI_FILE_NAME);
+
+      // Если файла нет — создаём с полным содержимым (включая [Schedule] по умолчанию)
+      if (!File.Exists(iniPath))
+      {
+        var sb = new StringBuilder();
+        sb.AppendLine(";Section Ip address and port  for connection DB");
+        sb.AppendLine("[DB]");
+        sb.AppendLine("ip = " + pSql.db_address);
+        sb.AppendLine("port = " + pSql.db_port);
+        sb.AppendLine();
+        sb.AppendLine(";Section for user and password for connection DB");
+        sb.AppendLine("[DBUser]");
+        sb.AppendLine("user = " + pSql.db_user);
+        sb.AppendLine("password = " + pSql.db_pwd);
+        sb.AppendLine();
+        sb.AppendLine(";Section for schedule");
+        sb.AppendLine("[Schedule]");
+        sb.AppendLine("schedule = 0 1-59/5 * * * ?");
+
+        // ini должен быть в ANSI/UTF-8 без BOM — WriteAllText с Encoding.Default
+        File.WriteAllText(iniPath, sb.ToString(), Encoding.Default);
+      }
+
+      // В любом случае (файл был или только что создан) — обновляем значения
+      WritePrivateProfileString("DB", "ip", pSql.db_address, iniPath);
+      WritePrivateProfileString("DB", "port", pSql.db_port.ToString(), iniPath);
+      WritePrivateProfileString("DBUser", "user", pSql.db_user, iniPath);
+      WritePrivateProfileString("DBUser", "password", pSql.db_pwd, iniPath);
+    }
+
     [CustomAction]
     public static ActionResult ActionInstallDB(Session session)
     {
-
+      var path = session["APPDIR"];
+      //System.Diagnostics.Debugger.Launch();
+      //var path = session["APPDIR"];
       try
       {
         //System.Diagnostics.Debugger.Launch();
@@ -59,7 +115,7 @@ namespace CtmAction
         int port = 0;
         if (!int.TryParse(session["DB_PORT"], out port))
         {
-          throw new Exception("������������ ����� �����");
+          throw new Exception("Неправильный номер порта");
         }
         __pSql.db_address = session["DB_ADDRESS"];
         __pSql.db_user = session["DB_USER"];
@@ -72,32 +128,37 @@ namespace CtmAction
         {
           if (session["DB_TEST"] == "1")
           {
+            // ---- ТОЛЬКО ТЕСТ. INI-файл не трогаем ----
             if (CheckDb(out exp) == 1)
             {
               throw exp;
             }
             else
             {
-              System.Windows.Forms.MessageBox.Show("���������� � �� �������", "����������", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              System.Windows.Forms.MessageBox.Show("Соединение с БД успешно", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
           }
           else if (session["DB_TEST"] == "0")
           {
+            // ---- УСТАНОВКА. Создаём БД и пишем/обновляем INI ----
             if (CreateDb(out exp) == 1)
             {
               throw exp;
             }
             else
             {
-              System.Windows.Forms.MessageBox.Show("�� ������� �������", "����������", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              System.Windows.Forms.MessageBox.Show("БД успешно создана", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
               session["DB_RESULT"] = "1";
+
+              // >>> запись/обновление ini только при установке
+              WriteOrUpdateIniFile(path, __pSql);
             }
           }
         }
       }
       catch (Exception exp)
       {
-        System.Windows.Forms.MessageBox.Show(exp.Message, "������", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        System.Windows.Forms.MessageBox.Show(exp.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         session["DB_RESULT"] = "0";
         return ActionResult.Failure;
       }
@@ -174,7 +235,7 @@ namespace CtmAction
           //{
           //  List<MainUnitTypes> lstDev = new List<MainUnitTypes>();
           //  lstDev.Add(new MainUnitTypes() { Id = 1, Name = "ULC 2" });
-          //  lstDev.Add(new MainUnitTypes() { Id = 0, Name = "���-18" });
+          //  lstDev.Add(new MainUnitTypes() { Id = 0, Name = "РВП-18" });
           //  db.Insert<MainUnitTypes>(lstDev.ToArray());
           //}
           db.CreateTableIfNotExists(typeof(MainUser));
@@ -183,7 +244,7 @@ namespace CtmAction
           {
             usr = "postgres",//__pSql.db_user,// this.txtDbSprUser.Text,
             level = -1,
-            comment = "����� ������",
+            comment = "общая запись",
             items = "",
             pwd = ""
           };
@@ -249,11 +310,10 @@ namespace CtmAction
       __pSql.db_address = "localhost";
       __pSql.db_user = "postgres";
       __pSql.db_port = 5432;
-      __pSql.db_pwd = "root";
+      __pSql.db_pwd = "pgp@ssdb";
       Exception exp = null;
       TryConnectDb(out exp);
       CreateDb(out exp);
     }
   }
 }
-  

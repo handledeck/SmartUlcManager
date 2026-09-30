@@ -1,0 +1,26 @@
+Структура папок тома Новый том
+Серийный номер тома: 54E4-FFE2
+D:.
+    CtmAction.CA.dll
+    CtmAction.dll
+    CtmAction.pdb
+    Microsoft.Deployment.WindowsInstaller.dll
+    Microsoft.Deployment.WindowsInstaller.xml
+    Npgsql.dll
+    Npgsql.xml
+    ServiceStack.Common.dll
+    ServiceStack.Common.xml
+    ServiceStack.Interfaces.dll
+    ServiceStack.Interfaces.xml
+    ServiceStack.OrmLite.dll
+    ServiceStack.OrmLite.PostgreSQL.dll
+    ServiceStack.OrmLite.PostgreSQL.xml
+    ServiceStack.OrmLite.xml
+    ServiceStack.Text.dll
+    ServiceStack.Text.xml
+    structure.txt
+    System.Threading.Tasks.Extensions.dll
+    System.Threading.Tasks.Extensions.xml
+    
+Подпапки отсутствуют 
+

@@ -22,10 +22,11 @@ using WorkerService1.Db;
 namespace InterUlc.Db
 {
   public delegate void ItemRunComplite(Task tsk);
-  public class DbReqestNotTrue {
+  public class DbReqestNotTrue
+  {
 
     public int id { get; set; }
-    public string ip_address{ get; set; }
+    public string ip_address { get; set; }
     public string message { get; set; }
     public int unit_type_id { get; set; }
     public object tag { get; set; }
@@ -37,7 +38,7 @@ namespace InterUlc.Db
     public Task OwnerTask { get; set; }
     [Ignore]
     public UlcCfg.UlcCfg UlcCnfg { get; set; }
-    
+
   }
 
   public class Node
@@ -49,7 +50,7 @@ namespace InterUlc.Db
     public string Phone { get; set; }
     public CurrentCfg Cfg { get; set; }
     public List<Log> Logs { get; set; }
-    public string Message  { get; set; }
+    public string Message { get; set; }
     public int Type { get; set; }
     public override string ToString()
     {
@@ -91,19 +92,21 @@ namespace InterUlc.Db
                   __connection, PostgreSqlDialect.Provider);
       using (var db = dbFactory.Open())
       {
-        List<MainInfo> mainInfos= db.Select<MainInfo>(x=>x.unit_type_id==0 && x.rs_stat==1);
+        List<MainInfo> mainInfos = db.Select<MainInfo>(x => x.unit_type_id == 0 && x.rs_stat == 1);
         List<MainInfo> lstUpdate = new List<MainInfo>();
         foreach (var item in mainInfos)
         {
-          if (item.rs_stat == 0) { 
+          if (item.rs_stat == 0)
+          {
             item.rs_stat = 1;
             lstUpdate.Add(item);
           }
         }
-        if (lstUpdate.Count > 0) {
+        if (lstUpdate.Count > 0)
+        {
           db.Update<MainInfo>(lstUpdate.ToArray());
         }
-        
+
       }
     }
 
@@ -116,24 +119,24 @@ namespace InterUlc.Db
       DateTime dtCurrent = dtn.AddMonths(-6);
       try
       {
-      var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
-                  __connection, PostgreSqlDialect.Provider);
-      using (var db = dbFactory.Open())
-      {
-        IDbCommand dbCommand = db.CreateCommand();
-        string sql= string.Format("delete from main_ctrlevent me where me.event_time <'{0}'", dtEvent.ToString("yyyy-MM-dd"));
-        dbCommand.CommandText = sql;
-        int count=dbCommand.ExecuteNonQuery();
-        UlcSrvLog.Logger.Info("Очистка базы событий. Удалено: {0}", count);
-        sql = string.Format("delete from main_ctrlcurrent mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
-        dbCommand.CommandText = sql;
-        count = dbCommand.ExecuteNonQuery();
-        //UlcSrvLog.Logger.Info("Очистка базы данных. Удалено: {0}", count);
-        sql = string.Format("delete from main_ctrldata mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
-        dbCommand.CommandText = sql;
-        count = dbCommand.ExecuteNonQuery();
-        UlcSrvLog.Logger.Info("Очистка базы данных о состоянии. Удалено: {0}", count);
-      }
+        var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
+                    __connection, PostgreSqlDialect.Provider);
+        using (var db = dbFactory.Open())
+        {
+          IDbCommand dbCommand = db.CreateCommand();
+          string sql = string.Format("delete from main_ctrlevent me where me.event_time <'{0}'", dtEvent.ToString("yyyy-MM-dd"));
+          dbCommand.CommandText = sql;
+          int count = dbCommand.ExecuteNonQuery();
+          UlcSrvLog.Logger.Info("Очистка базы событий. Удалено: {0}", count);
+          sql = string.Format("delete from main_ctrlcurrent mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
+          dbCommand.CommandText = sql;
+          count = dbCommand.ExecuteNonQuery();
+          //UlcSrvLog.Logger.Info("Очистка базы данных. Удалено: {0}", count);
+          sql = string.Format("delete from main_ctrldata mc where mc.current_time <'{0}'", dtCurrent.ToString("yyyy-MM-dd"));
+          dbCommand.CommandText = sql;
+          count = dbCommand.ExecuteNonQuery();
+          UlcSrvLog.Logger.Info("Очистка базы данных о состоянии. Удалено: {0}", count);
+        }
       }
       catch (Exception exp)
       {
@@ -141,7 +144,7 @@ namespace InterUlc.Db
       }
     }
 
-      public void ReadStatistic(string connString)
+    public void ReadStatistic(string connString)
     {
       try
       {
@@ -200,7 +203,8 @@ namespace InterUlc.Db
     }
 
 
-    void InsertDataTable(DbReqestNotTrue item, System.Data.IDbConnection conn) {
+    void InsertDataTable(DbReqestNotTrue item, System.Data.IDbConnection conn)
+    {
       try
       {
         UlcCfg.UlcCfg ulcCfg = new UlcCfg.UlcCfg();
@@ -213,7 +217,8 @@ namespace InterUlc.Db
           conn.Insert<UlcCfg.UlcCfg>(ulcCfg);
         }
       }
-      catch (Exception e) {
+      catch (Exception e)
+      {
         int x = 0;
       }
     }
@@ -265,7 +270,8 @@ namespace InterUlc.Db
 
 
 
-    public DbLogs GetDbObjectPath(int id, IDbConnection connection) {
+    public DbLogs GetDbObjectPath(int id, IDbConnection connection)
+    {
       string msg = string.Empty;
       string sql = string.Format("select mn.id, mn.\"name\" as tp ,mn2.\"name\" as res,mn3.\"name\" as fes, mc.ip_address as ip from main_nodes mn " +
       "right join main_nodes mn2 on mn.parent_id = mn2.id " +
@@ -283,7 +289,8 @@ namespace InterUlc.Db
 
     }
 
-    public OrmDbConfig GetLastRecordById(IDbConnection connection, int id) {
+    public OrmDbConfig GetLastRecordById(IDbConnection connection, int id)
+    {
       string sql = String.Format("SELECT * FROM main_ctrldata mc " +
                   "WHERE ID = (SELECT MAX(ID) FROM main_ctrldata mc1 where mc1.ctrl_id = {0})", id);
       List<OrmDbConfig> lstMax = connection.Select<OrmDbConfig>(sql);
@@ -291,7 +298,8 @@ namespace InterUlc.Db
       {
         return lstMax[0];
       }
-      else {
+      else
+      {
         return null;
       }
 
@@ -302,7 +310,7 @@ namespace InterUlc.Db
       if (imei.Length < 15)
         return string.Empty;
       else
-      return imei.Substring(imei.Length - 7, imei.Length - 8);
+        return imei.Substring(imei.Length - 7, imei.Length - 8);
     }
 
     public void CheckDeviceIMEI(List<UlcCfg.UlcCfg> ulcCfgLst)
@@ -352,7 +360,7 @@ namespace InterUlc.Db
                                      //GetShortImei(lstMax[0].IMEI.ToString()), GetShortImei(ulcCfg.IMEI.ToString()), (lstMax[0].CDIN >> 7).ToString()),
                       log_event = en,
                       host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName,
-                      ctrl_id= ulcCfg.ctrl_id,
+                      ctrl_id = ulcCfg.ctrl_id,
                     };
                     connection.Insert<MainLogs>(mainLogs);
                   }
@@ -378,7 +386,7 @@ namespace InterUlc.Db
                     host_from = Dns.GetHostEntry(Dns.GetHostName()).HostName,
                     ctrl_id = ulcCfg.ctrl_id
                   };
-                  long result=connection.Insert<MainLogs>(mainLogs);
+                  long result = connection.Insert<MainLogs>(mainLogs);
                 }
                 catch (Exception exp)
                 {
@@ -494,7 +502,7 @@ namespace InterUlc.Db
       var dbFactory = new OrmLiteConnectionFactory(__connection, PostgreSqlDialect.Provider);
       using (var db = dbFactory.Open())
       {
-        
+
         DateTime dtc = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
         if (mainCurrents.Count > 0)
         {
@@ -518,7 +526,7 @@ namespace InterUlc.Db
           }
           if (ulcCfgs.Count > 0)
           {
-            
+
             using (IDbTransaction dbTrans = db.OpenTransaction(IsolationLevel.ReadCommitted))
             {
               try
@@ -559,7 +567,8 @@ namespace InterUlc.Db
         cmd.ExecuteNonQuery();
         this.__dbConnection.Close();
       }
-      catch {
+      catch
+      {
       }
 
       finally
@@ -587,6 +596,7 @@ namespace InterUlc.Db
       }
       catch (Exception ex)
       {
+        UlcSrvLog.Logger.Error(ex.Message);
         return null;
       }
       return reqestNotTrues;
@@ -652,7 +662,8 @@ namespace InterUlc.Db
     }
 
 
-    public void WriteBinaryData(List<DbReqestNotTrue> lstItems) {
+    public void WriteBinaryData(List<DbReqestNotTrue> lstItems)
+    {
 
       try
       {
@@ -763,7 +774,8 @@ namespace InterUlc.Db
     }
 
 
-    public bool CleanDbEvent() {
+    public bool CleanDbEvent()
+    {
 
       try
       {
@@ -784,7 +796,8 @@ namespace InterUlc.Db
 
         return false;
       }
-      finally {
+      finally
+      {
         this.__dbConnection.Close();
       }
     }
@@ -810,16 +823,17 @@ namespace InterUlc.Db
       }
     }
 
-    public List<MeterValue> GetNotTrueMeters() {
+    public List<MeterValue> GetNotTrueMeters()
+    {
       List<MeterInfo> rsMeters;
-      List<MeterValue> rsNotTrue=new List<MeterValue>();
+      List<MeterValue> rsNotTrue = new List<MeterValue>();
       try
       {
         var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
           __connection, PostgreSqlDialect.Provider);
         using (var db = dbFactory.Open())
         {
-          
+
           string sql = string.Format("select mi.* from meter_info mi left join meter_value mv on mv.ctrl_id =mi.id and  mv.date_time >'{0}' where mv isnull and mi.active =1 and mi.meter_factory <>''", DateTime.Now.ToString("yyyy-MM-dd"));
           //string sql = string.Format("select mi.id as ctrl_id,mi.ip,mi.meter_type,mi.meter_factory,mv.date_time,mv.value,mv.is_true " +
           //                           "from meter_info mi " +
@@ -830,7 +844,7 @@ namespace InterUlc.Db
 
 
           rsMeters = db.Select<MeterInfo>(sql);
-          
+
           foreach (var item in rsMeters)
           {
             rsNotTrue.Add(new MeterValue()
@@ -996,7 +1010,7 @@ namespace InterUlc.Db
 
     public void WriteEventMessage_1(List<DbReqestNotTrue> lstItems)
     {
-     // string sql = "SELECT * FROM main_ctrlevent me where me.ctrl_id = {0} order by me.id desc limit 1";
+      // string sql = "SELECT * FROM main_ctrlevent me where me.ctrl_id = {0} order by me.id desc limit 1";
       var dbFactory = new ServiceStack.OrmLite.OrmLiteConnectionFactory(
             __connection, PostgreSqlDialect.Provider);
       uint dt_val = ParceLog.rtc_calendar_datetime_to_register_value(DateTime.Now.AddDays(-30));
@@ -1088,7 +1102,8 @@ namespace InterUlc.Db
         {
           if (item.unit_type_id == 0)
             continue;
-          else {
+          else
+          {
             if (item.logs == null)
               continue;
           }
@@ -1110,23 +1125,23 @@ namespace InterUlc.Db
               //DateTime dts = DateTime.Now.AddDays(-30);
               foreach (var lItem in item.logs)
               {
-                if (lItem.event_time>dts)
+                if (lItem.event_time > dts)
                 {
                   if (lItem.event_time > dtevt)
                     //lstColumns.AddRecord(lItem.dt, lItem.Log_type, (int)lItem.Log_level, item.ID, lItem.EventMessage);
-                  listToUpdate.Add(lItem);
+                    listToUpdate.Add(lItem);
                   //{ 
-                    
+
                   //}
                 }
               }
             }
-            
+
             dr.Close();
             //Console.WriteLine("Обраб {0}", ii++);
-            
+
             //cmd_ins.Parameters[4].Value = lstColumns.__event_msg.ToArray();
-            
+
             //cmd_ins.CommandText = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id) VALUES (@event_time, @event_type, @event_level, @ctrl_id, @event_msg, @event_msg)";
 
             if (listToUpdate.Count > 0)
@@ -1173,14 +1188,14 @@ namespace InterUlc.Db
             else
             {
               //lstColumns.AddRange(item, item.ID);
-              
+
               NpgsqlTransaction tran = this.__dbConnection.BeginTransaction();
               try
               {
                 int iCom = 0;
                 foreach (var itLog in item.logs)
                 {
-                  if (itLog.event_time >dts)
+                  if (itLog.event_time > dts)
                   {
                     cmd_ins.Parameters[0].Value = itLog.event_time;// lstColumns.__event_msg.ToArray();
                     cmd_ins.Parameters[1].Value = itLog.event_type;
@@ -1202,7 +1217,7 @@ namespace InterUlc.Db
 
 
               //cmd_ins.Parameters.Add("@event_time",NpgsqlTypes.NpgsqlDbType.Array)
-             // dr = cmd_ins.ExecuteReader();
+              // dr = cmd_ins.ExecuteReader();
               //sql = "INSERT INTO main_ctrlevent(event_time, event_type, event_level, ctrl_id) VALUES";
               //StringBuilder sb = new StringBuilder();
               //sb.Append(sql);
@@ -1232,7 +1247,7 @@ namespace InterUlc.Db
       }
       catch (Exception exp)
       {
-        
+
       }
       finally
       {
@@ -1311,7 +1326,7 @@ namespace InterUlc.Db
         DateTime dtn = DateTime.Now;
         DateTime dtl = new DateTime(dtn.Year, dtn.Month, dtn.Day, 0, 0, 0);
         DateTime curt = (DateTime)dr_fes[0];
-        string msg= (string)dr_fes[1];
+        string msg = (string)dr_fes[1];
         dr_fes.Close();
         this.__dbConnection.Close();
         if (dtl == curt)
@@ -1327,13 +1342,14 @@ namespace InterUlc.Db
       {
         return false;
       }
-      finally {
+      finally
+      {
         if (this.__dbConnection.State == System.Data.ConnectionState.Open)
         {
           this.__dbConnection.Close();
         }
       }
-    } 
+    }
 
     public void ReadDataBase()
     {
@@ -1341,9 +1357,9 @@ namespace InterUlc.Db
       //username=postgres
       //password=pgp@ssdb
       //var cs = string.Format("Host={0};Username={1};Password={2};Database=ctrl_mon_dev",this.dBIpAddress,this.DbUserName,this.DbPassword);
-      NpgsqlConnection con_fes=null;
-      NpgsqlConnection con_res=null;
-      NpgsqlConnection con_tp=null;
+      NpgsqlConnection con_fes = null;
+      NpgsqlConnection con_res = null;
+      NpgsqlConnection con_tp = null;
       try
       {
         con_fes = new NpgsqlConnection(this.__connection);
@@ -1393,11 +1409,12 @@ namespace InterUlc.Db
         dr_fes.Close();
         con_fes.Close();
       }
-      catch(Exception exp)
+      catch (Exception exp)
       {
         //Console.WriteLine(exp.Message);
       }
-      finally {
+      finally
+      {
         if (con_fes != null)
         {
           if (con_fes.State == System.Data.ConnectionState.Open)
@@ -1420,7 +1437,7 @@ namespace InterUlc.Db
           }
         }
       }
-     
+
     }
   }
 }

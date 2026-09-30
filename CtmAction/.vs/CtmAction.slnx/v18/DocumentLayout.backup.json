@@ -1,0 +1,63 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\1014\\1\\CtmAction\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6CF474F1-3DB4-4003-AFF1-84F7B82199FE}|CtmAction.csproj|d:\\1014\\1\\ctmaction\\customaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CF474F1-3DB4-4003-AFF1-84F7B82199FE}|CtmAction.csproj|solutionrelative:customaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|CtmAction||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CtmAction",
+              "DocumentMoniker": "D:\\1014\\1\\CtmAction\\CtmAction.csproj",
+              "RelativeDocumentMoniker": "CtmAction.csproj",
+              "ToolTip": "D:\\1014\\1\\CtmAction\\CtmAction.csproj",
+              "RelativeToolTip": "CtmAction.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-29T12:44:04.569Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CustomAction.cs",
+              "DocumentMoniker": "D:\\1014\\1\\CtmAction\\CustomAction.cs",
+              "RelativeDocumentMoniker": "CustomAction.cs",
+              "ToolTip": "D:\\1014\\1\\CtmAction\\CustomAction.cs*",
+              "RelativeToolTip": "CustomAction.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-29T12:34:40.478Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

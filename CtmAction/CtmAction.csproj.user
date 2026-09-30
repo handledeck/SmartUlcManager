@@ -3,9 +3,4 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartAction>Project</StartAction>
-    <StartProgram>
-    </StartProgram>
-  </PropertyGroup>
 </Project>

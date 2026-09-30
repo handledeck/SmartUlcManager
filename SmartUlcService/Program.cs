@@ -29,9 +29,10 @@ namespace WindowsService1
       UlcSrvLog.InitUlcSrvLog();
       UlcSrvLog.Logger.Info("Инициализация службы");
       //SmartUlcSrv smartUlcSrv = new SmartUlcSrv();
-      //UlcScheduleJob __ulcScheduleJob = new UlcScheduleJob(__configIni.Scheduler,new System.Threading.CancellationToken());
+      //UlcScheduleJob __ulcScheduleJob = new UlcScheduleJob(__configIni.Scheduler, new System.Threading.CancellationToken());
 
-      //Thread tr = new Thread(() => {
+      //Thread tr = new Thread(() =>
+      //{
       //  __ulcScheduleJob.Start();
       //});
       //tr.Start();
